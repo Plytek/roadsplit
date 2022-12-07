@@ -29,6 +29,15 @@ public class GloginStuff {
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account != null) Log.d("googleacc", "Schon eingeloggt");
+        else Log.d("googleacc", "Noch nicht eingeloggt");
+    }
+
     public void login(View v)
     {
         System.out.println("test");
