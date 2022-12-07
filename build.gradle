@@ -4,7 +4,3 @@ plugins {
     id 'com.android.library' version '7.3.1' apply false
 }
 
-dependencies {
-    //JDBC
-    implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '21.1.0.0'
-}
