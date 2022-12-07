@@ -1,6 +1,5 @@
 package com.example.roadsplit;
 
-import android.util.Log;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -9,10 +8,6 @@ import com.example.roadsplit.model.UserAccount;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,12 +22,11 @@ import okhttp3.Response;
 @Setter
 public class UserService implements Callback{
 
-    private MainActivity mainActivity;
+    private final MainActivity mainActivity;
 
     public UserService(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
-
 
     public void fetchByUnique(String uniquename)
     {
@@ -48,7 +42,6 @@ public class UserService implements Callback{
 
         client.newCall(request).enqueue(this);
     }
-
 
     @Override
     public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -85,7 +78,6 @@ public class UserService implements Callback{
                     ((EditText) mainActivity.findViewById(R.id.usernameText)).setText(nickname);
                 }
             });
-
         }
     }
 }
