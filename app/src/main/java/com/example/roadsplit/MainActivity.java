@@ -24,14 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account != null) Log.d("googleacc", "Schon eingeloggt");
-        else Log.d("googleacc", "Noch nicht eingeloggt");
-    }
-
     public void fetch(View view) {
         UserService userService = new UserService(this);
         EditText v = findViewById(R.id.uniqueNameField);
