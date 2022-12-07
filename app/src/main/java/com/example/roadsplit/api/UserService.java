@@ -1,16 +1,17 @@
-package com.example.roadsplit;
+package com.example.roadsplit.api;
 
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
+import com.example.roadsplit.activities.MainActivity;
+import com.example.roadsplit.R;
 import com.example.roadsplit.model.UserAccount;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 
-import lombok.Getter;
-import lombok.Setter;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -18,8 +19,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-@Getter
-@Setter
 public class UserService implements Callback{
 
     private final MainActivity mainActivity;

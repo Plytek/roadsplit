@@ -1,4 +1,4 @@
-package com.example.roadsplit;
+package com.example.roadsplit.googlelogin;
 
 import android.content.Intent;
 import android.view.View;

@@ -1,18 +1,16 @@
-package com.example.roadsplit;
+package com.example.roadsplit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.example.roadsplit.R;
+import com.example.roadsplit.api.UserService;
 
 import lombok.Getter;
 import lombok.Setter;
-
 
 @Getter
 @Setter

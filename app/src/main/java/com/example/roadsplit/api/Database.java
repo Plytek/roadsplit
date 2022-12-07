@@ -1,14 +1,7 @@
-package com.example.roadsplit.database;
-
-import android.util.Log;
-
-import com.example.roadsplit.model.UserAccount;
+package com.example.roadsplit.api;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import lombok.Getter;
 
