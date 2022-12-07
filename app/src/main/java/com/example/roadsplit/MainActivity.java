@@ -30,10 +30,4 @@ public class MainActivity extends AppCompatActivity {
         String input = String.valueOf(v.getText());
         if(!input.isEmpty()) userService.fetchByUnique(input);
     }
-
-
-
-
-
-
 }
