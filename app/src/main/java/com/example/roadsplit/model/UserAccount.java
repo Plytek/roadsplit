@@ -7,10 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
 public class UserAccount {
 
     private int id;
@@ -25,5 +21,44 @@ public class UserAccount {
         this.id = id;
         this.uniquename = uniquename;
         this.nickname = nickname;
+    }
+
+    public UserAccount(int id, String uniquename, String nickname, List<Reise> reisen) {
+        this.id = id;
+        this.uniquename = uniquename;
+        this.nickname = nickname;
+        this.reisen = reisen;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUniquename() {
+        return uniquename;
+    }
+
+    public void setUniquename(String uniquename) {
+        this.uniquename = uniquename;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public List<Reise> getReisen() {
+        return reisen;
+    }
+
+    public void setReisen(List<Reise> reisen) {
+        this.reisen = reisen;
     }
 }
