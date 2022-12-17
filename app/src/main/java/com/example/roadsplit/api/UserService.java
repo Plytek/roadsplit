@@ -30,8 +30,8 @@ public class UserService implements Callback{
     public void fetchByUnique(String uniquename)
     {
         OkHttpClient client = new OkHttpClient();
-        //String url = "http://6367-178-0-193-19.ngrok.io/api/userdaten/user";
-        String url = "http://10.0.2.2:8080/api/userdaten/user";
+        String url = "https://3f52-88-70-249-101.ngrok.io/api/userdaten/user";
+        //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
         httpBuilder.addQueryParameter("uniquename",uniquename);
 
@@ -75,6 +75,7 @@ public class UserService implements Callback{
                     ((EditText) mainActivity.findViewById(R.id.stopsText)).setText(stops);
                     ((EditText) mainActivity.findViewById(R.id.reisenText)).setText(reisen);
                     ((EditText) mainActivity.findViewById(R.id.usernameText)).setText(nickname);
+                    mainActivity.setUserAccount(user);
                 }
             });
         }
