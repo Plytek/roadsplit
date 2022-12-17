@@ -8,7 +8,9 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Debug;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.api.UserService;
@@ -47,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("user", (new Gson()).toJson(userAccount));
         startActivity(intent);
+    }
+
+    public void test(View view) {
+        Button button = (Button) view;
+        button.setText("Bent");
+        TextView eins = findViewById(R.id.usernameText);
+        eins.setText("1");
+       //test
+
+
     }
 
 }
