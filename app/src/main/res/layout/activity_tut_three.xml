@@ -42,6 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.705"
-        app:srcCompat="@drawable/Punkte3"
+        app:srcCompat="@drawable/punktethree"
  />
 </androidx.constraintlayout.widget.ConstraintLayout>
