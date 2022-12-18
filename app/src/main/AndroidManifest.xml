@@ -20,7 +20,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".TutActivityOne"
+            android:name=".TutActivityThree"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.TutActivityTwo"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.TutActivityOne"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.TutActivityOne">
+    tools:context=".activities.TutActivityThree">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView6"
         android:layout_width="114dp"
         android:layout_height="48dp"
         android:onClick="back"
@@ -21,7 +20,7 @@
         app:srcCompat="@mipmap/tut1_text3" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageView7"
         android:layout_width="62dp"
         android:layout_height="21dp"
         android:layout_marginStart="8dp"
@@ -29,13 +28,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.871"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.056"
         app:srcCompat="@mipmap/weiter" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView8"
         android:layout_width="393dp"
         android:layout_height="568dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,6 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.705"
-        app:srcCompat="@mipmap/Punkte1" />
-
+        app:srcCompat="@drawable/Punkte3"
+ />
 </androidx.constraintlayout.widget.ConstraintLayout>
