@@ -36,4 +36,8 @@ public class TutActivityOne extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void next(View view) {
+        Intent intent = new Intent(this, TutActivityTwo.class);
+        startActivity(intent);
+    }
 }
