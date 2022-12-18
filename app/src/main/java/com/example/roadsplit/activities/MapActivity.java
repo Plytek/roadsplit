@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,8 +17,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
+import com.example.roadsplit.OnSwipeTouchListener;
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.model.UserAccount;
@@ -35,8 +37,8 @@ import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -48,7 +50,6 @@ public class MapActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private UserAccount userAccount = null;
     private MapView map = null;
-    private Geocoder geocoder;
     private RoadManager roadManager;
     private List<Address> adressen;
     private List<Stop> stops;
@@ -56,20 +57,30 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_map);
+
         Intent i = getIntent();
         String userjson = i.getStringExtra("user");
         this.userAccount = (new Gson()).fromJson(userjson, UserAccount.class);
-        this.stops = userAccount.getReisen().get(0).getStops();
-
-
-
+        try {
+            this.stops = userAccount.getReisen().get(0).getStops();
+        } catch (NullPointerException e) {
+            Log.d("nulli", e.getMessage());
+        }
 
         //load/initialize the osmdroid configuration, this can be done
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         Configuration.getInstance().setUserAgentValue("MyOwnUserAgent/1.0");
 
-        setContentView(R.layout.activity_map);
+        LinearLayout linearLayout = findViewById(R.id.mapLayout);
+        linearLayout.setOnTouchListener(new OnSwipeTouchListener(MapActivity.this)
+        {
+            @Override
+            public void onSwipeRight() {
+                back(findViewById(R.id.nextButton));
+            }
+        });
 
         this.roadManager = new OSRMRoadManager(this, Configuration.getInstance().getNormalizedUserAgent());
         ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
@@ -80,35 +91,17 @@ public class MapActivity extends AppCompatActivity {
         map.setMultiTouchControls(true);
         map.setTilesScaledToDpi(true);
 
-
-
         IMapController mapController = map.getController();
         mapController.setZoom(6.5);
         GeoPoint startPoint = new GeoPoint(53.551086, 9.993682);
         //GeoPoint startPoint = new GeoPoint(0, 0);
         mapController.setCenter(startPoint);
 
-        List<Address> addresses = new ArrayList<>();
-        List<Address> addresses2 = new ArrayList<>();
-        this.geocoder = new Geocoder(this);
-
-        ArrayList<GeoPoint> waypoints = new ArrayList<GeoPoint>();
-
-
-        //draw(roadManager, startPoint,stops);
-
-
-
-        //Log.d("geocoder", addresses.toString());
         map.invalidate();
 
-        /*requestPermissionsIfNecessary(arrayOf(
-                // if you need to show the current location, uncomment the line below
-                // Manifest.permission.ACCESS_FINE_LOCATION,
-                // WRITE_EXTERNAL_STORAGE is required in order to show the map
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ));*/
-
+        String[] permissions = new String[1];
+        permissions[0] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        requestPermissionsIfNecessary(permissions);
     }
 
     public void fetchGeodata(View view)
@@ -178,6 +171,12 @@ public class MapActivity extends AppCompatActivity {
     {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+    }
+
+    public void showFullscreenMap(View view)
+    {
+        LinearLayout linearLayout = findViewById(R.id.topMapLayout);
+        linearLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

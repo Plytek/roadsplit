@@ -30,15 +30,21 @@ public class UserService implements Callback{
     public void fetchByUnique(String uniquename)
     {
         OkHttpClient client = new OkHttpClient();
-        String url = "https://3f52-88-70-249-101.ngrok.io/api/userdaten/user";
+        //Die URL auf dem der Service + angesprochener Endpunkt
+        String url = "https://39d9-88-70-249-101.ngrok.io/api/userdaten/user";
+        //Das hier auskommentieren für Localhost call durch den Emulator
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
+        //Bauen der Url für die Request
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
+        //Hinzufügen von benötigten Parametern für die Weitergabe an den Webservice
         httpBuilder.addQueryParameter("uniquename",uniquename);
 
+        //Bauen der Request
         Request request = new Request.Builder()
                 .url(httpBuilder.build())
                 .build();
 
+        //Erstellt in einem neuen Thread eine Http Anfrage an den Webservice, ruft bei Erfolg onReponse() auf, bei Misserfolg onFailure()
         client.newCall(request).enqueue(this);
     }
 
@@ -52,11 +58,14 @@ public class UserService implements Callback{
         if(response.isSuccessful())
         {
             Gson gson = new Gson();
+            //Erstellt aus dem als String erhaltenen UserAccount wieder ein für Java benutzbares Objekt her
             UserAccount user = gson.fromJson(response.body().string(), UserAccount.class);
 
+            //Da das hier ein neuer Thread ist, muss die runOnUiThread genutzt werden um auf den Urpsrungsthread Änderungen vorzunehmen
             mainActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    //Regex für die Darstellung, entfernt "," und " ".
                     String regex = "[\\[, \\],]";
                     String stops = "";
                     String reisen = "";
@@ -72,6 +81,7 @@ public class UserService implements Callback{
                     if(user != null && user.getNickname() != null)
                         nickname = user.getNickname();
 
+                    //Stellt Nickname, Reisen und Stops in der UI dar
                     ((EditText) mainActivity.findViewById(R.id.stopsText)).setText(stops);
                     ((EditText) mainActivity.findViewById(R.id.reisenText)).setText(reisen);
                     ((EditText) mainActivity.findViewById(R.id.usernameText)).setText(nickname);
