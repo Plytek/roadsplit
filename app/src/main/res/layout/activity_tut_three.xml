@@ -5,6 +5,7 @@
     android:id="@+id/cLayoutThree"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF6ED"
     tools:context=".activities.TutActivityThree">
 
     <ImageView
@@ -14,11 +15,11 @@
         android:onClick="back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039"
-        app:srcCompat="@mipmap/tut1_text3" />
+        app:srcCompat="@drawable/ueberone" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -29,20 +30,62 @@
         android:onClick="next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.871"
+        app:layout_constraintHorizontal_bias="0.912"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.056"
-        app:srcCompat="@mipmap/weiter" />
+        app:layout_constraintVertical_bias="0.057"
+        app:srcCompat="@drawable/weiterone" />
 
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="393dp"
-        android:layout_height="568dp"
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="349dp"
+        android:layout_height="56dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Gespeicherte Reisen"
+        android:textColor="#2A4B42"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705"
-        app:srcCompat="@drawable/punktethree" />
+        app:layout_constraintVertical_bias="0.14" />
+    />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="378dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:lineSpacingExtra="5sp"
+        android:text="Lass dir deine vergangenen Reisen durch den Kopf gehen und schau dir an, was du damals alles unternommen und ausgegeben hast."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="485dp"
+        android:layout_height="319dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.095"
+        app:srcCompat="@drawable/canvasthree" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="79dp"
+        android:layout_height="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94"
+        app:srcCompat="@drawable/dotsthree" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
