@@ -61,7 +61,7 @@
         android:layout_marginEnd="16dp"
         android:gravity="center"
         android:lineSpacingExtra="5sp"
-        android:text="Plane gemeinsam mit deinen Freunden deine eigene Reise. Inklusive Packliste, Reisestopps Budgetplanung und viel mehr."
+        android:text="Lass dir deine vergangenen Reisen durch den Kopf gehen und schau dir an, was du damals alles unternommen und ausgegeben hast."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
