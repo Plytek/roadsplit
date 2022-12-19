@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF6ED"
+    tools:context=".activities.NeueReiseActivity">
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="131dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.092"
+        app:srcCompat="@drawable/greenbar" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="376dp"
+        android:layout_height="208dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.029"
+        app:srcCompat="@drawable/canvasneuereise" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="348dp"
+        android:layout_height="41dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Zeit für eine Reise"
+        android:textColor="#2A4B42"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.185" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="323dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:lineSpacingExtra="5sp"
+        android:text="Mit Roadsplit an deiner Seite musst du kein Genie sein. Wir geben dir alles nötige vor und du planst nur die Dinge, die dir Spaß machen."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.017" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="206dp"
+        android:layout_height="73dp"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:text="NEUE REISE ANLEGEN"
+        android:textColor="#2A4B42"
+        android:textSize="34dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.063" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="209dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="208dp"
+        android:background="@drawable/buttonbackgroundgreen"
+        android:fontFamily="@font/cextrabold"
+        android:text="REISE ERSTELLEN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintVertical_bias="0.555" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="206dp"
+        android:layout_height="20dp"
+        android:text="Probleme beim erstellen einer Reise?"
+        android:textAlignment="center
+"
+        android:textColor="#c4c4c4"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="209dp"
+        android:layout_height="55dp"
+        android:background="@drawable/buttonbackgroundgreen"
+        android:fontFamily="@font/cextrabold"
+        android:shadowRadius="@integer/material_motion_duration_long_1"
+        android:text="REISE BEITRETEN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintVertical_bias="0.049" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.958"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022"
+        app:srcCompat="@drawable/stack" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

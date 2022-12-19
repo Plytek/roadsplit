@@ -71,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
     public void tutorial(View view) {
         Intent intent = new Intent(this, TutActivityOne.class);
         startActivity(intent);
+
+    }
+
+    public void neueReise(View view) {
+        Intent intent = new Intent(this, NeueReiseActivity.class);
+        startActivity(intent);
+
     }
 
 }
