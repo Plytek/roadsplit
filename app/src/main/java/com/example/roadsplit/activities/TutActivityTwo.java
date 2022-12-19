@@ -3,6 +3,7 @@ package com.example.roadsplit.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.example.roadsplit.R;
 
 public class TutActivityTwo extends AppCompatActivity {
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +26,7 @@ public class TutActivityTwo extends AppCompatActivity {
             }
             @Override
             public void onSwipeRight(){
-                onSwipeRightSwipe();
+                swipeRight();
             }
         });
     }
@@ -38,7 +40,7 @@ public class TutActivityTwo extends AppCompatActivity {
         Intent intent = new Intent(this, TutActivityThree.class);
         startActivity(intent);
     }
-    public void onSwipeRightSwipe() {
+    public void swipeRight() {
         Intent intent = new Intent(this, TutActivityOne.class);
         startActivity(intent);
     }
