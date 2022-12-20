@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF6ED"
+    tools:context=".activities.RegistryActivity">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.221"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.198"
+        app:srcCompat="@drawable/greenbar" />
+
+    <ImageView
+        android:id="@+id/logoRegView"
+        android:layout_width="84dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.048"
+        app:srcCompat="@drawable/logoround" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="286dp"
+        android:layout_height="88dp"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:text="PLANT EUREN EIGENEN TRIP"
+        android:textColor="#2A4B42"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.174" />
+
+    <ImageView
+        android:id="@+id/regCanvas"
+        android:layout_width="332dp"
+        android:layout_height="218dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421"
+        app:srcCompat="@drawable/canvasreg" />
+
+    <Button
+        android:id="@+id/regButton"
+        android:layout_width="373dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/buttonbackgroundgreen"
+        android:fontFamily="@font/cextrabold"
+        android:onClick="create"
+        android:text="REGISTRIEREN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regCanvas"
+        app:layout_constraintVertical_bias="0.785" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85"
+        app:passwordToggleEnabled="true"
+        tools:layout_editor_absoluteX="0dp">
+
+        <EditText
+            android:id="@+id/passwordRegView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="50dp"
+            android:background="#FFF6ED"
+            android:fontFamily="@font/cmedium"
+            android:hint="Passwort"
+            android:inputType="textPassword"
+            android:textColor="#2A4B42" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.757"
+        app:passwordToggleEnabled="false"
+        tools:layout_editor_absoluteX="0dp">
+
+        <EditText
+            android:id="@+id/emailRegView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="50dp"
+            android:background="#FFF6ED"
+            android:fontFamily="@font/cmedium"
+            android:hint="E-Mail"
+            android:inputType="textEmailAddress"
+            android:textColor="#2A4B42"
+            android:textColorHint="#2A4B42" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.669"
+        app:passwordToggleEnabled="false"
+        tools:layout_editor_absoluteX="0dp">
+
+        <EditText
+            android:id="@+id/userRegView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="50dp"
+            android:background="#FFF6ED"
+            android:fontFamily="@font/cmedium"
+            android:hint="Nutzername"
+            android:inputType="textPersonName"
+            android:textColor="#2A4B42" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/errorRegView"
+        android:layout_width="206dp"
+        android:layout_height="20dp"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="#ff0000"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regButton"
+        app:layout_constraintVertical_bias="0.054" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
