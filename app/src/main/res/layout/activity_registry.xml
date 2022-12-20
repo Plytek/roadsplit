@@ -9,14 +9,26 @@
     tools:context=".activities.RegistryActivity">
 
     <ImageView
+        android:id="@+id/imageView23"
+        android:layout_width="508dp"
+        android:layout_height="445dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/wallpapthree" />
+
+    <ImageView
         android:layout_width="150dp"
         android:layout_height="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.221"
+        app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.198"
+        app:layout_constraintVertical_bias="0.229"
         app:srcCompat="@drawable/greenbar" />
 
     <ImageView
@@ -28,43 +40,30 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048"
+        app:layout_constraintVertical_bias="0.083"
         app:srcCompat="@drawable/logoround" />
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="286dp"
-        android:layout_height="88dp"
+        android:layout_width="297dp"
+        android:layout_height="131dp"
         android:fontFamily="@font/cextrabold"
         android:gravity="center"
         android:text="PLANT EUREN EIGENEN TRIP"
-        android:textColor="#2A4B42"
+        android:textColor="#FFF6ED"
         android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.174" />
-
-    <ImageView
-        android:id="@+id/regCanvas"
-        android:layout_width="332dp"
-        android:layout_height="218dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.421"
-        app:srcCompat="@drawable/canvasreg" />
+        app:layout_constraintVertical_bias="0.194" />
 
     <Button
         android:id="@+id/regButton"
         android:layout_width="373dp"
         android:layout_height="47dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/buttonbackgroundgreen"
         android:fontFamily="@font/cextrabold"
         android:onClick="create"
@@ -75,18 +74,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.421"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regCanvas"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85"
+        app:layout_constraintVertical_bias="0.789"
         app:passwordToggleEnabled="true"
         tools:layout_editor_absoluteX="0dp">
 
@@ -104,13 +102,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.757"
+        app:layout_constraintVertical_bias="0.703"
         app:passwordToggleEnabled="false"
         tools:layout_editor_absoluteX="0dp">
 
@@ -136,7 +135,7 @@
         android:layout_centerVertical="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.669"
+        app:layout_constraintVertical_bias="0.629"
         app:passwordToggleEnabled="false"
         tools:layout_editor_absoluteX="0dp">
 
@@ -157,15 +156,14 @@
         android:id="@+id/errorRegView"
         android:layout_width="206dp"
         android:layout_height="20dp"
+        android:layout_marginBottom="28dp"
         android:text=""
         android:textAlignment="center"
         android:textColor="#ff0000"
         android:textSize="11dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regButton"
-        app:layout_constraintVertical_bias="0.054" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
