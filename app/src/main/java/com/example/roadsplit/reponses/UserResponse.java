@@ -3,7 +3,7 @@ package com.example.roadsplit.reponses;
 import com.example.roadsplit.model.Reisender;
 
 public class UserResponse {
-        private String message;
+    private String message;
     private Reisender reisender;
 
     public UserResponse() {

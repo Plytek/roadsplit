@@ -100,5 +100,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void reiseText(View view){
+        Intent intent = new Intent(this, DummyPlanungActivity.class);
+        intent.putExtra("user", (new Gson()).toJson(currentUser));
+        startActivity(intent);
+    }
+
 
 }

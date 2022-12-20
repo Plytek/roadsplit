@@ -12,6 +12,7 @@ public class Reise {
 
     private Long id;
     private String name;
+    private String uniquename;
     private boolean ongoing;
     private List<Stop> stops;
 
@@ -25,6 +26,21 @@ public class Reise {
     public Reise(Long id, String name, boolean ongoing, List<Stop> stops) {
         this.id = id;
         this.name = name;
+        this.ongoing = ongoing;
+        this.stops = stops;
+    }
+
+    public Reise(Long id, String name, String uniquename, boolean ongoing, List<Stop> stops) {
+        this.id = id;
+        this.name = name;
+        this.uniquename = uniquename;
+        this.ongoing = ongoing;
+        this.stops = stops;
+    }
+
+    public Reise(String name, String uniquename, boolean ongoing, List<Stop> stops) {
+        this.name = name;
+        this.uniquename = uniquename;
         this.ongoing = ongoing;
         this.stops = stops;
     }
@@ -62,5 +78,13 @@ public class Reise {
 
     public void setStops(List<Stop> stops) {
         this.stops = stops;
+    }
+
+    public String getUniquename() {
+        return uniquename;
+    }
+
+    public void setUniquename(String uniquename) {
+        this.uniquename = uniquename;
     }
 }
