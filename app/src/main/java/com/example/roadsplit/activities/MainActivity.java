@@ -32,8 +32,11 @@ import lombok.Setter;
 @Setter
 public class MainActivity extends AppCompatActivity {
 
+
     private UserAccount userAccount = null;
     public static Reisender currentUser;
+    private static final String BASEURL = "https://825b-88-70-249-101.ngrok.io";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
