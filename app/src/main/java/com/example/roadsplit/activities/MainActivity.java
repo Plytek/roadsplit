@@ -6,9 +6,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.roadsplit.OnSwipeTouchListener;
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 nextActivity(findViewById(R.id.nextButton));
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 
     //Versucht den Nutzer mit dem Uniquename das im Eingabefeld steht aus dem Backend zu holen

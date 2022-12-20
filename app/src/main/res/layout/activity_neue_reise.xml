@@ -39,7 +39,7 @@
         android:layout_height="41dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
-        android:text="Zeit für eine Reise"
+        android:text="Zeit für eine Reise!"
         android:textColor="#2A4B42"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -6,8 +6,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.roadsplit.OnSwipeTouchListener;
 import com.example.roadsplit.R;
@@ -26,6 +28,10 @@ public class TutActivityOne extends AppCompatActivity {
                 next();
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 
     public void back(View view) {

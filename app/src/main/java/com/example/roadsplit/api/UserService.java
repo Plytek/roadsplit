@@ -31,7 +31,7 @@ public class UserService implements Callback{
     {
         OkHttpClient client = new OkHttpClient();
         //Die URL auf dem der Service + angesprochener Endpunkt
-        String url = "https://3080-88-70-249-101.ngrok.io/api/userdaten/user";
+        String url = "https://4896-88-70-249-101.ngrok.io/api/userdaten/user";
         //Das hier auskommentieren für Localhost call durch den Emulator
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
         //Bauen der Url für die Request
