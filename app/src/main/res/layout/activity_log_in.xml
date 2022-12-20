@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF6ED"
+    tools:context=".activities.LogInActivity">
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="508dp"
+        android:layout_height="445dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/wallpapthree" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="297dp"
+        android:layout_height="131dp"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:text="PLANT EUREN EIGENEN TRIP"
+        android:textColor="#FFF6ED"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.194" />
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="84dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.083"
+        app:srcCompat="@drawable/logoround" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutLog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.72"
+        app:passwordToggleEnabled="true"
+        tools:layout_editor_absoluteX="0dp">
+
+        <EditText
+            android:id="@+id/passwordLogView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="50dp"
+            android:background="#FFF6ED"
+            android:fontFamily="@font/cmedium"
+            android:hint="Passwort"
+            android:inputType="textPassword"
+            android:textColor="#2A4B42" />
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:passwordToggleEnabled="false">
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/userLogView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:background="#FFF6ED"
+        android:fontFamily="@font/cmedium"
+        android:hint="Nutzername/E-Mail"
+        android:inputType="text"
+        android:textColor="#2A4B42"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="520dp" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="373dp"
+        android:layout_height="47dp"
+        android:background="@drawable/buttonbackgroundgreen"
+        android:fontFamily="@font/cextrabold"
+        android:onClick="create"
+        android:text="LOGIN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="678dp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="206dp"
+        android:layout_height="20dp"
+        android:text="Passwort vergessen?"
+        android:textAlignment="textStart"
+        android:textColor="#c4c4c4"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="206dp"
+        android:layout_height="20dp"
+        android:text="Registrieren"
+        android:textAlignment="textEnd"
+        android:textColor="#2A4B42"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.848"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5"
+        app:layout_constraintVertical_bias="0.054" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

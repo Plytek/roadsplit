@@ -7,14 +7,15 @@
     android:layout_height="match_parent"
     android:background="#FFF6ED"
     tools:context=".activities.RegistryActivity">
+    <!--TODO:Alle Blöcke insich mit Constraints verbinden für global layout-->
 
     <ImageView
         android:id="@+id/imageView23"
-        android:layout_width="508dp"
-        android:layout_height="445dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="464dp"
+        android:layout_height="418dp"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -35,12 +36,13 @@
         android:id="@+id/logoRegView"
         android:layout_width="84dp"
         android:layout_height="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083"
+        android:layout_marginTop="44dp"
+        app:layout_constraintBottom_toTopOf="@id/textView12"
+        app:layout_constraintEnd_toEndOf="@id/textView12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/textView12"
+        app:layout_constraintTop_toTopOf="@id/imageView23"
+        app:layout_constraintVertical_bias="0.082"
         app:srcCompat="@drawable/logoround" />
 
     <TextView
@@ -52,29 +54,12 @@
         android:text="PLANT EUREN EIGENEN TRIP"
         android:textColor="#FFF6ED"
         android:textSize="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.194" />
-
-    <Button
-        android:id="@+id/regButton"
-        android:layout_width="373dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="100dp"
-        android:background="@drawable/buttonbackgroundgreen"
-        android:fontFamily="@font/cextrabold"
-        android:onClick="create"
-        android:text="REGISTRIEREN"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.421"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/imageView23"
+        app:layout_constraintEnd_toEndOf="@id/imageView23"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@id/imageView23"
+        app:layout_constraintTop_toTopOf="@id/imageView23"
+        app:layout_constraintVertical_bias="0.536" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -82,9 +67,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789"
+        app:layout_constraintBottom_toTopOf="@id/regButton"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout"
+        app:layout_constraintVertical_bias="0.818"
         app:passwordToggleEnabled="true"
         tools:layout_editor_absoluteX="0dp">
 
@@ -101,15 +86,47 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/errorRegView"
+        android:layout_width="206dp"
+        android:layout_height="20dp"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="#ff0000"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/regButton" />
+
+    <Button
+        android:id="@+id/regButton"
+        android:layout_width="373dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/buttonbackgroundgreen"
+        android:fontFamily="@font/cextrabold"
+        android:onClick="create"
+        android:text="REGISTRIEREN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@id/errorRegView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.703"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout4"
         app:passwordToggleEnabled="false"
         tools:layout_editor_absoluteX="0dp">
 
@@ -129,13 +146,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
 
+        android:id="@+id/textInputLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.629"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayout2"
+        app:layout_constraintTop_toBottomOf="@id/imageView23"
+        app:layout_constraintVertical_bias="0.6"
         app:passwordToggleEnabled="false"
         tools:layout_editor_absoluteX="0dp">
 
@@ -151,19 +169,5 @@
             android:textColor="#2A4B42" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/errorRegView"
-        android:layout_width="206dp"
-        android:layout_height="20dp"
-        android:layout_marginBottom="28dp"
-        android:text=""
-        android:textAlignment="center"
-        android:textColor="#ff0000"
-        android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

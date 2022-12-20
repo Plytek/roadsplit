@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private UserAccount userAccount = null;
     public static Reisender currentUser;
-    public static final String BASEURL = "https://825b-88-70-249-101.ngrok.io";
+    public static final String BASEURL = "https://fe3b-88-70-249-101.ngrok.io";
 
 
     @Override
