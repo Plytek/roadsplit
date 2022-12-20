@@ -37,15 +37,18 @@ public class TutActivityOne extends AppCompatActivity {
     public void back(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void next() {
         Intent intent = new Intent(this, TutActivityTwo.class);
         startActivity(intent);
+        finish();
     }
 
     public void next(View view) {
         Intent intent = new Intent(this, TutActivityTwo.class);
         startActivity(intent);
+        finish();
     }
 }

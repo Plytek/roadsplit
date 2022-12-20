@@ -49,11 +49,11 @@ public class RegistryActivity extends AppCompatActivity {
 
         if(username.isEmpty() ||
                 email.isEmpty() ||
-                password.isEmpty() ||
-                !email.contains("@"))
+                password.isEmpty())
         {
-            TextView textView = findViewById(R.id.resultText);
-            textView.setText("fail");
+            TextView textView = findViewById(R.id.errorRegView);
+            String text = "Bitte alle benötigten Daten angeben";
+            textView.setText(text);
             return;
         }
 
@@ -92,5 +92,6 @@ public class RegistryActivity extends AppCompatActivity {
     public void next() {
         Intent intent = new Intent(this, TutActivityOne.class);
         startActivity(intent);
+        finish();
     }
 }

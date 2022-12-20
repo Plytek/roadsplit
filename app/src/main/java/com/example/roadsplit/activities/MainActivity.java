@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
     public void registrieren(View view) {
         Intent intent = new Intent(this, RegistryActivity.class);
         startActivity(intent);
-
     }
 
 

@@ -179,6 +179,7 @@ public class MapActivity extends AppCompatActivity {
     {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+        finish();
     }
 
     public void showFullscreenMap(View view)

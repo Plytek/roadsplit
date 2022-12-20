@@ -40,14 +40,17 @@ public class TutActivityTwo extends AppCompatActivity {
     public void back(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void next(View view) {
         Intent intent = new Intent(this, TutActivityThree.class);
         startActivity(intent);
+        finish();
     }
     public void swipeRight() {
         Intent intent = new Intent(this, TutActivityOne.class);
         startActivity(intent);
+        finish();
     }
 }
