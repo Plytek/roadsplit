@@ -27,6 +27,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".activities.RegistryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.splashScreenActivity"
             android:exported="false">
             <meta-data

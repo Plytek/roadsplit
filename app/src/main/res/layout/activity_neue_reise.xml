@@ -102,8 +102,7 @@
         android:layout_width="206dp"
         android:layout_height="20dp"
         android:text="Probleme beim erstellen einer Reise?"
-        android:textAlignment="center
-"
+        android:textAlignment="center"
         android:textColor="#c4c4c4"
         android:textSize="11dp"
         app:layout_constraintBottom_toBottomOf="parent"
