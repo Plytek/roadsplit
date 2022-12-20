@@ -53,7 +53,7 @@ public class RegistryActivity extends AppCompatActivity {
                 !email.contains("@"))
         {
             TextView textView = findViewById(R.id.resultText);
-            textView.setText("fail");
+              textView.setText("fail");
             return;
         }
 
