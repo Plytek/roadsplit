@@ -4,5 +4,6 @@ public enum AusgabenTyp {
     Unterkunft,
     Verpflegung,
     Transport,
-    Events
+    Events,
+    Unbekannt
 }

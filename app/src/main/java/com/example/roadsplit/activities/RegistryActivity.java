@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 
@@ -72,11 +74,14 @@ public class RegistryActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                TextView textView = findViewById(R.id.errorRegView);
+                String text = "Es konnte keine Verbindung zum Server hergestellt werden";
+                textView.setText(text);
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
+                UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful()) {
                     MainActivity.currentUser = userResponse.getReisender();
                     next();
@@ -89,6 +94,7 @@ public class RegistryActivity extends AppCompatActivity {
 
         });
     }
+
     public void next() {
         Intent intent = new Intent(this, TutActivityOne.class);
         startActivity(intent);

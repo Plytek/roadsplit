@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private UserAccount userAccount = null;
     public static Reisender currentUser;
-    public static final String BASEURL = "https://825b-88-70-249-101.ngrok.io";
+    public static final String BASEURL = "https://fe3b-88-70-249-101.ngrok.io";
 
 
     @Override
@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void registrieren(View view) {
         Intent intent = new Intent(this, RegistryActivity.class);
+        startActivity(intent);
+    }
+
+    public void reiseText(View view){
+        Intent intent = new Intent(this, DummyPlanungActivity.class);
+        intent.putExtra("user", (new Gson()).toJson(currentUser));
         startActivity(intent);
     }
 
