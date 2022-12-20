@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.example.roadsplit.OnSwipeTouchListener;
 import com.example.roadsplit.R;
 import com.example.roadsplit.api.UserService;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.model.UserAccount;
 import com.google.gson.Gson;
@@ -32,6 +33,7 @@ import lombok.Setter;
 public class MainActivity extends AppCompatActivity {
 
     private UserAccount userAccount = null;
+    public static Reisender currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     public void nextActivity(View view) {
         Intent intent = new Intent(this, MapActivity.class);
         //Gibt zusätzliche Daten mit durch .putExtra(Key, Value). In diesem Fall den aktuellen Useraccount als String
-        intent.putExtra("user", (new Gson()).toJson(userAccount));
+        intent.putExtra("user", (new Gson()).toJson(currentUser));
         //Startet die Activity
         startActivity(intent);
     }
@@ -83,7 +85,11 @@ public class MainActivity extends AppCompatActivity {
     public void neueReise(View view) {
         Intent intent = new Intent(this, NeueReiseActivity.class);
         startActivity(intent);
+    }
 
+    public void createUser(View view){
+        Intent intent = new Intent(this, UserCreateActivity.class);
+        startActivity(intent);
     }
 
 }

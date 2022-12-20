@@ -144,12 +144,25 @@
         android:layout_height="wrap_content"
         android:onClick="neueReise"
         android:text="neue reise"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tutorialButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.862" />
+
+    <Button
+        android:id="@+id/createActivityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="createUser"
+        android:text="Create User"
+        app:layout_constraintBottom_toTopOf="@+id/tutorialButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.736" />
+        app:layout_constraintTop_toBottomOf="@+id/neueReiseButton"
+        app:layout_constraintVertical_bias="0.586" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

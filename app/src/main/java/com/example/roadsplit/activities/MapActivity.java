@@ -5,7 +5,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,6 +21,7 @@ import android.widget.LinearLayout;
 
 import com.example.roadsplit.OnSwipeTouchListener;
 import com.example.roadsplit.R;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.model.UserAccount;
 import com.google.gson.Gson;
@@ -39,7 +39,6 @@ import org.osmdroid.views.overlay.Polyline;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -49,13 +48,20 @@ import java.util.concurrent.Executors;
 public class MapActivity extends AppCompatActivity {
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
-    private UserAccount userAccount = null;
+    private Reisender reisender = null;
     private MapView map = null;
     private RoadManager roadManager;
     private List<Address> adressen;
     private List<Stop> stops;
 
-    @SuppressLint("ClickableViewAccessibility")
+/*
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_map, container);
+    }
+*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +69,9 @@ public class MapActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         String userjson = i.getStringExtra("user");
-        this.userAccount = (new Gson()).fromJson(userjson, UserAccount.class);
+        this.reisender = (new Gson()).fromJson(userjson, Reisender.class);
         try {
-            this.stops = userAccount.getReisen().get(0).getStops();
+            this.stops = reisender.getReisen().get(0).getStops();
         } catch (NullPointerException e) {
             Log.d("nulli", e.getMessage());
         }

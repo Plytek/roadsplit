@@ -10,24 +10,20 @@ import lombok.ToString;
 public class UserAccount {
 
     private int id;
-    private String uniquename;
+    private String email;
     private String nickname;
-    private List<Reise> reisen;
+    private String password;
+    private boolean firsttimelogin;
 
     public UserAccount() {
     }
 
-    public UserAccount(int id, String uniquename, String nickname) {
+    public UserAccount(int id, String email, String nickname, String password, boolean firsttimelogin) {
         this.id = id;
-        this.uniquename = uniquename;
+        this.email = email;
         this.nickname = nickname;
-    }
-
-    public UserAccount(int id, String uniquename, String nickname, List<Reise> reisen) {
-        this.id = id;
-        this.uniquename = uniquename;
-        this.nickname = nickname;
-        this.reisen = reisen;
+        this.password = password;
+        this.firsttimelogin = firsttimelogin;
     }
 
     public int getId() {
@@ -38,12 +34,12 @@ public class UserAccount {
         this.id = id;
     }
 
-    public String getUniquename() {
-        return uniquename;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUniquename(String uniquename) {
-        this.uniquename = uniquename;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNickname() {
@@ -54,11 +50,30 @@ public class UserAccount {
         this.nickname = nickname;
     }
 
-    public List<Reise> getReisen() {
-        return reisen;
+    public String getPassword() {
+        return password;
     }
 
-    public void setReisen(List<Reise> reisen) {
-        this.reisen = reisen;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isFirsttimelogin() {
+        return firsttimelogin;
+    }
+
+    public void setFirsttimelogin(boolean firsttimelogin) {
+        this.firsttimelogin = firsttimelogin;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", firsttimelogin=" + firsttimelogin +
+                '}';
     }
 }

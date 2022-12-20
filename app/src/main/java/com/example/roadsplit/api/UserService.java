@@ -55,7 +55,7 @@ public class UserService implements Callback{
 
     @Override
     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-        if(response.isSuccessful())
+       /* if(response.isSuccessful())
         {
             Gson gson = new Gson();
             //Erstellt aus dem als String erhaltenen UserAccount wieder ein für Java benutzbares Objekt her
@@ -88,6 +88,6 @@ public class UserService implements Callback{
                     mainActivity.setUserAccount(user);
                 }
             });
-        }
+        }*/
     }
 }

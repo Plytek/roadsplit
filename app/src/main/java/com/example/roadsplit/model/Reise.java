@@ -12,13 +12,9 @@ public class Reise {
 
     private Long id;
     private String name;
+    private boolean ongoing;
     private List<Stop> stops;
 
-    public Reise(Long id, String name, List<Stop> stops) {
-        this.id = id;
-        this.name = name;
-        this.stops = stops;
-    }
 
     @Override
     public String toString() {
@@ -26,6 +22,15 @@ public class Reise {
     }
 
 
+    public Reise(Long id, String name, boolean ongoing, List<Stop> stops) {
+        this.id = id;
+        this.name = name;
+        this.ongoing = ongoing;
+        this.stops = stops;
+    }
+
+    public Reise() {
+    }
 
     public Long getId() {
         return id;
@@ -41,6 +46,14 @@ public class Reise {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isOngoing() {
+        return ongoing;
+    }
+
+    public void setOngoing(boolean ongoing) {
+        this.ongoing = ongoing;
     }
 
     public List<Stop> getStops() {
