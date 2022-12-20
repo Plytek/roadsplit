@@ -51,8 +51,9 @@ public class RegistryActivity extends AppCompatActivity {
                 email.isEmpty() ||
                 password.isEmpty())
         {
-            TextView textView = findViewById(R.id.resultText);
-            textView.setText("fail");
+            TextView textView = findViewById(R.id.errorRegView);
+            String text = "Bitte alle benötigten Daten angeben";
+            textView.setText(text);
             return;
         }
 
