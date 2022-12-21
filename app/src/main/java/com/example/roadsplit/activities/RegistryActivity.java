@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,7 +39,9 @@ public class RegistryActivity extends AppCompatActivity {
 
     public void create(View view)
     {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(5, TimeUnit.SECONDS)
+                .build();
         String url = MainActivity.BASEURL + "/api/userdaten/user";
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();

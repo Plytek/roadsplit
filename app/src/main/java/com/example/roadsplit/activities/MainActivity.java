@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private UserAccount userAccount = null;
     public static Reisender currentUser;
-    public static final String BASEURL = "https://fe3b-88-70-249-101.ngrok.io";
+    public static final String BASEURL = "https://416a-88-70-249-101.ngrok.io";
 
 
     @Override
@@ -55,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     //Versucht den Nutzer mit dem Uniquename das im Eingabefeld steht aus dem Backend zu holen

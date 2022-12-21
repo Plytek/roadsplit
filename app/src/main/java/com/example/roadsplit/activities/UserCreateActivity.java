@@ -3,6 +3,7 @@ package com.example.roadsplit.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,8 +35,6 @@ import okhttp3.Response;
 
 public class UserCreateActivity extends AppCompatActivity {
 
-    private final String BASEURL = "https://825b-88-70-249-101.ngrok.io";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +45,7 @@ public class UserCreateActivity extends AppCompatActivity {
     public void create(View view)
     {
         OkHttpClient client = new OkHttpClient();
-        String url = BASEURL + "/api/userdaten/user";
+        String url = MainActivity.BASEURL + "/api/userdaten/user";
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
@@ -102,7 +101,7 @@ public class UserCreateActivity extends AppCompatActivity {
     public void login(View view)
     {
         OkHttpClient client = new OkHttpClient();
-        String url = BASEURL + "/api/userdaten/login";
+        String url = MainActivity.BASEURL + "/api/userdaten/login";
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 

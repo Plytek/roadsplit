@@ -88,12 +88,17 @@ public class Stop {
         this.ausgaben = ausgaben;
     }
 
+
     @Override
     public String toString() {
-        return name + '\n';
+        return "Stop{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", budget=" + budget +
+                ", gesamtausgaben=" + gesamtausgaben +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", ausgaben=" + ausgaben +
+                '}';
     }
-
-
-
-
 }

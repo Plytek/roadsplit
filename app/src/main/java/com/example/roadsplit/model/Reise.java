@@ -17,12 +17,6 @@ public class Reise {
     private List<Stop> stops;
 
 
-    @Override
-    public String toString() {
-        return name + '\n';
-    }
-
-
     public Reise(Long id, String name, boolean ongoing, List<Stop> stops) {
         this.id = id;
         this.name = name;
@@ -86,5 +80,16 @@ public class Reise {
 
     public void setUniquename(String uniquename) {
         this.uniquename = uniquename;
+    }
+
+    @Override
+    public String toString() {
+        return "Reise{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", uniquename='" + uniquename + '\'' +
+                ", ongoing=" + ongoing +
+                ", stops=" + stops +
+                '}';
     }
 }
