@@ -9,6 +9,7 @@ import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -45,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
         //Debug.waitForDebugger();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            Intent inti = getIntent();
+            Log.d("Servus", inti.getStringExtra("Servus"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //Setzt einen Listener, der bei einem Linksswipe zur nächsten Activity geht
         ConstraintLayout constraintLayout = findViewById(R.id.mainLayout);
@@ -84,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void neueReise(View view) {
-        Intent intent = new Intent(this, NeueReiseActivity.class);
+        Intent intent = new Intent(this, FurkanTestActivity.class);
         startActivity(intent);
     }
 
