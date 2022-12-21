@@ -21,7 +21,7 @@ public class FurkanTestActivity extends AppCompatActivity {
     public void clickButton(View button) {
         EditText editText = findViewById(R.id.cloudText);
         editText.setText("Hallo");
-//        Button button1 = (Button) button;
+//      Button button1 = (Button) button;
         Button button1 = findViewById(R.id.heavenButton);
         button1.setText("Moin");
     }
@@ -31,6 +31,5 @@ public class FurkanTestActivity extends AppCompatActivity {
         intent.putExtra("Servus", ((EditText) findViewById(R.id.cloudText)).getText().toString());
         startActivity(intent);
         finish();
-
     }
 }

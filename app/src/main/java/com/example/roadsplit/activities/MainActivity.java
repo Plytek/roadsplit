@@ -3,6 +3,7 @@ package com.example.roadsplit.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         //Das hier auszukommentieren damit die App beim starten auf den Debugger wartet
         //Debug.waitForDebugger();
         super.onCreate(savedInstanceState);
@@ -54,26 +54,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //Setzt einen Listener, der bei einem Linksswipe zur nächsten Activity geht
-        ConstraintLayout constraintLayout = findViewById(R.id.mainLayout);
-        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this)
-        {
-            public void onSwipeLeft() {
-                nextActivity(findViewById(R.id.nextButton));
-            }
-        });
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-    }
-
-    //Versucht den Nutzer mit dem Uniquename das im Eingabefeld steht aus dem Backend zu holen
-    public void fetch(View view) {
-        //Neue Instanz des Userservice, übergibt sich für die Callbacks selbst als Activity
-        UserService userService = new UserService(this);
-        EditText v = findViewById(R.id.uniqueNameField);
-        String input = String.valueOf(v.getText());
-        //Wenn der Input nicht leer ist wird der UserService aufgerufen und ausgeführt
-        if(!input.isEmpty()) userService.fetchByUnique(input);
     }
 
     //Startet einen neuen Intent (Activity) - die MapActivity
@@ -92,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void neueReise(View view) {
-        Intent intent = new Intent(this, FurkanTestActivity.class);
+        Intent intent = new Intent(this, NeueReiseActivity.class);
         startActivity(intent);
     }
 
@@ -110,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DummyPlanungActivity.class);
         intent.putExtra("user", (new Gson()).toJson(currentUser));
         startActivity(intent);
+    }
+
+    public void furkanTest(View view){
+        Intent intent = new Intent(this, FurkanTestActivity.class);
+        startActivity(intent);
+
     }
 
 

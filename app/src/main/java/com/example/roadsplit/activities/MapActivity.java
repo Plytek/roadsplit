@@ -81,17 +81,8 @@ public class MapActivity extends AppCompatActivity {
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         Configuration.getInstance().setUserAgentValue("MyOwnUserAgent/1.0");
 
-        LinearLayout linearLayout = findViewById(R.id.mapLayout);
-        linearLayout.setOnTouchListener(new OnSwipeTouchListener(MapActivity.this)
-        {
-            @Override
-            public void onSwipeRight() {
-                back(findViewById(R.id.nextButton));
-            }
-        });
-
         this.roadManager = new OSRMRoadManager(this, Configuration.getInstance().getNormalizedUserAgent());
-        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
+        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_CAR);
 
         map = (MapView) findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
