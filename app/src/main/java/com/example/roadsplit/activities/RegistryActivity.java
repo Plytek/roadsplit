@@ -37,7 +37,7 @@ public class RegistryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registry);
     }
 
-    public void create(View view)
+   // public void create(View view)
     {
         OkHttpClient client = new OkHttpClient.Builder()
                 .readTimeout(5, TimeUnit.SECONDS)
@@ -47,60 +47,60 @@ public class RegistryActivity extends AppCompatActivity {
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
 
-        UserAccount userAccount = new UserAccount();
-        String username = ((EditText)findViewById(R.id.userRegView)).getText().toString();
-        String email = ((EditText)findViewById(R.id.emailRegView)).getText().toString();
-        String password = ((EditText)findViewById(R.id.passwordRegView)).getText().toString();
+        //      UserAccount userAccount = new UserAccount();
+//        String username = ((EditText)findViewById(R.id.userRegView)).getText().toString();
+        //    String email = ((EditText)findViewById(R.id.emailRegView)).getText().toString();
+        //  String password = ((EditText)findViewById(R.id.passwordRegView)).getText().toString();
 
-        if(username.isEmpty() ||
-                email.isEmpty() ||
-                password.isEmpty())
+        //   if(username.isEmpty() ||
+        //    email.isEmpty() ||
+                        //    password.isEmpty())
         {
-            TextView textView = findViewById(R.id.errorRegView);
-            String text = "Bitte alle benötigten Daten angeben";
-            textView.setText(text);
-            return;
+            //  TextView textView = findViewById(R.id.errorRegView);
+            //   String text = "Bitte alle benötigten Daten angeben";
+            //   textView.setText(text);
+            //   return;
         }
 
-        userAccount.setNickname(username);
-        userAccount.setEmail(email);
-        userAccount.setPassword(password);
+        // userAccount.setNickname(username);
+        // userAccount.setEmail(email);
+        //  userAccount.setPassword(password);
 
-        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(userAccount));
+        //  RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(userAccount));
 
-        Request request = new Request.Builder()
-                .url(httpBuilder.build())
-                .post(formBody)
-                .build();
+        //  Request request = new Request.Builder()
+        //    .url(httpBuilder.build())
+        //    .post(formBody)
+        //    .build();
 
         //Erstellt in einem neuen Thread eine Http Anfrage an den Webservice, ruft bei Erfolg onReponse() auf, bei Misserfolg onFailure()
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                TextView textView = findViewById(R.id.errorRegView);
-                String text = "Es konnte keine Verbindung zum Server hergestellt werden";
-                textView.setText(text);
-            }
+        // client.newCall(request).enqueue(new Callback() {
+        //     @Override
+        //     public void onFailure(@NonNull Call call, @NonNull IOException e) {
+        //         TextView textView = findViewById(R.id.errorRegView);
+        //         String text = "Es konnte keine Verbindung zum Server hergestellt werden";
+        //        textView.setText(text);
+        //     }
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
-                if(response.isSuccessful()) {
-                    MainActivity.currentUser = userResponse.getReisender();
-                    next();
-                }
-                else {
-                    TextView textView = findViewById(R.id.errorRegView);
-                    textView.setText(userResponse.getMessage());
+        //    @Override
+        //    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+        //       UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+        //       if(response.isSuccessful()) {
+        //          MainActivity.currentUser = userResponse.getReisender();
+        //         next();
+        //     }
+        //    else {
+        //        TextView textView = findViewById(R.id.errorRegView);
+        //        textView.setText(userResponse.getMessage());
                 }
                 }
 
-        });
-    }
+//        });
+    //}
 
-    public void next() {
-        Intent intent = new Intent(this, TutActivityOne.class);
-        startActivity(intent);
-        finish();
-    }
-}
+    //public void next() {
+    // Intent intent = new Intent(this, TutActivityOne.class);
+    //  startActivity(intent);
+//  finish();
+//  }
+//}
