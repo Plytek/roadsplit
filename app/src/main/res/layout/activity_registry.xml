@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/walltestvek"
-    tools:context=".activities.RegistryActivity">
+    tools:context=".activities.RegistryActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="-11dp">
 
     <TextView
         android:id="@+id/regText"
-        android:layout_width="359dp"
-        android:layout_height="309dp"
+        android:layout_width="372dp"
+        android:layout_height="104dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
+        android:elevation="0.5dp"
+        android:ems="5"
         android:fontFamily="@font/cextrabold"
         android:gravity="center"
         android:text="ERSTELLE DEINE EIGENE REISE."
@@ -21,25 +26,32 @@
         android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintVertical_bias="0.24" />
 
     <EditText
         android:id="@+id/emailRegView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="220dp"
         android:layout_marginEnd="32dp"
-        android:background="#FFF6ED"
+        android:background="@drawable/custom_shape"
+        android:elevation="3dp"
         android:fontFamily="@font/cmedium"
         android:hint="Nutzername"
         android:inputType="textPersonName"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
         android:textColor="#2A4B42"
         android:textColorHint="#2A4B42"
-        android:textSize="14dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="@id/regText"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/regText"
         app:layout_constraintTop_toBottomOf="@+id/regText" />
 
@@ -47,15 +59,21 @@
         android:id="@+id/userRegView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="#FFF6ED"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/custom_shape"
+        android:elevation="3dp"
         android:fontFamily="@font/cmedium"
         android:hint="E-Mail"
         android:inputType="textEmailAddress"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
         android:textColor="#2A4B42"
         android:textColorHint="#2A4B42"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="@id/emailRegView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/emailRegView"
         app:layout_constraintTop_toBottomOf="@id/emailRegView" />
 
@@ -65,8 +83,14 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="74dp"
+        android:layout_marginTop="115dp"
+        android:background="@drawable/custom_shape"
+        android:elevation="3dp"
+        android:textColor="#2A4B42"
+        android:textColorHint="#2A4B42"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="@id/emailRegView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/userRegView"
         app:layout_constraintTop_toBottomOf="@id/emailRegView"
         app:passwordToggleEnabled="true">
@@ -76,12 +100,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
-            android:background="#FFF6ED"
             android:fontFamily="@font/cmedium"
             android:hint="Passwort"
             android:inputType="textEmailAddress"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
             android:textColor="#2A4B42"
-            android:textColorHint="#2A4B42" />
+            android:textColorHint="#2A4B42"
+            android:textSize="20dp"
+            tools:layout_editor_absoluteX="58dp"
+            tools:layout_editor_absoluteY="527dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,12 +118,14 @@
         android:id="@+id/button6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="REGISTRIEREN"
-        android:textSize="16dp"
-        android:textColor="@color/rcreme"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_shape"
         android:fontFamily="@font/cextrabold"
-        android:background="@color/rdarkgreen"
+        android:text="REGISTRIEREN"
+        android:textColor="@color/rcreme"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@id/textInputLayoutPassword"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/textInputLayoutPassword"
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutPassword" />
 
@@ -103,6 +134,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:elevation="5dp"
         android:gravity="center"
         android:text="Ich habe bereits einen Account."
         android:textColor="#c4c4c4"
@@ -115,9 +147,23 @@
         android:id="@+id/errorRegView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="199dp"
-        tools:layout_editor_absoluteY="416dp" />
+        android:layout_marginTop="4dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@id/textView18"
+        app:layout_constraintStart_toStartOf="@id/textView18"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+    <ImageView
+        android:id="@+id/imageView20"
+        android:layout_width="107dp"
+        android:layout_height="96dp"
+        app:layout_constraintBottom_toTopOf="@id/regText"
+        app:layout_constraintEnd_toEndOf="@id/regText"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@id/regText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/cremelogo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

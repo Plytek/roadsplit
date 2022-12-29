@@ -1,31 +1,18 @@
 package com.example.roadsplit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 
-import com.example.roadsplit.OnSwipeTouchListener;
 import com.example.roadsplit.R;
-import com.example.roadsplit.api.UserService;
 import com.example.roadsplit.model.Reisender;
-import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.model.UserAccount;
 import com.google.gson.Gson;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -66,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void tutorial(View view) {
-        Intent intent = new Intent(this, TutActivityOne.class);
-        startActivity(intent);
-
-    }
-
     public void neueReise(View view) {
         Intent intent = new Intent(this, NeueReiseActivity.class);
         startActivity(intent);
@@ -99,5 +80,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void turorialAnim(View view){
+        Intent intent = new Intent(this, MainActivity3.class);
+        startActivity(intent);
 
+    }
+
+    public void testScreen(View view) {
+        Intent intent = new Intent(this, NeueTestActivity.class);
+        startActivity(intent);
+    }
 }
