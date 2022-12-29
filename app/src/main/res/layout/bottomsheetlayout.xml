@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintbottomsheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialogbg"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textViewBeitreten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Einer Reise beitreten?"
+        android:textColor="#2A4B42"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.313" />
+
+    <TextView
+        android:id="@+id/intro_description"
+        android:layout_width="346dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="560dp"
+        android:lineSpacingExtra="16dp"
+        android:text="Bitte deine(n) Freund(in) um den Sharing-PIN."
+        android:textAlignment="center"
+        android:textColor="#c4c4c4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/textViewBeitreten"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@id/textViewBeitreten" />
+
+    <EditText
+        android:id="@+id/sharingPin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="100dp"
+        android:background="@drawable/customshapetwo"
+        android:elevation="3dp"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:hint="SHARING-PIN"
+        android:inputType="number"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:textColor="#c4c4c4"
+        android:textColorHint="#c4c4c4"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="@id/intro_description"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/intro_description"
+        tools:layout_editor_absoluteY="344dp" />
+
+    <ImageView
+        android:id="@+id/canvasbottomslide"
+        android:layout_width="411dp"
+        android:layout_height="261dp"
+        app:layout_constraintEnd_toEndOf="@id/textViewBeitreten"
+        app:layout_constraintStart_toStartOf="@id/textViewBeitreten"
+        app:layout_constraintTop_toTopOf="parent
+"
+        app:srcCompat="@drawable/bottomsheetcanvas" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="54dp"
+        android:layout_height="11dp"
+        app:srcCompat="@drawable/shapedialogbottom"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/canvasbottomslide"
+        app:layout_constraintEnd_toEndOf="@id/canvasbottomslide"/>
+
+    <Button
+        android:id="@+id/reiseBeitretenSlide"
+        android:layout_width="209dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="408dp"
+        android:background="@drawable/lightgreenbutton"
+        android:elevation="3dp"
+        android:fontFamily="@font/cextrabold"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:text="REISE ERSTELLEN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/sharingPin"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="@id/sharingPin" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Reisender;
@@ -102,4 +103,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
+
+    public void reiseErstelen(View view){
+        Intent intent = new Intent(this, ReiseErstellenActivity.class);
+        startActivity(intent);
+    }
+
 }

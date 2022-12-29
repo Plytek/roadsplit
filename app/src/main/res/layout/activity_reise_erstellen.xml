@@ -22,6 +22,7 @@
         android:id="@+id/imageView17"
         android:layout_width="131dp"
         android:layout_height="20dp"
+        android:layout_marginStart="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.057"
@@ -34,6 +35,7 @@
         android:id="@+id/textView10"
         android:layout_width="247dp"
         android:layout_height="92dp"
+        android:layout_marginStart="45dp"
         android:fontFamily="@font/cextrabold"
         android:gravity="center"
         android:text="NEUE REISE ANLEGEN"
@@ -56,20 +58,18 @@
         android:text="Gib deiner Reise einen Namen."
         android:textColor="#2A4B42"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@id/startOrt"
+        app:layout_constraintBottom_toTopOf="@id/reiseName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.953" />
+        app:layout_constraintTop_toBottomOf="@id/textView10"
+        app:layout_constraintVertical_bias="0.829" />
 
     <EditText
-        android:id="@+id/startOrt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/reiseName"
+        android:layout_width="327dp"
+        android:layout_height="46dp"
         android:layout_marginVertical="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="48dp"
         android:background="@drawable/customshapetwo"
         android:elevation="3dp"
         android:fontFamily="@font/cmedium"
@@ -82,32 +82,31 @@
         android:textColor="#c4c4c4"
         android:textColorHint="#c4c4c4"
         android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/textView8"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/textView8"
         tools:layout_editor_absoluteY="241dp" />
 
     <TextView
-        android:id="@+id/errorReiseName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/errorStartingPoint"
+        android:layout_width="326dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="160dp"
         android:elevation="5dp"
         android:gravity="center"
-        android:text="Bitte gebe eine E-Mail ein."
+        android:text="Bitte gebe einen Start"
         android:textColor="@color/red"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/startOrt"
-        app:layout_constraintStart_toStartOf="@id/startOrt"
-        app:layout_constraintTop_toBottomOf="@id/startOrt" />
+        app:layout_constraintEnd_toEndOf="@id/reiseName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/startingPoint"
+        app:layout_constraintTop_toBottomOf="@id/startingPoint" />
 
     <EditText
-        android:id="@+id/reiseName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/startingPoint"
+        android:layout_width="327dp"
+        android:layout_height="46dp"
         android:layout_marginVertical="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="48dp"
         android:background="@drawable/customshapetwo"
         android:elevation="3dp"
         android:fontFamily="@font/cmedium"
@@ -120,41 +119,41 @@
         android:textColor="#c4c4c4"
         android:textColorHint="#c4c4c4"
         android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="351dp" />
-
-    <TextView
-        android:id="@+id/errorStartOrt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:text="Bitte gebe eine E-Mail ein."
-        android:textColor="@color/red"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/reiseName"
-        app:layout_constraintStart_toStartOf="@id/reiseName"
-        app:layout_constraintTop_toBottomOf="@id/reiseName" />
+        app:layout_constraintEnd_toEndOf="@id/textView9"
+        app:layout_constraintHorizontal_bias="0.012"
+        app:layout_constraintStart_toStartOf="@id/textView9"
+        tools:layout_editor_absoluteY="340dp" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Wo möchtest du Starten?"
         android:textColor="#2A4B42"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@id/reiseName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.062"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintBottom_toTopOf="@id/startingPoint"
+        app:layout_constraintEnd_toEndOf="@id/reiseName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/reiseName"
+        app:layout_constraintTop_toBottomOf="@id/reiseName"
+        app:layout_constraintVertical_bias="0.964" />
+
+    <TextView
+        android:id="@+id/errorReiseName"
+        android:layout_width="326dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="160dp"
+        android:elevation="5dp"
+        android:gravity="left"
+        android:text="Bitte gebe eine E-Mail ein."
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/reiseName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/reiseName"
+        app:layout_constraintTop_toBottomOf="@id/reiseName" />
 
     <EditText
         android:id="@+id/datumChoose"
@@ -236,11 +235,9 @@
 
     <EditText
         android:id="@+id/stopName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="327dp"
+        android:layout_height="46dp"
         android:layout_marginVertical="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="48dp"
         android:background="@drawable/customshapetwo"
         android:elevation="3dp"
         android:fontFamily="@font/cmedium"
@@ -253,9 +250,9 @@
         android:textColor="#c4c4c4"
         android:textColorHint="#c4c4c4"
         android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/textView13"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/textView13"
         tools:layout_editor_absoluteY="455dp" />
 
     <TextView
@@ -276,12 +273,15 @@
         app:layout_constraintVertical_bias="0.983" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/logodark"
         android:layout_width="96dp"
         android:layout_height="86dp"
-        app:srcCompat="@drawable/rdarklogo"
-        tools:layout_editor_absoluteX="284dp"
-        tools:layout_editor_absoluteY="85dp" />
+        android:layout_marginEnd="55dp"
+        app:layout_constraintBottom_toBottomOf="@id/textView10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView10"
+        app:layout_constraintTop_toTopOf="@id/textView10"
+        app:srcCompat="@drawable/rdarklogo" />
 
     <ListView
         android:id="@+id/stopList"
