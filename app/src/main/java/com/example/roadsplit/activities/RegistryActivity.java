@@ -31,11 +31,12 @@ public class RegistryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry);
-
+        findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
     }
 
     public void create(View view)
     {
+        findViewById(R.id.registerProgressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.errorNickname).setVisibility(View.INVISIBLE);
         findViewById(R.id.errorPassword).setVisibility(View.INVISIBLE);
         findViewById(R.id.erroremail).setVisibility(View.INVISIBLE);
@@ -49,7 +50,11 @@ public class RegistryActivity extends AppCompatActivity {
         String email = ((EditText)findViewById(R.id.emailRegView)).getText().toString();
         String password = ((EditText)findViewById(R.id.passRegView)).getText().toString();
 
-        if(!areInputsValid(username, password, email)) return;
+        if(!areInputsValid(username, password, email))
+        {
+            findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
+            return;
+        }
 
         userAccount.setNickname(username);
         userAccount.setEmail(email);
@@ -74,7 +79,9 @@ public class RegistryActivity extends AppCompatActivity {
                 UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful())
                 {
+                    findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
                     toLogin();
+                    return;
                 }
                 String message = userResponse.getMessage();
                 if(message.contains("Passwort"))
@@ -104,6 +111,7 @@ public class RegistryActivity extends AppCompatActivity {
                         textView.setText(message);
                     });
                 }
+                findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -117,31 +125,32 @@ public class RegistryActivity extends AppCompatActivity {
     }
 
     public boolean areInputsValid(String username, String password, String email) {
+        boolean ok = true;
         if (username.isEmpty()) {
             findViewById(R.id.errorNickname).setVisibility(View.VISIBLE);
-            return false;
+            ok = false;
         }
         if (password.isEmpty()) {
             findViewById(R.id.errorPassword).setVisibility(View.VISIBLE);
-            return false;
+            ok = false;
         }
         if (email.isEmpty()) {
             findViewById(R.id.erroremail).setVisibility(View.VISIBLE);
-            return false;
+            ok = false;
         }
         if (!email.contains("@")) {
             TextView textView = findViewById(R.id.erroremail);
             textView.setVisibility(View.VISIBLE);
             textView.setText("Keine gültige Email");
-            return false;
+            ok = false;
         }
         if(username.contains("@")) {
             TextView textView = findViewById(R.id.errorNickname);
             textView.setVisibility(View.VISIBLE);
             textView.setText("Name darf kein @ enthalten");
-            return false;
+            ok = false;
         }
-        return true;
+        return ok;
     }
 
 }

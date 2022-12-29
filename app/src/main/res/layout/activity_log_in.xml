@@ -197,7 +197,7 @@
             app:srcCompat="@drawable/cremelogo" />
 
         <ProgressBar
-            android:id="@+id/progressBar3"
+            android:id="@+id/loginProgressBar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -87,6 +87,7 @@
         android:layout_marginBottom="208dp"
         android:background="@drawable/buttonbackgroundgreen"
         android:fontFamily="@font/cextrabold"
+        android:onClick="reiseErstellen"
         android:text="REISE ERSTELLEN"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -109,15 +110,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
+        app:layout_constraintTop_toBottomOf="@+id/reiseBeitretenButton"
         app:layout_constraintVertical_bias="0.054" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/reiseBeitretenButton"
         android:layout_width="209dp"
         android:layout_height="55dp"
         android:background="@drawable/buttonbackgroundgreen"
         android:fontFamily="@font/cextrabold"
+        android:onClick="reiseBeitreten"
         android:shadowRadius="@integer/material_motion_duration_long_1"
         android:text="REISE BEITRETEN"
         android:textAlignment="center"

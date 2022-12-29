@@ -37,6 +37,7 @@ public class LogInActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent.getStringExtra("registered") != null)
             Toast.makeText(this, "Account erfolgreich registriert!", Toast.LENGTH_LONG).show();
+        findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
     }
 
     public void register(View view)
@@ -48,6 +49,7 @@ public class LogInActivity extends AppCompatActivity {
 
     public void realLogin(View view)
     {
+        findViewById(R.id.loginProgressBar).setVisibility(View.VISIBLE);
        findViewById(R.id.erroremail).setVisibility(View.INVISIBLE);
        findViewById(R.id.errorPassword).setVisibility(View.INVISIBLE);
 
@@ -61,15 +63,19 @@ public class LogInActivity extends AppCompatActivity {
         String username = ((EditText)findViewById(R.id.emailLogView)).getText().toString();
         String password = ((EditText)findViewById(R.id.passLogView)).getText().toString();
 
+        boolean ok = true;
         if(username.isEmpty()){
             findViewById(R.id.erroremail).setVisibility(View.VISIBLE);
-            return;
+            findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
+            ok = false;
         }
         if(password.isEmpty())
         {
             findViewById(R.id.errorPassword).setVisibility(View.VISIBLE);
-            return;
+            findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
+            ok = false;
         }
+        if(!ok) return;
 
         userAccount.setNickname(username);
         userAccount.setPassword(password);
@@ -94,6 +100,7 @@ public class LogInActivity extends AppCompatActivity {
                 {
                     MainActivity.currentUser = userResponse.getReisender();
                     Log.d("currentuser", MainActivity.currentUser.toString());
+                    findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
                     success();
                     return;
                 }
@@ -116,9 +123,8 @@ public class LogInActivity extends AppCompatActivity {
                         textView.setVisibility(View.VISIBLE);
                         textView.setText(message);
                     });
-
                 }
-                //textView.setText(text);
+                findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
             }
         });
     }
