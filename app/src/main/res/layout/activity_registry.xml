@@ -216,15 +216,16 @@
 
     <TextView
         android:id="@+id/errorPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="155dp"
+        android:layout_width="345dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="4dp"
         android:elevation="5dp"
         android:gravity="center"
-        android:text="Bitte gebe ein Passwort ein."
+        android:text="Das Passwort muss zwischen 5 und 30 Zeichen haben."
         android:textColor="@color/red"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@id/textInputLayoutPassword"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="@id/textInputLayoutPassword"
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutPassword" />
 
