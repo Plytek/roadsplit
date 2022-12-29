@@ -46,9 +46,7 @@ public class UserCreateActivity extends AppCompatActivity {
     {
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/userdaten/user";
-        //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-
 
         UserAccount userAccount = new UserAccount();
         String username = ((EditText)findViewById(R.id.nameText)).getText().toString();

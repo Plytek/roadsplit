@@ -97,7 +97,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/passsLogView"
+                android:id="@+id/passLogView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
@@ -117,12 +117,13 @@
 
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/plsloginButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:background="@color/rcreme"
             android:fontFamily="@font/cextrabold"
+            android:onClick="realLogin"
             android:text="EINLOGGEN"
             android:textColor="@color/rdarkgreen"
             android:textSize="20dp"
@@ -138,12 +139,13 @@
             android:layout_marginTop="10dp"
             android:elevation="5dp"
             android:gravity="center"
+            android:onClick="register"
             android:text="Einen Account erstellen."
             android:textColor="#c4c4c4"
-            app:layout_constraintEnd_toEndOf="@id/button6"
+            app:layout_constraintEnd_toEndOf="@id/plsloginButton"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/button6"
-            app:layout_constraintTop_toBottomOf="@id/button6" />
+            app:layout_constraintStart_toStartOf="@id/plsloginButton"
+            app:layout_constraintTop_toBottomOf="@id/plsloginButton" />
 
         <TextView
             android:id="@+id/errorRegView"

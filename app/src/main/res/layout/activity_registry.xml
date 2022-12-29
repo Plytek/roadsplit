@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.852" />
 
     <EditText
-        android:id="@+id/emailRegView"
+        android:id="@+id/userRegView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="50dp"
@@ -86,14 +86,14 @@
         android:textColor="#2A4B42"
         android:textColorHint="#2A4B42"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@id/emailRegView"
+        app:layout_constraintEnd_toEndOf="@id/userRegView"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/userRegView"
+        app:layout_constraintStart_toStartOf="@id/emailRegView"
         app:layout_constraintTop_toBottomOf="@id/guideline3"
         app:passwordToggleEnabled="true">
 
         <EditText
-            android:id="@+id/passsRegView"
+            android:id="@+id/passRegView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
@@ -112,7 +112,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
-        android:id="@+id/userRegView"
+        android:id="@+id/emailRegView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -128,20 +128,21 @@
         android:textColor="#2A4B42"
         android:textColorHint="#2A4B42"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@id/emailRegView"
+        app:layout_constraintEnd_toEndOf="@id/userRegView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintBottom_toTopOf="@id/guideline3"
         app:layout_constraintTop_toTopOf="@id/guideline3"
-        app:layout_constraintStart_toStartOf="@id/emailRegView"
-        app:layout_constraintTop_toBottomOf="@id/emailRegView" />
+        app:layout_constraintStart_toStartOf="@id/userRegView"
+        app:layout_constraintTop_toBottomOf="@id/userRegView" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/realLoginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:background="@color/rcreme"
         android:fontFamily="@font/cextrabold"
+        android:onClick="create"
         android:text="REGISTRIEREN"
         android:textColor="@color/rdarkgreen"
         android:textSize="20dp"
@@ -159,10 +160,10 @@
         android:gravity="center"
         android:text="Ich habe bereits einen Account."
         android:textColor="#c4c4c4"
-        app:layout_constraintEnd_toEndOf="@id/button6"
+        app:layout_constraintEnd_toEndOf="@id/realLoginButton"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/button6"
-        app:layout_constraintTop_toBottomOf="@id/button6" />
+        app:layout_constraintStart_toStartOf="@id/realLoginButton"
+        app:layout_constraintTop_toBottomOf="@id/realLoginButton" />
 
     <TextView
         android:id="@+id/errorRegView"
@@ -195,9 +196,9 @@
         android:text="Bitte gebe einen Nutzernamen ein."
         android:textColor="@color/red"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/emailRegView"
-        app:layout_constraintStart_toStartOf="@id/emailRegView"
-        app:layout_constraintTop_toBottomOf="@id/emailRegView" />
+        app:layout_constraintEnd_toEndOf="@id/userRegView"
+        app:layout_constraintStart_toStartOf="@id/userRegView"
+        app:layout_constraintTop_toBottomOf="@id/userRegView" />
 
     <TextView
         android:id="@+id/erroremail"
@@ -209,9 +210,9 @@
         android:text="Bitte gebe eine E-Mail ein."
         android:textColor="@color/red"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/userRegView"
-        app:layout_constraintStart_toStartOf="@id/userRegView"
-        app:layout_constraintTop_toBottomOf="@id/userRegView" />
+        app:layout_constraintEnd_toEndOf="@id/emailRegView"
+        app:layout_constraintStart_toStartOf="@id/emailRegView"
+        app:layout_constraintTop_toBottomOf="@id/emailRegView" />
 
     <TextView
         android:id="@+id/errorPassword"

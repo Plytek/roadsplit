@@ -1,6 +1,7 @@
 package com.example.roadsplit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private UserAccount userAccount = null;
     public static Reisender currentUser;
-    public static final String BASEURL = "https://416a-88-70-249-101.ngrok.io";
+    public static final String BASEURL = "https://4435-88-70-249-101.ngrok.io";
 
 
     @Override
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        RecyclerView.ItemDecoration itemDecoration;
+
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }

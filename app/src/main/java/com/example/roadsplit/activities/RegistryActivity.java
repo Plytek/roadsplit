@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,10 +13,8 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,72 +31,117 @@ public class RegistryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry);
+
     }
 
-   // public void create(View view)
+    public void create(View view)
     {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(5, TimeUnit.SECONDS)
-                .build();
+        findViewById(R.id.errorNickname).setVisibility(View.INVISIBLE);
+        findViewById(R.id.errorPassword).setVisibility(View.INVISIBLE);
+        findViewById(R.id.erroremail).setVisibility(View.INVISIBLE);
+
+        OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/userdaten/user";
-        //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
+        UserAccount userAccount = new UserAccount();
+        String username = ((EditText)findViewById(R.id.userRegView)).getText().toString();
+        String email = ((EditText)findViewById(R.id.emailRegView)).getText().toString();
+        String password = ((EditText)findViewById(R.id.passRegView)).getText().toString();
 
-        //      UserAccount userAccount = new UserAccount();
-//        String username = ((EditText)findViewById(R.id.userRegView)).getText().toString();
-        //    String email = ((EditText)findViewById(R.id.emailRegView)).getText().toString();
-        //  String password = ((EditText)findViewById(R.id.passwordRegView)).getText().toString();
+        if(!areInputsValid(username, password, email)) return;
 
-        //   if(username.isEmpty() ||
-        //    email.isEmpty() ||
-                        //    password.isEmpty())
-        {
-            //  TextView textView = findViewById(R.id.errorRegView);
-            //   String text = "Bitte alle benötigten Daten angeben";
-            //   textView.setText(text);
-            //   return;
-        }
+        userAccount.setNickname(username);
+        userAccount.setEmail(email);
+        userAccount.setPassword(password);
+        userAccount.setFirsttimelogin(true);
 
-        // userAccount.setNickname(username);
-        // userAccount.setEmail(email);
-        //  userAccount.setPassword(password);
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(userAccount));
 
-        //  RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(userAccount));
-
-        //  Request request = new Request.Builder()
-        //    .url(httpBuilder.build())
-        //    .post(formBody)
-        //    .build();
+        Request request = new Request.Builder()
+                .url(httpBuilder.build())
+                .post(formBody)
+                .build();
 
         //Erstellt in einem neuen Thread eine Http Anfrage an den Webservice, ruft bei Erfolg onReponse() auf, bei Misserfolg onFailure()
-        // client.newCall(request).enqueue(new Callback() {
-        //     @Override
-        //     public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        //         TextView textView = findViewById(R.id.errorRegView);
-        //         String text = "Es konnte keine Verbindung zum Server hergestellt werden";
-        //        textView.setText(text);
-        //     }
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
 
-        //    @Override
-        //    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-        //       UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
-        //       if(response.isSuccessful()) {
-        //          MainActivity.currentUser = userResponse.getReisender();
-        //         next();
-        //     }
-        //    else {
-        //        TextView textView = findViewById(R.id.errorRegView);
-        //        textView.setText(userResponse.getMessage());
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
+                if(response.isSuccessful())
+                {
+                    toLogin();
                 }
+                String message = userResponse.getMessage();
+                if(message.contains("Passwort"))
+                {
+                    runOnUiThread(() -> {
+                        TextView textView;
+                        textView = findViewById(R.id.errorPassword);
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(message);
+                    });
                 }
+                if(message.contains("Name"))
+                {
+                    runOnUiThread(() -> {
+                        TextView textView;
+                        textView = findViewById(R.id.errorNickname);
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(message);
+                    });
+                }
+                if(message.contains("Email"))
+                {
+                    runOnUiThread(() -> {
+                        TextView textView;
+                        textView = findViewById(R.id.erroremail);
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(message);
+                    });
+                }
+            }
+        });
+    }
 
-//        });
-    //}
+    public void toLogin()
+    {
+        Intent intent = new Intent(this, LogInActivity.class);
+        intent.putExtra("registered", "success");
+        startActivity(intent);
+        finish();
+    }
 
-    //public void next() {
-    // Intent intent = new Intent(this, TutActivityOne.class);
-    //  startActivity(intent);
-//  finish();
-//  }
-//}
+    public boolean areInputsValid(String username, String password, String email) {
+        if (username.isEmpty()) {
+            findViewById(R.id.errorNickname).setVisibility(View.VISIBLE);
+            return false;
+        }
+        if (password.isEmpty()) {
+            findViewById(R.id.errorPassword).setVisibility(View.VISIBLE);
+            return false;
+        }
+        if (email.isEmpty()) {
+            findViewById(R.id.erroremail).setVisibility(View.VISIBLE);
+            return false;
+        }
+        if (!email.contains("@")) {
+            TextView textView = findViewById(R.id.erroremail);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText("Keine gültige Email");
+            return false;
+        }
+        if(username.contains("@")) {
+            TextView textView = findViewById(R.id.errorNickname);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText("Name darf kein @ enthalten");
+            return false;
+        }
+        return true;
+    }
+
+}
