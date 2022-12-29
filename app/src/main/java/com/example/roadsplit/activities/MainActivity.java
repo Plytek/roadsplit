@@ -83,11 +83,15 @@ public class MainActivity extends AppCompatActivity {
     public void turorialAnim(View view){
         Intent intent = new Intent(this, MainActivity3.class);
         startActivity(intent);
-
     }
 
     public void testScreen(View view) {
         Intent intent = new Intent(this, NeueTestActivity.class);
+        startActivity(intent);
+    }
+
+    public void smooveTut(View view){
+        Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
     }
 }

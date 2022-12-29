@@ -47,11 +47,11 @@ public class IntroViewPagerAdapter extends PagerAdapter {
                 break;
         }*/
 
-        View layoutScreen = inflater.inflate(R.layout.intro_layout,null);
+        View layoutScreen = inflater.inflate(R.layout.layout_screen,null);
 
-        ImageView imgSlide = layoutScreen.findViewById(R.id.tutImage);
-        TextView title = layoutScreen.findViewById(R.id.tutTitle);
-        TextView description = layoutScreen.findViewById(R.id.tutDescription);
+        ImageView imgSlide = layoutScreen.findViewById(R.id.intro_img);
+        TextView title = layoutScreen.findViewById(R.id.intro_title);
+        TextView description = layoutScreen.findViewById(R.id.intro_description);
 
         title.setText(mListScreen.get(position).getTitle());
         description.setText(mListScreen.get(position).getDescription());

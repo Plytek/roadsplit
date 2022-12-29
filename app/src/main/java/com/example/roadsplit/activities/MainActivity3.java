@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.roadsplit.IntroViewPagerAdapter;
 import com.example.roadsplit.R;
-import com.example.roadsplit.ScreenItem;
+import com.example.roadsplit.helperclasses.ScreenItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class MainActivity3 extends AppCompatActivity {
 
         // setup viewpager
         screenPager =findViewById(R.id.screen_viewpager);
-        introViewPagerAdapter = new IntroViewPagerAdapter(this,mList);
+        introViewPagerAdapter = new IntroViewPagerAdapter(this, mList);
         screenPager.setAdapter(introViewPagerAdapter);
 
         // setup tablayout with viewpager
