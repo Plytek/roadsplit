@@ -94,4 +94,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
     }
+
+    public void einloggen(View view){
+        Intent intent = new Intent(this, LogInActivity.class);
+        startActivity(intent);
+    }
 }
