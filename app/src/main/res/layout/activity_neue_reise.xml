@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.11"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092"
+        app:layout_constraintVertical_bias="0.087"
         app:srcCompat="@drawable/greenbar" />
 
     <ImageView
@@ -70,7 +70,7 @@
         android:layout_height="73dp"
         android:fontFamily="@font/cextrabold"
         android:gravity="center"
-        android:text="NEUE REISE ANLEGEN"
+        android:text="WAS GEHT , LENNART?"
         android:textColor="#2A4B42"
         android:textSize="34dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +78,7 @@
         app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063" />
+        app:layout_constraintVertical_bias="0.064" />
 
     <Button
         android:id="@+id/button3"
