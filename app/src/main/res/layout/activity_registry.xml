@@ -186,6 +186,48 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cremelogo" />
 
+    <TextView
+        android:id="@+id/errorNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:text="Bitte gebe einen Nutzernamen ein."
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/emailRegView"
+        app:layout_constraintStart_toStartOf="@id/emailRegView"
+        app:layout_constraintTop_toBottomOf="@id/emailRegView" />
+
+    <TextView
+        android:id="@+id/erroremail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:text="Bitte gebe eine E-Mail ein."
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/userRegView"
+        app:layout_constraintStart_toStartOf="@id/userRegView"
+        app:layout_constraintTop_toBottomOf="@id/userRegView" />
+
+    <TextView
+        android:id="@+id/errorPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="155dp"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:text="Bitte gebe ein Passwort ein."
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/textInputLayoutPassword"
+        app:layout_constraintStart_toStartOf="@id/textInputLayoutPassword"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutPassword" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView
