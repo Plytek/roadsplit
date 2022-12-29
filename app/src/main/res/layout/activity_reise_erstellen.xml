@@ -87,6 +87,20 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="241dp" />
 
+    <TextView
+        android:id="@+id/errorReiseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:text="Bitte gebe eine E-Mail ein."
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/startOrt"
+        app:layout_constraintStart_toStartOf="@id/startOrt"
+        app:layout_constraintTop_toBottomOf="@id/startOrt" />
+
     <EditText
         android:id="@+id/reiseName"
         android:layout_width="0dp"
@@ -110,6 +124,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="351dp" />
+
+    <TextView
+        android:id="@+id/errorStartOrt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:text="Bitte gebe eine E-Mail ein."
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/reiseName"
+        app:layout_constraintStart_toStartOf="@id/reiseName"
+        app:layout_constraintTop_toBottomOf="@id/reiseName" />
 
     <TextView
         android:id="@+id/textView9"
@@ -237,7 +265,7 @@
         android:layout_marginStart="6dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
-        android:text="Wo möchtest du Starten?"
+        android:text="Zwischenstopps?"
         android:textColor="#2A4B42"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@id/stopName"
