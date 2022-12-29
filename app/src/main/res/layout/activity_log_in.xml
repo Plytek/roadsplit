@@ -51,7 +51,7 @@
             app:layout_constraintVertical_bias="0.852" />
 
         <EditText
-            android:id="@+id/emailRegView"
+            android:id="@+id/emailLogView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="50dp"
@@ -88,16 +88,16 @@
             android:textColorHint="#2A4B42"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@id/guideline3"
-            app:layout_constraintEnd_toEndOf="@id/emailRegView"
+            app:layout_constraintEnd_toEndOf="@id/emailLogView"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/emailRegView"
-            app:layout_constraintTop_toBottomOf="@id/emailRegView"
+            app:layout_constraintStart_toStartOf="@id/emailLogView"
+            app:layout_constraintTop_toBottomOf="@id/emailLogView"
             app:layout_constraintTop_toTopOf="@id/guideline3"
             app:layout_constraintVertical_bias="0.532"
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/passsRegView"
+                android:id="@+id/passsLogView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
@@ -154,6 +154,34 @@
             app:layout_constraintEnd_toEndOf="@id/textView18"
             app:layout_constraintStart_toStartOf="@id/textView18"
             app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+        <TextView
+            android:id="@+id/errorPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="155dp"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:text="Bitte gebe ein Passwort ein."
+            android:textColor="@color/red"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/textInputLayoutPassword"
+            app:layout_constraintStart_toStartOf="@id/textInputLayoutPassword"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayoutPassword" />
+
+        <TextView
+            android:id="@+id/erroremail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:text="Bitte gebe eine E-Mail ein."
+            android:textColor="@color/red"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/emailLogView"
+            app:layout_constraintStart_toStartOf="@id/emailLogView"
+            app:layout_constraintTop_toBottomOf="@id/emailLogView" />
 
         <ImageView
             android:id="@+id/imageView20"
