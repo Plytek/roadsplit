@@ -3,6 +3,7 @@ package com.example.roadsplit.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
@@ -57,7 +58,7 @@ public class NeueTestActivity extends AppCompatActivity{
         names = new ArrayList<>();
 
         ListView listView = findViewById(R.id.stopList);
-        adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, names);
         listView.setAdapter(adapter);
 
@@ -146,6 +147,8 @@ public class NeueTestActivity extends AppCompatActivity{
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
+                    MainActivity.currentUser = reiseReponse.getReisender();
+                    reiseSuccess(reiseReponse.getReise().getUniquename());
                     Looper.prepare();
                     Toast.makeText(NeueTestActivity.this, reiseReponse.getReise().toString(), Toast.LENGTH_LONG).show();
                 }
@@ -156,5 +159,13 @@ public class NeueTestActivity extends AppCompatActivity{
             }
 
         });
+    }
+
+    private void reiseSuccess(String id)
+    {
+        Intent intent = new Intent(this, ReiseSuccessDummy.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
+        finish();
     }
 }
