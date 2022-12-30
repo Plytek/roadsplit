@@ -3,6 +3,9 @@ package com.example.roadsplit.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -112,6 +115,19 @@ public class DummyPlanungActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    public void copyToClipboard(View view){
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("test",
+                ((EditText)findViewById(R.id.reiseNameText)).getText().toString());
+        clipboard.setPrimaryClip(clip);
+    }
+
+    public void paste(View view){
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = clipboard.getPrimaryClip();
+        ((EditText)findViewById(R.id.stopNameText)).setText(clip.getItemAt(0).getText().toString());
     }
 
     public void join(View view)
