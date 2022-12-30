@@ -165,9 +165,10 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     public void reject(View view){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             view.performHapticFeedback(HapticFeedbackConstants.REJECT);
-        }
+        }*/
+        view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
 
     public void confirm(View view){

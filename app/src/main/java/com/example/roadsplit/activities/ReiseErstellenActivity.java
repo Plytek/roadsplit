@@ -62,6 +62,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, names);
         listView.setAdapter(adapter);
+        currentReise = new Reise();
 
     }
 
@@ -73,6 +74,8 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         if (reisender.getReisen() == null) reisender.setReisen(new ArrayList<>());
         reisender.getReisen().add(reise);
         currentReise = reise;
+        ((EditText)findViewById(R.id.reiseName)).setEnabled(false);
+
     }
 
     public void addInitialStop()
@@ -86,6 +89,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         if(currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
         if(!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
         initialStopSaved = true;
+        ((EditText)findViewById(R.id.startingPoint)).setEnabled(false);
     }
 
     public void addStop()
@@ -108,7 +112,10 @@ public class ReiseErstellenActivity extends AppCompatActivity{
     }
 
     public void addEverything(View view){
-        if(currentReise == null) addReise();
+        if(currentReise == null) {
+            if(((EditText)findViewById(R.id.reiseName)).getText().toString().isEmpty()) return;
+            addReise();
+        }
         if(!initialStopSaved) addInitialStop();
         addStop();
         ListView listView = findViewById(R.id.stopList);
