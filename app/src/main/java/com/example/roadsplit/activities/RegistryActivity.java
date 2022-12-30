@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,6 +61,7 @@ public class RegistryActivity extends AppCompatActivity {
 
         if(!areInputsValid(username, password, email))
         {
+            reject(view);
             findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
             return;
         }
@@ -159,5 +162,9 @@ public class RegistryActivity extends AppCompatActivity {
         }
         return ok;
     }
-
+    public void reject(View view){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            view.performHapticFeedback(HapticFeedbackConstants.REJECT);
+        }
+    }
 }
