@@ -46,8 +46,8 @@
 
     <ImageView
         android:id="@+id/imageView18"
-        android:layout_width="54dp"
-        android:layout_height="11dp"
+        android:layout_width="44dp"
+        android:layout_height="10dp"
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="@id/canvasbottomslide"
         app:layout_constraintHorizontal_bias="0.49"
