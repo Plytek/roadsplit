@@ -30,23 +30,6 @@ public class IntroViewPagerAdapter extends PagerAdapter {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
- /*       View layoutScreen;
-        switch (position)
-        {
-            case 0:
-                layoutScreen = inflater.inflate(R.layout.activity_user_create,null);
-                break;
-            case 1:
-                layoutScreen = inflater.inflate(R.layout.activity_neue_reise,null);
-                break;
-            case 2:
-                layoutScreen = inflater.inflate(R.layout.activity_dummy_planung,null);
-                break;
-            default:
-                layoutScreen = inflater.inflate(R.layout.activity_main,null);
-                break;
-        }*/
-
         View layoutScreen = inflater.inflate(R.layout.layout_screen,null);
 
         ImageView imgSlide = layoutScreen.findViewById(R.id.intro_img);

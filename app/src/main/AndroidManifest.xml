@@ -31,7 +31,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.MainActivity3"
+            android:name=".activities.TutActivity"
             android:exported="false"
             android:theme="@style/Theme.RoadSplit.NoActionBarAndStatusBar">
             <meta-data

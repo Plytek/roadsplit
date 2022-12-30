@@ -5,11 +5,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Reisender;
@@ -85,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void turorialAnim(View view){
-        Intent intent = new Intent(this, MainActivity3.class);
+        Intent intent = new Intent(this, TutActivity.class);
         startActivity(intent);
     }
 

@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity3 extends AppCompatActivity {
+public class TutActivity extends AppCompatActivity {
 
     private ViewPager screenPager;
     IntroViewPagerAdapter introViewPagerAdapter ;
@@ -54,7 +54,7 @@ public class MainActivity3 extends AppCompatActivity {
 
         //}
 
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.activity_tut);
 
         // hide the action bar
 
@@ -157,7 +157,7 @@ public class MainActivity3 extends AppCompatActivity {
 
                 //open main activity
 
-                Intent mainActivity = new Intent(getApplicationContext(),MainActivity2.class);
+                Intent mainActivity = new Intent(getApplicationContext(),NeueReiseActivity.class);
                 startActivity(mainActivity);
                 savePrefsData();
                 finish();

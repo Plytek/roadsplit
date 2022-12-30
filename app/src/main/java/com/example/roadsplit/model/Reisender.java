@@ -7,6 +7,15 @@ public class Reisender {
     private String email;
     private String nickname;
     private List<Reise> reisen;
+    private boolean firsttimelogin;
+
+    public Reisender(Long id, String email, String nickname, List<Reise> reisen, boolean firsttimelogin) {
+        this.id = id;
+        this.email = email;
+        this.nickname = nickname;
+        this.reisen = reisen;
+        this.firsttimelogin = firsttimelogin;
+    }
 
     public Reisender(Long id, String email, String nickname, List<Reise> reisen) {
         this.id = id;
@@ -48,6 +57,14 @@ public class Reisender {
 
     public void setReisen(List<Reise> reisen) {
         this.reisen = reisen;
+    }
+
+    public boolean isFirsttimelogin() {
+        return firsttimelogin;
+    }
+
+    public void setFirsttimelogin(boolean firsttimelogin) {
+        this.firsttimelogin = firsttimelogin;
     }
 
     @Override

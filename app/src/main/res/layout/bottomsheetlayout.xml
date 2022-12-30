@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/bottomsheetcanvas" />
 
     <EditText
-        android:id="@+id/sharingPin"
+        android:id="@+id/pinTextView"
         android:layout_width="346dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
@@ -29,7 +29,7 @@
         android:fontFamily="@font/cextrabold"
         android:gravity="center"
         android:hint="SHARING-PIN"
-        android:inputType="number"
+        android:inputType="text"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
@@ -64,6 +64,7 @@
         android:background="@drawable/lightgreenbutton"
         android:elevation="3dp"
         android:fontFamily="@font/cextrabold"
+        android:onClick="join"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
@@ -73,10 +74,10 @@
         android:textColor="@color/white"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/sharingPin"
+        app:layout_constraintEnd_toEndOf="@id/pinTextView"
         app:layout_constraintHorizontal_bias="0.467"
-        app:layout_constraintStart_toStartOf="@id/sharingPin"
-        app:layout_constraintTop_toBottomOf="@+id/sharingPin"
+        app:layout_constraintStart_toStartOf="@id/pinTextView"
+        app:layout_constraintTop_toBottomOf="@+id/pinTextView"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView

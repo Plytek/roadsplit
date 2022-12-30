@@ -34,6 +34,13 @@ public class RegistryActivity extends AppCompatActivity {
         findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
     }
 
+    public void backToLogin(View view)
+    {
+        Intent intent = new Intent(this, LogInActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void create(View view)
     {
         findViewById(R.id.registerProgressBar).setVisibility(View.VISIBLE);

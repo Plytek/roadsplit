@@ -55,7 +55,6 @@ public class LogInActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/userdaten/login";
-        //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
 
@@ -99,9 +98,25 @@ public class LogInActivity extends AppCompatActivity {
                 if(response.isSuccessful())
                 {
                     MainActivity.currentUser = userResponse.getReisender();
+                    if(userResponse.getReisender().isFirsttimelogin())
+                    {
+                        MainActivity.currentUser.setFirsttimelogin(false);
+                        HttpUrl.Builder httpBuilder = HttpUrl.parse(MainActivity.BASEURL + "/api/userdaten/update").newBuilder();
+                        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(MainActivity.currentUser));
+
+                        OkHttpClient nextclient = new OkHttpClient();
+                        Request request = new Request.Builder()
+                                .url(httpBuilder.build())
+                                .post(formBody)
+                                .build();
+                        Call nextcall = nextclient.newCall(request);
+                        Response nextresponse = nextcall.execute();
+
+                        firstTime();
+                    }
+                    else success();
                     Log.d("currentuser", MainActivity.currentUser.toString());
                     findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
-                    success();
                     return;
                 }
 
@@ -132,6 +147,13 @@ public class LogInActivity extends AppCompatActivity {
     public void success()
     {
         Intent intent = new Intent(this, NeueReiseActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void firstTime()
+    {
+        Intent intent = new Intent(this, TutActivity.class);
         startActivity(intent);
         finish();
     }
