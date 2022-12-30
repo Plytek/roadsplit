@@ -207,7 +207,7 @@ public class TutActivity extends AppCompatActivity {
         btnNext.setVisibility(View.INVISIBLE);
         btnGetStarted.setVisibility(View.VISIBLE);
         tvSkip.setVisibility(View.INVISIBLE);
-        tabIndicator.setVisibility(View.INVISIBLE);
+        //tabIndicator.setVisibility(View.INVISIBLE);
         // TODO : ADD an animation the getstarted button
         // setup animation
         btnGetStarted.setAnimation(btnAnim);
