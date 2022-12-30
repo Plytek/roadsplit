@@ -54,7 +54,7 @@ public class NeueReiseActivity extends AppCompatActivity {
 
     public void reiseErstellen(View view)
     {
-        Intent intent = new Intent(this, ReiseErstellenActivity.class);
+        Intent intent = new Intent(this, NeueTestActivity.class);
         startActivity(intent);
     }
 

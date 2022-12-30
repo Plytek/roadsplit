@@ -55,7 +55,7 @@ public class DummyPlanungActivity extends AppCompatActivity {
         this.reisender = (new Gson()).fromJson(userjson, Reisender.class);
     }
 
-    public void addReise(View view)
+    public void addReise()
     {
         Reise reise = new Reise();
         reise.setName(((EditText)findViewById(R.id.reiseNameText)).getText().toString());
@@ -65,7 +65,7 @@ public class DummyPlanungActivity extends AppCompatActivity {
         currentReise = reise;
     }
 
-    public void addStop(View view)
+    public void addStop()
     {
         Stop stop = new Stop();
         stop.setName(((EditText)findViewById(R.id.stopNameText)).getText().toString());
@@ -78,6 +78,7 @@ public class DummyPlanungActivity extends AppCompatActivity {
 
     public void save(View view)
     {
+
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/reise";
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
