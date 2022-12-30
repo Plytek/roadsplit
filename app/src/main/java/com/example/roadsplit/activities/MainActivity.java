@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void neueReise(View view) {
-        Intent intent = new Intent(this, NeueReiseActivity.class);
+        Intent intent = new Intent(this, ReiseErstellenActivity.class);
         startActivity(intent);
     }
 
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reiseErstelen(View view){
-        Intent intent = new Intent(this, ReiseErstellenActivity.class);
+        Intent intent = new Intent(this, ReiseErstellenTestActivity.class);
         startActivity(intent);
     }
 

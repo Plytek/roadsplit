@@ -38,6 +38,7 @@ import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -67,9 +68,7 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        Intent i = getIntent();
-        String userjson = i.getStringExtra("user");
-        this.reisender = (new Gson()).fromJson(userjson, Reisender.class);
+        this.reisender = MainActivity.currentUser;
         try {
             this.stops = reisender.getReisen().get(0).getStops();
         } catch (NullPointerException e) {
@@ -115,18 +114,22 @@ public class MapActivity extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
+
             Road road = roadManager.getRoad(waypoints);
             Polyline roadOverlay = RoadManager.buildRoadOverlay(road);
             handler.post(() -> {
-                Random random = new Random();
+                int counter = 0;
                 for(GeoPoint waypoint : waypoints)
                 {
+                    BigDecimal budget =  stops.get(counter).getBudget();
+                    if(budget == null) budget = new BigDecimal(0);
                     Marker marker = new Marker(map);
                     marker.setPosition(waypoint);
                     marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                    marker.setIcon(getResources().getDrawable(R.drawable.logoassetthree));
-                    marker.setTitle(" Budget: " + (random.nextInt(1000 - 40) + 40) + "€"); //
+                    marker.setIcon(getResources().getDrawable(R.drawable.logosmall));
+                    marker.setTitle(" Budget: " + stops.get(counter).getBudget() + "€"); //
                     map.getOverlays().add(marker);
+                    counter++;
                 }
                 map.getOverlays().add(roadOverlay);
                 IMapController mapController = map.getController();

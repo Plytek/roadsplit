@@ -157,7 +157,7 @@ public class TutActivity extends AppCompatActivity {
 
                 //open main activity
 
-                Intent mainActivity = new Intent(getApplicationContext(),NeueReiseActivity.class);
+                Intent mainActivity = new Intent(getApplicationContext(), ReiseErstellenActivity.class);
                 startActivity(mainActivity);
                 savePrefsData();
                 finish();

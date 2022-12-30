@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -146,7 +145,7 @@ public class LogInActivity extends AppCompatActivity {
 
     public void success()
     {
-        Intent intent = new Intent(this, NeueReiseActivity.class);
+        Intent intent = new Intent(this, ReiseErstellenActivity.class);
         startActivity(intent);
         finish();
     }
