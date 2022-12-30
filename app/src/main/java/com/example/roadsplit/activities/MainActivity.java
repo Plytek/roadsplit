@@ -10,6 +10,12 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.activities.testing.DummyPlanungActivity;
+import com.example.roadsplit.activities.testing.FurkanTestActivity;
+import com.example.roadsplit.activities.testing.MapActivity;
+import com.example.roadsplit.activities.testing.ReiseErstellenTestActivity;
+import com.example.roadsplit.activities.testing.TutorialActivity;
+import com.example.roadsplit.activities.testing.UserCreateActivity;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.UserAccount;
 import com.google.gson.Gson;
@@ -56,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void neueReise(View view) {
-        Intent intent = new Intent(this, ReiseErstellenActivity.class);
+        Intent intent = new Intent(this, NeueReiseActivity.class);
         startActivity(intent);
     }
 
@@ -88,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testScreen(View view) {
-        Intent intent = new Intent(this, NeueTestActivity.class);
+        Intent intent = new Intent(this, ReiseErstellenActivity.class);
         startActivity(intent);
     }
 
@@ -108,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testBent(View view){
-        Intent intent = new Intent(this, NeueTestActivity.class);
+        Intent intent = new Intent(this, ReiseErstellenActivity.class);
         startActivity(intent);
     }
 

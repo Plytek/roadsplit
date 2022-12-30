@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.roadsplit.IntroViewPagerAdapter;
+import com.example.roadsplit.adapter.IntroViewPagerAdapter;
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ScreenItem;
 import com.google.android.material.tabs.TabLayout;
@@ -157,7 +157,7 @@ public class TutActivity extends AppCompatActivity {
 
                 //open main activity
 
-                Intent mainActivity = new Intent(getApplicationContext(), ReiseErstellenActivity.class);
+                Intent mainActivity = new Intent(getApplicationContext(), NeueReiseActivity.class);
                 startActivity(mainActivity);
                 savePrefsData();
                 finish();

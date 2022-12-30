@@ -152,7 +152,7 @@ public class LogInActivity extends AppCompatActivity {
 
     public void success()
     {
-        Intent intent = new Intent(this, ReiseErstellenActivity.class);
+        Intent intent = new Intent(this, NeueReiseActivity.class);
         startActivity(intent);
         finish();
     }
@@ -174,19 +174,5 @@ public class LogInActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         view.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
         }
-    }
-}
-class HapticTouchListener implements View.OnTouchListener {
-    @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                break;
-            case MotionEvent.ACTION_UP:
-                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
-                break;
-        }
-        return true;
     }
 }

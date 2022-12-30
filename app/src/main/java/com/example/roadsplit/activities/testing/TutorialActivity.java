@@ -1,21 +1,17 @@
-package com.example.roadsplit.activities;
+package com.example.roadsplit.activities.testing;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 
-import com.example.roadsplit.IntroViewPagerAdapter;
+import com.example.roadsplit.adapter.IntroViewPagerAdapter;
 import com.example.roadsplit.R;
-import com.example.roadsplit.TabAdapter;
-import com.example.roadsplit.TabLayoutStrategy;
+import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.helperclasses.ScreenItem;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;

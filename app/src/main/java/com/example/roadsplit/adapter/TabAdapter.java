@@ -1,4 +1,4 @@
-package com.example.roadsplit;
+package com.example.roadsplit.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

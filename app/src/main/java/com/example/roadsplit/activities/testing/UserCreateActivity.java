@@ -1,4 +1,4 @@
-package com.example.roadsplit.activities;
+package com.example.roadsplit.activities.testing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Stop;

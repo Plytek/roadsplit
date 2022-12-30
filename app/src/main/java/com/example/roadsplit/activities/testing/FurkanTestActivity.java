@@ -1,4 +1,4 @@
-package com.example.roadsplit.activities;
+package com.example.roadsplit.activities.testing;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.activities.MainActivity;
 
 public class FurkanTestActivity extends AppCompatActivity {
 

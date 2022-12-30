@@ -1,4 +1,4 @@
-package com.example.roadsplit.activities;
+package com.example.roadsplit.activities.testing;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,14 @@ import android.os.Bundle;
 
 import com.example.roadsplit.R;
 
-public class MainActivity2 extends AppCompatActivity {
+public class ReiseErstellenTestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_reise_erstellen_test);
+
     }
+
+
 }
