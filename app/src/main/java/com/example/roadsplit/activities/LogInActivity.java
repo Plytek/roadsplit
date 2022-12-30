@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +40,7 @@ public class LogInActivity extends AppCompatActivity {
         if(intent.getStringExtra("registered") != null)
             Toast.makeText(this, "Account erfolgreich registriert!", Toast.LENGTH_LONG).show();
         findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
+        //findViewById(R.id.plsloginButton).setOnTouchListener(new HapticTouchListener());
     }
 
     public void register(View view)
@@ -73,7 +77,10 @@ public class LogInActivity extends AppCompatActivity {
             findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
             ok = false;
         }
-        if(!ok) return;
+        if(!ok){
+            reject(view);
+            return;
+        }
 
         userAccount.setNickname(username);
         userAccount.setPassword(password);
@@ -155,5 +162,31 @@ public class LogInActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TutActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void reject(View view){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            view.performHapticFeedback(HapticFeedbackConstants.REJECT);
+        }
+    }
+
+    public void confirm(View view){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        view.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+        }
+    }
+}
+class HapticTouchListener implements View.OnTouchListener {
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                break;
+            case MotionEvent.ACTION_UP:
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                break;
+        }
+        return true;
     }
 }
