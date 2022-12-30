@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class RegistryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
     }
 
@@ -43,7 +45,7 @@ public class RegistryActivity extends AppCompatActivity {
         finish();
     }
 
-    public void create(View view)
+    public void createUser(View view)
     {
         findViewById(R.id.registerProgressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.errorNickname).setVisibility(View.INVISIBLE);
@@ -61,7 +63,7 @@ public class RegistryActivity extends AppCompatActivity {
 
         if(!areInputsValid(username, password, email))
         {
-            reject(view);
+            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
             return;
         }
@@ -72,7 +74,6 @@ public class RegistryActivity extends AppCompatActivity {
         userAccount.setFirsttimelogin(true);
 
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(userAccount));
-
         Request request = new Request.Builder()
                 .url(httpBuilder.build())
                 .post(formBody)
@@ -161,10 +162,5 @@ public class RegistryActivity extends AppCompatActivity {
             ok = false;
         }
         return ok;
-    }
-    public void reject(View view){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            view.performHapticFeedback(HapticFeedbackConstants.REJECT);
-        }
     }
 }

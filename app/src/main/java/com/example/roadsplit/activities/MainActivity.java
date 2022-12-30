@@ -1,7 +1,6 @@
 package com.example.roadsplit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,21 +38,11 @@ public class MainActivity extends AppCompatActivity {
         //Debug.waitForDebugger();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        try {
-            Intent inti = getIntent();
-            Log.d("Servus", inti.getStringExtra("Servus"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        RecyclerView.ItemDecoration itemDecoration;
-
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     //Startet einen neuen Intent (Activity) - die MapActivity
-    public void nextActivity(View view) {
+    public void openMap(View view) {
         Intent intent = new Intent(this, MapActivity.class);
         //Gibt zusätzliche Daten mit durch .putExtra(Key, Value). In diesem Fall den aktuellen Useraccount als String
         intent.putExtra("user", (new Gson()).toJson(currentUser));
@@ -82,24 +71,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void furkanTest(View view){
-        Intent intent = new Intent(this, FurkanTestActivity.class);
-        startActivity(intent);
-
-    }
-
     public void turorialAnim(View view){
         Intent intent = new Intent(this, TutActivity.class);
-        startActivity(intent);
-    }
-
-    public void testScreen(View view) {
-        Intent intent = new Intent(this, ReiseErstellenActivity.class);
-        startActivity(intent);
-    }
-
-    public void smooveTut(View view){
-        Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
     }
 

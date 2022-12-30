@@ -37,7 +37,6 @@ import okhttp3.Response;
 
 public class NeueReiseActivity extends AppCompatActivity {
 
-    Button bottemsheet;
     Dialog dialog;
 
     @Override
@@ -97,7 +96,9 @@ public class NeueReiseActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
+                    MainActivity.currentUser = reiseReponse.getReisender();
                     Looper.prepare();
+                    dialog.dismiss();
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();
                 }
             }

@@ -28,8 +28,7 @@ public class ReiseSuccessDummy extends AppCompatActivity {
 
     public void copyToClipboard(View view){
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("test",
-                ((EditText)findViewById(R.id.reiseNameText)).getText().toString());
+        ClipData clip = ClipData.newPlainText("id", id);
         clipboard.setPrimaryClip(clip);
     }
 

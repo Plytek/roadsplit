@@ -1,4 +1,4 @@
-package com.example.roadsplit.activities;
+package com.example.roadsplit.activities.testing;
 
 import androidx.appcompat.app.AppCompatActivity;
 

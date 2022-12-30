@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -25,14 +24,15 @@ import java.util.List;
 public class TutActivity extends AppCompatActivity {
 
     private ViewPager screenPager;
-    IntroViewPagerAdapter introViewPagerAdapter ;
-    TabLayout tabIndicator;
-    Button btnNext;
-    int position = 0 ;
-    Button btnGetStarted;
-    Animation btnAnim ;
-    TextView tvSkip;
-    Boolean visible = false;
+    private IntroViewPagerAdapter introViewPagerAdapter ;
+    private TabLayout tabIndicator;
+    private Button btnNext;
+    private int position = 0 ;
+    private Button btnGetStarted;
+    private Animation btnAnim ;
+    private TextView tvSkip;
+    private Boolean visible = false;
+    private List<ScreenItem> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,24 +42,7 @@ public class TutActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
-        // when this activity is about to be launch we need to check if its openened before or not
-
-        //if (restorePrefData()) {
-
-            //Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class );
-        // startActivity(mainActivity);
-        //finish();
-
-
-        //}
-
         setContentView(R.layout.activity_tut);
-
-        // hide the action bar
-
-        //getSupportActionBar().hide();
-
         // ini views
         btnNext = findViewById(R.id.btn_next);
         btnGetStarted = findViewById(R.id.btn_get_started);
@@ -68,8 +51,7 @@ public class TutActivity extends AppCompatActivity {
         tvSkip = findViewById(R.id.tv_skip);
 
         // fill list screen
-
-        final List<ScreenItem> mList = new ArrayList<>();
+        this.mList = new ArrayList<>();
         mList.add(new ScreenItem("Plane deine Reise","Du musst kein Planungsgenie sein, wir helfen dir bei dem Planen deiner Reise und du kümmerst dich um das Genießen deiner Reise.",R.drawable.img1));
         mList.add(new ScreenItem("Rechnungen teilen","Genieße die Reise mit deinen Freunden oder deiner Familie und verbringe nicht die Zeit damit Rechnungen kompliziert aufzuteilen.",R.drawable.img2));
         mList.add(new ScreenItem("Gespeicherte Reisen","Wir bewahren deine Reisen auf und damit auch deine Erinnerungen. Sieh dir an was du wo und wann ausgegeben hast auf deinen Reisen.",R.drawable.img3));
@@ -80,47 +62,15 @@ public class TutActivity extends AppCompatActivity {
         screenPager.setAdapter(introViewPagerAdapter);
 
         // setup tablayout with viewpager
-
         tabIndicator.setupWithViewPager(screenPager);
 
-        // next button click Listner
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                position = screenPager.getCurrentItem();
-                if (position < mList.size()) {
-
-                    position++;
-                    screenPager.setCurrentItem(position);
-
-
-                }
-
-                if (position == mList.size()-1) { // when we rech to the last screen
-
-                    // TODO : show the GETSTARTED Button and hide the indicator and the next button
-
-                    loaddLastScreen();
-
-
-                }
-
-
-
-            }
-        });
-
         // tablayout add change listener
-
-
         tabIndicator.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
                 if (tab.getPosition() == mList.size()-1) {
-                    loaddLastScreen();
+                    loadLastScreen();
                 }
                 else if(visible == true)
                 {
@@ -130,90 +80,43 @@ public class TutActivity extends AppCompatActivity {
                     tabIndicator.setVisibility(View.VISIBLE);
                     visible = false;
                 }
-
-
-
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 
 
-
-        // Get Started button click listener
-
-        btnGetStarted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                //open main activity
-
-                Intent mainActivity = new Intent(getApplicationContext(), NeueReiseActivity.class);
-                startActivity(mainActivity);
-                savePrefsData();
-                finish();
-
-
-
-            }
-        });
-
-        // skip button click listener
-
-        tvSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                screenPager.setCurrentItem(mList.size());
-            }
-        });
-
-
-
     }
 
-    private boolean restorePrefData() {
-
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
-        Boolean isIntroActivityOpnendBefore = pref.getBoolean("isIntroOpnend",false);
-        return  isIntroActivityOpnendBefore;
-
-
-
+    public void nextTut(View view) {
+        position = screenPager.getCurrentItem();
+        if (position < mList.size()) {
+            position++;
+            screenPager.setCurrentItem(position);
+        }
+        if (position == mList.size()-1) {
+            loadLastScreen();
+        }
     }
 
-    private void savePrefsData() {
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("isIntroOpnend",true);
-        editor.commit();
-
-
+    public void getStarted(View view) {
+        Intent mainActivity = new Intent(getApplicationContext(), NeueReiseActivity.class);
+        startActivity(mainActivity);
+        finish();
     }
 
-    // show the GETSTARTED Button and hide the indicator and the next button
-    private void loaddLastScreen() {
-
+    public void skip(View view){
+        screenPager.setCurrentItem(mList.size());
+    }
+    private void loadLastScreen() {
         btnNext.setVisibility(View.INVISIBLE);
         btnGetStarted.setVisibility(View.VISIBLE);
         tvSkip.setVisibility(View.INVISIBLE);
-        //tabIndicator.setVisibility(View.INVISIBLE);
-        // TODO : ADD an animation the getstarted button
-        // setup animation
         btnGetStarted.setAnimation(btnAnim);
         visible = true;
-
-
-
     }
 }

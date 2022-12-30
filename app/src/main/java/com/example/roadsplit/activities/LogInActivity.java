@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,16 +49,15 @@ public class LogInActivity extends AppCompatActivity {
         finish();
     }
 
-    public void realLogin(View view)
+    public void login(View view)
     {
         findViewById(R.id.loginProgressBar).setVisibility(View.VISIBLE);
-       findViewById(R.id.erroremail).setVisibility(View.INVISIBLE);
-       findViewById(R.id.errorPassword).setVisibility(View.INVISIBLE);
+        findViewById(R.id.erroremail).setVisibility(View.INVISIBLE);
+        findViewById(R.id.errorPassword).setVisibility(View.INVISIBLE);
 
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/userdaten/login";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-
 
         UserAccount userAccount = new UserAccount();
         String username = ((EditText)findViewById(R.id.emailLogView)).getText().toString();
@@ -107,18 +105,8 @@ public class LogInActivity extends AppCompatActivity {
                     if(userResponse.getReisender().isFirsttimelogin())
                     {
                         MainActivity.currentUser.setFirsttimelogin(false);
-                        HttpUrl.Builder httpBuilder = HttpUrl.parse(MainActivity.BASEURL + "/api/userdaten/update").newBuilder();
-                        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(MainActivity.currentUser));
-
-                        OkHttpClient nextclient = new OkHttpClient();
-                        Request request = new Request.Builder()
-                                .url(httpBuilder.build())
-                                .post(formBody)
-                                .build();
-                        Call nextcall = nextclient.newCall(request);
-                        Response nextresponse = nextcall.execute();
-
-                        firstTime();
+                        sendUserUpdate();
+                        startFirstTimeActivity();
                     }
                     else success();
                     Log.d("currentuser", MainActivity.currentUser.toString());
@@ -150,6 +138,19 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
+    public void sendUserUpdate() throws IOException {
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(MainActivity.BASEURL + "/api/userdaten/update").newBuilder();
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(MainActivity.currentUser));
+
+        OkHttpClient nextclient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(httpBuilder.build())
+                .post(formBody)
+                .build();
+        Call nextcall = nextclient.newCall(request);
+        nextcall.execute();
+    }
+
     public void success()
     {
         Intent intent = new Intent(this, NeueReiseActivity.class);
@@ -157,7 +158,7 @@ public class LogInActivity extends AppCompatActivity {
         finish();
     }
 
-    public void firstTime()
+    public void startFirstTimeActivity()
     {
         Intent intent = new Intent(this, TutActivity.class);
         startActivity(intent);
@@ -165,9 +166,6 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     public void reject(View view){
-/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            view.performHapticFeedback(HapticFeedbackConstants.REJECT);
-        }*/
         view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
 

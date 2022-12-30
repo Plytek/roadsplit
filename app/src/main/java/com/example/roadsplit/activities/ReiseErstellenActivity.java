@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.InputType;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -40,19 +40,15 @@ public class ReiseErstellenActivity extends AppCompatActivity{
 
     private Reisender reisender;
     private Reise currentReise;
-    List<String> names;
-    ArrayAdapter<String> adapter;
-    boolean initialStopSaved = false;
-
-
+    private List<String> names;
+    private ArrayAdapter<String> adapter;
+    private boolean initialStopSaved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setContentView(R.layout.activity_reise_erstellen);
         this.reisender = MainActivity.currentUser;
@@ -62,7 +58,6 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, names);
         listView.setAdapter(adapter);
-        currentReise = new Reise();
 
     }
 
@@ -75,6 +70,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         reisender.getReisen().add(reise);
         currentReise = reise;
         ((EditText)findViewById(R.id.reiseName)).setEnabled(false);
+        ((EditText)findViewById(R.id.reiseName)).setInputType(InputType.TYPE_NULL);
 
     }
 
@@ -83,13 +79,11 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         if(currentReise == null) addReise();
         Stop stop = new Stop();
         stop.setName(((EditText)findViewById(R.id.startingPoint)).getText().toString());
-        /*String budget = ((EditText)findViewById(R.id.budgetText)).getText().toString();
-        budget = budget.replaceAll(",", ".");
-        stop.setBudget(new BigDecimal(budget));*/
         if(currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
         if(!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
         initialStopSaved = true;
         ((EditText)findViewById(R.id.startingPoint)).setEnabled(false);
+        ((EditText)findViewById(R.id.startingPoint)).setInputType(InputType.TYPE_NULL);
     }
 
     public void addStop()
@@ -97,11 +91,9 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         if(currentReise == null) addReise();
         if(!initialStopSaved) addInitialStop();
         Stop stop = new Stop();
-        stop.setName(((EditText)findViewById(R.id.stopName)).getText().toString());
-
-        /*String budget = ((EditText)findViewById(R.id.budgetText)).getText().toString();
-        budget = budget.replaceAll(",", ".");
-        stop.setBudget(new BigDecimal(budget));*/
+        EditText editText = findViewById(R.id.stopName);
+        stop.setName(editText.getText().toString());
+        runOnUiThread(() -> editText.setText(""));
         if(currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
         List<Stop> stops = currentReise.getStops();
         if(!currentReise.getStops().isEmpty() &&
@@ -118,7 +110,6 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         }
         if(!initialStopSaved) addInitialStop();
         addStop();
-        ListView listView = findViewById(R.id.stopList);
         names.clear();
         for(Stop stop : currentReise.getStops())
         {
@@ -127,7 +118,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         adapter.notifyDataSetChanged();
     }
 
-    public void save(View view)
+    public void saveReise(View view)
     {
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/reise";

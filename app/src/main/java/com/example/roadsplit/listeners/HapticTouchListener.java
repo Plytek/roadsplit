@@ -1,5 +1,6 @@
 package com.example.roadsplit.listeners;
 
+import android.os.Build;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +13,9 @@ class HapticTouchListener implements View.OnTouchListener {
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 break;
             case MotionEvent.ACTION_UP:
-                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                    view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                }
                 break;
         }
         return true;

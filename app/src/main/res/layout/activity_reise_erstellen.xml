@@ -190,7 +190,7 @@
         android:background="@drawable/lightgreenbutton"
         android:elevation="3dp"
         android:fontFamily="@font/cextrabold"
-        android:onClick="save"
+        android:onClick="saveReise"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"

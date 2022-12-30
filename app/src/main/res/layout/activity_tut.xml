@@ -21,13 +21,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:textColor="@color/rdarkgreen"
         android:layout_marginBottom="16dp"
-        android:text="Weiter"
-        android:fontFamily="@font/cmedium"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/menuback"
+        android:fontFamily="@font/cmedium"
+        android:onClick="nextTut"
+        android:text="Weiter"
+        android:textColor="@color/rdarkgreen"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
@@ -48,35 +48,34 @@
     </com.google.android.material.tabs.TabLayout>
 
     <Button
-        android:visibility="invisible"
         android:id="@+id/btn_get_started"
         android:layout_width="132dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="64dp"
         android:background="@drawable/menuback"
+        android:fontFamily="@font/cmedium"
+        android:onClick="getStarted"
         android:text="REISE PLANEN"
         android:textColor="@color/rdarkgreen"
-        android:fontFamily="@font/cmedium"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
         android:id="@+id/tv_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text="Überspringen"
         android:fontFamily="@font/cmedium"
+        android:onClick="skip"
+        android:text="Überspringen"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

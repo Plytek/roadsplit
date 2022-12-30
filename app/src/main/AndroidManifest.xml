@@ -100,7 +100,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.splashScreenActivity"
+            android:name=".activities.testing.splashScreenActivity"
             android:exported="false"
             android:theme="@style/Theme.RoadSplit.NoActionBarAndStatusBar">
             <meta-data

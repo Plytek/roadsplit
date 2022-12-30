@@ -142,7 +142,7 @@
         android:layout_marginTop="150dp"
         android:background="@color/rcreme"
         android:fontFamily="@font/cextrabold"
-        android:onClick="create"
+        android:onClick="createUser"
         android:text="REGISTRIEREN"
         android:textColor="@color/rdarkgreen"
         android:textSize="20dp"
