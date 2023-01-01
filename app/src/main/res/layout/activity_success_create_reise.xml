@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.52" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <TextView
         android:id="@+id/textView2"
@@ -45,11 +45,10 @@
         android:textColor="#2A4B42"
         android:textSize="34dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline10"
-        app:layout_constraintTop_toTopOf="@id/guideline10"
-        app:layout_constraintVertical_bias="0.547"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteX="68dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline10"
+        app:layout_constraintVertical_bias="0.547" />
 
     <TextView
         android:id="@+id/textView4"
@@ -105,6 +104,8 @@
         android:textColor="#c4c4c4"
         android:textColorHint="#c4c4c4"
         android:textSize="20dp"
+        android:editable="false"
+        android:clickable="false"
         app:layout_constraintEnd_toEndOf="@id/button5"
         app:layout_constraintStart_toStartOf="@id/button5"
         app:layout_constraintTop_toBottomOf="@id/button5" />
