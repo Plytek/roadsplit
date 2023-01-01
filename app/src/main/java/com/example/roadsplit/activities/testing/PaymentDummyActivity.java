@@ -18,10 +18,12 @@ import android.widget.Toast;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Ausgabe;
+import com.example.roadsplit.model.AusgabenZusammenfassung;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.requests.AusgabenRequest;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -48,6 +50,7 @@ public class PaymentDummyActivity extends AppCompatActivity {
     private List<String> names;
     private List<String> stops;
     private List<String> items;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,6 +204,56 @@ public class PaymentDummyActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     //MainActivity.currentUser = reiseReponse.getReisender();
                     Log.d("ausgaben", reiseReponse.getReise().toString());
+                    Looper.prepare();
+                    Toast.makeText(PaymentDummyActivity.this, "success", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    //EditText editText = findViewById(R.id.dummyResultText);
+                    //editText.setText(reiseReponse.getMessage());
+                }
+            }
+
+        });
+    }
+
+    public void fetchPaymentInfo(View view)
+    {
+        OkHttpClient client = new OkHttpClient();
+        String url = MainActivity.BASEURL + "/api/reisedaten/ausgaben";
+        //String url = "http://10.0.2.2:8080/api/userdaten/user";
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
+
+        Reise reise = reiseList.get(0);
+
+        AusgabenRequest ausgabenRequest = new AusgabenRequest();
+        if(reise == null) return;
+
+        ausgabenRequest.setReise(reise);
+        ausgabenRequest.setReisender(MainActivity.currentUser);
+
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
+
+        Request request = new Request.Builder()
+                .url(httpBuilder.build())
+                .post(formBody)
+                .build();
+
+        //Erstellt in einem neuen Thread eine Http Anfrage an den Webservice, ruft bei Erfolg onReponse() auf, bei Misserfolg onFailure()
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                TextView textView = findViewById(R.id.errorRegView);
+                String text = "Es konnte keine Verbindung zum Server hergestellt werden";
+                textView.setText(text);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                AusgabenZusammenfassung ausgabenZusammenfassung = new Gson().fromJson(response.body().string(), AusgabenZusammenfassung.class);
+                if(response.isSuccessful()) {
+                    //MainActivity.currentUser = reiseReponse.getReisender();
+                    Log.d("ausgaben", ausgabenZusammenfassung.getBezahltFuer().toString());
+                    Log.d("ausgaben", ausgabenZusammenfassung.getBezahltVon().toString());
                     Looper.prepare();
                     Toast.makeText(PaymentDummyActivity.this, "success", Toast.LENGTH_LONG).show();
                 }
