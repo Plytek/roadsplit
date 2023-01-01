@@ -52,14 +52,6 @@ public class MapActivity extends AppCompatActivity {
     private List<Address> adressen;
     private List<Stop> stops;
 
-/*
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_map, container);
-    }
-*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

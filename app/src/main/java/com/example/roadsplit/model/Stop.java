@@ -1,6 +1,7 @@
 package com.example.roadsplit.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class Stop {
     }
 
     public Stop() {
+        ausgaben = new ArrayList<>();
     }
 
     public long getId() {

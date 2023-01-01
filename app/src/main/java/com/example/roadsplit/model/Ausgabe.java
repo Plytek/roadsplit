@@ -60,4 +60,15 @@ public class Ausgabe {
     public void setZahler(long zahler) {
         this.zahler = zahler;
     }
+
+    @Override
+    public String toString() {
+        return "Ausgabe{" +
+                "id=" + id +
+                ", ausgabenTyp=" + ausgabenTyp +
+                ", betrag=" + betrag +
+                ", schuldner=" + schuldner +
+                ", zahler=" + zahler +
+                '}';
+    }
 }

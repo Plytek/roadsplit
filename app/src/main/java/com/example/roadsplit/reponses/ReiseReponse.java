@@ -3,10 +3,20 @@ package com.example.roadsplit.reponses;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 
+import java.util.List;
+
 public class ReiseReponse {
     private String message;
     private Reise reise;
     private Reisender reisender;
+    private List<Reisender> reisendeList;
+
+    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList) {
+        this.message = message;
+        this.reise = reise;
+        this.reisender = reisender;
+        this.reisendeList = reisendeList;
+    }
 
     public ReiseReponse() {
     }
@@ -39,5 +49,13 @@ public class ReiseReponse {
 
     public void setReisender(Reisender reisender) {
         this.reisender = reisender;
+    }
+
+    public List<Reisender> getReisendeList() {
+        return reisendeList;
+    }
+
+    public void setReisendeList(List<Reisender> reisendeList) {
+        this.reisendeList = reisendeList;
     }
 }

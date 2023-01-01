@@ -12,6 +12,7 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.activities.testing.DummyPlanungActivity;
 import com.example.roadsplit.activities.testing.FurkanTestActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
+import com.example.roadsplit.activities.testing.PaymentDummyActivity;
 import com.example.roadsplit.activities.testing.ReiseErstellenTestActivity;
 import com.example.roadsplit.activities.testing.TutorialActivity;
 import com.example.roadsplit.activities.testing.UserCreateActivity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private UserAccount userAccount = null;
     public static Reisender currentUser;
     public static final String BASEURL = "http://167.172.167.221:8080";
+    //public static final String BASEURL = "https://17f5-88-70-249-101.ngrok.io";
 
 
     @Override
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reiseErstelen(View view){
-        Intent intent = new Intent(this, ReiseErstellenTestActivity.class);
+        Intent intent = new Intent(this, PaymentDummyActivity.class);
         startActivity(intent);
     }
 
