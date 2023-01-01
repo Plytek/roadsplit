@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
-import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.activities.testing.ReiseSuccessDummy;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
@@ -40,9 +38,8 @@ public class ReiseErstellenActivity extends AppCompatActivity{
 
     private Reisender reisender;
     private Reise currentReise;
-    private List<String> names;
+    private List<String> zwischenstops;
     private ArrayAdapter<String> adapter;
-    private boolean initialStopSaved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +49,33 @@ public class ReiseErstellenActivity extends AppCompatActivity{
 
         setContentView(R.layout.activity_reise_erstellen);
         this.reisender = MainActivity.currentUser;
-        names = new ArrayList<>();
+        zwischenstops = new ArrayList<>();
 
         ListView listView = findViewById(R.id.stopList);
         adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, names);
+                android.R.layout.simple_list_item_1, zwischenstops);
         listView.setAdapter(adapter);
 
+    }
+
+    public void addToZwischenstops(View view){
+        EditText editText = findViewById(R.id.zwischenStopView);
+        String stop = editText.getText().toString();
+        if(stop.isEmpty()) return;
+        try {
+            if(zwischenstops.get(zwischenstops.size()-1).equals(stop)) return;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        zwischenstops.add(stop);
+        editText.clearComposingText();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void deleteFromZwischenstops(View view){
+        if(zwischenstops.isEmpty()) return;
+        zwischenstops.remove(zwischenstops.size()-1);
+        adapter.notifyDataSetChanged();
     }
 
     public void addReise()
@@ -69,57 +86,42 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         if (reisender.getReisen() == null) reisender.setReisen(new ArrayList<>());
         reisender.getReisen().add(reise);
         currentReise = reise;
-        ((EditText)findViewById(R.id.reiseName)).setEnabled(false);
-        ((EditText)findViewById(R.id.reiseName)).setInputType(InputType.TYPE_NULL);
-
     }
 
     public void addInitialStop()
     {
-        if(currentReise == null) addReise();
         Stop stop = new Stop();
         stop.setName(((EditText)findViewById(R.id.startingPoint)).getText().toString());
         if(currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
         if(!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
-        initialStopSaved = true;
-        ((EditText)findViewById(R.id.startingPoint)).setEnabled(false);
-        ((EditText)findViewById(R.id.startingPoint)).setInputType(InputType.TYPE_NULL);
     }
 
-    public void addStop()
-    {
-        if(currentReise == null) addReise();
-        if(!initialStopSaved) addInitialStop();
+    public void addLastStop(){
         Stop stop = new Stop();
-        EditText editText = findViewById(R.id.stopName);
-        stop.setName(editText.getText().toString());
-        runOnUiThread(() -> editText.setText(""));
+        stop.setName(((EditText)findViewById(R.id.endStopView)).getText().toString());
         if(currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
-        List<Stop> stops = currentReise.getStops();
-        if(!currentReise.getStops().isEmpty() &&
-                !stop.getName().equals(stops.get(stops.size()-1).getName())) {
+        if(!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
+    }
+
+    public void addZwischenStops(){
+        for(String zwischenstop : zwischenstops){
+            Stop stop = new Stop();
+            stop.setName(zwischenstop);
             currentReise.getStops().add(stop);
         }
-
-    }
-
-    public void addEverything(View view){
-        if(currentReise == null) {
-            if(((EditText)findViewById(R.id.reiseName)).getText().toString().isEmpty()) return;
-            addReise();
-        }
-        if(!initialStopSaved) addInitialStop();
-        addStop();
-        names.clear();
-        for(Stop stop : currentReise.getStops())
-        {
-            names.add(stop.getName());
-        }
-        adapter.notifyDataSetChanged();
     }
 
     public void saveReise(View view)
     {
+        if(currentReise == null) {
+            if(((EditText)findViewById(R.id.reiseName)).getText().toString().isEmpty()) return;
+            addReise();
+        }
+        addInitialStop();
+        addZwischenStops();
+        addLastStop();
+        zwischenstops.clear();
+
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/reise";
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
@@ -162,7 +164,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
 
     private void reiseSuccess(String id)
     {
-        Intent intent = new Intent(this, ReiseSuccessDummy.class);
+        Intent intent = new Intent(this, successCreateReiseActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
         finish();

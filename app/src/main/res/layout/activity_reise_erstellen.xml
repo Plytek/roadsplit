@@ -142,10 +142,10 @@
             android:text="Wo möchtest du hin?"
             android:textColor="@color/rcreme"
             android:textSize="15dp"
-            app:layout_constraintBottom_toTopOf="@id/stopName"
-            app:layout_constraintEnd_toEndOf="@id/stopName"
+            app:layout_constraintBottom_toTopOf="@id/endStopView"
+            app:layout_constraintEnd_toEndOf="@id/endStopView"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/stopName" />
+            app:layout_constraintStart_toStartOf="@id/endStopView" />
 
 
         <ListView
@@ -157,9 +157,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/stopName"
+            app:layout_constraintTop_toBottomOf="@id/endStopView"
             app:layout_constraintTop_toTopOf="@id/guideline6"
-            app:layout_constraintVertical_bias="0.554">
+            app:layout_constraintVertical_bias="0.312">
 
         </ListView>
 
@@ -202,7 +202,7 @@
             app:layout_constraintVertical_bias="0.045" />
 
         <EditText
-            android:id="@+id/endStop"
+            android:id="@+id/zwischenStopView"
             android:drawableStart="@drawable/smallplane"
             android:layout_width="275dp"
             android:layout_height="46dp"
@@ -229,7 +229,7 @@
             app:layout_constraintVertical_bias="0.36" />
 
         <EditText
-            android:id="@+id/stopName"
+            android:id="@+id/endStopView"
             android:layout_width="275dp"
             android:layout_height="46dp"
             android:layout_marginVertical="100dp"
@@ -251,7 +251,7 @@
             app:layout_constraintHorizontal_bias="0.205"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline5"
-            app:layout_constraintVertical_bias="0.36" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/endStopText"
@@ -263,10 +263,10 @@
             android:text="Zwischenstopps (optional)"
             android:textColor="@color/rcreme"
             android:textSize="15dp"
-            app:layout_constraintBottom_toTopOf="@id/endStop"
-            app:layout_constraintEnd_toEndOf="@id/endStop"
+            app:layout_constraintBottom_toTopOf="@id/zwischenStopView"
+            app:layout_constraintEnd_toEndOf="@id/zwischenStopView"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/endStop" />
+            app:layout_constraintStart_toStartOf="@id/zwischenStopView" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -294,7 +294,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="446dp" />
+            app:layout_constraintGuide_begin="457dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline8"
@@ -308,24 +308,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.72" />
+            app:layout_constraintGuide_percent="0.75" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.85" />
+            app:layout_constraintGuide_percent="0.88" />
 
         <Button
             android:id="@+id/minusButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/minusbutton"
+            android:onClick="deleteFromZwischenstops"
             app:layout_constraintBottom_toBottomOf="@id/guideline8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.794"
-            app:layout_constraintStart_toEndOf="@id/endStop"
+            app:layout_constraintStart_toEndOf="@id/zwischenStopView"
             app:layout_constraintTop_toTopOf="@id/guideline8" />
 
         <Button
@@ -333,10 +334,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/plusbutton"
+            android:onClick="addToZwischenstops"
             app:layout_constraintBottom_toBottomOf="@id/guideline8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
-            app:layout_constraintStart_toEndOf="@id/endStop"
+            app:layout_constraintStart_toEndOf="@id/zwischenStopView"
             app:layout_constraintTop_toTopOf="@id/guideline8" />
 
         <TextView
@@ -379,10 +381,10 @@
             android:textColor="@color/red"
             android:textSize="10dp"
             android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@id/stopName"
+            app:layout_constraintEnd_toEndOf="@id/endStopView"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/stopName"
-            app:layout_constraintTop_toBottomOf="@id/stopName" />
+            app:layout_constraintStart_toStartOf="@id/endStopView"
+            app:layout_constraintTop_toBottomOf="@id/endStopView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
