@@ -73,7 +73,7 @@
         android:fontFamily="@font/cmedium"
         android:onClick="skip"
         android:text="Überspringen"
-        android:textColor="@color/white"
+        android:textColor="@color/rcreme"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

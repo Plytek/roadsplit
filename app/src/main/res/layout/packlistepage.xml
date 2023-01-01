@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintmainscreenreisen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rcreme">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Gemeinsame Packliste"
+        android:textColor="#2A4B42"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintVertical_bias="0.487" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="323dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:lineSpacingExtra="2sp"
+        android:text="Was ist besser als Sachen zu vergessen? Eine gemeinsame Packliste!"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="@id/textView8"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toStartOf="@id/textView8"
+        app:layout_constraintTop_toBottomOf="@id/textView8" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineOben"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.075" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.075" />
+
+    <EditText
+        android:id="@+id/pinTextView2"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/customshapetwo"
+        android:elevation="3dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="left"
+        android:hint="Personalausweis, Hemd, Tasche "
+        android:inputType="text"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="#c4c4c4"
+        android:textColorHint="#c4c4c4"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.242"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline16"
+        app:layout_constraintVertical_bias="0.216" />
+
+    <Button
+        android:id="@+id/plusButton2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/plusbutton"
+        android:onClick="addToZwischenstops"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/pinTextView2"
+        app:layout_constraintTop_toTopOf="@id/guideline16" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.24" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55
+" />
+
+    <ListView
+        android:layout_width="347dp"
+        android:layout_height="517dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline18"
+        app:layout_constraintVertical_bias="0.593" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

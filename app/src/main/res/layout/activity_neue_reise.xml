@@ -11,6 +11,7 @@
         android:id="@+id/imageView17"
         android:layout_width="131dp"
         android:layout_height="20dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.11"
@@ -21,17 +22,18 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="376dp"
-        android:layout_height="208dp"
+        android:layout_width="500dp"
+        android:layout_height="300dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guideline11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.029"
-        app:srcCompat="@drawable/canvasneuereise" />
+        app:layout_constraintTop_toTopOf="@id/guideline11"
+        app:layout_constraintVertical_bias="0.02"
+        app:srcCompat="@drawable/neuereisecanvas" />
+
+
 
     <TextView
         android:id="@+id/textView8"
@@ -41,12 +43,11 @@
         android:gravity="center"
         android:text="Zeit für eine Reise!"
         android:textColor="#2A4B42"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline12"
         app:layout_constraintVertical_bias="0.185" />
 
     <TextView
@@ -58,26 +59,25 @@
         android:gravity="center"
         android:lineSpacingExtra="5sp"
         android:text="Mit Roadsplit an deiner Seite musst du kein Genie sein. Wir geben dir alles nötige vor und du planst nur die Dinge, die dir Spaß machen."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:layout_constraintVertical_bias="0.017" />
+        app:layout_constraintEnd_toEndOf="@id/textView8"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="206dp"
-        android:layout_height="73dp"
+        android:layout_width="247dp"
+        android:layout_height="87dp"
         android:fontFamily="@font/cextrabold"
-        android:gravity="center"
+
         android:text="WAS GEHT , LENNART?"
         android:textColor="#2A4B42"
-        android:textSize="34dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline19"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline19"
         app:layout_constraintVertical_bias="0.064" />
 
     <Button
@@ -85,17 +85,18 @@
         android:layout_width="209dp"
         android:layout_height="55dp"
         android:layout_marginBottom="208dp"
-        android:background="@drawable/buttonbackgroundgreen"
+        android:background="@drawable/lightgreenbutton"
         android:fontFamily="@font/cextrabold"
         android:onClick="reiseErstellen"
         android:text="REISE ERSTELLEN"
         android:textAlignment="center"
         android:textColor="@color/rcreme"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@id/guideline13"
         app:layout_constraintVertical_bias="0.555" />
 
     <TextView
@@ -106,18 +107,19 @@
         android:textAlignment="center"
         android:textColor="#c4c4c4"
         android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guideline13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reiseBeitretenButton"
+app:layout_constraintTop_toTopOf="@id/guideline13"
         app:layout_constraintVertical_bias="0.054" />
 
     <Button
         android:id="@+id/reiseBeitretenButton"
         android:layout_width="209dp"
         android:layout_height="55dp"
-        android:background="@drawable/buttonbackgroundgreen"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/darkgreenbutton"
         android:fontFamily="@font/cextrabold"
         android:onClick="reiseBeitreten"
         android:shadowRadius="@integer/material_motion_duration_long_1"
@@ -125,11 +127,9 @@
         android:textAlignment="center"
         android:textColor="@color/rcreme"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintEnd_toEndOf="@id/button3"
+        app:layout_constraintStart_toStartOf="@id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -142,5 +142,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022"
         app:srcCompat="@drawable/stack" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.46936542" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.23304157" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.67" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09409191" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
