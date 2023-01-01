@@ -6,277 +6,385 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/rdarkgreen">
-    <ImageView
-        android:id="@+id/imageView17"
-        android:layout_width="131dp"
-        android:layout_height="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/textView10"
-        app:layout_constraintEnd_toEndOf="@id/textView10"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/textView10"
-        app:layout_constraintTop_toTopOf="@id/textView10"
-        app:layout_constraintVertical_bias="0.402"
-        app:srcCompat="@drawable/greenbar" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="247dp"
-        android:layout_height="92dp"
-        android:layout_marginStart="28dp"
-        android:fontFamily="@font/cextrabold"
-        android:gravity="center"
-        android:text="NEUE REISE ANLEGEN"
-        android:textColor="@color/rcreme"
-        android:textSize="40dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline3"
-        app:layout_constraintVertical_bias="0.467" />
-
-
-    <ImageView
-        android:id="@+id/logodark"
-        android:layout_width="96dp"
-        android:layout_height="86dp"
-        android:layout_marginEnd="28dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline3"
-        app:layout_constraintVertical_bias="0.465"
-        app:srcCompat="@drawable/rdarklogo" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/cmedium"
-        android:gravity="center"
-        android:text="@string/reise_name_erstellen"
-        android:textColor="@color/rcreme"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@id/reiseName"
-        app:layout_constraintEnd_toEndOf="@id/reiseName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/reiseName" />
+        android:background="@color/rdarkgreen"
+        tools:layout_editor_absoluteX="-17dp"
+        tools:layout_editor_absoluteY="4dp">
 
-    <EditText
-        android:id="@+id/reiseName"
-        android:layout_width="327dp"
-        android:layout_height="50dp"
-        android:layout_marginVertical="100dp"
-        android:background="@drawable/customshapetwo"
-        android:elevation="3dp"
-        android:fontFamily="@font/cmedium"
-        android:hint="Rolands rasender Roadtrip"
-        android:inputType="textPersonName"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColor="#c4c4c4"
-        android:textColorHint="#c4c4c4"
-        android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline2"
-        app:layout_constraintBottom_toBottomOf="@id/guideline2"
-        tools:layout_editor_absoluteY="241dp" />
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="131dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/textView10"
+            app:layout_constraintEnd_toEndOf="@id/textView10"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/textView10"
+            app:layout_constraintTop_toTopOf="@id/textView10"
+            app:layout_constraintVertical_bias="0.402"
+            app:srcCompat="@drawable/greenbar" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/cmedium"
-        android:gravity="center"
-        android:text="Wo möchtest du Starten?"
-        android:textColor="@color/rcreme"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@id/startingPoint"
-        app:layout_constraintEnd_toEndOf="@id/startingPoint"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startingPoint" />
-
-    <EditText
-        android:id="@+id/startingPoint"
-        android:layout_width="327dp"
-        android:layout_height="46dp"
-        android:layout_marginVertical="100dp"
-        android:background="@drawable/customshapetwo"
-        android:elevation="3dp"
-        android:fontFamily="@font/cmedium"
-        android:hint="Adresse, Bahnhof, Flughafen"
-        android:inputType="textPersonName"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColor="#c4c4c4"
-        android:textColorHint="#c4c4c4"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline4"
-        app:layout_constraintVertical_bias="0.521" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/cmedium"
-        android:gravity="center"
-        android:text="Zwischenstopps?"
-        android:textColor="@color/rcreme"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/stopName"
-        app:layout_constraintEnd_toEndOf="@id/stopName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/stopName" />
-
-    <EditText
-        android:id="@+id/stopName"
-        android:layout_width="327dp"
-        android:layout_height="46dp"
-        android:layout_marginVertical="100dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/customshapetwo"
-        android:elevation="3dp"
-        android:fontFamily="@font/cmedium"
-        android:hint="Adresse, Hotel, "
-        android:inputType="textPersonName"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColor="#c4c4c4"
-        android:textColorHint="#c4c4c4"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline5"
-        app:layout_constraintVertical_bias="0.46" />
-
-    <ListView
-        android:id="@+id/stopList"
-        android:layout_width="341dp"
-        android:layout_height="163dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/stopName"
-        app:layout_constraintTop_toTopOf="@id/guideline6"
-        app:layout_constraintVertical_bias="0.52" >
-
-    </ListView>
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="209dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="76dp"
-        android:background="@drawable/lightgreenbutton"
-        android:elevation="3dp"
-        android:fontFamily="@font/cextrabold"
-        android:onClick="saveReise"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:text="REISE ERSTELLEN"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline7" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="253dp"
-        android:layout_height="19dp"
-        android:text="Wir generieren automatisch eine Sharing-PIN."
-        android:textAlignment="center"
-        android:textColor="#c4c4c4"
-        android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/button3"
-        app:layout_constraintHorizontal_bias="0.659"
-        app:layout_constraintStart_toStartOf="@id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
-        app:layout_constraintVertical_bias="0.045" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:onClick="addEverything"
-        app:layout_constraintBottom_toBottomOf="@id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline5"
-        app:layout_constraintVertical_bias="0.46"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.14" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.43" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.56" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.70" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="247dp"
+            android:layout_height="92dp"
+            android:layout_marginStart="28dp"
+            android:fontFamily="@font/cextrabold"
+            android:gravity="center"
+            android:text="NEUE REISE ANLEGEN"
+            android:textColor="@color/rcreme"
+            android:textSize="40dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline3"
+            app:layout_constraintVertical_bias="0.467" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/logodark"
+            android:layout_width="96dp"
+            android:layout_height="86dp"
+            android:layout_marginEnd="28dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="@id/guideline3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline3"
+            app:layout_constraintVertical_bias="0.465"
+            app:srcCompat="@drawable/cremelogo" />
+
+        <EditText
+            android:id="@+id/reiseName"
+            android:layout_width="275dp"
+            android:layout_height="46dp"
+            android:layout_marginVertical="100dp"
+            android:background="@drawable/customshapetwo"
+            android:elevation="3dp"
+            android:fontFamily="@font/cmedium"
+            android:hint="Rolands rasender Roadtrip"
+            android:inputType="textPersonName"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="#c4c4c4"
+            android:textColorHint="#c4c4c4"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline2"
+            app:layout_constraintVertical_bias="0.586" />
+
+        <EditText
+            android:id="@+id/startingPoint"
+            android:layout_width="275dp"
+            android:layout_height="46dp"
+            android:layout_marginVertical="100dp"
+            android:background="@drawable/customshapetwo"
+            android:elevation="3dp"
+            android:fontFamily="@font/cmedium"
+            android:hint="Adresse, Bahnhof, Flughafen"
+            android:inputType="textPersonName"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="#c4c4c4"
+            android:textColorHint="#c4c4c4"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline4"
+            app:layout_constraintVertical_bias="0.586" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/cmedium"
+            android:gravity="center"
+            android:text="@string/reise_name_erstellen"
+            android:textColor="@color/rcreme"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@id/reiseName"
+            app:layout_constraintEnd_toEndOf="@id/reiseName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/reiseName" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/cmedium"
+            android:gravity="center"
+            android:text="Wo möchtest du Starten?"
+            android:textColor="@color/rcreme"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@id/startingPoint"
+            app:layout_constraintEnd_toEndOf="@id/startingPoint"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/startingPoint" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/cmedium"
+            android:gravity="center"
+            android:text="Wo möchtest du hin?"
+            android:textColor="@color/rcreme"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@id/stopName"
+            app:layout_constraintEnd_toEndOf="@id/stopName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/stopName" />
+
+
+        <ListView
+            android:id="@+id/stopList"
+            android:layout_width="341dp"
+            android:layout_height="163dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stopName"
+            app:layout_constraintTop_toTopOf="@id/guideline6"
+            app:layout_constraintVertical_bias="0.554">
+
+        </ListView>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="209dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="76dp"
+            android:background="@drawable/lightgreenbutton"
+            android:elevation="3dp"
+            android:fontFamily="@font/cextrabold"
+            android:onClick="saveReise"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:text="REISE ERSTELLEN"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.455"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline7" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="253dp"
+            android:layout_height="19dp"
+            android:text="Wir generieren automatisch eine Sharing-PIN."
+            android:textAlignment="center"
+            android:textColor="#c4c4c4"
+            android:textSize="11dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/button3"
+            app:layout_constraintHorizontal_bias="0.659"
+            app:layout_constraintStart_toStartOf="@id/button3"
+            app:layout_constraintTop_toBottomOf="@+id/button3"
+            app:layout_constraintVertical_bias="0.045" />
+
+        <EditText
+            android:id="@+id/endStop"
+            android:drawableStart="@drawable/smallplane"
+            android:layout_width="275dp"
+            android:layout_height="46dp"
+            android:layout_marginVertical="100dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/customshapetwo"
+            android:elevation="3dp"
+            android:fontFamily="@font/cmedium"
+            android:hint="Adresse, Ort, Land "
+            android:inputType="textPersonName"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="#c4c4c4"
+            android:textColorHint="#c4c4c4"
+            android:textSize="15dp"
+            android:ems="10"
+            app:layout_constraintBottom_toBottomOf="@id/guideline8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline8"
+            app:layout_constraintVertical_bias="0.36" />
+
+        <EditText
+            android:id="@+id/stopName"
+            android:layout_width="275dp"
+            android:layout_height="46dp"
+            android:layout_marginVertical="100dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/customshapetwo"
+            android:elevation="3dp"
+            android:fontFamily="@font/cmedium"
+            android:hint="Adresse, Hotel, Region "
+            android:inputType="textPersonName"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="#c4c4c4"
+            android:textColorHint="#c4c4c4"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline5"
+            app:layout_constraintVertical_bias="0.36" />
+
+        <TextView
+            android:id="@+id/endStopText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/cmedium"
+            android:gravity="center"
+            android:text="Zwischenstopps (optional)"
+            android:textColor="@color/rcreme"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@id/endStop"
+            app:layout_constraintEnd_toEndOf="@id/endStop"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/endStop" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.30" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.14" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.40" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="446dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="356dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.72" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <Button
+            android:id="@+id/minusButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/minusbutton"
+            app:layout_constraintBottom_toBottomOf="@id/guideline8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.794"
+            app:layout_constraintStart_toEndOf="@id/endStop"
+            app:layout_constraintTop_toTopOf="@id/guideline8" />
+
+        <Button
+            android:id="@+id/plusButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/plusbutton"
+            app:layout_constraintBottom_toBottomOf="@id/guideline8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@id/endStop"
+            app:layout_constraintTop_toTopOf="@id/guideline8" />
+
+        <TextView
+            android:id="@+id/errorReiseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cmedium"
+            android:gravity="left"
+            android:text="Deine Reise hat noch keinen Namen."
+            android:textColor="@color/red"
+            android:textSize="10dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/reiseName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/reiseName"
+            app:layout_constraintTop_toBottomOf="@id/reiseName" />
+
+        <TextView
+            android:id="@+id/errorStartPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cmedium"
+            android:gravity="left"
+            android:text="Bitte gebe einen Start-Punkt ein."
+            android:textColor="@color/red"
+            android:textSize="10dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/startingPoint"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/startingPoint"
+            app:layout_constraintTop_toBottomOf="@id/startingPoint" />
+
+        <TextView
+            android:id="@+id/errorEndStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cmedium"
+            android:gravity="left"
+            android:text="Bitte gebe einen Start-Punkt ein."
+            android:textColor="@color/red"
+            android:textSize="10dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/stopName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/stopName"
+            app:layout_constraintTop_toBottomOf="@id/stopName" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
     <!--android:drawableRight="@drawable/ic_arrow_forward_black_24dp"-->
