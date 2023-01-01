@@ -10,9 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/rdarkgreen"
-        tools:layout_editor_absoluteX="-17dp"
-        tools:layout_editor_absoluteY="4dp">
+        android:background="@color/rdarkgreen">
 
         <ImageView
             android:id="@+id/imageView17"
@@ -56,8 +54,8 @@
 
         <EditText
             android:id="@+id/reiseName"
-            android:layout_width="275dp"
-            android:layout_height="46dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginVertical="100dp"
             android:background="@drawable/customshapetwo"
             android:elevation="3dp"
@@ -73,15 +71,14 @@
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintHorizontal_bias="0.252"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline2"
-            app:layout_constraintVertical_bias="0.586" />
+            app:layout_constraintTop_toTopOf="@id/guideline2" />
 
         <EditText
             android:id="@+id/startingPoint"
-            android:layout_width="275dp"
-            android:layout_height="46dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginVertical="100dp"
             android:background="@drawable/customshapetwo"
             android:elevation="3dp"
@@ -97,10 +94,9 @@
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@id/guideline4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintHorizontal_bias="0.252"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline4"
-            app:layout_constraintVertical_bias="0.586" />
+            app:layout_constraintTop_toTopOf="@id/guideline4" />
 
         <TextView
             android:id="@+id/textView8"
@@ -111,7 +107,7 @@
             android:gravity="center"
             android:text="@string/reise_name_erstellen"
             android:textColor="@color/rcreme"
-            android:textSize="15dp"
+            android:textSize="17dp"
             app:layout_constraintBottom_toTopOf="@id/reiseName"
             app:layout_constraintEnd_toEndOf="@id/reiseName"
             app:layout_constraintHorizontal_bias="0.0"
@@ -126,7 +122,7 @@
             android:gravity="center"
             android:text="Wo möchtest du Starten?"
             android:textColor="@color/rcreme"
-            android:textSize="15dp"
+            android:textSize="17dp"
             app:layout_constraintBottom_toTopOf="@id/startingPoint"
             app:layout_constraintEnd_toEndOf="@id/startingPoint"
             app:layout_constraintHorizontal_bias="0.0"
@@ -141,7 +137,7 @@
             android:gravity="center"
             android:text="Wo möchtest du hin?"
             android:textColor="@color/rcreme"
-            android:textSize="15dp"
+            android:textSize="17dp"
             app:layout_constraintBottom_toTopOf="@id/stopName"
             app:layout_constraintEnd_toEndOf="@id/stopName"
             app:layout_constraintHorizontal_bias="0.0"
@@ -153,6 +149,8 @@
             android:layout_width="341dp"
             android:layout_height="163dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/customshapetwo"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/guideline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
@@ -190,16 +188,17 @@
             android:id="@+id/textView12"
             android:layout_width="253dp"
             android:layout_height="19dp"
+            android:layout_marginTop="4dp"
             android:text="Wir generieren automatisch eine Sharing-PIN."
             android:textAlignment="center"
             android:textColor="#c4c4c4"
             android:textSize="11dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/button3"
-            app:layout_constraintHorizontal_bias="0.659"
+            app:layout_constraintHorizontal_bias="0.386"
             app:layout_constraintStart_toStartOf="@id/button3"
             app:layout_constraintTop_toBottomOf="@+id/button3"
-            app:layout_constraintVertical_bias="0.045" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/endStop"
@@ -230,8 +229,8 @@
 
         <EditText
             android:id="@+id/stopName"
-            android:layout_width="275dp"
-            android:layout_height="46dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginVertical="100dp"
             android:layout_marginBottom="4dp"
             android:background="@drawable/customshapetwo"
@@ -248,10 +247,10 @@
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@id/guideline5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintHorizontal_bias="0.252"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline5"
-            app:layout_constraintVertical_bias="0.36" />
+            app:layout_constraintVertical_bias="0.462" />
 
         <TextView
             android:id="@+id/endStopText"
@@ -294,14 +293,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="446dp" />
+            app:layout_constraintGuide_percent="0.50" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="356dp" />
+            app:layout_constraintGuide_percent="0.60" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline6"
