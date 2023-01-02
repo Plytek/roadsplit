@@ -3,6 +3,7 @@ package com.example.roadsplit.reponses;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ReiseReponse {
@@ -10,6 +11,18 @@ public class ReiseReponse {
     private Reise reise;
     private Reisender reisender;
     private List<Reisender> reisendeList;
+    private List<Reisender> schuldner;
+    private List<BigDecimal> betraege;
+
+
+    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege) {
+        this.message = message;
+        this.reise = reise;
+        this.reisender = reisender;
+        this.reisendeList = reisendeList;
+        this.schuldner = schuldner;
+        this.betraege = betraege;
+    }
 
     public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList) {
         this.message = message;
@@ -57,5 +70,29 @@ public class ReiseReponse {
 
     public void setReisendeList(List<Reisender> reisendeList) {
         this.reisendeList = reisendeList;
+    }
+
+    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner) {
+        this.message = message;
+        this.reise = reise;
+        this.reisender = reisender;
+        this.reisendeList = reisendeList;
+        this.schuldner = schuldner;
+    }
+
+    public List<Reisender> getSchuldner() {
+        return schuldner;
+    }
+
+    public void setSchuldner(List<Reisender> schuldner) {
+        this.schuldner = schuldner;
+    }
+
+    public List<BigDecimal> getBetraege() {
+        return betraege;
+    }
+
+    public void setBetraege(List<BigDecimal> betraege) {
+        this.betraege = betraege;
     }
 }

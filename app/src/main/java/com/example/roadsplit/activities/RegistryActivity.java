@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.helperclasses.AppSettings;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
@@ -36,6 +37,8 @@ public class RegistryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registry);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
+
+        AppSettings.buttonPressDownEffect(findViewById(R.id.realRegistrierenButton));
     }
 
     public void backToLogin(View view)

@@ -7,15 +7,20 @@ public class Ausgabe {
 
     private AusgabenTyp ausgabenTyp;
     private BigDecimal betrag;
-    private long schuldner;
+    private boolean paidForHimself;
     private long zahler;
+    private long schuldner;
+    private int anzahlReisende;
 
-    public Ausgabe(long id, AusgabenTyp ausgabenTyp, BigDecimal betrag, long schuldner, long zahler) {
+
+    public Ausgabe(long id, AusgabenTyp ausgabenTyp, BigDecimal betrag, boolean paidForHimself, long zahler, long schuldner, int anzahlReisende) {
         this.id = id;
         this.ausgabenTyp = ausgabenTyp;
         this.betrag = betrag;
-        this.schuldner = schuldner;
+        this.paidForHimself = paidForHimself;
         this.zahler = zahler;
+        this.schuldner = schuldner;
+        this.anzahlReisende = anzahlReisende;
     }
 
     public Ausgabe() {
@@ -45,12 +50,12 @@ public class Ausgabe {
         this.betrag = betrag;
     }
 
-    public long getSchuldner() {
-        return schuldner;
+    public boolean isPaidForHimself() {
+        return paidForHimself;
     }
 
-    public void setSchuldner(long schuldner) {
-        this.schuldner = schuldner;
+    public void setPaidForHimself(boolean paidForHimself) {
+        this.paidForHimself = paidForHimself;
     }
 
     public long getZahler() {
@@ -59,6 +64,22 @@ public class Ausgabe {
 
     public void setZahler(long zahler) {
         this.zahler = zahler;
+    }
+
+    public long getSchuldner() {
+        return schuldner;
+    }
+
+    public void setSchuldner(long schuldner) {
+        this.schuldner = schuldner;
+    }
+
+    public int getAnzahlReisende() {
+        return anzahlReisende;
+    }
+
+    public void setAnzahlReisende(int anzahlReisende) {
+        this.anzahlReisende = anzahlReisende;
     }
 
     @Override

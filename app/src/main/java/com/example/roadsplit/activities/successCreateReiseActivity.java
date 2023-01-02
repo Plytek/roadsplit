@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.helperclasses.AppSettings;
 
 public class successCreateReiseActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class successCreateReiseActivity extends AppCompatActivity {
         Intent intent = getIntent();
         reiseid = intent.getStringExtra("id");
         ((TextView)findViewById(R.id.pinTextViewSuccess)).setText(reiseid);
+        AppSettings.buttonPressDownEffect(findViewById(R.id.sharedUebersichtButton));
     }
 
     public void copyToClipboard(View view){

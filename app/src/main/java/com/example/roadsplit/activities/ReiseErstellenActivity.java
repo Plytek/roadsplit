@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.helperclasses.AppSettings;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
@@ -56,6 +57,10 @@ public class ReiseErstellenActivity extends AppCompatActivity{
                 android.R.layout.simple_list_item_1, zwischenstops);
         listView.setAdapter(adapter);
 
+        AppSettings.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
+        AppSettings.buttonPressDownEffect(findViewById(R.id.plusButton));
+        AppSettings.buttonPressDownEffect(findViewById(R.id.minusButton));
+
     }
 
     public void addToZwischenstops(View view){
@@ -68,7 +73,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
             e.printStackTrace();
         }
         zwischenstops.add(stop);
-        editText.clearComposingText();
+        editText.setText(" ");
         adapter.notifyDataSetChanged();
     }
 
@@ -124,7 +129,6 @@ public class ReiseErstellenActivity extends AppCompatActivity{
 
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/reise";
-        //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
         if(currentReise == null) return;

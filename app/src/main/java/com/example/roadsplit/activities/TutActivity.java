@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.roadsplit.adapter.IntroViewPagerAdapter;
 import com.example.roadsplit.R;
+import com.example.roadsplit.helperclasses.AppSettings;
 import com.example.roadsplit.helperclasses.ScreenItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -49,6 +50,9 @@ public class TutActivity extends AppCompatActivity {
         tabIndicator = findViewById(R.id.tab_indicator);
         btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation);
         tvSkip = findViewById(R.id.tv_skip);
+
+        AppSettings.buttonPressDownEffect(btnNext);
+        AppSettings.buttonPressDownEffect(btnGetStarted);
 
         // fill list screen
         this.mList = new ArrayList<>();

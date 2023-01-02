@@ -18,18 +18,21 @@ import android.widget.Toast;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Ausgabe;
-import com.example.roadsplit.model.AusgabenZusammenfassung;
+import com.example.roadsplit.model.AusgabenResponse;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
+import com.example.roadsplit.reponses.PayResponse;
 import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.requests.AusgabenRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,12 +53,14 @@ public class PaymentDummyActivity extends AppCompatActivity {
     private List<String> names;
     private List<String> stops;
     private List<String> items;
+    private Reise currentReise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_dummy);
 
+        currentReise = MainActivity.currentUser.getReisen().get(0);
         names = new ArrayList<>();
         stops = new ArrayList<>();
         items = new ArrayList<>();
@@ -84,7 +89,7 @@ public class PaymentDummyActivity extends AppCompatActivity {
         String url = MainActivity.BASEURL + "/api/reisedaten/reisesuche";
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-        Reise currentReise = MainActivity.currentUser.getReisen().get(0);
+        currentReise = MainActivity.currentUser.getReisen().get(0);
         if(currentReise == null) return;
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(currentReise));
 
@@ -164,6 +169,7 @@ public class PaymentDummyActivity extends AppCompatActivity {
             if (checked.get(i)) {
                 Ausgabe ausgabe = new Ausgabe();
                 ausgabe.setBetrag(betrag);
+                ausgabe.setAnzahlReisende(checked.size());
                 ausgabe.setZahler(MainActivity.currentUser.getId());
                 ausgabe.setSchuldner(reisenderList.get(i).getId());
                 if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
@@ -223,7 +229,7 @@ public class PaymentDummyActivity extends AppCompatActivity {
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
-        Reise reise = reiseList.get(0);
+        Reise reise = currentReise;
 
         AusgabenRequest ausgabenRequest = new AusgabenRequest();
         if(reise == null) return;
@@ -238,24 +244,38 @@ public class PaymentDummyActivity extends AppCompatActivity {
                 .post(formBody)
                 .build();
 
+        //Log.d("zusammenfassung", new Gson().toJson(ausgabenRequest));
+
         //Erstellt in einem neuen Thread eine Http Anfrage an den Webservice, ruft bei Erfolg onReponse() auf, bei Misserfolg onFailure()
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                TextView textView = findViewById(R.id.errorRegView);
-                String text = "Es konnte keine Verbindung zum Server hergestellt werden";
-                textView.setText(text);
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                AusgabenZusammenfassung ausgabenZusammenfassung = new Gson().fromJson(response.body().string(), AusgabenZusammenfassung.class);
+                ReiseReponse reiseReponse = new Gson().fromJson(Objects.requireNonNull(response.body()).string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
-                    //MainActivity.currentUser = reiseReponse.getReisender();
-                    Log.d("ausgaben", ausgabenZusammenfassung.getBezahltFuer().toString());
-                    Log.d("ausgaben", ausgabenZusammenfassung.getBezahltVon().toString());
-                    Looper.prepare();
-                    Toast.makeText(PaymentDummyActivity.this, "success", Toast.LENGTH_LONG).show();
+                    Log.d("zusammenfassung", reiseReponse.getMessage());
+                    Log.d("zusammenfassung", reiseReponse.getSchuldner().toString());
+                    Log.d("zusammenfassung", reiseReponse.getBetraege().toString());
+                    runOnUiThread(() -> {
+                        int counter = 0;
+                        for(Reisender reisender : reiseReponse.getSchuldner()){
+                            if(!reisender.getId().equals(MainActivity.currentUser.getId())){
+                                BigDecimal betrag = reiseReponse.getBetraege().get(counter);
+                                String result = MainActivity.currentUser.getNickname()
+                                        + " bekommt " + betrag.toString() + "€ von " + reisender.getNickname();
+                                if(betrag.compareTo(new BigDecimal(0)) < 0){
+                                    result = MainActivity.currentUser.getNickname()
+                                            + " zahlt " + betrag.toString() + "€ an " + reisender.getNickname();
+                                }
+                                items.add(result);
+                            }
+                            itemAdapter.notifyDataSetChanged();
+                            counter++;
+                        }
+                    });
                 }
                 else {
                     //EditText editText = findViewById(R.id.dummyResultText);

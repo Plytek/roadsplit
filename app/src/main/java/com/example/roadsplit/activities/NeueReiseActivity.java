@@ -14,12 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.helperclasses.AppSettings;
 import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.gson.Gson;
@@ -45,10 +45,13 @@ public class NeueReiseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_neue_reise);
         if(MainActivity.currentUser != null)
         {
-            ((TextView)findViewById(R.id.textView10)).setText("Was geht, " + MainActivity.currentUser.getNickname());
+            String welcome = "WAS GEHT, " + MainActivity.currentUser.getNickname().toUpperCase();
+            ((TextView)findViewById(R.id.textView10)).setText(welcome);
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        AppSettings.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
+        AppSettings.buttonPressDownEffect(findViewById(R.id.reiseBeitretenButton));
     }
 
     public void reiseErstellen(View view)

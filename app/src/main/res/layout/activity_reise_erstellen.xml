@@ -150,7 +150,6 @@
             android:layout_height="163dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/customshapetwo"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/guideline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
@@ -162,7 +161,7 @@
         </ListView>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/reiseErstellenButton"
             android:layout_width="209dp"
             android:layout_height="55dp"
             android:layout_marginBottom="76dp"
@@ -194,10 +193,10 @@
             android:textColor="#c4c4c4"
             android:textSize="11dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/button3"
+            app:layout_constraintEnd_toEndOf="@id/reiseErstellenButton"
             app:layout_constraintHorizontal_bias="0.386"
-            app:layout_constraintStart_toStartOf="@id/button3"
-            app:layout_constraintTop_toBottomOf="@+id/button3"
+            app:layout_constraintStart_toStartOf="@id/reiseErstellenButton"
+            app:layout_constraintTop_toBottomOf="@+id/reiseErstellenButton"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
@@ -307,14 +306,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.72" />
+            app:layout_constraintGuide_percent="0.74" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.85" />
+            app:layout_constraintGuide_percent="0.88" />
 
         <Button
             android:id="@+id/minusButton"
@@ -335,8 +334,7 @@
             android:background="@drawable/plusbutton"
             android:onClick="addToZwischenstops"
             app:layout_constraintBottom_toBottomOf="@id/guideline8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintEnd_toStartOf="@+id/minusButton"
             app:layout_constraintStart_toEndOf="@id/zwischenStopView"
             app:layout_constraintTop_toTopOf="@id/guideline8" />
 

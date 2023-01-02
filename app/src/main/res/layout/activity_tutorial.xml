@@ -15,6 +15,7 @@
         android:background="#FFF6ED"
         tools:context=".activities.TutActivityOne">
 
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/screen_viewpager"
             android:layout_width="0dp"
@@ -22,9 +23,10 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/tab_indicator"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/tutSkip"

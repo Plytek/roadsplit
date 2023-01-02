@@ -4,16 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.helperclasses.AppSettings;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
@@ -40,6 +44,29 @@ public class LogInActivity extends AppCompatActivity {
             Toast.makeText(this, "Account erfolgreich registriert!", Toast.LENGTH_LONG).show();
         findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
         //findViewById(R.id.plsloginButton).setOnTouchListener(new HapticTouchListener());
+        Button button = findViewById(R.id.plsloginButton);
+        AppSettings.buttonPressDownEffect(button);
+    }
+
+    public static void buttonEffect(View button){
+        button.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public void register(View view)

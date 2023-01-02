@@ -136,7 +136,7 @@
         app:layout_constraintTop_toBottomOf="@id/userRegView" />
 
     <Button
-        android:id="@+id/realLoginButton"
+        android:id="@+id/realRegistrierenButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -161,10 +161,10 @@
         android:onClick="backToLogin"
         android:text="Ich habe bereits einen Account."
         android:textColor="#c4c4c4"
-        app:layout_constraintEnd_toEndOf="@id/realLoginButton"
+        app:layout_constraintEnd_toEndOf="@id/realRegistrierenButton"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/realLoginButton"
-        app:layout_constraintTop_toBottomOf="@id/realLoginButton" />
+        app:layout_constraintStart_toStartOf="@id/realRegistrierenButton"
+        app:layout_constraintTop_toBottomOf="@id/realRegistrierenButton" />
 
     <TextView
         android:id="@+id/errorRegView"

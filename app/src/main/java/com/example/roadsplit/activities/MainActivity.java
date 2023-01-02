@@ -10,11 +10,8 @@ import android.view.WindowManager;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.testing.DummyPlanungActivity;
-import com.example.roadsplit.activities.testing.FurkanTestActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
 import com.example.roadsplit.activities.testing.PaymentDummyActivity;
-import com.example.roadsplit.activities.testing.ReiseErstellenTestActivity;
-import com.example.roadsplit.activities.testing.TutorialActivity;
 import com.example.roadsplit.activities.testing.UserCreateActivity;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.UserAccount;
@@ -31,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private UserAccount userAccount = null;
     public static Reisender currentUser;
     public static final String BASEURL = "http://167.172.167.221:8080";
-    //public static final String BASEURL = "https://321a-88-70-249-101.ngrok.io";
+    //public static final String BASEURL = "https://9dca-88-70-249-101.ngrok.io";
 
 
     @Override
