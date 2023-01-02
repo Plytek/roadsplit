@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintzwischenstopp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rcreme">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Mehr oder Weniger Zwischentops?"
+        android:textColor="#2A4B42"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.376"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintVertical_bias="0.487" />
+
+
+    <TextView
+        android:id="@+id/BudgetTextHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Neues Budget festlegen?"
+        android:textColor="#2A4B42"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline17"
+        tools:layout_editor_absoluteX="28dp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="323dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:lineSpacingExtra="2sp"
+        android:text="Füge Zwischenstopps hinzu, entferne sie oder sieh dir eine Übersicht zu den jeweiligen Stopps an."
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="@id/textView8"
+        app:layout_constraintHorizontal_bias="0.64"
+        app:layout_constraintStart_toStartOf="@id/textView8"
+        app:layout_constraintTop_toBottomOf="@id/textView8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineOben"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <EditText
+        android:id="@+id/pinTextView2"
+        android:layout_width="275dp"
+        android:layout_height="46dp"
+        android:layout_marginVertical="100dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/customshapetwo"
+        android:drawableStart="@drawable/beachicon"
+        android:drawablePadding="5dp"
+        android:elevation="3dp"
+        android:ems="10"
+        android:fontFamily="@font/cmedium"
+        android:hint="Adresse, Ort, Land"
+        android:inputType="textPersonName"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:textColor="#c4c4c4"
+        android:textColorHint="#c4c4c4"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline16"
+        app:layout_constraintVertical_bias="0.44" />
+
+    <Button
+        android:id="@+id/plusButton2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/plusbutton"
+        android:onClick="addToZwischenstops"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/pinTextView2"
+        app:layout_constraintTop_toTopOf="@id/guideline16" />
+
+    <Button
+        android:id="@+id/plusButton3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/plusbutton"
+        android:onClick="addToZwischenstops"
+        app:layout_constraintBottom_toBottomOf="@id/guideline17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/pinTextView3"
+        app:layout_constraintTop_toTopOf="@id/guideline17" />
+
+    <Button
+        android:id="@+id/minusButton2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/minusbuttondark"
+        android:onClick="deleteFromZwischenstops"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.794"
+        app:layout_constraintStart_toEndOf="@id/plusButton2"
+        app:layout_constraintTop_toTopOf="@id/guideline16" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.32" />
+
+
+    <TextView
+        android:id="@+id/StopsTextHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Zwischenstops"
+        android:textColor="#2A4B42"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
+        app:layout_constraintTop_toTopOf="@id/guidelineText2"
+        app:layout_constraintVertical_bias="0.536"
+        tools:layout_editor_absoluteX="28dp" />
+
+    <TextView
+        android:id="@+id/AusgabenTextHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Ausgaben"
+        android:textColor="#2A4B42"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
+        app:layout_constraintTop_toTopOf="@id/guidelineText2"
+        app:layout_constraintVertical_bias="0.292"
+        tools:layout_editor_absoluteX="230dp" />
+
+    <TextView
+        android:id="@+id/BudgetTextHeadline3"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Budget"
+        android:textColor="#2A4B42"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
+        app:layout_constraintTop_toTopOf="@id/guidelineText2"
+        app:layout_constraintVertical_bias="0.317"
+        tools:layout_editor_absoluteX="318dp" />
+
+    <ListView
+        android:id="@+id/stopNamenListView"
+        android:layout_width="190dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/customshapefour"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.127"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline18"
+        app:layout_constraintVertical_bias="0.534" />
+
+    <ListView
+        android:id="@+id/AusgabenListView"
+        android:layout_width="75dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/customshapethree"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.684"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline18"
+        app:layout_constraintVertical_bias="0.534" />
+
+    <ListView
+        android:id="@+id/BudgetListView"
+        android:layout_width="75dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/customshapefive"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline18"
+        app:layout_constraintVertical_bias="0.534" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.63" />
+
+    <EditText
+        android:id="@+id/pinTextView3"
+        android:layout_width="273dp"
+        android:layout_height="31dp"
+        android:layout_marginVertical="8dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/customshapetwo"
+        android:drawableStart="@drawable/moneyicon"
+        android:drawablePadding="5dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="left"
+        android:hint="20€ Budget für Hamburg"
+        android:inputType="text"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="#c4c4c4"
+        android:textColorHint="#c4c4c4"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline17"
+        app:layout_constraintVertical_bias="0.263" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
