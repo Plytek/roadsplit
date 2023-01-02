@@ -28,14 +28,16 @@
         android:id="@+id/BudgetTextHeadline"
         android:layout_width="wrap_content"
         android:layout_height="41dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="12dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Neues Budget festlegen?"
         android:textColor="#2A4B42"
         android:textSize="17dp"
         app:layout_constraintBottom_toTopOf="@id/guideline17"
-        tools:layout_editor_absoluteX="28dp" />
+        app:layout_constraintEnd_toEndOf="@id/pinTextView3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/pinTextView3" />
 
     <TextView
         android:id="@+id/textView9"
@@ -157,9 +159,11 @@
         android:textColor="#2A4B42"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
+        app:layout_constraintEnd_toEndOf="@id/stopNamenListView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/stopNamenListView"
         app:layout_constraintTop_toTopOf="@id/guidelineText2"
-        app:layout_constraintVertical_bias="0.536"
-        tools:layout_editor_absoluteX="28dp" />
+        app:layout_constraintVertical_bias="0.512" />
 
     <TextView
         android:id="@+id/AusgabenTextHeadline"
@@ -171,9 +175,11 @@
         android:textColor="#2A4B42"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
+        app:layout_constraintEnd_toEndOf="@id/AusgabenListView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/AusgabenListView"
         app:layout_constraintTop_toTopOf="@id/guidelineText2"
-        app:layout_constraintVertical_bias="0.292"
-        tools:layout_editor_absoluteX="230dp" />
+        app:layout_constraintVertical_bias="0.512" />
 
     <TextView
         android:id="@+id/BudgetTextHeadline3"
@@ -185,9 +191,11 @@
         android:textColor="#2A4B42"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
+        app:layout_constraintEnd_toEndOf="@id/BudgetListView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/BudgetListView"
         app:layout_constraintTop_toTopOf="@id/guidelineText2"
-        app:layout_constraintVertical_bias="0.317"
-        tools:layout_editor_absoluteX="318dp" />
+        app:layout_constraintVertical_bias="0.512" />
 
     <ListView
         android:id="@+id/stopNamenListView"
