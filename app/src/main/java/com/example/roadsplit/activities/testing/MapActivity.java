@@ -115,7 +115,7 @@ public class MapActivity extends AppCompatActivity {
                     Marker marker = new Marker(map);
                     marker.setPosition(waypoint);
                     marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                    marker.setIcon(getResources().getDrawable(R.drawable.logosmall));
+                    marker.setIcon(getResources().getDrawable(R.drawable.pinpoint));
                     marker.setTitle(" Budget: " + stops.get(counter).getBudget() + "€"); //
                     map.getOverlays().add(marker);
                     counter++;
