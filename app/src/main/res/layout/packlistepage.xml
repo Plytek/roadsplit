@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.165" />
 
     <EditText
         android:id="@+id/pinTextView2"
@@ -75,7 +75,7 @@
         android:id="@+id/plusButton2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="5dp"
         android:background="@drawable/plusbutton"
         android:onClick="addToZwischenstops"
         app:layout_constraintBottom_toBottomOf="@id/guideline16"
@@ -89,20 +89,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.29" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55
-" />
+        app:layout_constraintGuide_percent="0.55" />
+
+    <Button
+        android:id="@+id/minusButton3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/minusbuttondark"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.794"
+        app:layout_constraintStart_toEndOf="@id/plusButton2"
+        app:layout_constraintTop_toTopOf="@id/guideline16" />
 
     <ListView
         android:id="@+id/packlisteListView"
-        android:layout_width="347dp"
-        android:layout_height="517dp"
+        android:layout_width="349dp"
+        android:layout_height="378dp"
         android:layout_marginStart="32dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline18"
         app:layout_constraintEnd_toEndOf="parent"
