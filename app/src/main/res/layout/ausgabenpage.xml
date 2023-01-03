@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintausgabenpage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/rcreme">
+
+    <TextView
+        android:id="@+id/textViewPayAmountAusgleich"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:clickable="true"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:text="240€"
+        android:textColor="@color/rlightgreen"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.768"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintVertical_bias="0.49" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:lineSpacingExtra="2sp"
+        android:text="Du Schuldest"
+        android:textColor="#c4c4c4"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="@id/textViewPayAmountAusgleich"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@id/textViewPayAmountAusgleich"
+        app:layout_constraintTop_toBottomOf="@id/textViewPayAmountAusgleich" />
+
+    <TextView
+        android:id="@+id/textViewPayAmountTeam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:text="1200€"
+        android:textColor="#2A4B42"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintVertical_bias="0.49" />
+
+    <TextView
+        android:id="@+id/textViewPayAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:clickable="true"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:text="80€"
+        android:textColor="#2A4B42"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.231"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintVertical_bias="0.49" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:lineSpacingExtra="2sp"
+        android:text="Privatausgaben"
+        android:textSize="10dp"
+        android:textColor="#c4c4c4"
+        app:layout_constraintEnd_toEndOf="@id/textViewPayAmount"
+        app:layout_constraintStart_toStartOf="@id/textViewPayAmount"
+        app:layout_constraintTop_toBottomOf="@id/textViewPayAmount" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:lineSpacingExtra="2sp"
+        android:text="Gruppenausgaben"
+        android:textColor="#c4c4c4"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="@id/textViewPayAmountTeam"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@id/textViewPayAmountTeam"
+        app:layout_constraintTop_toBottomOf="@id/textViewPayAmountTeam" />
+
+    <TextView
+        android:id="@+id/BudgetTextHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Teilnehmer"
+        android:textColor="#2A4B42"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline17"
+        app:layout_constraintEnd_toEndOf="@id/planets_spinner2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/planets_spinner2"
+        app:layout_constraintTop_toBottomOf="@+id/pinTextView2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/newausgabetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Betrag"
+        android:textColor="#2A4B42"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="@id/pinTextView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/pinTextView2" />
+
+    <EditText
+        android:id="@+id/pinTextView2"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginVertical="8dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/customshapetwo"
+        android:drawableStart="@drawable/moneyicon"
+        android:drawablePadding="5dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="left"
+        android:hint="Betrag"
+        android:inputType="text"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="#c4c4c4"
+        android:textColorHint="#c4c4c4"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline16"
+        app:layout_constraintVertical_bias="0.183" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineOben"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.22" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <Spinner
+        android:id="@+id/planets_spinner2"
+        android:layout_width="273dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/customshapetwo"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline17"
+        app:layout_constraintVertical_bias="0.841" />
+
+    <TextView
+        android:id="@+id/BudgetTextHeadline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Kategorie"
+        android:textColor="#2A4B42"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline18"
+        app:layout_constraintEnd_toEndOf="@id/planets_spinner4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/planets_spinner4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <Spinner
+        android:id="@+id/planets_spinner4"
+        android:layout_width="273dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/customshapetwo"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline18"
+        app:layout_constraintVertical_bias="0.841" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStops"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <TextView
+        android:id="@+id/BudgetTextHeadline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Zwischenstop"
+        android:textColor="#2A4B42"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/guidelineStops"
+        app:layout_constraintEnd_toEndOf="@id/planets_spinner3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/planets_spinner3" />
+
+    <Spinner
+        android:id="@+id/planets_spinner3"
+        android:layout_width="273dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/customshapetwo"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineStops"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineStops"
+        app:layout_constraintVertical_bias="0.825" />
+
+    <Button
+        android:id="@+id/buttonunten"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/lightgreenbutton"
+        android:elevation="3dp"
+        android:fontFamily="@font/cextrabold"
+        android:onClick="zurReise"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:text="AUSGABE SPEICHERN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline21"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline21"
+        app:layout_constraintVertical_bias="0.569" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:clickable="true"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:text="Ausgabe hinzufügen"
+        android:textColor="#2A4B42"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.207"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline22" />
+
+    <TextView
+        android:id="@+id/textStatistik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:fontFamily="@font/cextrabold"
+        android:gravity="center"
+        android:text="Reisestatistik"
+        android:textColor="#2A4B42"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline23"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline23" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.165" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -14,6 +14,7 @@ import com.example.roadsplit.activities.testing.DummyPlanungActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
 import com.example.roadsplit.activities.testing.PaymentDummyActivity;
 import com.example.roadsplit.activities.testing.UserCreateActivity;
+import com.example.roadsplit.activities.testing.testknechtActivitay;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
@@ -106,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ReiseErstellenActivity.class);
         startActivity(intent);
     }
+
+    public void testKnecht(View view){
+        Intent intent = new Intent(this, testknechtActivitay.class);
+        startActivity(intent);
+    }
+
 
     public void reiseDetail(View view){
         Intent intent = new Intent(this, MainScreenReisenActivity.class);

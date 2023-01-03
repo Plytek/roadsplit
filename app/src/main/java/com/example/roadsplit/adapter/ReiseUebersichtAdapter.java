@@ -67,7 +67,7 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
                 setUpZwischenStops(layoutScreen);
                 break;
             case 3:
-                layoutScreen = inflater.inflate(R.layout.dokumentepage,null);
+                layoutScreen = inflater.inflate(R.layout.ausgabenpage,null);
                 break;
             default:
                 layoutScreen = inflater.inflate(R.layout.dokumentepage,null);
