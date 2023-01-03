@@ -1,5 +1,6 @@
 package com.example.roadsplit.activities.testing;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -18,11 +19,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
+import com.example.roadsplit.model.UserAccount;
+import com.example.roadsplit.reponses.UserResponse;
+import com.google.gson.Gson;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
@@ -42,6 +47,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -89,6 +103,7 @@ public class MapActivity extends AppCompatActivity {
         String[] permissions = new String[1];
         permissions[0] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         requestPermissionsIfNecessary(permissions);
+
     }
 
     public void fetchGeodata(View view)
@@ -222,6 +237,5 @@ public class MapActivity extends AppCompatActivity {
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
     }
-
 
 }
