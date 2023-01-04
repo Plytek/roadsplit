@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,28 +22,38 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.activities.MainScreenReisenActivity;
 import com.example.roadsplit.model.Ausgabe;
+import com.example.roadsplit.model.AusgabenTyp;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class ReiseUebersichtAdapter extends PagerAdapter {
 
     private final Reise reise;
+    private List<Reisender> reisende;
     private List<Stop> stops;
+    private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
     Context mContext;
     MainScreenReisenActivity mainScreenReisenActivity;
     List<View> views;
 
-    public ReiseUebersichtAdapter(Context mContext, MainScreenReisenActivity mainScreenReisenActivity, List<View> views, Reise reise) {
+    public ReiseUebersichtAdapter(Context mContext, MainScreenReisenActivity mainScreenReisenActivity, List<View> views, Reise reise, List<Reisender> reisende) {
         this.mContext = mContext;
         this.views = views;
         this.mainScreenReisenActivity = mainScreenReisenActivity;
         this.reise = reise;
         this.stops = reise.getStops();
+        this.reisende = reisende;
         //mainScreenReisenActivity.findViewById()
     }
 
@@ -55,13 +68,14 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
 
         switch(position)
         {
-            case 2:
-                layoutScreen = inflater.inflate(R.layout.dokumentepage,null);
+            case 0:
+                layoutScreen = inflater.inflate(R.layout.ausgabenpage,null);
+                setUpAusgaben(layoutScreen);
                 break;
-            case 1:
+            case 2:
                 layoutScreen = inflater.inflate(R.layout.packlistepage,null);
                 break;
-            case 0:
+            case 1:
                 layoutScreen = inflater.inflate(R.layout.zwischenstopp,null);
                 setUpZwischenStops(layoutScreen);
                 break;
@@ -101,33 +115,26 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
         Button addBudgetButton = layoutScreen.findViewById(R.id.plusButton3);
 
         ListView stopListView = layoutScreen.findViewById(R.id.stopNamenListView);
-        ListView budgetListView = layoutScreen.findViewById(R.id.BudgetListView);
-        ListView gesamtAusgabenListView = layoutScreen.findViewById(R.id.AusgabenListView);
-
-        List<String> stopNames = new ArrayList<>();
-        List<String> budgetStrings = new ArrayList<>();
-        List<String> gesamtAusgabenString = new ArrayList<>();
 
         for(Stop stop : stops)
         {
-            stopNames.add(stop.getName());
+            HashMap<String, String> fullstop = new HashMap<>();
+            //stopNames.add(stop.getName());
             //TODO: budget immer setzen
-            if(stop.getBudget() == null) budgetStrings.add("0");
-            else budgetStrings.add(stop.getBudget().toString());
-            if(stop.getGesamtausgaben() == null)gesamtAusgabenString.add("0");
-            else gesamtAusgabenString.add(stop.getGesamtausgaben().toString());
+            fullstop.put("stop", stop.getName());
+/*            if(stop.getBudget() == null) budgetStrings.add("0");
+            else budgetStrings.add(stop.getBudget().toString());*/
+            if(stop.getBudget() == null) fullstop.put("budget","0");
+            else fullstop.put("budget", stop.getBudget().toString());
+            /*if(stop.getGesamtausgaben() == null)gesamtAusgabenString.add("0");
+            else gesamtAusgabenString.add(stop.getGesamtausgaben().toString());*/
+            if(stop.getGesamtausgaben() == null)fullstop.put("gesamt", "0");
+            else fullstop.put("gesamt", stop.getGesamtausgaben().toString());
+            fullstops.add(fullstop);
         }
 
-        stopListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        ArrayAdapter<String> stopAdapter = new ArrayAdapter<>(mContext,
-                android.R.layout.simple_list_item_multiple_choice, stopNames);
+        StopAdapter stopAdapter = new StopAdapter(stops, mContext);
         stopListView.setAdapter(stopAdapter);
-        ArrayAdapter<String> budgetAdapter = new ArrayAdapter<>(mContext,
-                android.R.layout.simple_list_item_1, budgetStrings);
-        budgetListView.setAdapter(budgetAdapter);
-        ArrayAdapter<String> gesamtausgabenAdapter = new ArrayAdapter<>(mContext,
-                android.R.layout.simple_list_item_1, gesamtAusgabenString);
-        gesamtAusgabenListView.setAdapter(gesamtausgabenAdapter);
 
         addStopButton.setOnClickListener(view -> {
             String stopName = ((EditText)layoutScreen.findViewById(R.id.pinTextView2)).getText().toString();
@@ -141,13 +148,8 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
             stop.setGesamtausgaben(new BigDecimal(0));
 
             stops.add(stop);
-            stopNames.add(stop.getName());
-            budgetStrings.add(stop.getBudget().toString());
-            gesamtAusgabenString.add(stop.getGesamtausgaben().toString());
             reise.setStops(stops);
             stopAdapter.notifyDataSetChanged();
-            budgetAdapter.notifyDataSetChanged();
-            gesamtausgabenAdapter.notifyDataSetChanged();
 
         });
 
@@ -157,15 +159,10 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
             for (int i = 0; i < stopListView.getCount(); i++)
                 if (checked.get(i)) {
                     stops.remove(i-removedcounter);
-                    stopNames.remove(i-removedcounter);
-                    budgetStrings.remove(i-removedcounter);
-                    gesamtAusgabenString.remove(i-removedcounter);
                     removedcounter++;
                 }
             reise.setStops(stops);
             stopAdapter.notifyDataSetChanged();
-            budgetAdapter.notifyDataSetChanged();
-            gesamtausgabenAdapter.notifyDataSetChanged();
         });
 
         addBudgetButton.setOnClickListener(view -> {
@@ -183,11 +180,36 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
             for (int i = 0; i < stopListView.getCount(); i++)
                 if (checked.get(i)) {
                     stops.get(i).setBudget(new BigDecimal(budget));
-                    budgetStrings.set(i, budget);
+                    //budgetStrings.set(i, budget);
                 }
             reise.setStops(stops);
-            budgetAdapter.notifyDataSetChanged();
-
+            stopAdapter.notifyDataSetChanged();
         });
+    }
+
+    public void setUpAusgaben(View layoutscreen){
+        Spinner spinner = layoutscreen.findViewById(R.id.planets_spinner2);
+        List<String> reisendeNames = new ArrayList<>();
+        for(Reisender reisender : reisende) reisendeNames.add(reisender.getNickname());
+        ArrayAdapter<String> reisendeAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, reisendeNames);
+        reisendeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(reisendeAdapter);
+
+        Spinner typen = layoutscreen.findViewById(R.id.planets_spinner4);
+        List<String> names = new ArrayList<>();
+        for (AusgabenTyp c : AusgabenTyp.values()) {
+            names.add(c.name());
+        }
+        ArrayAdapter<String> typAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, names);
+        typAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typen.setAdapter(typAdapter);
+
+        Spinner stopNameSpinner = layoutscreen.findViewById(R.id.planets_spinner3);
+        List<String> stopNames = new ArrayList<>();
+        for(Stop stop : stops) stopNames.add(stop.getName());
+        ArrayAdapter<String> stopAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, stopNames);
+        stopAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        stopNameSpinner.setAdapter(stopAdapter);
+
     }
 }

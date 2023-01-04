@@ -96,7 +96,7 @@
         android:fontFamily="@font/cextrabold"
         android:gravity="center"
         android:hint="SHARING-PIN"
-        android:inputType="text"
+        android:inputType="none"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"

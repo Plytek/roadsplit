@@ -38,7 +38,8 @@
         app:layout_constraintBottom_toTopOf="@id/guideline17"
         app:layout_constraintEnd_toEndOf="@id/pinTextView3"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/pinTextView3" />
+        app:layout_constraintStart_toStartOf="@id/pinTextView3"
+        app:layout_constraintTop_toBottomOf="@+id/stopNamenListView" />
 
     <TextView
         android:id="@+id/textView9"
@@ -60,7 +61,7 @@
         android:layout_width="275dp"
         android:layout_height="46dp"
         android:layout_marginVertical="100dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/customshapetwo"
         android:drawableStart="@drawable/beachicon"
@@ -91,7 +92,7 @@
         android:layout_marginStart="5dp"
         android:background="@drawable/plusbutton"
         app:layout_constraintBottom_toBottomOf="@id/guideline16"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/minusButton2"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toEndOf="@id/pinTextView2"
         app:layout_constraintTop_toTopOf="@id/guideline16" />
@@ -148,14 +149,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.62" />
+        app:layout_constraintGuide_percent="0.64" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <TextView
         android:id="@+id/StopsTextHeadline"
@@ -177,75 +178,50 @@
         android:id="@+id/AusgabenTextHeadline"
         android:layout_width="wrap_content"
         android:layout_height="41dp"
+        android:layout_marginStart="48dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Ausgaben"
         android:textColor="#2A4B42"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
-        app:layout_constraintEnd_toEndOf="@id/AusgabenListView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/AusgabenListView"
+        app:layout_constraintEnd_toStartOf="@+id/BudgetTextHeadline3"
+        app:layout_constraintHorizontal_bias="0.197"
+        app:layout_constraintStart_toEndOf="@+id/StopsTextHeadline"
         app:layout_constraintTop_toTopOf="@id/guidelineText2"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintVertical_bias="0.487" />
 
     <TextView
         android:id="@+id/BudgetTextHeadline3"
         android:layout_width="wrap_content"
         android:layout_height="41dp"
+        android:layout_marginEnd="48dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Budget"
         android:textColor="#2A4B42"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
-        app:layout_constraintEnd_toEndOf="@id/BudgetListView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/BudgetListView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineText2"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintVertical_bias="0.219" />
 
     <ListView
         android:id="@+id/stopNamenListView"
-        android:layout_width="190dp"
-        android:layout_height="200dp"
+        android:layout_width="366dp"
+        android:layout_height="189dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/customshapefour"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:choiceMode="singleChoice"
         android:elevation="3dp"
+        android:listSelector="#00FF00"
         app:layout_constraintBottom_toBottomOf="@id/guideline18"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.127"
+        app:layout_constraintHorizontal_bias="0.355"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline18"
-        app:layout_constraintVertical_bias="0.534" />
-
-    <ListView
-        android:id="@+id/AusgabenListView"
-        android:layout_width="75dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/customshapethree"
-        android:elevation="3dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline18"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.684"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline18"
-        app:layout_constraintVertical_bias="0.534" />
-
-    <ListView
-        android:id="@+id/BudgetListView"
-        android:layout_width="75dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/customshapefive"
-        android:elevation="3dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline18"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline18"
-        app:layout_constraintVertical_bias="0.534" />
+        app:layout_constraintVertical_bias="0.573" />
 
     <EditText
         android:id="@+id/pinTextView3"
@@ -260,7 +236,7 @@
         android:fontFamily="@font/cmedium"
         android:gravity="left"
         android:hint="20€ Budget für Hamburg"
-        android:inputType="text"
+        android:inputType="numberDecimal"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
         android:paddingEnd="8dp"
@@ -270,10 +246,10 @@
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline17"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintHorizontal_bias="0.202"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline17"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintVertical_bias="0.028" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

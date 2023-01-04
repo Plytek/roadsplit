@@ -2,6 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -75,7 +76,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline2" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/startingPoint"
             android:layout_width="300dp"
             android:layout_height="50dp"
@@ -84,7 +85,6 @@
             android:elevation="3dp"
             android:fontFamily="@font/cmedium"
             android:hint="Adresse, Bahnhof, Flughafen"
-            android:inputType="textPersonName"
             android:paddingStart="16dp"
             android:paddingTop="16dp"
             android:paddingEnd="16dp"
@@ -113,6 +113,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/reiseName" />
 
+
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
@@ -126,7 +127,8 @@
             app:layout_constraintBottom_toTopOf="@id/startingPoint"
             app:layout_constraintEnd_toEndOf="@id/startingPoint"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/startingPoint" />
+            app:layout_constraintStart_toStartOf="@id/startingPoint"
+            />
 
         <TextView
             android:id="@+id/textView13"
