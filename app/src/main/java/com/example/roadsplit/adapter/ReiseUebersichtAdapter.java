@@ -57,7 +57,6 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
         {
             case 2:
                 layoutScreen = inflater.inflate(R.layout.dokumentepage,null);
-                ((TextView)mainScreenReisenActivity.findViewById(R.id.textView6)).setTextColor(Color.RED);
                 break;
             case 1:
                 layoutScreen = inflater.inflate(R.layout.packlistepage,null);

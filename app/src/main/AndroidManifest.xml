@@ -50,14 +50,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".activities.testing.ReiseErstellenTestActivity"
-            android:exported="false"
-            android:theme="@style/Theme.RoadSplit.NoActionBarAndStatusBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".activities.TutActivity"
             android:exported="false"
