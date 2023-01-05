@@ -15,7 +15,16 @@ public class Reise {
     private String uniquename;
     private boolean ongoing;
     private List<Stop> stops;
+    private List<PacklistenItem> packliste;
 
+    public Reise(Long id, String name, String uniquename, boolean ongoing, List<Stop> stops, List<PacklistenItem> packliste) {
+        this.id = id;
+        this.name = name;
+        this.uniquename = uniquename;
+        this.ongoing = ongoing;
+        this.stops = stops;
+        this.packliste = packliste;
+    }
 
     public Reise(Long id, String name, boolean ongoing, List<Stop> stops) {
         this.id = id;
@@ -80,6 +89,14 @@ public class Reise {
 
     public void setUniquename(String uniquename) {
         this.uniquename = uniquename;
+    }
+
+    public List<PacklistenItem> getPackliste() {
+        return packliste;
+    }
+
+    public void setPackliste(List<PacklistenItem> packliste) {
+        this.packliste = packliste;
     }
 
     @Override

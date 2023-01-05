@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testKnecht(View view){
-        Intent intent = new Intent(this, testknechtActivitay.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, testknechtActivitay.class);
+        //startActivity(intent);
     }
 
 

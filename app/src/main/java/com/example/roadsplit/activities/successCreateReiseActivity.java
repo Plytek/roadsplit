@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.AppSettings;
@@ -31,6 +32,7 @@ public class successCreateReiseActivity extends AppCompatActivity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("id", reiseid);
         clipboard.setPrimaryClip(clip);
+        Toast.makeText(this, "Copied to Clipboard", Toast.LENGTH_LONG).show();
     }
 
     public void share(View view){

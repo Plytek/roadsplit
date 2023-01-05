@@ -61,11 +61,13 @@ public class PaymentDummyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment_dummy);
 
         currentReise = MainActivity.currentUser.getReisen().get(0);
+
         names = new ArrayList<>();
         stops = new ArrayList<>();
         items = new ArrayList<>();
         reiseList = new ArrayList<>();
         reisenderList = new ArrayList<>();
+
         ListView reisendeView = findViewById(R.id.reisendeList);
         reisendeView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         reisendeAdapter = new ArrayAdapter<>(this,

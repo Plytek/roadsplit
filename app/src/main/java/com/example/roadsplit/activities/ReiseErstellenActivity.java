@@ -188,11 +188,6 @@ public class ReiseErstellenActivity extends AppCompatActivity{
                     MainActivity.currentUser = reiseReponse.getReisender();
                     reiseSuccess(reiseReponse.getReise().getUniquename());
                     Looper.prepare();
-                    Toast.makeText(ReiseErstellenActivity.this, reiseReponse.getReise().toString(), Toast.LENGTH_LONG).show();
-                }
-                else {
-                    //EditText editText = findViewById(R.id.dummyResultText);
-                    //editText.setText(reiseReponse.getMessage());
                 }
             }
 
@@ -245,7 +240,6 @@ public class ReiseErstellenActivity extends AppCompatActivity{
                 if(response.isSuccessful()) {
 
                     LocationInfo[] finalLocationInfo = locationInfo;
-
                     runOnUiThread(() -> {
                         autocompletes.clear();
                         for(LocationInfo info : finalLocationInfo)

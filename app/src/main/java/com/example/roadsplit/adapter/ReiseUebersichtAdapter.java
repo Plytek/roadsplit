@@ -257,4 +257,8 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
         stopNameSpinner.setAdapter(stopAdapter);
 
     }
+
+    public void setUpPackliste(){
+
+    }
 }
