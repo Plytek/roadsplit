@@ -26,6 +26,7 @@ import com.example.roadsplit.model.AusgabenTyp;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
+import com.example.roadsplit.reponses.ReiseReponse;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -43,17 +44,32 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
     private List<Reisender> reisende;
     private List<Stop> stops;
     private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
+    private BigDecimal nutzerGesamtAusgabe;
+    private BigDecimal reiseGesamtAusgabe;
+    private ReiseReponse reiseReponse;
     Context mContext;
     MainScreenReisenActivity mainScreenReisenActivity;
     List<View> views;
 
-    public ReiseUebersichtAdapter(Context mContext, MainScreenReisenActivity mainScreenReisenActivity, List<View> views, Reise reise, List<Reisender> reisende) {
+    public ReiseUebersichtAdapter(Context mContext, MainScreenReisenActivity mainScreenReisenActivity, List<View> views, ReiseReponse reiseReponse) {
         this.mContext = mContext;
         this.views = views;
         this.mainScreenReisenActivity = mainScreenReisenActivity;
-        this.reise = reise;
-        this.stops = reise.getStops();
-        this.reisende = reisende;
+        this.reise = reiseReponse.getReise();
+        this.stops = reiseReponse.getReise().getStops();
+        this.reisende = reiseReponse.getReisendeList();
+        this.nutzerGesamtAusgabe = reiseReponse.getGesamtAusgabe();
+        this.reiseReponse = reiseReponse;
+        if(nutzerGesamtAusgabe == null) nutzerGesamtAusgabe = new BigDecimal(0);
+        reiseGesamtAusgabe = new BigDecimal(0);
+        for(Stop stop : stops) {
+            try {
+                reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
+            } catch (Exception e) {
+                stop.setGesamtausgaben(new BigDecimal(0));
+            }
+        }
+
         //mainScreenReisenActivity.findViewById()
     }
 
@@ -188,6 +204,35 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
     }
 
     public void setUpAusgaben(View layoutscreen){
+        TextView nutzergView = layoutscreen.findViewById(R.id.textViewPayAmount);
+        nutzergView.setText(nutzerGesamtAusgabe.toString() + "€");
+
+        TextView gesamtView = layoutscreen.findViewById(R.id.textViewPayAmountTeam);
+        gesamtView.setText(reiseGesamtAusgabe.toString() + "€");
+
+        TextView balanceView = layoutscreen.findViewById(R.id.textViewPayAmountAusgleich);
+        TextView balanceTextView = layoutscreen.findViewById(R.id.textView11);
+
+        BigDecimal gesamtBalance = new BigDecimal(0);
+        int counter = 0;
+        for(Reisender reisender : reiseReponse.getSchuldner()){
+            if(!reisender.getId().equals(MainActivity.currentUser.getId())){
+                BigDecimal betrag = reiseReponse.getBetraege().get(counter);
+                gesamtBalance = gesamtBalance.add(betrag);
+            }
+            counter++;
+        }
+        if(gesamtBalance.compareTo(new BigDecimal(0)) < 0){
+            balanceView.setTextColor(Color.RED);
+            balanceTextView.setText("Du schuldest");
+        }
+        else {
+            balanceView.setTextColor(Color.GREEN);
+            balanceTextView.setText("Du bekommst");
+        }
+            balanceView.setText(gesamtBalance.toString() + "€");
+
+
         Spinner spinner = layoutscreen.findViewById(R.id.planets_spinner2);
         List<String> reisendeNames = new ArrayList<>();
         for(Reisender reisender : reisende) reisendeNames.add(reisender.getNickname());

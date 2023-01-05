@@ -15,6 +15,7 @@ import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.requests.AusgabenRequest;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
@@ -41,17 +42,19 @@ public class MainScreenReisenActivity extends AppCompatActivity {
 
         // setup viewpager
         screenPager =findViewById(R.id.screen_viewpager);
-        fetchReise(MainActivity.currentUser.getReisen().get(0));
+        AusgabenRequest ausgabenRequest = new AusgabenRequest(MainActivity.currentUser,
+                MainActivity.currentUser.getReisen().get(0));
+        fetchReise(ausgabenRequest);
 
     }
 
-    private void fetchReise(Reise reise)
+    private void fetchReise(AusgabenRequest ausgabenRequest)
     {
         OkHttpClient client = new OkHttpClient();
-        String url = MainActivity.BASEURL + "/api/reisedaten/reisesuche";
+        String url = MainActivity.BASEURL + "/api/reisedaten/ausgaben";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
-        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(reise));
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
 
         Request request = new Request.Builder()
                 .url(httpBuilder.build())
@@ -69,8 +72,7 @@ public class MainScreenReisenActivity extends AppCompatActivity {
                 ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
                         runOnUiThread(() -> {
-                            reiseUebersichtAdapter = new ReiseUebersichtAdapter(MainScreenReisenActivity.this, MainScreenReisenActivity.this, null
-                                    , MainActivity.currentUser.getReisen().get(0), reiseReponse.getReisendeList());
+                            reiseUebersichtAdapter = new ReiseUebersichtAdapter(MainScreenReisenActivity.this, MainScreenReisenActivity.this, null, reiseReponse);
                             screenPager.setAdapter(reiseUebersichtAdapter);
                             tabLayout = findViewById(R.id.tab_indicator2);
                             tabLayout.setupWithViewPager(screenPager);
