@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.requests.AusgabenRequest;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,15 +38,21 @@ public class MainScreenReisenActivity extends AppCompatActivity {
     private ViewPager screenPager;
     private ReiseUebersichtAdapter reiseUebersichtAdapter;
     private TabLayout tabLayout;
+    private Reise reise;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen_reisen);
-
+        try {
+            Intent intent = getIntent();
+            String stringReise = intent.getStringExtra("reise");
+            reise = new Gson().fromJson(stringReise, Reise.class);
+        } catch (Exception e) {
+            Log.d("errorRoadsplit", e.getMessage());
+        }
         // setup viewpager
         screenPager =findViewById(R.id.screen_viewpager);
-        AusgabenRequest ausgabenRequest = new AusgabenRequest(MainActivity.currentUser,
-                MainActivity.currentUser.getReisen().get(0));
+        AusgabenRequest ausgabenRequest = new AusgabenRequest(MainActivity.currentUser, reise);
         fetchReise(ausgabenRequest);
 
     }

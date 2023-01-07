@@ -63,6 +63,17 @@
         app:layout_constraintTop_toTopOf="@id/guidelineOben"
         app:layout_constraintVertical_bias="0.49" />
 
+    <ProgressBar
+        android:id="@+id/ausgabenProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textViewPayAmount"
         android:layout_width="wrap_content"
@@ -111,43 +122,39 @@
         app:layout_constraintTop_toBottomOf="@id/textViewPayAmountTeam" />
 
     <TextView
-        android:id="@+id/BudgetTextHeadline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="24dp"
-        android:fontFamily="@font/cmedium"
-        android:gravity="center"
-        android:text="Teilnehmer"
-        android:textColor="#2A4B42"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline17"
-        app:layout_constraintEnd_toEndOf="@id/planets_spinner2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/planets_spinner2"
-        app:layout_constraintTop_toBottomOf="@+id/pinTextView2"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
         android:id="@+id/newausgabetext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Betrag"
         android:textColor="#2A4B42"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline16"
-        app:layout_constraintEnd_toEndOf="@id/pinTextView2"
+        app:layout_constraintBottom_toTopOf="@+id/ausgabenTextView"
+        app:layout_constraintEnd_toEndOf="@id/ausgabenTextView"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/pinTextView2" />
+        app:layout_constraintStart_toStartOf="@id/ausgabenTextView" />
+
+    <TextView
+        android:id="@+id/payedForTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Gezahlt für"
+        android:textColor="#2A4B42"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline17"
+        app:layout_constraintEnd_toEndOf="@id/schuldnerListView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/schuldnerListView" />
 
     <EditText
-        android:id="@+id/pinTextView2"
+        android:id="@+id/ausgabenTextView"
         android:layout_width="100dp"
         android:layout_height="31dp"
-        android:layout_marginVertical="8dp"
+        android:layout_marginVertical="30dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/customshapetwo"
         android:drawableStart="@drawable/moneyicon"
@@ -164,61 +171,43 @@
         android:textColor="#c4c4c4"
         android:textColorHint="#c4c4c4"
         android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintBottom_toTopOf="@+id/schuldnerListView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline16"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintTop_toTopOf="@+id/guideline16" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineOben"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.10" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.43" />
-
-    <Spinner
-        android:id="@+id/planets_spinner2"
-        android:layout_width="273dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/customshapetwo"
-        android:elevation="3dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline17"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline17"
-        app:layout_constraintVertical_bias="0.841" />
+        app:layout_constraintGuide_percent="0.40" />
 
     <TextView
         android:id="@+id/BudgetTextHeadline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Kategorie"
         android:textColor="#2A4B42"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline18"
+        app:layout_constraintBottom_toTopOf="@+id/planets_spinner4"
         app:layout_constraintEnd_toEndOf="@id/planets_spinner4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/planets_spinner4" />
@@ -228,14 +217,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.63" />
+        app:layout_constraintGuide_percent="0.61" />
 
     <Spinner
         android:id="@+id/planets_spinner4"
         android:layout_width="273dp"
         android:layout_height="31dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/customshapetwo"
         android:elevation="3dp"
@@ -243,8 +232,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline18"
-        app:layout_constraintVertical_bias="0.841" />
+        app:layout_constraintTop_toBottomOf="@+id/planets_spinner3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStops"
@@ -257,13 +245,12 @@
         android:id="@+id/BudgetTextHeadline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Zwischenstop"
         android:textColor="#2A4B42"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/guidelineStops"
+        app:layout_constraintBottom_toTopOf="@+id/planets_spinner3"
         app:layout_constraintEnd_toEndOf="@id/planets_spinner3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/planets_spinner3" />
@@ -273,7 +260,7 @@
         android:layout_width="273dp"
         android:layout_height="31dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/customshapetwo"
         android:elevation="3dp"
@@ -281,14 +268,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineStops"
+        app:layout_constraintTop_toBottomOf="@+id/schuldnerListView"
         app:layout_constraintVertical_bias="0.825" />
 
     <Button
-        android:id="@+id/buttonunten"
+        android:id="@+id/ausgabeSpeichernButton"
         android:layout_width="275dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/lightgreenbutton"
         android:elevation="3dp"
         android:fontFamily="@font/cextrabold"
@@ -304,7 +291,7 @@
         app:layout_constraintBottom_toBottomOf="@id/guideline21"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline21"
+        app:layout_constraintTop_toBottomOf="@+id/planets_spinner4"
         app:layout_constraintVertical_bias="0.569" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -312,7 +299,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.70" />
 
     <TextView
         android:id="@+id/textView5"
@@ -352,14 +339,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.17" />
+
+    <ListView
+        android:id="@+id/schuldnerListView"
+        android:layout_width="330dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/customshapefour"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:choiceMode="multipleChoice"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.355"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline17"
+        app:layout_constraintVertical_bias="0.573" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

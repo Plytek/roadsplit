@@ -23,6 +23,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ReiseUebersichtActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.MainScreenReisenActivity"
             android:exported="false">
             <meta-data
@@ -43,7 +50,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".activities.TutActivity"
             android:exported="false"

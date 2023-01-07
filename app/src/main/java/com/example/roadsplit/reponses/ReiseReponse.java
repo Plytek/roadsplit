@@ -13,8 +13,20 @@ public class ReiseReponse {
     private List<Reisender> reisendeList;
     private List<Reisender> schuldner;
     private List<BigDecimal> betraege;
+    private List<String> ausgabenRecord;
     private BigDecimal gesamtAusgabe;
 
+
+    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege, List<String> ausgabenRecord, BigDecimal gesamtAusgabe) {
+        this.message = message;
+        this.reise = reise;
+        this.reisender = reisender;
+        this.reisendeList = reisendeList;
+        this.schuldner = schuldner;
+        this.betraege = betraege;
+        this.ausgabenRecord = ausgabenRecord;
+        this.gesamtAusgabe = gesamtAusgabe;
+    }
 
     public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege, BigDecimal gesamtAusgabe) {
         this.message = message;
@@ -113,5 +125,13 @@ public class ReiseReponse {
 
     public void setGesamtAusgabe(BigDecimal gesamtAusgabe) {
         this.gesamtAusgabe = gesamtAusgabe;
+    }
+
+    public List<String> getAusgabenRecord() {
+        return ausgabenRecord;
+    }
+
+    public void setAusgabenRecord(List<String> ausgabenRecord) {
+        this.ausgabenRecord = ausgabenRecord;
     }
 }

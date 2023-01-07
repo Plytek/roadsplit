@@ -212,7 +212,6 @@
         android:layout_height="189dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/customshapefour"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:choiceMode="singleChoice"
         android:elevation="3dp"
         android:listSelector="#00FF00"
