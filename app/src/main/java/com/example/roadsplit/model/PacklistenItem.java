@@ -17,23 +17,18 @@ public class PacklistenItem {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getItemname() {
         return itemname;
     }
-
     public void setItemname(String itemname) {
         this.itemname = itemname;
     }
-
     public boolean isDone() {
         return done;
     }
-
     public void setDone(boolean done) {
         this.done = done;
     }

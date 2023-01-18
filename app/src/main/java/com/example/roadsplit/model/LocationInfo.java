@@ -5,28 +5,36 @@ import java.util.List;
 
 public class LocationInfo {
     private String place_id;
-    private String osm_type;
     private String osm_id;
+    private String osm_type;
     private String licence;
     private String lat;
     private String lon;
-    private String display_name;
     private String[] boundingbox;
-    private String importance;
+    private String clazz;
+    private String type;
+    private String display_name;
+    private String display_place;
+    private String display_address;
+    private Location address;
 
     public LocationInfo() {
     }
 
-    public LocationInfo(String place_id, String osm_type, String osm_id, String licence, String lat, String lon, String display_name, String[] boundingbox, String importance) {
+    public LocationInfo(String place_id, String osm_id, String osm_type, String licence, String lat, String lon, String[] boundingbox, String clazz, String type, String display_name, String display_place, String display_address, Location address) {
         this.place_id = place_id;
-        this.osm_type = osm_type;
         this.osm_id = osm_id;
+        this.osm_type = osm_type;
         this.licence = licence;
         this.lat = lat;
         this.lon = lon;
-        this.display_name = display_name;
         this.boundingbox = boundingbox;
-        this.importance = importance;
+        this.clazz = clazz;
+        this.type = type;
+        this.display_name = display_name;
+        this.display_place = display_place;
+        this.display_address = display_address;
+        this.address = address;
     }
 
     public String getPlace_id() {
@@ -37,20 +45,20 @@ public class LocationInfo {
         this.place_id = place_id;
     }
 
-    public String getOsm_type() {
-        return osm_type;
-    }
-
-    public void setOsm_type(String osm_type) {
-        this.osm_type = osm_type;
-    }
-
     public String getOsm_id() {
         return osm_id;
     }
 
     public void setOsm_id(String osm_id) {
         this.osm_id = osm_id;
+    }
+
+    public String getOsm_type() {
+        return osm_type;
+    }
+
+    public void setOsm_type(String osm_type) {
+        this.osm_type = osm_type;
     }
 
     public String getLicence() {
@@ -77,14 +85,6 @@ public class LocationInfo {
         this.lon = lon;
     }
 
-    public String getDisplay_name() {
-        return display_name;
-    }
-
-    public void setDisplay_name(String display_name) {
-        this.display_name = display_name;
-    }
-
     public String[] getBoundingbox() {
         return boundingbox;
     }
@@ -93,26 +93,51 @@ public class LocationInfo {
         this.boundingbox = boundingbox;
     }
 
-    public String getImportance() {
-        return importance;
+    public String getClazz() {
+        return clazz;
     }
 
-    public void setImportance(String importance) {
-        this.importance = importance;
+    public void setClazz(String clazz) {
+        this.clazz = clazz;
     }
 
-    @Override
-    public String toString() {
-        return "LocationInfo{" +
-                "place_id='" + place_id + '\'' +
-                ", osm_type='" + osm_type + '\'' +
-                ", osm_id='" + osm_id + '\'' +
-                ", licence='" + licence + '\'' +
-                ", lat='" + lat + '\'' +
-                ", lon='" + lon + '\'' +
-                ", display_name='" + display_name + '\'' +
-                ", boundingbox=" + Arrays.toString(boundingbox) +
-                ", importance='" + importance + '\'' +
-                '}';
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDisplay_name() {
+        return display_name;
+    }
+
+    public void setDisplay_name(String display_name) {
+        this.display_name = display_name;
+    }
+
+    public String getDisplay_place() {
+        return display_place;
+    }
+
+    public void setDisplay_place(String display_place) {
+        this.display_place = display_place;
+    }
+
+    public String getDisplay_address() {
+        return display_address;
+    }
+
+    public void setDisplay_address(String display_address) {
+        this.display_address = display_address;
+    }
+
+    public Location getAddress() {
+        return address;
+    }
+
+    public void setAddress(Location address) {
+        this.address = address;
     }
 }

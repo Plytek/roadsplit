@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.ScreenItem;
+import com.example.roadsplit.model.ScreenItem;
 
 import java.util.List;
 

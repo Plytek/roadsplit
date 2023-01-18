@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.AppSettings;
+import com.example.roadsplit.helperclasses.EndpointConnector;
 import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.gson.Gson;
@@ -28,11 +29,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class NeueReiseActivity extends AppCompatActivity {
@@ -73,21 +69,16 @@ public class NeueReiseActivity extends AppCompatActivity {
 
     }
 
-    public void join(View view)
-    {
+    public void join(View view) {
         EditText editText = dialog.findViewById(R.id.pinTextView);
         String uniquename = editText.getText().toString();
         JoinRequest joinRequest = new JoinRequest(MainActivity.currentUser.getId(), uniquename);
-        OkHttpClient client = new OkHttpClient();
-        String url = MainActivity.BASEURL + "/api/reisedaten/join";
-        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(joinRequest));
-        Request request = new Request.Builder()
-                .url(httpBuilder.build())
-                .post(formBody)
-                .build();
+        EndpointConnector.reiseBeitreten(joinRequest, reiseBeitretenCallback());
 
-        client.newCall(request).enqueue(new Callback() {
+    }
+
+    private Callback reiseBeitretenCallback(){
+        return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 TextView textView = findViewById(R.id.errorRegView);
@@ -105,9 +96,6 @@ public class NeueReiseActivity extends AppCompatActivity {
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();
                 }
             }
-
-        });
+        };
     }
-
-
 }

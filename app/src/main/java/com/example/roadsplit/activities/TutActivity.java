@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.roadsplit.adapter.IntroViewPagerAdapter;
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.AppSettings;
-import com.example.roadsplit.helperclasses.ScreenItem;
+import com.example.roadsplit.model.ScreenItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

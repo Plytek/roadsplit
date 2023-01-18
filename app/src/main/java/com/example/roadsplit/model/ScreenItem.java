@@ -1,4 +1,4 @@
-package com.example.roadsplit.helperclasses;
+package com.example.roadsplit.model;
 
 public class ScreenItem {
     String Title,Description;

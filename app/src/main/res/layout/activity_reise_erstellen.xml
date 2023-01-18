@@ -201,7 +201,7 @@
             app:layout_constraintTop_toBottomOf="@+id/reiseErstellenButton"
             app:layout_constraintVertical_bias="0.0" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/zwischenStopView"
             android:drawableStart="@drawable/smallplane"
             android:layout_width="275dp"
@@ -228,7 +228,7 @@
             app:layout_constraintTop_toTopOf="@id/guideline8"
             app:layout_constraintVertical_bias="0.36" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/endStopView"
             android:layout_width="300dp"
             android:layout_height="50dp"
