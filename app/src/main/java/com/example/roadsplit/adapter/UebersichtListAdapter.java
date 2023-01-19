@@ -39,7 +39,7 @@ public class UebersichtListAdapter extends ArrayAdapter<Reise> {
             viewHolder = new UebersichtListAdapter.ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.reiseuebersichtlist, parent, false);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.uebersichtTextView);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.uebersichtTextViewName);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.locationImageView);
             convertView.setTag(viewHolder);
         } else {
