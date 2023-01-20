@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -14,7 +13,6 @@ import com.example.roadsplit.activities.testing.DummyPlanungActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
 import com.example.roadsplit.activities.testing.PaymentDummyActivity;
 import com.example.roadsplit.activities.testing.UserCreateActivity;
-import com.example.roadsplit.activities.testing.testknechtActivitay;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private UserAccount userAccount = null;
     public static Reisender currentUser;
     public static final String BASEURL = "http://167.172.167.221:8080";
-    //public static final String BASEURL = "https://d082-88-70-249-101.ngrok.io";
+    //public static final String BASEURL = "https://b5dc-88-70-249-101.ngrok.io";
 
 
     @Override
@@ -89,12 +87,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void turorialAnim(View view){
-        Intent intent = new Intent(this, TutActivity.class);
+        Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
     }
 
     public void einloggen(View view){
-        Intent intent = new Intent(this, LogInActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 

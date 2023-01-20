@@ -30,14 +30,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.MainScreenReisenActivity"
+            android:name=".activities.AusgabenActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.successCreateReiseActivity"
+            android:name=".activities.ReiseSuccessActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -51,7 +51,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.TutActivity"
+            android:name=".activities.TutorialActivity"
             android:exported="false"
             android:theme="@style/Theme.RoadSplit.NoActionBarAndStatusBar">
             <meta-data
@@ -97,7 +97,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.LogInActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

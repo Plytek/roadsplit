@@ -18,8 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.AppSettings;
-import com.example.roadsplit.helperclasses.EndpointConnector;
+import com.example.roadsplit.helperclasses.ButtonEffect;
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Location;
 import com.example.roadsplit.model.LocationInfo;
 import com.example.roadsplit.model.Reise;
@@ -46,6 +46,8 @@ public class ReiseErstellenActivity extends AppCompatActivity{
     private AutoCompleteTextView start;
     private AutoCompleteTextView end;
     private AutoCompleteTextView zwischenstop;
+    private TextView errorReisenameView;
+    private TextView errorStartView;
     private List<String> suggestions;
     private long last = 0;
 
@@ -68,6 +70,8 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         listView.setAdapter(adapter);
 
 
+        errorReisenameView = findViewById(R.id.errorReiseName);
+        errorStartView = findViewById(R.id.errorStartPoint);
         start = findViewById(R.id.startingPoint);
         end = findViewById(R.id.endStopView);
         zwischenstop = findViewById(R.id.zwischenStopView);
@@ -83,9 +87,9 @@ public class ReiseErstellenActivity extends AppCompatActivity{
             }
         });
 
-        AppSettings.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
-        AppSettings.buttonPressDownEffect(findViewById(R.id.plusButton));
-        AppSettings.buttonPressDownEffect(findViewById(R.id.minusButton));
+        ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
+        ButtonEffect.buttonPressDownEffect(findViewById(R.id.plusButton));
+        ButtonEffect.buttonPressDownEffect(findViewById(R.id.minusButton));
 
     }
 
@@ -120,12 +124,14 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         currentReise = reise;
     }
 
-    public void addInitialStop()
+    public boolean addInitialStop()
     {
         Stop stop = new Stop();
         stop.setName(((EditText)findViewById(R.id.startingPoint)).getText().toString());
+        if(stop.getName() == null || stop.getName().isEmpty()) return false;
         if(currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
         if(!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
+        return true;
     }
 
     public void addLastStop(){
@@ -144,14 +150,31 @@ public class ReiseErstellenActivity extends AppCompatActivity{
     }
 
     public void saveReise(View view) {
+        errorReisenameView.setVisibility(View.INVISIBLE);
+        errorStartView.setVisibility(View.INVISIBLE);
         if (currentReise == null) {
-            if (((EditText) findViewById(R.id.reiseName)).getText().toString().isEmpty()) return;
+            String reiseName = ((EditText) findViewById(R.id.reiseName)).getText().toString();
+            if (reiseName.isEmpty()){
+                errorReisenameView.setVisibility(View.VISIBLE);
+                errorReisenameView.setText("Bitte gib der Reise einen Namen");
+                return;
+            }
+            if(reiseName.length() > 16){
+                errorReisenameView.setVisibility(View.VISIBLE);
+                errorReisenameView.setText("Der Name darf maximal 16 Zeichen lang sein");
+                return;
+            }
             addReise();
         }
-        addInitialStop();
+        if(!addInitialStop()){
+            errorStartView.setVisibility(View.VISIBLE);
+            errorStartView.setText("Bitte gib einen Start an");
+            return;
+        }
         addZwischenStops();
         addLastStop();
         zwischenstops.clear();
+        currentReise.setCreateDate(System.currentTimeMillis());
         EndpointConnector.saveReise(currentReise, saveReiseCallback());
 
     }
@@ -259,7 +282,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
 
     private void reiseSuccess(String id)
     {
-        Intent intent = new Intent(this, successCreateReiseActivity.class);
+        Intent intent = new Intent(this, ReiseSuccessActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
         finish();

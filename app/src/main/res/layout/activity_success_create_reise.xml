@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/rcreme"
     android:onClick="copyToClipboard"
-    tools:context=".activities.successCreateReiseActivity">
+    tools:context=".activities.ReiseSuccessActivity">
 
 
     <ImageView

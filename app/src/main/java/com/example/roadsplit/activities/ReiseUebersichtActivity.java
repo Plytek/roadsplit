@@ -2,6 +2,7 @@ package com.example.roadsplit.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,14 +20,16 @@ import android.widget.ListView;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.UebersichtListAdapter;
-import com.example.roadsplit.helperclasses.EndpointConnector;
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.reponses.WikiResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,10 +43,13 @@ import okhttp3.Response;
 
 public class ReiseUebersichtActivity extends AppCompatActivity {
     private List<Reise> reisen;
+    private ReiseReponse[] reiseResponses;
     private Reise selectedReise;
     private ListView reisenView;
-    private Map<Reise, Bitmap> reisenWithImages;
-
+    private List<Bitmap> images;
+    private int imageloadCounter;
+    private Handler handler;
+    UebersichtListAdapter uebersichtListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,24 +57,41 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
 
 
         reisen = new ArrayList<>();
-        reisenWithImages = new HashMap<>();
+        images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
         reisen = MainActivity.currentUser.getReisen();
         reisenView = findViewById(R.id.reisenUebersichtListView);
+        reiseResponses = new ReiseReponse[1];
 
+        handler = new Handler(Looper.getMainLooper());
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            for(Reise reise : reisen)
-            {
-                EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
+            imageloadCounter = 0;
+            EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUser.getReisen().get(0), fetchPaymentSummaryCallback());
+            handler.post(() -> {
+                for(Reise reise : reisen)
+                {
+                    EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
+                }
+            });
+        });
+
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUser.getReisen().get(0), fetchPaymentSummaryCallback());
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
+
 
         reisenView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    UebersichtListAdapter uebersichtListAdapter = new UebersichtListAdapter( reisen, ReiseUebersichtActivity.this, reisenWithImages);
-                    reisenView.setAdapter(uebersichtListAdapter);
+                        UebersichtListAdapter uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
+                        reisenView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+                        reisenView.setAdapter(uebersichtListAdapter);
                     clickedPosition[0] = i;
                     selectedReise = reisen.get(i);
             }
@@ -92,26 +115,16 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
             }
         });
 
-
-        UebersichtListAdapter uebersichtListAdapter = new UebersichtListAdapter(reisen, ReiseUebersichtActivity.this, reisenWithImages);
-        reisenView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-        reisenView.setAdapter(uebersichtListAdapter);
-
-        final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                UebersichtListAdapter uebersichtListAdapter = new UebersichtListAdapter(reisen, ReiseUebersichtActivity.this, reisenWithImages);
-                reisenView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-                reisenView.setAdapter(uebersichtListAdapter);
-            }
-        }, 1000);
-
+        handler.post(() -> {
+            uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
+            reisenView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            reisenView.setAdapter(uebersichtListAdapter);
+        });
     }
 
 
     private void goToReise(Reise reise){
-        Intent intent = new Intent(this, MainScreenReisenActivity.class);
+        Intent intent = new Intent(this, AusgabenActivity.class);
         String reiseString = new Gson().toJson(reise);
         intent.putExtra("reise", reiseString);
         startActivity(intent);
@@ -137,9 +150,9 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
                         String url = wikiResponse.getPages().get(0).getThumbnail().getUrl();
                         url = "https:" + url;
                         url = url.replaceAll("/\\d+px-", "/200px-");
-                        downloadImages(url, reise);
+                        downloadImages(url);
                     } catch (Exception e) {
-                        downloadImages("https://cdn.discordapp.com/attachments/284675100253487104/1065300629448298578/globeicon.png", reise);
+                        downloadImages("https://cdn.discordapp.com/attachments/284675100253487104/1065300629448298578/globeicon.png");
                         //TODO: Set Default Image
                         e.printStackTrace();
                     }
@@ -148,9 +161,35 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
         };
     }
 
+    private Callback fetchPaymentSummaryCallback(){
+        return new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
 
-    public void downloadImages(String url, Reise reise){
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                try {
+                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseReponse[].class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(response.isSuccessful()) {
+                    MainActivity.currentUser = reiseResponses[0].getReisender();
+                     runOnUiThread(() -> {
+                             uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
+                             reisenView.setAdapter(uebersichtListAdapter);
+                             uebersichtListAdapter.notifyDataSetChanged();
+                     });
+                    }
+                }
+        };
+    }
+
+
+    public void downloadImages(String url){
         ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
                 Bitmap mIcon = null;
                 try {
@@ -160,7 +199,10 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
                     Log.e("Error", e.getMessage());
                     e.printStackTrace();
                 }
-                reisenWithImages.put(reise, mIcon);
+                images.add(mIcon);
+                handler.post(() -> {
+                        uebersichtListAdapter.notifyDataSetChanged();
+                });
         });
     }
 }

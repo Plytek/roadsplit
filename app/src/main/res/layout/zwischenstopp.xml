@@ -175,6 +175,21 @@
         app:layout_constraintVertical_bias="0.512" />
 
     <TextView
+        android:id="@+id/stopEntfernenErrorView"
+        android:layout_width="333dp"
+        android:layout_height="17dp"
+        android:fontFamily="@font/cmedium"
+        android:text="Der ausgewählte Stop hat bereits Ausgaben"
+        android:textColor="@color/red"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
+        app:layout_constraintEnd_toEndOf="@id/stopNamenListView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/stopNamenListView"
+        app:layout_constraintTop_toBottomOf="@+id/pinTextView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
         android:id="@+id/AusgabenTextHeadline"
         android:layout_width="wrap_content"
         android:layout_height="41dp"

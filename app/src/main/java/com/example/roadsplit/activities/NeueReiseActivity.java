@@ -19,8 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.AppSettings;
-import com.example.roadsplit.helperclasses.EndpointConnector;
+import com.example.roadsplit.helperclasses.ButtonEffect;
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.gson.Gson;
@@ -33,7 +33,7 @@ import okhttp3.Response;
 
 public class NeueReiseActivity extends AppCompatActivity {
 
-    Dialog dialog;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public class NeueReiseActivity extends AppCompatActivity {
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        AppSettings.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
-        AppSettings.buttonPressDownEffect(findViewById(R.id.reiseBeitretenButton));
+        ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
+        ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseBeitretenButton));
     }
 
     public void reiseErstellen(View view)

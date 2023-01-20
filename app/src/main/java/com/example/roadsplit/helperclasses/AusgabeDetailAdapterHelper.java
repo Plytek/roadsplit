@@ -1,4 +1,4 @@
-package com.example.roadsplit.adapter;
+package com.example.roadsplit.helperclasses;
 
 import android.content.Context;
 import android.view.View;

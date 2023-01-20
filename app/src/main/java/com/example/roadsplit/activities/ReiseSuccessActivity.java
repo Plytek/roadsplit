@@ -12,9 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.AppSettings;
+import com.example.roadsplit.helperclasses.ButtonEffect;
 
-public class successCreateReiseActivity extends AppCompatActivity {
+public class ReiseSuccessActivity extends AppCompatActivity {
 
     String reiseid;
     @Override
@@ -25,7 +25,7 @@ public class successCreateReiseActivity extends AppCompatActivity {
         Intent intent = getIntent();
         reiseid = intent.getStringExtra("id");
         ((TextView)findViewById(R.id.pinTextViewSuccess)).setText(reiseid);
-        AppSettings.buttonPressDownEffect(findViewById(R.id.sharedUebersichtButton));
+        ButtonEffect.buttonPressDownEffect(findViewById(R.id.sharedUebersichtButton));
     }
 
     public void copyToClipboard(View view){

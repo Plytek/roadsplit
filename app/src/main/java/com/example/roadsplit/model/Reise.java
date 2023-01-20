@@ -16,6 +16,17 @@ public class Reise {
     private boolean ongoing;
     private List<Stop> stops;
     private List<PacklistenItem> packliste;
+    private long createDate;
+
+    public Reise(Long id, String name, String uniquename, boolean ongoing, List<Stop> stops, List<PacklistenItem> packliste, long createDate) {
+        this.id = id;
+        this.name = name;
+        this.uniquename = uniquename;
+        this.ongoing = ongoing;
+        this.stops = stops;
+        this.packliste = packliste;
+        this.createDate = createDate;
+    }
 
     public Reise(Long id, String name, String uniquename, boolean ongoing, List<Stop> stops, List<PacklistenItem> packliste) {
         this.id = id;
@@ -99,14 +110,11 @@ public class Reise {
         this.packliste = packliste;
     }
 
-    @Override
-    public String toString() {
-        return "Reise{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", uniquename='" + uniquename + '\'' +
-                ", ongoing=" + ongoing +
-                ", stops=" + stops +
-                '}';
+    public long getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(long createDate) {
+        this.createDate = createDate;
     }
 }

@@ -10,8 +10,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import com.example.roadsplit.R;
-import com.example.roadsplit.activities.MainScreenReisenActivity;
-import com.example.roadsplit.helperclasses.EndpointConnector;
+import com.example.roadsplit.activities.AusgabenActivity;
+import com.example.roadsplit.helperclasses.AusgabeDetailAdapterHelper;
+import com.example.roadsplit.helperclasses.AusgabenAdapterHelper;
+import com.example.roadsplit.EndpointConnector;
+import com.example.roadsplit.helperclasses.ZwischenstopAdapterHelper;
 import com.example.roadsplit.reponses.ReiseReponse;
 import com.google.gson.Gson;
 
@@ -26,13 +29,13 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
 
     private ReiseReponse reiseReponse;
     Context mContext;
-    MainScreenReisenActivity mainScreenReisenActivity;
+    AusgabenActivity ausgabenActivity;
     List<View> views;
 
-    public ReiseUebersichtAdapter(Context mContext, MainScreenReisenActivity mainScreenReisenActivity, List<View> views, ReiseReponse reiseReponse) {
+    public ReiseUebersichtAdapter(Context mContext, AusgabenActivity ausgabenActivity, List<View> views, ReiseReponse reiseReponse) {
         this.mContext = mContext;
         this.views = views;
-        this.mainScreenReisenActivity = mainScreenReisenActivity;
+        this.ausgabenActivity = ausgabenActivity;
         this.reiseReponse = reiseReponse;
     }
 
@@ -51,7 +54,7 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
                 layoutScreen = inflater.inflate(R.layout.ausgabenpage,null);
                 //updateReise(reiseReponse.getReise());
                 EndpointConnector.fetchPaymentInfo(reiseReponse.getReise(), updateReiseCallback());
-                AusgabenAdapterHelper ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, reiseReponse, mainScreenReisenActivity);
+                AusgabenAdapterHelper ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, reiseReponse, ausgabenActivity);
                 ausgabenAdapterHelper.setUpAusgaben();
                 break;
             case 1:

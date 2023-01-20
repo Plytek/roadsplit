@@ -1,4 +1,4 @@
-package com.example.roadsplit.adapter;
+package com.example.roadsplit.helperclasses;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.adapter.StopAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseReponse;
@@ -23,6 +25,7 @@ public class ZwischenstopAdapterHelper {
     private View layoutScreen;
     private List<Stop> stops;
     private Reise reise;
+    private TextView stopEntfernenErrorView;
     private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
 
 
@@ -37,21 +40,18 @@ public class ZwischenstopAdapterHelper {
         Button addStopButton = layoutScreen.findViewById(R.id.plusButton2);
         Button removeStopButton = layoutScreen.findViewById(R.id.minusButton2);
         Button addBudgetButton = layoutScreen.findViewById(R.id.plusButton3);
+        stopEntfernenErrorView = layoutScreen.findViewById(R.id.stopEntfernenErrorView);
+        stopEntfernenErrorView.setVisibility(View.INVISIBLE);
 
         ListView stopListView = layoutScreen.findViewById(R.id.stopNamenListView);
 
         for(Stop stop : stops)
         {
             HashMap<String, String> fullstop = new HashMap<>();
-            //stopNames.add(stop.getName());
             //TODO: budget immer setzen
             fullstop.put("stop", stop.getName());
-/*            if(stop.getBudget() == null) budgetStrings.add("0");
-            else budgetStrings.add(stop.getBudget().toString());*/
             if(stop.getBudget() == null) fullstop.put("budget","0");
             else fullstop.put("budget", stop.getBudget().toString());
-            /*if(stop.getGesamtausgaben() == null)gesamtAusgabenString.add("0");
-            else gesamtAusgabenString.add(stop.getGesamtausgaben().toString());*/
             if(stop.getGesamtausgaben() == null)fullstop.put("gesamt", "0");
             else fullstop.put("gesamt", stop.getGesamtausgaben().toString());
             fullstops.add(fullstop);
@@ -61,6 +61,7 @@ public class ZwischenstopAdapterHelper {
         stopListView.setAdapter(stopAdapter);
 
         addStopButton.setOnClickListener(view -> {
+            stopEntfernenErrorView.setVisibility(View.INVISIBLE);
             String stopName = ((EditText)layoutScreen.findViewById(R.id.pinTextView2)).getText().toString();
             String budget = ((EditText)layoutScreen.findViewById(R.id.pinTextView3)).getText().toString();
             if(stopName.isEmpty()) return;
@@ -78,10 +79,15 @@ public class ZwischenstopAdapterHelper {
         });
 
         removeStopButton.setOnClickListener(view -> {
+            stopEntfernenErrorView.setVisibility(View.INVISIBLE);
             SparseBooleanArray checked = stopListView.getCheckedItemPositions();
             int removedcounter = 0;
             for (int i = 0; i < stopListView.getCount(); i++)
                 if (checked.get(i)) {
+                    if (!stops.get(i-removedcounter).getGesamtausgaben().equals(new BigDecimal(0))){
+                        stopEntfernenErrorView.setVisibility(View.VISIBLE);
+                        return;
+                    }
                     stops.remove(i-removedcounter);
                     removedcounter++;
                 }
@@ -90,6 +96,7 @@ public class ZwischenstopAdapterHelper {
         });
 
         addBudgetButton.setOnClickListener(view -> {
+            stopEntfernenErrorView.setVisibility(View.INVISIBLE);
             String budget = ((EditText)layoutScreen.findViewById(R.id.pinTextView3)).getText().toString();
             //Nur "*d.dd und *d,dd*"
             String regex = "^\\d+([.,]\\d{2})?$";

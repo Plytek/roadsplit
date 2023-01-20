@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.AppSettings;
+import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
@@ -33,7 +31,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LogInActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class LogInActivity extends AppCompatActivity {
         findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
         //findViewById(R.id.plsloginButton).setOnTouchListener(new HapticTouchListener());
         Button button = findViewById(R.id.plsloginButton);
-        AppSettings.buttonPressDownEffect(button);
+        ButtonEffect.buttonPressDownEffect(button);
     }
 
     //TODO: Textfeld auf PW Feld von Email ändern
@@ -167,7 +165,7 @@ public class LogInActivity extends AppCompatActivity {
 
     public void startFirstTimeActivity()
     {
-        Intent intent = new Intent(this, TutActivity.class);
+        Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
         finish();
     }

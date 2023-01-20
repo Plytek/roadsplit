@@ -4,7 +4,7 @@ import android.graphics.PorterDuff;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class AppSettings {
+public class ButtonEffect {
     public static void buttonPressDownEffect(View button){
         button.setOnTouchListener(new View.OnTouchListener() {
 

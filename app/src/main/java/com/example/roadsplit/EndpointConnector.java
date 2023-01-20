@@ -1,4 +1,4 @@
-package com.example.roadsplit.helperclasses;
+package com.example.roadsplit;
 
 
 import com.example.roadsplit.activities.MainActivity;
@@ -37,6 +37,28 @@ public class EndpointConnector {
     {
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/ausgaben";
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
+
+        AusgabenRequest ausgabenRequest = new AusgabenRequest();
+        if(reise == null) return;
+
+        ausgabenRequest.setReise(reise);
+        ausgabenRequest.setReisender(MainActivity.currentUser);
+
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
+
+        Request request = new Request.Builder()
+                .url(httpBuilder.build())
+                .post(formBody)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void fetchPaymentInfoSummary(Reise reise, Callback callback)
+    {
+        OkHttpClient client = new OkHttpClient();
+        String url = MainActivity.BASEURL + "/api/reisedaten/ausgabenSummary";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
         AusgabenRequest ausgabenRequest = new AusgabenRequest();
@@ -120,5 +142,7 @@ public class EndpointConnector {
 
         client.newCall(request).enqueue(callback);
     }
+
+
 
 }

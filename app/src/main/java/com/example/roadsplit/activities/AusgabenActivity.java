@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
-import com.example.roadsplit.helperclasses.EndpointConnector;
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.reponses.ReiseReponse;
 import com.google.android.material.tabs.TabLayout;
@@ -22,7 +22,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class MainScreenReisenActivity extends AppCompatActivity {
+public class AusgabenActivity extends AppCompatActivity {
     private ViewPager screenPager;
     private ReiseUebersichtAdapter reiseUebersichtAdapter;
     private TabLayout tabLayout;
@@ -54,7 +54,8 @@ public class MainScreenReisenActivity extends AppCompatActivity {
                 ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
                     runOnUiThread(() -> {
-                        reiseUebersichtAdapter = new ReiseUebersichtAdapter(MainScreenReisenActivity.this, MainScreenReisenActivity.this, null, reiseReponse);
+                        reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseReponse);
+                        MainActivity.currentUser = reiseReponse.getReisender();
                         screenPager.setAdapter(reiseUebersichtAdapter);
                         tabLayout = findViewById(R.id.tab_indicator2);
                         tabLayout.setupWithViewPager(screenPager);

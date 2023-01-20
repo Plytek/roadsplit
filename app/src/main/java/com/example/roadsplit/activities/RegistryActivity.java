@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.AppSettings;
+import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
@@ -38,12 +37,12 @@ public class RegistryActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
 
-        AppSettings.buttonPressDownEffect(findViewById(R.id.realRegistrierenButton));
+        ButtonEffect.buttonPressDownEffect(findViewById(R.id.realRegistrierenButton));
     }
 
     public void backToLogin(View view)
     {
-        Intent intent = new Intent(this, LogInActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
@@ -132,7 +131,7 @@ public class RegistryActivity extends AppCompatActivity {
 
     public void toLogin()
     {
-        Intent intent = new Intent(this, LogInActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("registered", "success");
         startActivity(intent);
         finish();

@@ -1,4 +1,4 @@
-package com.example.roadsplit.adapter;
+package com.example.roadsplit.helperclasses;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -17,11 +17,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
-import com.example.roadsplit.activities.MainScreenReisenActivity;
-import com.example.roadsplit.helperclasses.AppSettings;
-import com.example.roadsplit.helperclasses.EndpointConnector;
+import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.AusgabenTyp;
 import com.example.roadsplit.model.Reise;
@@ -44,16 +43,16 @@ public class AusgabenAdapterHelper {
 
         private Context mContext;
         private View layoutScreen;
-        private MainScreenReisenActivity mainScreenReisenActivity;
+        private AusgabenActivity ausgabenActivity;
         private ReiseReponse reiseReponse;
         private BigDecimal reiseGesamtAusgabe;
         private List<String> reisendeNames;
 
-    public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseReponse reiseReponse, MainScreenReisenActivity mainScreenReisenActivity) {
+    public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseReponse reiseReponse, AusgabenActivity ausgabenActivity) {
         this.layoutScreen = layoutScreen;
         this.reiseReponse = reiseReponse;
         this.mContext = context;
-        this.mainScreenReisenActivity = mainScreenReisenActivity;
+        this.ausgabenActivity = ausgabenActivity;
 
         reiseGesamtAusgabe = new BigDecimal(0);
         for(Stop stop : reiseReponse.getReise().getStops()) {
@@ -68,7 +67,7 @@ public class AusgabenAdapterHelper {
     public void setUpAusgaben(){
         Button ausgabeSpeichernButton = layoutScreen.findViewById(R.id.ausgabeSpeichernButton);
         layoutScreen.findViewById(R.id.ausgabenProgressBar).setVisibility(View.INVISIBLE);
-        AppSettings.buttonPressDownEffect(ausgabeSpeichernButton);
+        ButtonEffect.buttonPressDownEffect(ausgabeSpeichernButton);
 
         TextView nutzergView = layoutScreen.findViewById(R.id.textViewPayAmount);
         nutzergView.setText(reiseReponse.getGesamtAusgabe().toString() + "€");
@@ -217,7 +216,7 @@ public class AusgabenAdapterHelper {
                             stop.setGesamtausgaben(new BigDecimal(0));
                         }
                     }
-                    mainScreenReisenActivity.runOnUiThread(() -> setUpPaymentTextViews(layoutScreen));
+                    ausgabenActivity.runOnUiThread(() -> setUpPaymentTextViews(layoutScreen));
                     Looper.prepare();
                     Toast.makeText(mContext, "success", Toast.LENGTH_LONG).show();
                 }

@@ -15,14 +15,14 @@ import android.widget.TextView;
 
 import com.example.roadsplit.adapter.IntroViewPagerAdapter;
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.AppSettings;
+import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.model.ScreenItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TutActivity extends AppCompatActivity {
+public class TutorialActivity extends AppCompatActivity {
 
     private ViewPager screenPager;
     private IntroViewPagerAdapter introViewPagerAdapter ;
@@ -51,8 +51,8 @@ public class TutActivity extends AppCompatActivity {
         btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation);
         tvSkip = findViewById(R.id.tv_skip);
 
-        AppSettings.buttonPressDownEffect(btnNext);
-        AppSettings.buttonPressDownEffect(btnGetStarted);
+        ButtonEffect.buttonPressDownEffect(btnNext);
+        ButtonEffect.buttonPressDownEffect(btnGetStarted);
 
         // fill list screen
         this.mList = new ArrayList<>();
