@@ -2,6 +2,8 @@ package com.example.roadsplit.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,9 +19,10 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.UebersichtListAdapter;
-import com.example.roadsplit.EndpointConnector;
+import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.reponses.WikiResponse;
@@ -29,11 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,46 +41,51 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ReiseUebersichtActivity extends AppCompatActivity implements Observer {
+public class ReiseUebersichtTestActivity extends AppCompatActivity {
+
     private List<Reise> reisen;
     private ReiseReponse[] reiseResponses;
     private Reise selectedReise;
-    private ListView reisenView;
+    private RecyclerView reisenView;
     private List<Bitmap> images;
     private int imageloadCounter;
     private Handler handler;
     UebersichtListAdapter uebersichtListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reise_uebersicht);
-        MainActivity.currentUserData.addObserver(this);
-
+        setContentView(R.layout.activity_reise_uebersicht_test);
 
         reisen = new ArrayList<>();
         images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
         reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
-        reisenView = findViewById(R.id.reisenUebersichtListView);
-        reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
+        reisenView = findViewById(R.id.recyclerViewTest);
+        reiseResponses = new ReiseReponse[1];
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        reisenView.setLayoutManager(layoutManager);
 
         handler = new Handler(Looper.getMainLooper());
-        setUpListView();
-
-        reisenView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    clickedPosition[0] = i;
-                    selectedReise = reisen.get(i);
-            }
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            imageloadCounter = 0;
+            EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentSummaryCallback());
+            handler.post(() -> {
+                for(Reise reise : reisen)
+                {
+                    EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
+                }
+            });
         });
+
 
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
                 if(clickedPosition[0] != -1)
                 {
-                    MainActivity.currentUserData.setCurrentReise(selectedReise);
                     goToReise(selectedReise);
                 }
                 return true;
@@ -96,26 +100,8 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
         });
 
         handler.post(() -> {
-            uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
-            reisenView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-            reisenView.setAdapter(uebersichtListAdapter);
-        });
-    }
-
-    private void setUpListView()
-    {
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            imageloadCounter = 0;
-            //if(reiseResponses == null || reiseResponses[0] == null)
-            EndpointConnector.fetchPaymentInfoSummary(reisen.get(0), fetchPaymentSummaryCallback());
-            handler.post(() -> {
-                for(Reise reise : reisen)
-                {
-                    EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
-                }
-            });
-        });
+            UebersichtRecAdapter reisenAdapter = new UebersichtRecAdapter(this, MainActivity.currentUserData.getCurrentReiseReponsesAsList());
+            reisenView.setAdapter(reisenAdapter);});
     }
 
 
@@ -166,22 +152,15 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 try {
-                    ReiseReponse[] responses = new Gson().fromJson(response.body().string(), ReiseReponse[].class);
-                    reiseResponses = responses;
-                    MainActivity.currentUserData.setCurrentReiseReponses(responses);
+                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseReponse[].class);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if(response.isSuccessful()) {
+                    MainActivity.currentUserData.setCurrentReiseReponses(reiseResponses);
                     MainActivity.currentUserData.setCurrentUser(reiseResponses[0].getReisender());
-                    MainActivity.currentUserData.notifyObservers();
-                     runOnUiThread(() -> {
-                             uebersichtListAdapter = new UebersichtListAdapter(MainActivity.currentUserData.getCurrentReiseReponsesAsList(), ReiseUebersichtActivity.this, images);
-                             reisenView.setAdapter(uebersichtListAdapter);
-                             uebersichtListAdapter.notifyDataSetChanged();
-                     });
-                    }
                 }
+            }
         };
     }
 
@@ -190,38 +169,18 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
-                Bitmap mIcon = null;
-                try {
-                    InputStream in = new java.net.URL(url).openStream();
-                    mIcon = BitmapFactory.decodeStream(in);
-                } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
-                    e.printStackTrace();
-                }
-                images.add(mIcon);
-                handler.post(() -> {
-                        uebersichtListAdapter.notifyDataSetChanged();
-                });
+            Bitmap mIcon = null;
+            try {
+                InputStream in = new java.net.URL(url).openStream();
+                mIcon = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            images.add(mIcon);
+            handler.post(() -> {
+                uebersichtListAdapter.notifyDataSetChanged();
+            });
         });
-    }
-
-    @Override
-    public void update(Observable observable, Object o) {
-            reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MainActivity.currentUserData.deleteObserver(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
-        //reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
-        EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentReiseReponses()[0].getReise(), fetchPaymentSummaryCallback());
-
     }
 }

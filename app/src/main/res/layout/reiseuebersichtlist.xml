@@ -4,104 +4,134 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/rcreme"
     tools:layout_editor_absoluteX="-87dp"
     tools:layout_editor_absoluteY="353dp">
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <androidx.cardview.widget.CardView
         android:layout_width="315dp"
         android:layout_height="140dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="10dp"
+        android:elevation="20dp"
+        app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/roundreiseshape" />
+        app:layout_constraintTop_toTopOf="parent" >
 
-    <ImageView
-        android:id="@+id/locationImageView"
-        android:layout_width="117dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="68dp"
-        android:padding="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/imageView2"
-        app:layout_constraintStart_toStartOf="@id/imageView2"
-        app:layout_constraintTop_toTopOf="@id/imageView2"
-        app:layout_constraintVertical_bias="1.0" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/rldarkgreen" >
 
-    <TextView
-        android:id="@+id/uebersichtTextViewName"
-        android:layout_width="150dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="84dp"
-        android:paddingTop="5dp"
-        android:textSize="15dp"
-        android:text="Bents Finnlandreise"
-        android:textColor="@color/rcreme"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@id/locationImageView"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/locationImageView"
+                android:layout_width="117dp"
+                android:layout_height="140dp"
+                android:background="@color/rcreme"
+                android:scaleType="centerCrop"
+                android:src="@color/rcreme"
+                app:layout_constraintBottom_toBottomOf="@id/imageView2"
+                app:layout_constraintStart_toStartOf="@id/imageView2"
+                app:layout_constraintTop_toTopOf="@id/imageView2"
+                app:layout_constraintVertical_bias="1.0"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="69dp" />
 
-    <TextView
-        android:id="@+id/uebersichtTextViewDatum"
-        android:layout_width="150dp"
-        android:layout_height="14dp"
-        android:layout_marginStart="12dp"
-        android:padding="0dp"
-        android:paddingStart="0dp"
-        android:textSize="10dp"
-        android:text="28.07.23 - 05.08.23"
-        android:textColor="@color/rgrey"
-        android:textStyle="normal"
-        app:layout_constraintStart_toEndOf="@id/locationImageView"
-        app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewName" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/uebersichtTextViewAusgaben"
-        android:layout_width="150dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="12dp"
-        android:paddingTop="5dp"
-        android:text="Ausgaben: 746€"
-        android:textColor="@color/rlightgreen"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@id/locationImageView"
-        app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewDatum" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clayoutuebersicht1"
+                android:layout_width="314dp"
+                android:layout_height="140dp" >
 
-    <TextView
-        android:id="@+id/uebersichtTextViewBudget"
-        android:layout_width="150dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="24dp"
-        android:paddingTop="5dp"
-        android:text="Budget: 50€"
-        android:textColor="@color/rlightgreen"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@id/locationImageView"
-        app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewDatum" />
+                <TextView
+                    android:id="@+id/uebersichtTextViewName"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="140dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="35dp"
+                    android:paddingTop="5dp"
+                    android:text="BeFinnlandreise"
+                    android:textColor="@color/rcreme"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/clayoutuebersicht1"
+                    app:layout_constraintStart_toStartOf="@id/clayoutuebersicht1"
+                    app:layout_constraintTop_toTopOf="@id/clayoutuebersicht1" />
 
-    <TextView
-        android:id="@+id/uebersichtTextViewReisende"
-        android:layout_width="150dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="52dp"
-        android:padding="5dp"
-        android:paddingStart="0dp"
-        android:text="Reise-Teilnehmer:"
-        android:textColor="@color/rcreme"
-        android:textSize="10dp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toEndOf="@id/locationImageView"
-        app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewDatum" />
+                <TextView
+                    android:id="@+id/uebersichtTextViewDatum"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="05.08.2023"
+                    android:textColor="@color/rgrey"
+                    android:textSize="10dp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewName"
+                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewName"
+                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewName" />
+
+                <TextView
+                    android:id="@+id/uebersichtTextViewAusgaben"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Ausgaben:      746€"
+                    android:textColor="@color/rcreme"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewDatum"
+                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewDatum"
+                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewDatum" />
+
+                <TextView
+                    android:id="@+id/uebersichtTextViewBudget"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Budget:       1000€"
+                    android:textColor="@color/rcreme"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewAusgaben"
+                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewAusgaben"
+                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewAusgaben" />
+
+                <TextView
+                    android:id="@+id/uebersichtTextViewReisende"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Teilnehmende:"
+                    android:textColor="@color/rgrey"
+                    android:textSize="10dp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewBudget"
+                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewBudget"
+                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewBudget" />
+
+                <TextView
+                    android:id="@+id/uebersichtTextViewErsteller"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Erstellt von:"
+                    android:textColor="@color/rgrey"
+                    android:textSize="10dp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewBudget"
+                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewBudget"
+                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewBudget" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

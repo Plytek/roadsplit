@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void reiseDetail(View view){
-        Intent intent = new Intent(this, ReiseUebersichtActivity.class);
+        Intent intent = new Intent(this, ReiseUebersichtTestActivity.class);
         startActivity(intent);
     }
 

@@ -46,6 +46,7 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Obser
 
     private List<Bitmap> reisenWithImages;
     private List<ReiseReponse> reiseReponses;
+    private Context context;
 
     @Override
     public void update(Observable observable, Object o) {
@@ -69,7 +70,7 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Obser
         MainActivity.currentUserData.addObserver(this);
         this.reisenWithImages = data;
         this.reiseReponses = MainActivity.currentUserData.getCurrentReiseReponsesAsList();
-
+        this.context = context;
     }
 
     @Override
@@ -121,7 +122,7 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Obser
         if(gesamtBudget != null &&
                 !gesamtBudget.equals(new BigDecimal(0))
             && gesamtBudget.compareTo(reiseReponse.getGesamtAusgabe()) < 0){
-            viewHolder.ausgaben.setTextColor(Color.RED);
+            viewHolder.ausgaben.setTextColor(context.getResources().getColor(R.color.rcreme));
         }
 
         if(reisenWithImages.get(position) != null) {
