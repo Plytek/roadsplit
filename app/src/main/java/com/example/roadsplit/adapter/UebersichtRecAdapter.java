@@ -2,6 +2,7 @@ package com.example.roadsplit.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
         holder.date.setText(dateString);
         if (reiseReponse.getGesamtAusgabe() != null)
             holder.ausgaben.setText(reiseReponse.getGesamtAusgabe().toString());
-        holder.anzahlReisende.setText(reiseReponse.getReisendeList().size());
+        holder.anzahlReisende.setText(Integer.toString(reiseReponse.getReisendeList().size()));
         BigDecimal gesamtBudget = new BigDecimal(0);
         for(Stop stop : reise.getStops())
         {
@@ -66,7 +67,7 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
         if(gesamtBudget != null &&
                 !gesamtBudget.equals(new BigDecimal(0))
                 && gesamtBudget.compareTo(reiseReponse.getGesamtAusgabe()) < 0){
-            holder.ausgaben.setTextColor(context.getResources().getColor(R.color.red));
+            holder.ausgaben.setTextColor(Color.RED);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

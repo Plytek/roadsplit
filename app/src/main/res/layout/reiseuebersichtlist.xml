@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rcreme"
+    android:background="@color/rdarkgreen"
     tools:layout_editor_absoluteX="-87dp"
     tools:layout_editor_absoluteY="353dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="315dp"
         android:layout_height="140dp"
-        android:layout_marginTop="50dp"
-        app:cardCornerRadius="10dp"
+
         android:elevation="20dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/rldarkgreen" >
+            android:background="@color/rldarkgreen">
 
             <ImageView
                 android:id="@+id/locationImageView"
@@ -40,92 +40,92 @@
 
         </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clayoutuebersicht1"
-                android:layout_width="314dp"
-                android:layout_height="140dp" >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clayoutuebersicht1"
+            android:layout_width="314dp"
+            android:layout_height="140dp">
 
-                <TextView
-                    android:id="@+id/uebersichtTextViewName"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="140dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="35dp"
-                    android:paddingTop="5dp"
-                    android:text="BeFinnlandreise"
-                    android:textColor="@color/rcreme"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/clayoutuebersicht1"
-                    app:layout_constraintStart_toStartOf="@id/clayoutuebersicht1"
-                    app:layout_constraintTop_toTopOf="@id/clayoutuebersicht1" />
+            <TextView
+                android:id="@+id/uebersichtTextViewName"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="35dp"
+                android:paddingTop="5dp"
+                android:text="BeFinnlandreise"
+                android:textColor="@color/rcreme"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/clayoutuebersicht1"
+                app:layout_constraintStart_toStartOf="@id/clayoutuebersicht1"
+                app:layout_constraintTop_toTopOf="@id/clayoutuebersicht1" />
 
-                <TextView
-                    android:id="@+id/uebersichtTextViewDatum"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:text="05.08.2023"
-                    android:textColor="@color/rgrey"
-                    android:textSize="10dp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewName"
-                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewName"
-                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewName" />
+            <TextView
+                android:id="@+id/uebersichtTextViewDatum"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="05.08.2023"
+                android:textColor="@color/rgrey"
+                android:textSize="10dp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewName"
+                app:layout_constraintStart_toStartOf="@id/uebersichtTextViewName"
+                app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewName" />
 
-                <TextView
-                    android:id="@+id/uebersichtTextViewAusgaben"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Ausgaben:      746€"
-                    android:textColor="@color/rcreme"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewDatum"
-                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewDatum"
-                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewDatum" />
+            <TextView
+                android:id="@+id/uebersichtTextViewAusgaben"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Ausgaben:      746€"
+                android:textColor="@color/rcreme"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewDatum"
+                app:layout_constraintStart_toStartOf="@id/uebersichtTextViewDatum"
+                app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewDatum" />
 
-                <TextView
-                    android:id="@+id/uebersichtTextViewBudget"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Budget:       1000€"
-                    android:textColor="@color/rcreme"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewAusgaben"
-                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewAusgaben"
-                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewAusgaben" />
+            <TextView
+                android:id="@+id/uebersichtTextViewBudget"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Budget:       1000€"
+                android:textColor="@color/rcreme"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewAusgaben"
+                app:layout_constraintStart_toStartOf="@id/uebersichtTextViewAusgaben"
+                app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewAusgaben" />
 
-                <TextView
-                    android:id="@+id/uebersichtTextViewReisende"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:text="Teilnehmende:"
-                    android:textColor="@color/rgrey"
-                    android:textSize="10dp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewBudget"
-                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewBudget"
-                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewBudget" />
+            <TextView
+                android:id="@+id/uebersichtTextViewReisende"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Teilnehmende:"
+                android:textColor="@color/rgrey"
+                android:textSize="10dp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewBudget"
+                app:layout_constraintStart_toStartOf="@id/uebersichtTextViewBudget"
+                app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewBudget" />
 
-                <TextView
-                    android:id="@+id/uebersichtTextViewErsteller"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Erstellt von:"
-                    android:textColor="@color/rgrey"
-                    android:textSize="10dp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewBudget"
-                    app:layout_constraintStart_toStartOf="@id/uebersichtTextViewBudget"
-                    app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewBudget" />
+            <TextView
+                android:id="@+id/uebersichtTextViewErsteller"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Erstellt von:"
+                android:textColor="@color/rgrey"
+                android:textSize="10dp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewBudget"
+                app:layout_constraintStart_toStartOf="@id/uebersichtTextViewBudget"
+                app:layout_constraintTop_toBottomOf="@id/uebersichtTextViewBudget" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

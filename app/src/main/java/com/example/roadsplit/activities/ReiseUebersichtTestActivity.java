@@ -50,13 +50,14 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
     private List<Bitmap> images;
     private int imageloadCounter;
     private Handler handler;
-    UebersichtListAdapter uebersichtListAdapter;
+    UebersichtRecAdapter uebersichtRecAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reise_uebersicht_test);
 
+        setSupportActionBar(null);
         reisen = new ArrayList<>();
         images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
@@ -100,8 +101,8 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         });
 
         handler.post(() -> {
-            UebersichtRecAdapter reisenAdapter = new UebersichtRecAdapter(this, MainActivity.currentUserData.getCurrentReiseReponsesAsList());
-            reisenView.setAdapter(reisenAdapter);});
+            uebersichtRecAdapter = new UebersichtRecAdapter(this, MainActivity.currentUserData.getCurrentReiseReponsesAsList());
+            reisenView.setAdapter(uebersichtRecAdapter);});
     }
 
 
@@ -178,9 +179,6 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             images.add(mIcon);
-            handler.post(() -> {
-                uebersichtListAdapter.notifyDataSetChanged();
-            });
         });
     }
 }
