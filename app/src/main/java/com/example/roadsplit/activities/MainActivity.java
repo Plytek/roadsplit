@@ -8,17 +8,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.testing.DummyPlanungActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
 import com.example.roadsplit.activities.testing.PaymentDummyActivity;
 import com.example.roadsplit.activities.testing.UserCreateActivity;
+import com.example.roadsplit.adapter.UebersichtListAdapter;
+import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.UserAccount;
+import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -37,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private UserAccount userAccount = null;
-    public static Reisender currentUser;
+    //public static Reisender currentUser;
     public static final String BASEURL = "http://167.172.167.221:8080";
+    public static CurrentUserData currentUserData;
     //public static final String BASEURL = "https://b5dc-88-70-249-101.ngrok.io";
 
 
@@ -49,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        currentUserData = new CurrentUserData();
         try {
             login();
         } catch (Exception e) {
@@ -60,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     public void openMap(View view) {
         Intent intent = new Intent(this, MapActivity.class);
         //Gibt zusätzliche Daten mit durch .putExtra(Key, Value). In diesem Fall den aktuellen Useraccount als String
-        intent.putExtra("user", (new Gson()).toJson(currentUser));
+        intent.putExtra("user", (new Gson()).toJson(currentUserData.getCurrentUser()));
         //Startet die Activity
         startActivity(intent);
     }
@@ -82,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void reiseText(View view){
         Intent intent = new Intent(this, DummyPlanungActivity.class);
-        intent.putExtra("user", (new Gson()).toJson(currentUser));
+        intent.putExtra("user", (new Gson()).toJson(currentUserData.getCurrentUser()));
         startActivity(intent);
     }
 
@@ -118,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void login()
+    private void login()
     {
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/userdaten/login";
@@ -149,10 +158,39 @@ public class MainActivity extends AppCompatActivity {
                 UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful())
                 {
-                    MainActivity.currentUser = userResponse.getReisender();
+                    currentUserData.setCurrentUser(userResponse.getReisender());
+                    EndpointConnector.fetchPaymentInfoSummary(currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentInfoSummaryCallback());
                 }
             }
         });
     }
 
+    private Callback fetchPaymentInfoSummaryCallback(){
+        return new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                ReiseReponse[] reiseResponses = new ReiseReponse[0];
+                try {
+                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseReponse[].class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(response.isSuccessful()) {
+                    currentUserData.setCurrentReiseReponses(reiseResponses);
+                    currentUserData.notifyObservers();
+                    }
+                }
+            };
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.currentUserData.deleteObservers();
+        //MainActivity.currentUserData = null;
+    }
 }

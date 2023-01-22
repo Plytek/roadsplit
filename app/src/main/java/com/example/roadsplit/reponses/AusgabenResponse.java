@@ -1,4 +1,7 @@
-package com.example.roadsplit.model;
+package com.example.roadsplit.reponses;
+
+import com.example.roadsplit.model.Ausgabe;
+import com.example.roadsplit.model.Reisender;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

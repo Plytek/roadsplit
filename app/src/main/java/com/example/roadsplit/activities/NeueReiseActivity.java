@@ -39,9 +39,9 @@ public class NeueReiseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neue_reise);
-        if(MainActivity.currentUser != null)
+        if(MainActivity.currentUserData.getCurrentUser() != null)
         {
-            String welcome = "WAS GEHT, " + MainActivity.currentUser.getNickname().toUpperCase();
+            String welcome = "WAS GEHT, " + MainActivity.currentUserData.getCurrentUser().getNickname().toUpperCase();
             ((TextView)findViewById(R.id.textView10)).setText(welcome);
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -72,7 +72,7 @@ public class NeueReiseActivity extends AppCompatActivity {
     public void join(View view) {
         EditText editText = dialog.findViewById(R.id.pinTextView);
         String uniquename = editText.getText().toString();
-        JoinRequest joinRequest = new JoinRequest(MainActivity.currentUser.getId(), uniquename);
+        JoinRequest joinRequest = new JoinRequest(MainActivity.currentUserData.getCurrentUser().getId(), uniquename);
         EndpointConnector.reiseBeitreten(joinRequest, reiseBeitretenCallback());
 
     }
@@ -90,7 +90,7 @@ public class NeueReiseActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUser = reiseReponse.getReisender();
+                    MainActivity.currentUserData.setCurrentUser(reiseReponse.getReisender());
                     Looper.prepare();
                     dialog.dismiss();
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();

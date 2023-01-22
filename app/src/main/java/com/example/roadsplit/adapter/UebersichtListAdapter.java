@@ -19,7 +19,9 @@ import androidx.annotation.NonNull;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
+import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.activities.ReiseUebersichtActivity;
+import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseReponse;
@@ -33,15 +35,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class UebersichtListAdapter extends ArrayAdapter<Bitmap> {
+public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Observer {
 
     private List<Bitmap> reisenWithImages;
     private List<ReiseReponse> reiseReponses;
+
+    @Override
+    public void update(Observable observable, Object o) {
+        if(o instanceof CurrentUserData){
+            //reiseReponses = ((CurrentUserData) o).getCurrentReiseReponsesAsList();
+        }
+    }
 
     // View lookup cache
     private static class ViewHolder {
@@ -55,8 +66,9 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> {
 
     public UebersichtListAdapter(List<ReiseReponse> reiseReponses, Context context, List<Bitmap> data) {
         super(context, R.layout.reiseuebersichtlist, data);
+        MainActivity.currentUserData.addObserver(this);
         this.reisenWithImages = data;
-        this.reiseReponses = reiseReponses;
+        this.reiseReponses = MainActivity.currentUserData.getCurrentReiseReponsesAsList();
 
     }
 
@@ -64,7 +76,13 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         Bitmap image = getItem(position);
-        ReiseReponse reiseReponse = reiseReponses.get(position);
+        ReiseReponse reiseReponse = null;
+        try {
+            reiseReponse = reiseReponses.get(position);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return convertView;
+        }
         Reise reise = reiseReponse.getReise();
         // Check if an existing view is being reused, otherwise inflate the view
         UebersichtListAdapter.ViewHolder viewHolder; // view lookup cache stored in tag

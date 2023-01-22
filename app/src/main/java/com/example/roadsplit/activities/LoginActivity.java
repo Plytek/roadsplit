@@ -106,15 +106,15 @@ public class LoginActivity extends AppCompatActivity {
                 UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful())
                 {
-                    MainActivity.currentUser = userResponse.getReisender();
+                    MainActivity.currentUserData.setCurrentUser(userResponse.getReisender());
                     if(userResponse.getReisender().isFirsttimelogin())
                     {
-                        MainActivity.currentUser.setFirsttimelogin(false);
+                        MainActivity.currentUserData.getCurrentUser().setFirsttimelogin(false);
                         sendUserUpdate();
                         startFirstTimeActivity();
                     }
                     else success();
-                    Log.d("currentuser", MainActivity.currentUser.toString());
+                    Log.d("currentuser", MainActivity.currentUserData.getCurrentUser().toString());
                     findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
                     return;
                 }
@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void sendUserUpdate() throws IOException {
         HttpUrl.Builder httpBuilder = HttpUrl.parse(MainActivity.BASEURL + "/api/userdaten/update").newBuilder();
-        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(MainActivity.currentUser));
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(MainActivity.currentUserData.getCurrentUser()));
 
         OkHttpClient nextclient = new OkHttpClient();
         Request request = new Request.Builder()

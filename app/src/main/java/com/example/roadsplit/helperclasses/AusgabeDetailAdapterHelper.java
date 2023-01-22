@@ -13,8 +13,10 @@ import com.example.roadsplit.reponses.ReiseReponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class AusgabeDetailAdapterHelper {
+public class AusgabeDetailAdapterHelper implements Observer {
 
     private List<String> reisendeNames;
     private Context mContext;
@@ -64,6 +66,11 @@ public class AusgabeDetailAdapterHelper {
 
             }
         });
+
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
 
     }
 }

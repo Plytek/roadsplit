@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.adapter.StopAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Stop;
@@ -18,11 +19,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class ZwischenstopAdapterHelper {
+public class ZwischenstopAdapterHelper implements Observer {
 
     private Context mContext;
     private View layoutScreen;
+    private ListView stopListView;
     private List<Stop> stops;
     private Reise reise;
     private TextView stopEntfernenErrorView;
@@ -30,8 +34,9 @@ public class ZwischenstopAdapterHelper {
 
 
     public ZwischenstopAdapterHelper(View layoutScreen, Context context, ReiseReponse reiseReponse) {
-        this.stops = reiseReponse.getReise().getStops();
-        this.reise = reiseReponse.getReise();
+        MainActivity.currentUserData.addObserver(this);
+        this.stops = MainActivity.currentUserData.getCurrentReiseResponse().getReise().getStops();
+        this.reise = MainActivity.currentUserData.getCurrentReiseResponse().getReise();
         this.mContext = context;
         this.layoutScreen = layoutScreen;
     }
@@ -43,7 +48,7 @@ public class ZwischenstopAdapterHelper {
         stopEntfernenErrorView = layoutScreen.findViewById(R.id.stopEntfernenErrorView);
         stopEntfernenErrorView.setVisibility(View.INVISIBLE);
 
-        ListView stopListView = layoutScreen.findViewById(R.id.stopNamenListView);
+        stopListView = layoutScreen.findViewById(R.id.stopNamenListView);
 
         for(Stop stop : stops)
         {
@@ -116,5 +121,13 @@ public class ZwischenstopAdapterHelper {
             reise.setStops(stops);
             stopAdapter.notifyDataSetChanged();
         });
+    }
+
+
+    @Override
+    public void update(Observable observable, Object o) {
+        this.stops = MainActivity.currentUserData.getCurrentReiseResponse().getReise().getStops();
+        this.reise = MainActivity.currentUserData.getCurrentReiseResponse().getReise();
+        //setUpZwischenStops();
     }
 }

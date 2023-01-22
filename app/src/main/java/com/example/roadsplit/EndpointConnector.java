@@ -43,7 +43,7 @@ public class EndpointConnector {
         if(reise == null) return;
 
         ausgabenRequest.setReise(reise);
-        ausgabenRequest.setReisender(MainActivity.currentUser);
+        ausgabenRequest.setReisender(MainActivity.currentUserData.getCurrentUser());
 
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
 
@@ -65,7 +65,7 @@ public class EndpointConnector {
         if(reise == null) return;
 
         ausgabenRequest.setReise(reise);
-        ausgabenRequest.setReisender(MainActivity.currentUser);
+        ausgabenRequest.setReisender(MainActivity.currentUserData.getCurrentUser());
 
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
 

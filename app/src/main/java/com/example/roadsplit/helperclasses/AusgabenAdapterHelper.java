@@ -34,12 +34,14 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Observable;
+import java.util.Observer;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class AusgabenAdapterHelper {
+public class AusgabenAdapterHelper implements Observer {
 
         private Context mContext;
         private View layoutScreen;
@@ -49,8 +51,9 @@ public class AusgabenAdapterHelper {
         private List<String> reisendeNames;
 
     public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseReponse reiseReponse, AusgabenActivity ausgabenActivity) {
+        MainActivity.currentUserData.addObserver(this);
         this.layoutScreen = layoutScreen;
-        this.reiseReponse = reiseReponse;
+        this.reiseReponse = MainActivity.currentUserData.getCurrentReiseResponse();
         this.mContext = context;
         this.ausgabenActivity = ausgabenActivity;
 
@@ -136,7 +139,7 @@ public class AusgabenAdapterHelper {
         BigDecimal gesamtBalance = new BigDecimal(0);
         int counter = 0;
         for(Reisender reisender : reiseReponse.getSchuldner()){
-            if(!reisender.getId().equals(MainActivity.currentUser.getId())){
+            if(!reisender.getId().equals(MainActivity.currentUserData.getCurrentUser().getId())){
                 BigDecimal betrag = reiseReponse.getBetraege().get(counter);
                 gesamtBalance = gesamtBalance.add(betrag);
             }
@@ -164,7 +167,7 @@ public class AusgabenAdapterHelper {
                 Ausgabe ausgabe = new Ausgabe();
                 ausgabe.setBetrag(betragN);
                 ausgabe.setAnzahlReisende(checked.size());
-                ausgabe.setZahler(MainActivity.currentUser.getId());
+                ausgabe.setZahler(MainActivity.currentUserData.getCurrentUser().getId());
                 ausgabe.setSchuldner(reiseReponse.getReisendeList().get(i).getId());
                 ausgabe.setAusgabenTyp(AusgabenTyp.typForPosition(kategorieSpinner.getSelectedItemPosition()));
                 if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
@@ -204,7 +207,10 @@ public class AusgabenAdapterHelper {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 ReiseReponse payResponse = new Gson().fromJson(Objects.requireNonNull(response.body()).string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUser = payResponse.getReisender();
+                    MainActivity.currentUserData.setCurrentUser(payResponse.getReisender());
+                    MainActivity.currentUserData.setCurrentReiseResponse(payResponse);
+                    MainActivity.currentUserData.setCurrentReise(payResponse.getReise());
+                    MainActivity.currentUserData.notifyObservers();
                     reiseReponse = payResponse;
                     reisendeNames = new ArrayList<>();
                     for(Reisender reisender : reiseReponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
@@ -224,4 +230,8 @@ public class AusgabenAdapterHelper {
         };
     }
 
+    @Override
+    public void update(Observable observable, Object o) {
+
+    }
 }

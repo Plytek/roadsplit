@@ -55,7 +55,9 @@ public class AusgabenActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     runOnUiThread(() -> {
                         reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseReponse);
-                        MainActivity.currentUser = reiseReponse.getReisender();
+                        MainActivity.currentUserData.setCurrentUser(reiseReponse.getReisender());
+                        MainActivity.currentUserData.setCurrentReiseResponse(reiseReponse);
+                        MainActivity.currentUserData.notifyObservers();
                         screenPager.setAdapter(reiseUebersichtAdapter);
                         tabLayout = findViewById(R.id.tab_indicator2);
                         tabLayout.setupWithViewPager(screenPager);
@@ -68,5 +70,11 @@ public class AusgabenActivity extends AppCompatActivity {
             }
 
         };
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        reiseUebersichtAdapter.removeListeners();
     }
 }

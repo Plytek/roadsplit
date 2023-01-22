@@ -59,7 +59,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setContentView(R.layout.activity_reise_erstellen);
-        this.reisender = MainActivity.currentUser;
+        this.reisender = MainActivity.currentUserData.getCurrentUser();
         zwischenstops = new ArrayList<>();
         suggestions = new ArrayList<>();
 
@@ -193,7 +193,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUser = reiseReponse.getReisender();
+                    MainActivity.currentUserData.setCurrentUser(reiseReponse.getReisender());
                     reiseSuccess(reiseReponse.getReise().getUniquename());
                     Looper.prepare();
                 }

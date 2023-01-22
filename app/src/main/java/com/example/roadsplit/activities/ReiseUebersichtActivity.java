@@ -33,6 +33,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,7 +43,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ReiseUebersichtActivity extends AppCompatActivity {
+public class ReiseUebersichtActivity extends AppCompatActivity implements Observer {
     private List<Reise> reisen;
     private ReiseReponse[] reiseResponses;
     private Reise selectedReise;
@@ -54,44 +56,22 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reise_uebersicht);
+        MainActivity.currentUserData.addObserver(this);
 
 
         reisen = new ArrayList<>();
         images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
-        reisen = MainActivity.currentUser.getReisen();
+        reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
         reisenView = findViewById(R.id.reisenUebersichtListView);
-        reiseResponses = new ReiseReponse[1];
+        reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
 
         handler = new Handler(Looper.getMainLooper());
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            imageloadCounter = 0;
-            EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUser.getReisen().get(0), fetchPaymentSummaryCallback());
-            handler.post(() -> {
-                for(Reise reise : reisen)
-                {
-                    EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
-                }
-            });
-        });
-
-        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUser.getReisen().get(0), fetchPaymentSummaryCallback());
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
+        setUpListView();
 
         reisenView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        UebersichtListAdapter uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
-                        reisenView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-                        reisenView.setAdapter(uebersichtListAdapter);
                     clickedPosition[0] = i;
                     selectedReise = reisen.get(i);
             }
@@ -102,6 +82,7 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
             public boolean onDoubleTap(MotionEvent e) {
                 if(clickedPosition[0] != -1)
                 {
+                    MainActivity.currentUserData.setCurrentReise(selectedReise);
                     goToReise(selectedReise);
                 }
                 return true;
@@ -119,6 +100,22 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
             uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
             reisenView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
             reisenView.setAdapter(uebersichtListAdapter);
+        });
+    }
+
+    private void setUpListView()
+    {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            imageloadCounter = 0;
+            //if(reiseResponses == null || reiseResponses[0] == null)
+            EndpointConnector.fetchPaymentInfoSummary(reisen.get(0), fetchPaymentSummaryCallback());
+            handler.post(() -> {
+                for(Reise reise : reisen)
+                {
+                    EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
+                }
+            });
         });
     }
 
@@ -170,14 +167,17 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 try {
-                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseReponse[].class);
+                    ReiseReponse[] responses = new Gson().fromJson(response.body().string(), ReiseReponse[].class);
+                    reiseResponses = responses;
+                    MainActivity.currentUserData.setCurrentReiseReponses(responses);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if(response.isSuccessful()) {
-                    MainActivity.currentUser = reiseResponses[0].getReisender();
+                    MainActivity.currentUserData.setCurrentUser(reiseResponses[0].getReisender());
+                    MainActivity.currentUserData.notifyObservers();
                      runOnUiThread(() -> {
-                             uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
+                             uebersichtListAdapter = new UebersichtListAdapter(MainActivity.currentUserData.getCurrentReiseReponsesAsList(), ReiseUebersichtActivity.this, images);
                              reisenView.setAdapter(uebersichtListAdapter);
                              uebersichtListAdapter.notifyDataSetChanged();
                      });
@@ -204,5 +204,25 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
                         uebersichtListAdapter.notifyDataSetChanged();
                 });
         });
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+            reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.currentUserData.deleteObserver(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
+        //reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
+        EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentReiseReponses()[0].getReise(), fetchPaymentSummaryCallback());
+
     }
 }

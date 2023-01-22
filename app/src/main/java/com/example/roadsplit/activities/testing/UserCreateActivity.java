@@ -143,8 +143,8 @@ public class UserCreateActivity extends AppCompatActivity {
                 UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful())
                 {
-                    MainActivity.currentUser = userResponse.getReisender();
-                    Log.d("currentuser", MainActivity.currentUser.toString());
+                    MainActivity.currentUserData.setCurrentUser(userResponse.getReisender());
+                    Log.d("currentuser", MainActivity.currentUserData.getCurrentUser().toString());
                 }
                 TextView textView = findViewById(R.id.resultText);
                 String text = "User: " + userResponse.getReisender() + "\n" + userResponse.getMessage();

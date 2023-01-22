@@ -18,15 +18,12 @@ import android.widget.Toast;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Ausgabe;
-import com.example.roadsplit.model.AusgabenResponse;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.reponses.PayResponse;
 import com.example.roadsplit.reponses.ReiseReponse;
 import com.example.roadsplit.requests.AusgabenRequest;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -60,7 +57,7 @@ public class PaymentDummyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_dummy);
 
-        currentReise = MainActivity.currentUser.getReisen().get(0);
+        currentReise = MainActivity.currentUserData.getCurrentUser().getReisen().get(0);
 
         names = new ArrayList<>();
         stops = new ArrayList<>();
@@ -91,7 +88,7 @@ public class PaymentDummyActivity extends AppCompatActivity {
         String url = MainActivity.BASEURL + "/api/reisedaten/reisesuche";
         //String url = "http://10.0.2.2:8080/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-        currentReise = MainActivity.currentUser.getReisen().get(0);
+        currentReise = MainActivity.currentUserData.getCurrentUser().getReisen().get(0);
         if(currentReise == null) return;
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(currentReise));
 
@@ -172,7 +169,7 @@ public class PaymentDummyActivity extends AppCompatActivity {
                 Ausgabe ausgabe = new Ausgabe();
                 ausgabe.setBetrag(betrag);
                 ausgabe.setAnzahlReisende(checked.size());
-                ausgabe.setZahler(MainActivity.currentUser.getId());
+                ausgabe.setZahler(MainActivity.currentUserData.getCurrentUser().getId());
                 ausgabe.setSchuldner(reisenderList.get(i).getId());
                 if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
                 stop.getAusgaben().add(ausgabe);
@@ -237,7 +234,7 @@ public class PaymentDummyActivity extends AppCompatActivity {
         if(reise == null) return;
 
         ausgabenRequest.setReise(reise);
-        ausgabenRequest.setReisender(MainActivity.currentUser);
+        ausgabenRequest.setReisender(MainActivity.currentUserData.getCurrentUser());
 
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
 
@@ -264,12 +261,12 @@ public class PaymentDummyActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         int counter = 0;
                         for(Reisender reisender : reiseReponse.getSchuldner()){
-                            if(!reisender.getId().equals(MainActivity.currentUser.getId())){
+                            if(!reisender.getId().equals(MainActivity.currentUserData.getCurrentUser().getId())){
                                 BigDecimal betrag = reiseReponse.getBetraege().get(counter);
-                                String result = MainActivity.currentUser.getNickname()
+                                String result = MainActivity.currentUserData.getCurrentUser().getNickname()
                                         + " bekommt " + betrag.toString() + "€ von " + reisender.getNickname();
                                 if(betrag.compareTo(new BigDecimal(0)) < 0){
-                                    result = MainActivity.currentUser.getNickname()
+                                    result = MainActivity.currentUserData.getCurrentUser().getNickname()
                                             + " zahlt " + betrag.toString() + "€ an " + reisender.getNickname();
                                 }
                                 items.add(result);

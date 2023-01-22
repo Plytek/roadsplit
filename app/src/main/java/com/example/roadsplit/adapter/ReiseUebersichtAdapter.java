@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
+import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.helperclasses.AusgabeDetailAdapterHelper;
 import com.example.roadsplit.helperclasses.AusgabenAdapterHelper;
 import com.example.roadsplit.EndpointConnector;
@@ -28,9 +29,12 @@ import okhttp3.Response;
 public class ReiseUebersichtAdapter extends PagerAdapter {
 
     private ReiseReponse reiseReponse;
-    Context mContext;
-    AusgabenActivity ausgabenActivity;
-    List<View> views;
+    private Context mContext;
+    private AusgabenActivity ausgabenActivity;
+    private List<View> views;
+    private AusgabeDetailAdapterHelper ausgabeDetailAdapterHelper;
+    private ZwischenstopAdapterHelper zwischenstopAdapterHelper;
+    private AusgabenAdapterHelper ausgabenAdapterHelper;
 
     public ReiseUebersichtAdapter(Context mContext, AusgabenActivity ausgabenActivity, List<View> views, ReiseReponse reiseReponse) {
         this.mContext = mContext;
@@ -54,12 +58,12 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
                 layoutScreen = inflater.inflate(R.layout.ausgabenpage,null);
                 //updateReise(reiseReponse.getReise());
                 EndpointConnector.fetchPaymentInfo(reiseReponse.getReise(), updateReiseCallback());
-                AusgabenAdapterHelper ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, reiseReponse, ausgabenActivity);
+                ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, MainActivity.currentUserData.getCurrentReiseResponse(), ausgabenActivity);
                 ausgabenAdapterHelper.setUpAusgaben();
                 break;
             case 1:
                 layoutScreen = inflater.inflate(R.layout.zwischenstopp,null);
-                ZwischenstopAdapterHelper zwischenstopAdapterHelper = new ZwischenstopAdapterHelper(layoutScreen, mContext, reiseReponse);
+                zwischenstopAdapterHelper = new ZwischenstopAdapterHelper(layoutScreen, mContext, MainActivity.currentUserData.getCurrentReiseResponse());
                 zwischenstopAdapterHelper.setUpZwischenStops();
                 break;
             case 2:
@@ -67,7 +71,7 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
                 break;
             case 3:
                 layoutScreen = inflater.inflate(R.layout.ausgabendetailpage,null);
-                AusgabeDetailAdapterHelper ausgabeDetailAdapterHelper = new AusgabeDetailAdapterHelper(layoutScreen, mContext, reiseReponse);
+                ausgabeDetailAdapterHelper = new AusgabeDetailAdapterHelper(layoutScreen, mContext, MainActivity.currentUserData.getCurrentReiseResponse());
                 ausgabeDetailAdapterHelper.setUpAusgabeDetailPage();
                 break;
             default:
@@ -108,6 +112,9 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 ReiseReponse reponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
                 if(response.isSuccessful()) {
+                    MainActivity.currentUserData.setCurrentUser(reponse.getReisender());
+                    MainActivity.currentUserData.setCurrentReiseResponse(reiseReponse);
+                    MainActivity.currentUserData.notifyObservers();
                     reiseReponse = reponse;
                     Looper.prepare();
                     Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show();
@@ -116,5 +123,13 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
 
         };
     }
+
+    public void removeListeners(){
+        MainActivity.currentUserData.deleteObserver(zwischenstopAdapterHelper);
+        MainActivity.currentUserData.deleteObserver(ausgabenAdapterHelper);
+        MainActivity.currentUserData.deleteObserver(ausgabeDetailAdapterHelper);
+    }
+
+
 
 }
