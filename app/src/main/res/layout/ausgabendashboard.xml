@@ -15,7 +15,6 @@
     android:background="@color/rcreme">
 
 
-
     <TextView
         android:id="@+id/textDashboard"
         android:layout_width="wrap_content"
@@ -25,10 +24,10 @@
         android:gravity="center"
         android:text="Dashboard"
         android:textColor="#2A4B42"
-        android:textSize="25dp"
+        android:textSize="22dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline23"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.335"
+        app:layout_constraintHorizontal_bias="0.248"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline23" />
 
@@ -37,62 +36,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineOben"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.16" />
-
-    <TextView
-        android:id="@+id/BudgetTextHeadline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/cmedium"
-        android:gravity="center"
-        android:text="Zwischenstop"
-        android:textColor="#2A4B42"
-        android:textSize="15dp" />
-
-    <Button
-        android:id="@+id/ausgabeSpeichernButton"
-        android:layout_width="275dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/lightgreenbutton"
-        android:elevation="3dp"
-        android:fontFamily="@font/cextrabold"
-        android:onClick="zurReise"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:text="AUSGABE SPEICHERN"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline21"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.569" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.70" />
+        app:layout_constraintGuide_percent="0.06" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/dashboardcard"
         android:layout_width="325dp"
-        android:layout_height="125dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="100dp"
         android:background="@color/rlightgreen"
+        app:cardElevation="20dp"
+        app:cardCornerRadius="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="83dp" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintcardlayoutdash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rcreme">
 
         <ImageView
             android:id="@+id/imageView6"
@@ -102,7 +64,97 @@
             tools:layout_editor_absoluteX="98dp"
             tools:layout_editor_absoluteY="238dp" />
 
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:clickable="true"
+                android:fontFamily="@font/cmedium"
+                android:gravity="center"
+                android:text="17,800€"
+                android:textColor="@color/rcreme"
+                android:textSize="40dp"
+                app:layout_constraintEnd_toEndOf="@id/constraintcardlayoutdash"
+                app:layout_constraintHorizontal_bias="0.281"
+                app:layout_constraintStart_toStartOf="@id/constraintcardlayoutdash"
+                app:layout_constraintTop_toTopOf="@id/constraintcardlayoutdash" />
+
+            <TextView
+                android:id="@+id/BudgetTextHeadline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/cmedium"
+                android:gravity="center"
+                android:text="EUR"
+                android:textColor="@color/rcreme"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="@id/constraintcardlayoutdash"
+                app:layout_constraintStart_toEndOf="@id/textView6"
+                app:layout_constraintTop_toTopOf="@id/constraintcardlayoutdash" />
+
+            <TextView
+                android:id="@+id/BudgetTextHeadline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="92dp"
+                android:layout_marginEnd="144dp"
+                android:fontFamily="@font/cmedium"
+                android:gravity="center"
+                android:text="*Gesamtausgaben"
+                android:textColor="@color/rcreme"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="@id/constraintcardlayoutdash"
+                app:layout_constraintTop_toTopOf="@id/constraintcardlayoutdash" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Alle Ausgaben"
+        android:textColor="#2A4B42"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintVertical_bias="0.703"
+        tools:layout_editor_absoluteX="43dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineOben"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.36" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="80dp"
+        android:layout_height="39dp"
+        android:background="@drawable/smallbuttondots"
+        android:text="Mehr"
+        android:textAllCaps="false"
+        android:textColor="@color/rcreme"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintVertical_bias="0.358"
+        tools:layout_editor_absoluteX="288dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="409dp"
+        android:layout_height="430dp"
+        android:layout_marginBottom="96dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
