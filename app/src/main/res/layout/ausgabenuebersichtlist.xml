@@ -32,6 +32,7 @@
                 android:id="@+id/textViewDashName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
                 android:clickable="true"
                 android:fontFamily="@font/cmedium"
                 android:gravity="center"
@@ -39,16 +40,24 @@
                 android:textColor="#2A4B42"
                 android:textSize="17dp"
                 android:textStyle="bold"
-                tools:layout_editor_absoluteX="89dp"
-                tools:layout_editor_absoluteY="16dp" />
+                app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
+                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
+                app:layout_constraintHorizontal_bias="0.38"
+                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
+                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
+                app:layout_constraintVertical_bias="0.296" />
 
             <TextView
                 android:id="@+id/textViewDashDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dave, Peter, Hans"
-                tools:layout_editor_absoluteX="89dp"
-                tools:layout_editor_absoluteY="41dp" />
+                app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
+                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
+                app:layout_constraintHorizontal_bias="0.427"
+                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
+                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
+                app:layout_constraintVertical_bias="0.649" />
 
             <TextView
                 android:id="@+id/textViewDashPrice"
@@ -67,9 +76,13 @@
                 android:id="@+id/imageView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/clipboardicon"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="13dp" />
+                app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
+                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
+                app:layout_constraintHorizontal_bias="0.09"
+                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
+                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
+                app:layout_constraintVertical_bias="0.481"
+                app:srcCompat="@drawable/clipboardicon" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
