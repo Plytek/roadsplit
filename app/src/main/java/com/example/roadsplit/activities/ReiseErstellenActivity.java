@@ -25,7 +25,7 @@ import com.example.roadsplit.model.LocationInfo;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -191,10 +191,11 @@ public class ReiseErstellenActivity extends AppCompatActivity{
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUserData.setCurrentUser(reiseReponse.getReisender());
-                    reiseSuccess(reiseReponse.getReise().getUniquename());
+                    MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
+                    MainActivity.currentUserData.setCurrentReiseResponse(reiseResponse);
+                    reiseSuccess(reiseResponse.getReise().getUniquename());
                     Looper.prepare();
                 }
             }

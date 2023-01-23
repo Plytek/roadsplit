@@ -6,7 +6,7 @@ import com.example.roadsplit.model.Reisender;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ReiseReponse {
+public class ReiseResponse {
     private String message;
     private Reise reise;
     private Reisender reisender;
@@ -17,7 +17,7 @@ public class ReiseReponse {
     private BigDecimal gesamtAusgabe;
 
 
-    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege, List<String> ausgabenRecord, BigDecimal gesamtAusgabe) {
+    public ReiseResponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege, List<String> ausgabenRecord, BigDecimal gesamtAusgabe) {
         this.message = message;
         this.reise = reise;
         this.reisender = reisender;
@@ -28,7 +28,7 @@ public class ReiseReponse {
         this.gesamtAusgabe = gesamtAusgabe;
     }
 
-    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege, BigDecimal gesamtAusgabe) {
+    public ReiseResponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege, BigDecimal gesamtAusgabe) {
         this.message = message;
         this.reise = reise;
         this.reisender = reisender;
@@ -38,7 +38,7 @@ public class ReiseReponse {
         this.gesamtAusgabe = gesamtAusgabe;
     }
 
-    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege) {
+    public ReiseResponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner, List<BigDecimal> betraege) {
         this.message = message;
         this.reise = reise;
         this.reisender = reisender;
@@ -47,17 +47,17 @@ public class ReiseReponse {
         this.betraege = betraege;
     }
 
-    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList) {
+    public ReiseResponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList) {
         this.message = message;
         this.reise = reise;
         this.reisender = reisender;
         this.reisendeList = reisendeList;
     }
 
-    public ReiseReponse() {
+    public ReiseResponse() {
     }
 
-    public ReiseReponse(String message, Reise reise, Reisender reisender) {
+    public ReiseResponse(String message, Reise reise, Reisender reisender) {
         this.message = message;
         this.reise = reise;
         this.reisender = reisender;
@@ -95,7 +95,7 @@ public class ReiseReponse {
         this.reisendeList = reisendeList;
     }
 
-    public ReiseReponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner) {
+    public ReiseResponse(String message, Reise reise, Reisender reisender, List<Reisender> reisendeList, List<Reisender> schuldner) {
         this.message = message;
         this.reise = reise;
         this.reisender = reisender;

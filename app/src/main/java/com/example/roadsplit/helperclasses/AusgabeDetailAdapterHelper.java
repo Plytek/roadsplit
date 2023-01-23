@@ -9,7 +9,7 @@ import android.widget.Spinner;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Reisender;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +21,16 @@ public class AusgabeDetailAdapterHelper implements Observer {
     private List<String> reisendeNames;
     private Context mContext;
     private View layoutScreen;
-    private ReiseReponse reiseReponse;
+    private ReiseResponse reiseResponse;
     private List<String> ausgabeDetails;
 
-    public AusgabeDetailAdapterHelper(View layoutScreen, Context context, ReiseReponse reiseReponse) {
-        this.reiseReponse = reiseReponse;
+    public AusgabeDetailAdapterHelper(View layoutScreen, Context context, ReiseResponse reiseResponse) {
+        this.reiseResponse = reiseResponse;
         this.layoutScreen = layoutScreen;
         this.mContext = context;
         ausgabeDetails = new ArrayList<>();
-        if(reiseReponse.getAusgabenRecord() != null)
-            ausgabeDetails.addAll(reiseReponse.getAusgabenRecord());
+        if(reiseResponse.getAusgabenRecord() != null)
+            ausgabeDetails.addAll(reiseResponse.getAusgabenRecord());
     }
 
     public void setUpAusgabeDetailPage()
@@ -39,7 +39,7 @@ public class AusgabeDetailAdapterHelper implements Observer {
         ListView detailAusgaben = layoutScreen.findViewById(R.id.ausgabeDetailListView);
 
         reisendeNames = new ArrayList<>();
-        for(Reisender reisender : reiseReponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
+        for(Reisender reisender : reiseResponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
 
         ArrayAdapter<String> reisendeAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, reisendeNames);
         reisendeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -53,9 +53,9 @@ public class AusgabeDetailAdapterHelper implements Observer {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 ausgabeDetails.clear();
-                for(String detail : reiseReponse.getAusgabenRecord())
+                for(String detail : reiseResponse.getAusgabenRecord())
                 {
-                    if(detail.contains(reiseReponse.getReisendeList().get(i).getNickname())) ausgabeDetails.add(detail);
+                    if(detail.contains(reiseResponse.getReisendeList().get(i).getNickname())) ausgabeDetails.add(detail);
                 }
                 detailAdapter.notifyDataSetChanged();
 

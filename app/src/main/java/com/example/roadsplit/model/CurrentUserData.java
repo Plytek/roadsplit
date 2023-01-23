@@ -1,6 +1,6 @@
 package com.example.roadsplit.model;
 
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.Observable;
 public class CurrentUserData extends Observable {
     private Reisender currentUser;
     private Reise currentReise;
-    private ReiseReponse currentReiseResponse;
-    private ReiseReponse[] currentReiseReponses;
+    private ReiseResponse currentReiseResponse;
+    private ReiseResponse[] currentReiseRepons;
 
     public Reisender getCurrentUser() {
         return currentUser;
@@ -22,25 +22,25 @@ public class CurrentUserData extends Observable {
         notifyObservers();
     }
 
-    public ReiseReponse getCurrentReiseResponse() {
+    public ReiseResponse getCurrentReiseResponse() {
         return currentReiseResponse;
     }
 
-    public void setCurrentReiseResponse(ReiseReponse currentReiseResponse) {
+    public void setCurrentReiseResponse(ReiseResponse currentReiseResponse) {
         this.currentReiseResponse = currentReiseResponse;
         setChanged();
         notifyObservers();
     }
 
-    public ReiseReponse[] getCurrentReiseReponses() {
-        return currentReiseReponses;
+    public ReiseResponse[] getCurrentReiseReponses() {
+        return currentReiseRepons;
     }
-    public List<ReiseReponse> getCurrentReiseReponsesAsList() {
-        return Arrays.asList(currentReiseReponses);
+    public List<ReiseResponse> getCurrentReiseReponsesAsList() {
+        return Arrays.asList(currentReiseRepons);
     }
 
-    public void setCurrentReiseReponses(ReiseReponse[] currentReiseReponses) {
-        this.currentReiseReponses = currentReiseReponses;
+    public void setCurrentReiseReponses(ReiseResponse[] currentReiseRepons) {
+        this.currentReiseRepons = currentReiseRepons;
         setChanged();
         notifyObservers();
     }

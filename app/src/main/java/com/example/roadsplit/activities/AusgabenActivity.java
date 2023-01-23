@@ -12,7 +12,7 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reise;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
@@ -51,12 +51,13 @@ public class AusgabenActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
                     runOnUiThread(() -> {
-                        reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseReponse);
-                        MainActivity.currentUserData.setCurrentUser(reiseReponse.getReisender());
-                        MainActivity.currentUserData.setCurrentReiseResponse(reiseReponse);
+                        reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseResponse);
+                        MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
+                        MainActivity.currentUserData.setCurrentReiseResponse(reiseResponse);
+                        MainActivity.currentUserData.setCurrentReise(reiseResponse.getReise());
                         MainActivity.currentUserData.notifyObservers();
                         screenPager.setAdapter(reiseUebersichtAdapter);
                         tabLayout = findViewById(R.id.tab_indicator2);

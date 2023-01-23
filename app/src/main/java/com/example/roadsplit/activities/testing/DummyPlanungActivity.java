@@ -7,9 +7,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Geocoder;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.EditText;
@@ -20,18 +18,13 @@ import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.model.UserAccount;
-import com.example.roadsplit.reponses.ReiseReponse;
-import com.example.roadsplit.reponses.UserResponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -104,15 +97,15 @@ public class DummyPlanungActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
                     EditText editText = findViewById(R.id.dummyResultText);
                     Looper.prepare();
-                    editText.setText(reiseReponse.getReise().toString());
+                    editText.setText(reiseResponse.getReise().toString());
                 }
                 else {
                     EditText editText = findViewById(R.id.dummyResultText);
-                    editText.setText(reiseReponse.getMessage());
+                    editText.setText(reiseResponse.getMessage());
                 }
             }
 
@@ -156,15 +149,15 @@ public class DummyPlanungActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
                     EditText editText = findViewById(R.id.dummyResultText);
                     Looper.prepare();
-                    editText.setText(reiseReponse.getReise().toString());
+                    editText.setText(reiseResponse.getReise().toString());
                 }
                 else {
                     EditText editText = findViewById(R.id.dummyResultText);
-                    editText.setText(reiseReponse.getMessage());
+                    editText.setText(reiseResponse.getMessage());
                 }
             }
 

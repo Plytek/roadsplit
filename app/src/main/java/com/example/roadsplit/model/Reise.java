@@ -13,10 +13,22 @@ public class Reise {
     private Long id;
     private String name;
     private String uniquename;
+    private String reiseErsteller;
     private boolean ongoing;
     private List<Stop> stops;
     private List<PacklistenItem> packliste;
     private long createDate;
+
+    public Reise(Long id, String name, String uniquename, String reiseErsteller, boolean ongoing, List<Stop> stops, List<PacklistenItem> packliste, long createDate) {
+        this.id = id;
+        this.name = name;
+        this.uniquename = uniquename;
+        this.reiseErsteller = reiseErsteller;
+        this.ongoing = ongoing;
+        this.stops = stops;
+        this.packliste = packliste;
+        this.createDate = createDate;
+    }
 
     public Reise(Long id, String name, String uniquename, boolean ongoing, List<Stop> stops, List<PacklistenItem> packliste, long createDate) {
         this.id = id;
@@ -116,5 +128,13 @@ public class Reise {
 
     public void setCreateDate(long createDate) {
         this.createDate = createDate;
+    }
+
+    public String getReiseErsteller() {
+        return reiseErsteller;
+    }
+
+    public void setReiseErsteller(String reiseErsteller) {
+        this.reiseErsteller = reiseErsteller;
     }
 }

@@ -2,50 +2,31 @@ package com.example.roadsplit.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
-import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
-import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.activities.MainActivity;
-import com.example.roadsplit.activities.ReiseUebersichtActivity;
 import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.reponses.ReiseReponse;
-import com.google.gson.Gson;
+import com.example.roadsplit.reponses.ReiseResponse;
 
-import org.w3c.dom.Text;
-
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Observer {
 
     private List<Bitmap> reisenWithImages;
-    private List<ReiseReponse> reiseReponses;
+    private List<ReiseResponse> reiseRepons;
     private Context context;
 
     @Override
@@ -65,11 +46,11 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Obser
         ImageView image;
     }
 
-    public UebersichtListAdapter(List<ReiseReponse> reiseReponses, Context context, List<Bitmap> data) {
+    public UebersichtListAdapter(List<ReiseResponse> reiseRepons, Context context, List<Bitmap> data) {
         super(context, R.layout.reiseuebersichtlist, data);
         MainActivity.currentUserData.addObserver(this);
         this.reisenWithImages = data;
-        this.reiseReponses = MainActivity.currentUserData.getCurrentReiseReponsesAsList();
+        this.reiseRepons = MainActivity.currentUserData.getCurrentReiseReponsesAsList();
         this.context = context;
     }
 
@@ -77,14 +58,14 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Obser
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         Bitmap image = getItem(position);
-        ReiseReponse reiseReponse = null;
+        ReiseResponse reiseResponse = null;
         try {
-            reiseReponse = reiseReponses.get(position);
+            reiseResponse = reiseRepons.get(position);
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             return convertView;
         }
-        Reise reise = reiseReponse.getReise();
+        Reise reise = reiseResponse.getReise();
         // Check if an existing view is being reused, otherwise inflate the view
         UebersichtListAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
 
@@ -114,14 +95,14 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Obser
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateString = dateFormat.format(new Date(reise.getCreateDate()));
         viewHolder.date.setText(dateString);
-        viewHolder.anzahlReisende.setText("Reise-Teilnehmer: " + reiseReponse.getReisendeList().size());
-        viewHolder.ausgaben.setText("Ausgaben: " + reiseReponse.getGesamtAusgabe() + "€");
+        viewHolder.anzahlReisende.setText("Reise-Teilnehmer: " + reiseResponse.getReisendeList().size());
+        viewHolder.ausgaben.setText("Ausgaben: " + reiseResponse.getGesamtAusgabe() + "€");
         viewHolder.budget.setText("Budget: " + gesamtBudget + "€");
 
         //Log.d("bigdecimal", )
         if(gesamtBudget != null &&
                 !gesamtBudget.equals(new BigDecimal(0))
-            && gesamtBudget.compareTo(reiseReponse.getGesamtAusgabe()) < 0){
+            && gesamtBudget.compareTo(reiseResponse.getGesamtAusgabe()) < 0){
             viewHolder.ausgaben.setTextColor(context.getResources().getColor(R.color.rcreme));
         }
 

@@ -14,18 +14,13 @@ import com.example.roadsplit.activities.testing.DummyPlanungActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
 import com.example.roadsplit.activities.testing.PaymentDummyActivity;
 import com.example.roadsplit.activities.testing.UserCreateActivity;
-import com.example.roadsplit.adapter.UebersichtListAdapter;
 import com.example.roadsplit.model.CurrentUserData;
-import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.UserAccount;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -173,9 +168,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse[] reiseResponses = new ReiseReponse[0];
+                ReiseResponse[] reiseResponses = new ReiseResponse[0];
                 try {
-                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseReponse[].class);
+                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseResponse[].class);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

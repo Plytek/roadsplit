@@ -15,24 +15,21 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
-import com.example.roadsplit.adapter.UebersichtListAdapter;
 import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Reise;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.reponses.WikiResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,10 +41,11 @@ import okhttp3.Response;
 public class ReiseUebersichtTestActivity extends AppCompatActivity {
 
     private List<Reise> reisen;
-    private ReiseReponse[] reiseResponses;
+    private ReiseResponse[] reiseResponses;
     private Reise selectedReise;
     private RecyclerView reisenView;
     private List<Bitmap> images;
+    private Map<String, Bitmap> imageMap = new HashMap<>();
     private int imageloadCounter;
     private Handler handler;
     UebersichtRecAdapter uebersichtRecAdapter;
@@ -63,7 +61,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
         reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
         reisenView = findViewById(R.id.recyclerViewTest);
-        reiseResponses = new ReiseReponse[1];
+        reiseResponses = new ReiseResponse[1];
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         reisenView.setLayoutManager(layoutManager);
@@ -101,7 +99,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         });
 
         handler.post(() -> {
-            uebersichtRecAdapter = new UebersichtRecAdapter(this, MainActivity.currentUserData.getCurrentReiseReponsesAsList());
+            uebersichtRecAdapter = new UebersichtRecAdapter(this, MainActivity.currentUserData.getCurrentReiseReponsesAsList(), imageMap);
             reisenView.setAdapter(uebersichtRecAdapter);});
     }
 
@@ -129,13 +127,16 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(response.isSuccessful()) {
+
                     try {
                         String url = wikiResponse.getPages().get(0).getThumbnail().getUrl();
                         url = "https:" + url;
                         url = url.replaceAll("/\\d+px-", "/200px-");
-                        downloadImages(url);
+                        downloadImages(url, reise.getName());
+                        uebersichtRecAdapter.notifyItemChanged(imageloadCounter);
+                        imageloadCounter++;
                     } catch (Exception e) {
-                        downloadImages("https://cdn.discordapp.com/attachments/284675100253487104/1065300629448298578/globeicon.png");
+                        downloadImages("https://cdn.discordapp.com/attachments/284675100253487104/1065300629448298578/globeicon.png", reise.getName());
                         //TODO: Set Default Image
                         e.printStackTrace();
                     }
@@ -153,7 +154,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 try {
-                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseReponse[].class);
+                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseResponse[].class);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -166,7 +167,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
     }
 
 
-    public void downloadImages(String url){
+    public void downloadImages(String url, String reisename){
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
@@ -179,6 +180,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             images.add(mIcon);
+            imageMap.put(reisename, mIcon);
         });
     }
 }

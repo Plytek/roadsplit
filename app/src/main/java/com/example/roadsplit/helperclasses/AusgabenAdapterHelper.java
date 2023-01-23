@@ -26,7 +26,7 @@ import com.example.roadsplit.model.AusgabenTyp;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -46,19 +46,19 @@ public class AusgabenAdapterHelper implements Observer {
         private Context mContext;
         private View layoutScreen;
         private AusgabenActivity ausgabenActivity;
-        private ReiseReponse reiseReponse;
+        private ReiseResponse reiseResponse;
         private BigDecimal reiseGesamtAusgabe;
         private List<String> reisendeNames;
 
-    public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseReponse reiseReponse, AusgabenActivity ausgabenActivity) {
+    public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseResponse reiseResponse, AusgabenActivity ausgabenActivity) {
         MainActivity.currentUserData.addObserver(this);
         this.layoutScreen = layoutScreen;
-        this.reiseReponse = MainActivity.currentUserData.getCurrentReiseResponse();
+        this.reiseResponse = MainActivity.currentUserData.getCurrentReiseResponse();
         this.mContext = context;
         this.ausgabenActivity = ausgabenActivity;
 
         reiseGesamtAusgabe = new BigDecimal(0);
-        for(Stop stop : reiseReponse.getReise().getStops()) {
+        for(Stop stop : reiseResponse.getReise().getStops()) {
             try {
                 reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
             } catch (Exception e) {
@@ -73,7 +73,7 @@ public class AusgabenAdapterHelper implements Observer {
         ButtonEffect.buttonPressDownEffect(ausgabeSpeichernButton);
 
         TextView nutzergView = layoutScreen.findViewById(R.id.textViewPayAmount);
-        nutzergView.setText(reiseReponse.getGesamtAusgabe().toString() + "€");
+        nutzergView.setText(reiseResponse.getGesamtAusgabe().toString() + "€");
 
         TextView gesamtView = layoutScreen.findViewById(R.id.textViewPayAmountTeam);
         gesamtView.setText(reiseGesamtAusgabe + "€");
@@ -82,7 +82,7 @@ public class AusgabenAdapterHelper implements Observer {
 
 
         reisendeNames = new ArrayList<>();
-        for(Reisender reisender : reiseReponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
+        for(Reisender reisender : reiseResponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
 
         ListView schuldnerListView = layoutScreen.findViewById(R.id.schuldnerListView);
         schuldnerListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
@@ -100,7 +100,7 @@ public class AusgabenAdapterHelper implements Observer {
 
         Spinner stopNameSpinner = layoutScreen.findViewById(R.id.planets_spinner3);
         List<String> stopNames = new ArrayList<>();
-        for(Stop stop : reiseReponse.getReise().getStops()) stopNames.add(stop.getName());
+        for(Stop stop : reiseResponse.getReise().getStops()) stopNames.add(stop.getName());
         ArrayAdapter<String> stopAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, stopNames);
         stopAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         stopNameSpinner.setAdapter(stopAdapter);
@@ -111,7 +111,7 @@ public class AusgabenAdapterHelper implements Observer {
             String sbetrag = betragView.getText().toString();
             if(sbetrag.isEmpty()) return;
             BigDecimal betrag = new BigDecimal(sbetrag);
-            addBetrag(reiseReponse.getReise(), stopNameSpinner, betrag, schuldnerListView, layoutScreen);
+            addBetrag(reiseResponse.getReise(), stopNameSpinner, betrag, schuldnerListView, layoutScreen);
             betragView.setText("");
             layoutScreen.findViewById(R.id.ausgabenProgressBar).setVisibility(View.INVISIBLE);
         });
@@ -122,12 +122,12 @@ public class AusgabenAdapterHelper implements Observer {
         TextView balanceTextView = layoutScreen.findViewById(R.id.textView11);
 
         TextView gesamtView = layoutScreen.findViewById(R.id.textViewPayAmount);
-        gesamtView.setText(reiseReponse.getGesamtAusgabe().toString() + "€");
+        gesamtView.setText(reiseResponse.getGesamtAusgabe().toString() + "€");
 
         TextView gesamtGruppeView = layoutScreen.findViewById(R.id.textViewPayAmountTeam);
 
         reiseGesamtAusgabe = new BigDecimal(0);
-        for(Stop stop : reiseReponse.getReise().getStops()) {
+        for(Stop stop : reiseResponse.getReise().getStops()) {
             try {
                 reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
             } catch (Exception e) {
@@ -138,9 +138,9 @@ public class AusgabenAdapterHelper implements Observer {
 
         BigDecimal gesamtBalance = new BigDecimal(0);
         int counter = 0;
-        for(Reisender reisender : reiseReponse.getSchuldner()){
+        for(Reisender reisender : reiseResponse.getSchuldner()){
             if(!reisender.getId().equals(MainActivity.currentUserData.getCurrentUser().getId())){
-                BigDecimal betrag = reiseReponse.getBetraege().get(counter);
+                BigDecimal betrag = reiseResponse.getBetraege().get(counter);
                 gesamtBalance = gesamtBalance.add(betrag);
             }
             counter++;
@@ -168,7 +168,7 @@ public class AusgabenAdapterHelper implements Observer {
                 ausgabe.setBetrag(betragN);
                 ausgabe.setAnzahlReisende(checked.size());
                 ausgabe.setZahler(MainActivity.currentUserData.getCurrentUser().getId());
-                ausgabe.setSchuldner(reiseReponse.getReisendeList().get(i).getId());
+                ausgabe.setSchuldner(reiseResponse.getReisendeList().get(i).getId());
                 ausgabe.setAusgabenTyp(AusgabenTyp.typForPosition(kategorieSpinner.getSelectedItemPosition()));
                 if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
                 stop.getAusgaben().add(ausgabe);
@@ -188,10 +188,10 @@ public class AusgabenAdapterHelper implements Observer {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    Log.d("ausgaben", reiseReponse.getReise().toString());
-                    EndpointConnector.fetchPaymentInfo(reiseReponse.getReise(), fetchPaymentCallback());
+                    Log.d("ausgaben", reiseResponse.getReise().toString());
+                    EndpointConnector.fetchPaymentInfo(reiseResponse.getReise(), fetchPaymentCallback());
                 }
             }
         };
@@ -205,17 +205,17 @@ public class AusgabenAdapterHelper implements Observer {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse payResponse = new Gson().fromJson(Objects.requireNonNull(response.body()).string(), ReiseReponse.class);
+                ReiseResponse payResponse = new Gson().fromJson(Objects.requireNonNull(response.body()).string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
                     MainActivity.currentUserData.setCurrentUser(payResponse.getReisender());
                     MainActivity.currentUserData.setCurrentReiseResponse(payResponse);
                     MainActivity.currentUserData.setCurrentReise(payResponse.getReise());
                     MainActivity.currentUserData.notifyObservers();
-                    reiseReponse = payResponse;
+                    reiseResponse = payResponse;
                     reisendeNames = new ArrayList<>();
-                    for(Reisender reisender : reiseReponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
+                    for(Reisender reisender : reiseResponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
                     reiseGesamtAusgabe = new BigDecimal(0);
-                    for(Stop stop : reiseReponse.getReise().getStops()) {
+                    for(Stop stop : reiseResponse.getReise().getStops()) {
                         try {
                             reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
                         } catch (Exception e) {

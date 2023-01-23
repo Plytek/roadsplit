@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.EndpointConnector;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.gson.Gson;
 
@@ -88,9 +88,9 @@ public class NeueReiseActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUserData.setCurrentUser(reiseReponse.getReisender());
+                    MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
                     Looper.prepare();
                     dialog.dismiss();
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();

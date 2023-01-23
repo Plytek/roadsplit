@@ -13,7 +13,7 @@ import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.adapter.StopAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class ZwischenstopAdapterHelper implements Observer {
     private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
 
 
-    public ZwischenstopAdapterHelper(View layoutScreen, Context context, ReiseReponse reiseReponse) {
+    public ZwischenstopAdapterHelper(View layoutScreen, Context context, ReiseResponse reiseResponse) {
         MainActivity.currentUserData.addObserver(this);
         this.stops = MainActivity.currentUserData.getCurrentReiseResponse().getReise().getStops();
         this.reise = MainActivity.currentUserData.getCurrentReiseResponse().getReise();

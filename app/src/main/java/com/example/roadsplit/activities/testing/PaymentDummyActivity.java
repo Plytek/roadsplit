@@ -21,7 +21,7 @@ import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.reponses.ReiseReponse;
+import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.requests.AusgabenRequest;
 import com.google.gson.Gson;
 
@@ -105,19 +105,19 @@ public class PaymentDummyActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    Log.d("reiseresponse",reiseReponse.getReisendeList().toString());
-                    for(Reisender reisender : reiseReponse.getReisendeList())
+                    Log.d("reiseresponse", reiseResponse.getReisendeList().toString());
+                    for(Reisender reisender : reiseResponse.getReisendeList())
                     {
                         reisenderList.add(reisender);
                         names.add(reisender.getNickname());
                     }
-                    for(Stop stop : reiseReponse.getReise().getStops())
+                    for(Stop stop : reiseResponse.getReise().getStops())
                     {
                         stops.add(stop.getName());
                     }
-                    reiseList.add(reiseReponse.getReise());
+                    reiseList.add(reiseResponse.getReise());
                     runOnUiThread(() -> {
                         reisendeAdapter.notifyDataSetChanged();
                         stopAdapter.notifyDataSetChanged();
@@ -205,10 +205,10 @@ public class PaymentDummyActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(response.body().string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
                     //MainActivity.currentUser = reiseReponse.getReisender();
-                    Log.d("ausgaben", reiseReponse.getReise().toString());
+                    Log.d("ausgaben", reiseResponse.getReise().toString());
                     Looper.prepare();
                     Toast.makeText(PaymentDummyActivity.this, "success", Toast.LENGTH_LONG).show();
                 }
@@ -253,16 +253,16 @@ public class PaymentDummyActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseReponse reiseReponse = new Gson().fromJson(Objects.requireNonNull(response.body()).string(), ReiseReponse.class);
+                ReiseResponse reiseResponse = new Gson().fromJson(Objects.requireNonNull(response.body()).string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    Log.d("zusammenfassung", reiseReponse.getMessage());
-                    Log.d("zusammenfassung", reiseReponse.getSchuldner().toString());
-                    Log.d("zusammenfassung", reiseReponse.getBetraege().toString());
+                    Log.d("zusammenfassung", reiseResponse.getMessage());
+                    Log.d("zusammenfassung", reiseResponse.getSchuldner().toString());
+                    Log.d("zusammenfassung", reiseResponse.getBetraege().toString());
                     runOnUiThread(() -> {
                         int counter = 0;
-                        for(Reisender reisender : reiseReponse.getSchuldner()){
+                        for(Reisender reisender : reiseResponse.getSchuldner()){
                             if(!reisender.getId().equals(MainActivity.currentUserData.getCurrentUser().getId())){
-                                BigDecimal betrag = reiseReponse.getBetraege().get(counter);
+                                BigDecimal betrag = reiseResponse.getBetraege().get(counter);
                                 String result = MainActivity.currentUserData.getCurrentUser().getNickname()
                                         + " bekommt " + betrag.toString() + "€ von " + reisender.getNickname();
                                 if(betrag.compareTo(new BigDecimal(0)) < 0){
