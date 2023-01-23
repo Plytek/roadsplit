@@ -9,9 +9,8 @@
     tools:layout_editor_absoluteY="353dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="315dp"
-        android:layout_height="140dp"
-
+        android:layout_width="355dp"
+        android:layout_height="198dp"
         android:elevation="20dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="20dp"
@@ -26,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/locationImageView"
-                android:layout_width="117dp"
-                android:layout_height="140dp"
+                android:layout_width="120dp"
+                android:layout_height="200dp"
                 android:background="@color/rcreme"
                 android:scaleType="centerCrop"
                 android:src="@color/rcreme"
@@ -42,20 +41,20 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clayoutuebersicht1"
-            android:layout_width="314dp"
-            android:layout_height="140dp">
+            android:layout_width="342dp"
+            android:layout_height="200dp">
 
             <TextView
                 android:id="@+id/uebersichtTextViewName"
-                android:layout_width="150dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="140dp"
+                android:layout_marginStart="165dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="35dp"
                 android:paddingTop="5dp"
                 android:text="BeFinnlandreise"
                 android:textColor="@color/rcreme"
-                android:textSize="15dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/clayoutuebersicht1"
                 app:layout_constraintStart_toStartOf="@id/clayoutuebersicht1"
@@ -65,9 +64,10 @@
                 android:id="@+id/uebersichtTextViewDatum"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="-45dp"
                 android:text="05.08.2023"
                 android:textColor="@color/rgrey"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewName"
                 app:layout_constraintStart_toStartOf="@id/uebersichtTextViewName"
@@ -75,12 +75,13 @@
 
             <TextView
                 android:id="@+id/uebersichtTextViewAusgaben"
-                android:layout_width="150dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp"
                 android:text="Ausgaben:      746€"
                 android:textColor="@color/rcreme"
-                android:textSize="15dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewDatum"
                 app:layout_constraintStart_toStartOf="@id/uebersichtTextViewDatum"
@@ -88,12 +89,12 @@
 
             <TextView
                 android:id="@+id/uebersichtTextViewBudget"
-                android:layout_width="150dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Budget:       1000€"
                 android:textColor="@color/rcreme"
-                android:textSize="15dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewAusgaben"
                 app:layout_constraintStart_toStartOf="@id/uebersichtTextViewAusgaben"
@@ -103,10 +104,11 @@
                 android:id="@+id/uebersichtTextViewReisende"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="50dp"
                 android:text="Teilnehmende:"
                 android:textColor="@color/rgrey"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewBudget"
                 app:layout_constraintStart_toStartOf="@id/uebersichtTextViewBudget"
@@ -116,10 +118,11 @@
                 android:id="@+id/uebersichtTextViewErsteller"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="50dp"
                 android:text="Erstellt von:"
                 android:textColor="@color/rgrey"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="@id/uebersichtTextViewBudget"
                 app:layout_constraintStart_toStartOf="@id/uebersichtTextViewBudget"

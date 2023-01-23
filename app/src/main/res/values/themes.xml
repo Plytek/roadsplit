@@ -16,6 +16,12 @@
         <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
     </style>
 
+    <style name="Theme.RoadSplitSingle" parent="Theme.AppCompat.DayNight.NoActionBar">
+
+        <item name="android:statusBarColor">@color/rldarkgreen</item>
+
+    </style>
+
     <style name="Theme.RoadSplit.NoActionBarAndStatusBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

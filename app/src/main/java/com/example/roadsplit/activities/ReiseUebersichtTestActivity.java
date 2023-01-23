@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -55,7 +57,9 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reise_uebersicht_test);
 
-        setSupportActionBar(null);
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#325a4f")));
+
+        // setSupportActionBar(null);
         reisen = new ArrayList<>();
         images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
