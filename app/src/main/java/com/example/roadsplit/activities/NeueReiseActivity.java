@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -23,6 +24,7 @@ import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.requests.JoinRequest;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -44,10 +46,32 @@ public class NeueReiseActivity extends AppCompatActivity {
             String welcome = "WAS GEHT, " + MainActivity.currentUserData.getCurrentUser().getNickname().toUpperCase();
             ((TextView)findViewById(R.id.textView10)).setText(welcome);
         }
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseBeitretenButton));
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setSelectedItemId(R.id.navigation_dashboard);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        finish();
+                        break;
+                    case R.id.navigation_dashboard:
+                        break;
+                    case R.id.navigation_notifications:
+                        intent = new Intent(NeueReiseActivity.this, ReiseUebersichtTestActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     public void reiseErstellen(View view)
@@ -91,6 +115,8 @@ public class NeueReiseActivity extends AppCompatActivity {
                 ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
                     MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
+                    MainActivity.currentUserData.setCurrentReiseResponse(reiseResponse);
+                    MainActivity.currentUserData.setCurrentReise(reiseResponse.getReise());
                     Looper.prepare();
                     dialog.dismiss();
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();

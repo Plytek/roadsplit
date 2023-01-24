@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
+import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.gson.Gson;
@@ -23,19 +26,20 @@ import com.google.gson.Gson;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusgabenAdapter.RecentsViewHolder> {
 
     private Context context;
-    private List<ReiseResponse> recentsDataList;
-    private Map<String, Bitmap> imageMap;
-
-    public DashboardAusgabenAdapter(Context context, List<ReiseResponse> recentsDataList, Map<String, Bitmap> imageMap) {
+    private List<Ausgabe> ausgaben;
+    private List<Reisender> reisende;
+    public DashboardAusgabenAdapter(Context context, List<Ausgabe> ausgaben, List<Reisender> reisende) {
         this.context = context;
-        this.recentsDataList = recentsDataList;
-        this.imageMap = imageMap;
+        this.ausgaben = ausgaben;
+        this.reisende = reisende;
     }
 
     @NonNull
@@ -49,46 +53,34 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
     @Override
     public void onBindViewHolder(@NonNull RecentsViewHolder holder, int position) {
 
-        ReiseResponse reiseResponse = recentsDataList.get(position);
-        Reise reise = reiseResponse.getReise();
-
-        holder.name.setText(reise.getName());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        String dateString = dateFormat.format(new Date(reise.getCreateDate()));
-        holder.date.setText(dateString);
-        if (reiseResponse.getGesamtAusgabe() != null)
-            holder.ausgaben.setText(reiseResponse.getGesamtAusgabe().toString());
-        holder.anzahlReisende.setText(Integer.toString(reiseResponse.getReisendeList().size()));
-        BigDecimal gesamtBudget = new BigDecimal(0);
-        for(Stop stop : reise.getStops())
-        {
-            if(stop.getBudget() != null)
-                gesamtBudget = gesamtBudget.add(stop.getBudget());
-        }
-        holder.budget.setText(gesamtBudget.toString());
-        holder.image.setImageBitmap(imageMap.get(reise.getName()));
-
-        if(gesamtBudget != null &&
-                !gesamtBudget.equals(new BigDecimal(0))
-                && gesamtBudget.compareTo(reiseResponse.getGesamtAusgabe()) < 0){
-            holder.ausgaben.setTextColor(Color.RED);
-        }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, AusgabenActivity.class);
-                String reiseString = new Gson().toJson(reise);
-                intent.putExtra("reise", reiseString);
-                context.startActivity(intent);
+        Ausgabe ausgabe = ausgaben.get(position);
+        String zahler = null;
+        for (Iterator<Reisender> iterator = reisende.iterator(); iterator.hasNext(); ) {
+            Reisender reisender = iterator.next();
+            if (reisender.getId() == ausgabe.getZahler()) {
+                zahler = reisender.getNickname();
+                break;
             }
-        });
+        }
+        String schulder = null;
+        for (Iterator<Reisender> iterator = reisende.iterator(); iterator.hasNext(); ) {
+            Reisender reisender = iterator.next();
+            if (reisender.getId() == ausgabe.getSchuldner()) {
+                schulder = reisender.getNickname();
+                break;
+            }
+        }
+        if(schulder == null || zahler == null) return;
+
+        holder.ausgabename.setText(ausgabe.getAusgabenTyp().toString());
+        holder.beschreibung.setText("Von: " + zahler + " An: " + schulder);
+        holder.ausgabe.setText(ausgabe.getBetrag() + "€");
 
     }
 
     @Override
     public int getItemCount() {
-        return recentsDataList.size();
+        return ausgaben.size();
     }
 
     public static final class RecentsViewHolder extends RecyclerView.ViewHolder{

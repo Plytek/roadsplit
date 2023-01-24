@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,6 +25,7 @@ import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.reponses.WikiResponse;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -67,6 +69,28 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         reisenView = findViewById(R.id.recyclerViewTest);
         reiseResponses = new ReiseResponse[1];
 
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setSelectedItemId(R.id.navigation_notifications);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        finish();
+                        break;
+                    case R.id.navigation_dashboard:
+                        intent = new Intent(ReiseUebersichtTestActivity.this, NeueReiseActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.navigation_notifications:
+                        break;
+                }
+                return true;
+            }
+        });
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         reisenView.setLayoutManager(layoutManager);
 
@@ -74,7 +98,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             imageloadCounter = 0;
-            EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentSummaryCallback());
+            EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentSummaryCallback(false));
             handler.post(() -> {
                 for(Reise reise : reisen)
                 {
@@ -104,7 +128,8 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
 
         handler.post(() -> {
             uebersichtRecAdapter = new UebersichtRecAdapter(this, MainActivity.currentUserData.getCurrentReiseReponsesAsList(), imageMap);
-            reisenView.setAdapter(uebersichtRecAdapter);});
+            reisenView.setAdapter(uebersichtRecAdapter);
+        });
     }
 
 
@@ -149,7 +174,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         };
     }
 
-    private Callback fetchPaymentSummaryCallback(){
+    private Callback fetchPaymentSummaryCallback(boolean resume){
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -165,6 +190,15 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     MainActivity.currentUserData.setCurrentReiseReponses(reiseResponses);
                     MainActivity.currentUserData.setCurrentUser(reiseResponses[0].getReisender());
+                    if(resume)
+                    {
+                        runOnUiThread(() -> {
+                            uebersichtRecAdapter = new UebersichtRecAdapter(ReiseUebersichtTestActivity.this, MainActivity.currentUserData.getCurrentReiseReponsesAsList(), imageMap);
+                            reisenView.setAdapter(uebersichtRecAdapter);
+                            reisenView.smoothScrollToPosition(0);
+                        });
+                    }
+
                 }
             }
         };
@@ -173,7 +207,6 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
 
     public void downloadImages(String url, String reisename){
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
             Bitmap mIcon = null;
             try {
@@ -186,5 +219,11 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
             images.add(mIcon);
             imageMap.put(reisename, mIcon);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentSummaryCallback(true));
     }
 }

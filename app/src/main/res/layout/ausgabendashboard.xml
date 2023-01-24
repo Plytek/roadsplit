@@ -149,6 +149,7 @@
         tools:layout_editor_absoluteX="288dp" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ausgabenDetailsRecycler"
         android:layout_width="409dp"
         android:layout_height="430dp"
         android:layout_marginBottom="96dp"

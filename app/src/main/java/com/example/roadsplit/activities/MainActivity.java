@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -18,6 +19,7 @@ import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.reponses.UserResponse;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     //public static Reisender currentUser;
     public static final String BASEURL = "http://167.172.167.221:8080";
     public static CurrentUserData currentUserData;
+    private BottomNavigationView navigation;
     //public static final String BASEURL = "https://b5dc-88-70-249-101.ngrok.io";
 
 
@@ -51,13 +54,32 @@ public class MainActivity extends AppCompatActivity {
         //Debug.waitForDebugger();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         currentUserData = new CurrentUserData();
         try {
             login();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setSelectedItemId(R.id.navigation_home);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        break;
+                    case R.id.navigation_dashboard:
+                        neueReise(null);
+                        break;
+                    case R.id.navigation_notifications:
+                        reiseDetail(null);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     //Startet einen neuen Intent (Activity) - die MapActivity
@@ -188,4 +210,12 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.currentUserData.deleteObservers();
         //MainActivity.currentUserData = null;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigation.setSelectedItemId(R.id.navigation_home);
+    }
+
+
 }

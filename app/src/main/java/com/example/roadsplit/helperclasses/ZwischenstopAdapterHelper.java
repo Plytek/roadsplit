@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import lombok.Getter;
+
 public class ZwischenstopAdapterHelper implements Observer {
 
     private Context mContext;

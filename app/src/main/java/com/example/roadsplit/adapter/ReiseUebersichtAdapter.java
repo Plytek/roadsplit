@@ -21,11 +21,13 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
+
+import lombok.Getter;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-
+@Getter
 public class ReiseUebersichtAdapter extends PagerAdapter {
 
     private ReiseResponse reiseResponse;
@@ -50,15 +52,13 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
         View layoutScreen;
         switch(position)
         {
             case 0:
                 layoutScreen = inflater.inflate(R.layout.ausgabenpage,null);
-                //updateReise(reiseReponse.getReise());
                 EndpointConnector.fetchPaymentInfo(reiseResponse.getReise(), updateReiseCallback());
-                ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, MainActivity.currentUserData.getCurrentReiseResponse(), ausgabenActivity);
+                ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, MainActivity.currentUserData.getCurrentReiseResponse(), ausgabenActivity, this);
                 ausgabenAdapterHelper.setUpAusgaben();
                 break;
             case 1:
@@ -70,9 +70,14 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
                 layoutScreen = inflater.inflate(R.layout.packlistepage,null);
                 break;
             case 3:
-                layoutScreen = inflater.inflate(R.layout.ausgabendetailpage,null);
+/*                layoutScreen = inflater.inflate(R.layout.ausgabendetailpage,null);
                 ausgabeDetailAdapterHelper = new AusgabeDetailAdapterHelper(layoutScreen, mContext, MainActivity.currentUserData.getCurrentReiseResponse());
-                ausgabeDetailAdapterHelper.setUpAusgabeDetailPage();
+                ausgabeDetailAdapterHelper.setUpAusgabeDetailPage();*/
+                EndpointConnector.fetchPaymentInfo(reiseResponse.getReise(), updateReiseCallback());
+                layoutScreen = inflater.inflate(R.layout.ausgabendashboard,null);
+                ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, MainActivity.currentUserData.getCurrentReiseResponse(), ausgabenActivity, this);
+                ausgabenAdapterHelper.setUpDashboard();
+                zwischenstopAdapterHelper.setUpZwischenStops();
                 break;
             default:
                 layoutScreen = inflater.inflate(R.layout.dokumentepage,null);

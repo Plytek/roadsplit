@@ -16,13 +16,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.activities.AusgabenActivity;
+import com.example.roadsplit.adapter.DashboardAusgabenAdapter;
+import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
+import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.AusgabenTyp;
+import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
@@ -49,13 +55,15 @@ public class AusgabenAdapterHelper implements Observer {
         private ReiseResponse reiseResponse;
         private BigDecimal reiseGesamtAusgabe;
         private List<String> reisendeNames;
+        private ReiseUebersichtAdapter reiseUebersichtAdapter;
 
-    public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseResponse reiseResponse, AusgabenActivity ausgabenActivity) {
+    public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseResponse reiseResponse, AusgabenActivity ausgabenActivity, ReiseUebersichtAdapter reiseUebersichtAdapter) {
         MainActivity.currentUserData.addObserver(this);
         this.layoutScreen = layoutScreen;
         this.reiseResponse = MainActivity.currentUserData.getCurrentReiseResponse();
         this.mContext = context;
         this.ausgabenActivity = ausgabenActivity;
+        this.reiseUebersichtAdapter = reiseUebersichtAdapter;
 
         reiseGesamtAusgabe = new BigDecimal(0);
         for(Stop stop : reiseResponse.getReise().getStops()) {
@@ -65,6 +73,17 @@ public class AusgabenAdapterHelper implements Observer {
                 stop.setGesamtausgaben(new BigDecimal(0));
             }
         }
+    }
+
+    public void setUpDashboard(){
+        RecyclerView details = layoutScreen.findViewById(R.id.ausgabenDetailsRecycler);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
+        details.setLayoutManager(layoutManager);
+        List<Ausgabe> ausgaben = new ArrayList<>();
+        for(Stop stop : reiseResponse.getReise().getStops())
+            ausgaben.addAll(stop.getAusgaben());
+        DashboardAusgabenAdapter dashboardAusgabenAdapter = new DashboardAusgabenAdapter(mContext, ausgaben, reiseResponse.getReisendeList());
+        details.setAdapter(dashboardAusgabenAdapter);
     }
 
     public void setUpAusgaben(){
@@ -114,6 +133,7 @@ public class AusgabenAdapterHelper implements Observer {
             addBetrag(reiseResponse.getReise(), stopNameSpinner, betrag, schuldnerListView, layoutScreen);
             betragView.setText("");
             layoutScreen.findViewById(R.id.ausgabenProgressBar).setVisibility(View.INVISIBLE);
+            reiseUebersichtAdapter.getZwischenstopAdapterHelper().setUpZwischenStops();
         });
     }
 
@@ -232,6 +252,8 @@ public class AusgabenAdapterHelper implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-
+        if(o instanceof CurrentUserData){
+            //reiseReponses = ((CurrentUserData) o).getCurrentReiseReponsesAsList();
+        }
     }
 }
