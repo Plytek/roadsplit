@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true" >
-
-<androidx.constraintlayout.widget.ConstraintLayout
+    android:fillViewport="true"
     android:id="@+id/constraintausgabenpage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,7 +19,7 @@
         android:gravity="center"
         android:text="Dashboard"
         android:textColor="#2A4B42"
-        android:textSize="22dp"
+        android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline23"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.248"
@@ -53,16 +48,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintcardlayoutdash"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/rcreme">
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/uebersichtlightshape"
-            tools:layout_editor_absoluteX="98dp"
-            tools:layout_editor_absoluteY="238dp" />
+            android:background="@color/rdarkgreen">
 
             <TextView
                 android:id="@+id/textView6"
@@ -116,6 +103,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:clickable="true"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
@@ -124,9 +112,9 @@
         android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineOben"
-        app:layout_constraintVertical_bias="0.703"
-        tools:layout_editor_absoluteX="43dp" />
+        app:layout_constraintVertical_bias="0.703" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineOben"
@@ -135,28 +123,54 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.36" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineRecView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+
     <Button
         android:id="@+id/button3"
         android:layout_width="80dp"
         android:layout_height="39dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/smallbuttondots"
         android:text="Mehr"
         android:textAllCaps="false"
         android:textColor="@color/rcreme"
         app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineOben"
-        app:layout_constraintVertical_bias="0.358"
-        tools:layout_editor_absoluteX="288dp" />
+        app:layout_constraintVertical_bias="0.358" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ausgabenDetailsRecycler"
-        android:layout_width="409dp"
-        android:layout_height="430dp"
-        android:layout_marginBottom="96dp"
+        android:layout_width="410dp"
+        android:layout_height="516dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineRecView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineRecView"
+        app:layout_constraintVertical_bias="0.544" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:contentDescription="Test"
+        app:backgroundTint="@color/rlightgreen"
+        app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.935"
+        app:srcCompat="@drawable/plusiconsecond" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>

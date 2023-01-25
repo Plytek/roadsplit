@@ -133,8 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testKnecht(View view){
-        //Intent intent = new Intent(this, testknechtActivitay.class);
-        //startActivity(intent);
+        setContentView(R.layout.testknecht);
     }
 
 

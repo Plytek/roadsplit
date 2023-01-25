@@ -106,7 +106,9 @@
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.RoadSplitLoGIn">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
