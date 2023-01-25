@@ -245,10 +245,10 @@
         android:layout_marginTop="76dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.86"
+        app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toEndOf="@id/regText"
         app:layout_constraintTop_toTopOf="@id/guideline2"
-        app:layout_constraintVertical_bias="0.829"
+        app:layout_constraintVertical_bias="0.78"
         app:srcCompat="@drawable/rdarklogo" />
 
     <ProgressBar
