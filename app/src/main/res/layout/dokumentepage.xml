@@ -5,7 +5,7 @@
     android:id="@+id/constraintdocuments"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rcreme">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/imageView"
@@ -37,7 +37,8 @@
         android:id="@+id/textView2"
         android:layout_width="275dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/cextrabold"
+        android:fontFamily="@font/cmedium"
+        android:textStyle="bold"
         android:gravity="center"
         android:text="In Arbeit..."
         android:textColor="#2A4B42"
@@ -69,13 +70,14 @@
         android:layout_marginTop="14dp"
         android:background="@drawable/lightgreenbutton"
         android:elevation="3dp"
-        android:fontFamily="@font/cextrabold"
+        android:fontFamily="@font/cmedium"
         android:onClick="zurReise"
+        android:textAllCaps="false"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
         android:paddingBottom="16dp"
-        android:text="BALD VERFÜGBAR"
+        android:text="Bald verfügbar"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15dp"
