@@ -1,26 +1,22 @@
 package com.example.roadsplit.requests;
 
+import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
+import com.example.roadsplit.model.Stop;
 
 public class AusgabenRequest {
-    private Reisender reisender;
     private Reise reise;
-
-    public AusgabenRequest(Reisender reisender, Reise reise) {
-        this.reisender = reisender;
-        this.reise = reise;
-    }
+    private Stop stop;
+    private Ausgabe ausgabe;
 
     public AusgabenRequest() {
     }
 
-    public Reisender getReisender() {
-        return reisender;
-    }
-
-    public void setReisender(Reisender reisender) {
-        this.reisender = reisender;
+    public AusgabenRequest(Reise reise, Stop stop, Ausgabe ausgabe) {
+        this.reise = reise;
+        this.stop = stop;
+        this.ausgabe = ausgabe;
     }
 
     public Reise getReise() {
@@ -29,5 +25,21 @@ public class AusgabenRequest {
 
     public void setReise(Reise reise) {
         this.reise = reise;
+    }
+
+    public Stop getStop() {
+        return stop;
+    }
+
+    public void setStop(Stop stop) {
+        this.stop = stop;
+    }
+
+    public Ausgabe getAusgabe() {
+        return ausgabe;
+    }
+
+    public void setAusgabe(Ausgabe ausgabe) {
+        this.ausgabe = ausgabe;
     }
 }

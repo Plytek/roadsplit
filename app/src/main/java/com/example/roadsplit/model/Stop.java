@@ -13,25 +13,25 @@ public class Stop {
 
     private long id;
     private String name;
-    private BigDecimal budget;
-    private BigDecimal gesamtausgaben;
     private long latitude;
     private long longitude;
-
+    private BigDecimal gesamtBudget;
+    private List<AusgabenSumme> budgetProReisender;
+    private List<AusgabenSumme> gesamtAusgabeProReisender;
     private List<Ausgabe> ausgaben;
 
-    public Stop(long id, String name, BigDecimal budget, BigDecimal gesamtausgaben, long latitude, long longitude, List<Ausgabe> ausgaben) {
+    public Stop(long id, String name, long latitude, long longitude, BigDecimal gesamtBudget, List<AusgabenSumme> budgetProReisender, List<AusgabenSumme> gesamtAusgabeProReisender, List<Ausgabe> ausgaben) {
         this.id = id;
         this.name = name;
-        this.budget = budget;
-        this.gesamtausgaben = gesamtausgaben;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.gesamtBudget = gesamtBudget;
+        this.budgetProReisender = budgetProReisender;
+        this.gesamtAusgabeProReisender = gesamtAusgabeProReisender;
         this.ausgaben = ausgaben;
     }
 
     public Stop() {
-        ausgaben = new ArrayList<>();
     }
 
     public long getId() {
@@ -50,22 +50,6 @@ public class Stop {
         this.name = name;
     }
 
-    public BigDecimal getBudget() {
-        return budget;
-    }
-
-    public void setBudget(BigDecimal budget) {
-        this.budget = budget;
-    }
-
-    public BigDecimal getGesamtausgaben() {
-        return gesamtausgaben;
-    }
-
-    public void setGesamtausgaben(BigDecimal gesamtausgaben) {
-        this.gesamtausgaben = gesamtausgaben;
-    }
-
     public long getLatitude() {
         return latitude;
     }
@@ -82,25 +66,35 @@ public class Stop {
         this.longitude = longitude;
     }
 
+    public BigDecimal getGesamtBudget() {
+        return gesamtBudget;
+    }
+
+    public void setGesamtBudget(BigDecimal gesamtBudget) {
+        this.gesamtBudget = gesamtBudget;
+    }
+
+    public List<AusgabenSumme> getBudgetProReisender() {
+        return budgetProReisender;
+    }
+
+    public void setBudgetProReisender(List<AusgabenSumme> budgetProReisender) {
+        this.budgetProReisender = budgetProReisender;
+    }
+
+    public List<AusgabenSumme> getGesamtAusgabeProReisender() {
+        return gesamtAusgabeProReisender;
+    }
+
+    public void setGesamtAusgabeProReisender(List<AusgabenSumme> gesamtAusgabeProReisender) {
+        this.gesamtAusgabeProReisender = gesamtAusgabeProReisender;
+    }
+
     public List<Ausgabe> getAusgaben() {
         return ausgaben;
     }
 
     public void setAusgaben(List<Ausgabe> ausgaben) {
         this.ausgaben = ausgaben;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Stop{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", budget=" + budget +
-                ", gesamtausgaben=" + gesamtausgaben +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", ausgaben=" + ausgaben +
-                '}';
     }
 }

@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
@@ -15,10 +18,7 @@ import com.example.roadsplit.activities.testing.DummyPlanungActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
 import com.example.roadsplit.activities.testing.PaymentDummyActivity;
 import com.example.roadsplit.activities.testing.UserCreateActivity;
-import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.UserAccount;
-import com.example.roadsplit.reponses.ReiseResponse;
-import com.example.roadsplit.reponses.UserResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
@@ -38,14 +38,11 @@ import okhttp3.Response;
 @Getter
 @Setter
 public class MainActivity extends AppCompatActivity {
-
-
-    private UserAccount userAccount = null;
-    //public static Reisender currentUser;
+    private static int PICK_FILE_REQUEST = 1;
+    private SharedPreferences prefs;
     public static final String BASEURL = "http://167.172.167.221:8080";
-    public static CurrentUserData currentUserData;
     private BottomNavigationView navigation;
-    //public static final String BASEURL = "https://b5dc-88-70-249-101.ngrok.io";
+    //public static final String BASEURL = "https://2d43-88-70-249-101.ngrok.io";
 
 
     @Override
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        currentUserData = new CurrentUserData();
+        prefs = getSharedPreferences("reisender", MODE_PRIVATE);
         try {
             login();
         } catch (Exception e) {
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
     public void openMap(View view) {
         Intent intent = new Intent(this, MapActivity.class);
         //Gibt zusätzliche Daten mit durch .putExtra(Key, Value). In diesem Fall den aktuellen Useraccount als String
-        intent.putExtra("user", (new Gson()).toJson(currentUserData.getCurrentUser()));
         //Startet die Activity
         startActivity(intent);
     }
@@ -108,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void reiseText(View view){
         Intent intent = new Intent(this, DummyPlanungActivity.class);
-        intent.putExtra("user", (new Gson()).toJson(currentUserData.getCurrentUser()));
         startActivity(intent);
     }
 
@@ -171,44 +166,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful())
                 {
-                    currentUserData.setCurrentUser(userResponse.getReisender());
-                    EndpointConnector.fetchPaymentInfoSummary(currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentInfoSummaryCallback());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("reisender", response.body().string());
+                    editor.apply();
                 }
             }
         });
     }
 
-    private Callback fetchPaymentInfoSummaryCallback(){
-        return new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseResponse[] reiseResponses = new ReiseResponse[0];
-                try {
-                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseResponse[].class);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(response.isSuccessful()) {
-                    currentUserData.setCurrentReiseReponses(reiseResponses);
-                    currentUserData.notifyObservers();
-                    }
-                }
-            };
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MainActivity.currentUserData.deleteObservers();
-        //MainActivity.currentUserData = null;
-    }
 
     @Override
     protected void onResume() {
@@ -216,5 +183,36 @@ public class MainActivity extends AppCompatActivity {
         navigation.setSelectedItemId(R.id.navigation_home);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK) {
+            Uri fileUri = data.getData();
+            EndpointConnector.uploadFile(this, fileCallback(), fileUri);
+            // Do something with the selected file
+        }
+    }
+
+    public void uploadFile(View view){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        startActivityForResult(intent, PICK_FILE_REQUEST);
+    }
+
+    private Callback fileCallback(){
+        return new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    Looper.prepare();
+                    Toast.makeText(MainActivity.this, "File uploaded", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+    }
 
 }

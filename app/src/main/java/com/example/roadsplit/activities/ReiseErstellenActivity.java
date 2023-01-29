@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.Editable;
@@ -26,6 +27,7 @@ import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -51,15 +53,18 @@ public class ReiseErstellenActivity extends AppCompatActivity{
     private List<String> suggestions;
     private long last = 0;
 
+    private SharedPreferences prefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
         setContentView(R.layout.activity_reise_erstellen);
-        this.reisender = MainActivity.currentUserData.getCurrentUser();
+
+        this.prefs = getSharedPreferences("reisender", MODE_PRIVATE);
+        this.reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
         zwischenstops = new ArrayList<>();
         suggestions = new ArrayList<>();
 
@@ -191,10 +196,13 @@ public class ReiseErstellenActivity extends AppCompatActivity{
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
+                Gson gson = new Gson();
+                ReiseResponse reiseResponse = gson.fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
-                    MainActivity.currentUserData.setCurrentReiseResponse(reiseResponse);
+                    UserResponse userResponse = new UserResponse("ok", reiseResponse.getReisender(), System.currentTimeMillis());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("reisender", gson.toJson(userResponse));
+                    editor.apply();
                     reiseSuccess(reiseResponse.getReise().getUniquename());
                     Looper.prepare();
                 }

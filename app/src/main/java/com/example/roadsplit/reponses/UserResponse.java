@@ -5,13 +5,15 @@ import com.example.roadsplit.model.Reisender;
 public class UserResponse {
     private String message;
     private Reisender reisender;
+    private long timestamp;
 
-    public UserResponse() {
-    }
-
-    public UserResponse(String message, Reisender reisender) {
+    public UserResponse(String message, Reisender reisender, long timestamp) {
         this.message = message;
         this.reisender = reisender;
+        this.timestamp = timestamp;
+    }
+
+    public UserResponse() {
     }
 
     public String getMessage() {
@@ -28,5 +30,13 @@ public class UserResponse {
 
     public void setReisender(Reisender reisender) {
         this.reisender = reisender;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

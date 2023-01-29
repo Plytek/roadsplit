@@ -93,6 +93,7 @@ public class MapActivity extends AppCompatActivity {
         map.setTilesScaledToDpi(true);
 
         IMapController mapController = map.getController();
+
         mapController.setZoom(6.5);
         GeoPoint startPoint = new GeoPoint(53.551086, 9.993682);
         //GeoPoint startPoint = new GeoPoint(0, 0);

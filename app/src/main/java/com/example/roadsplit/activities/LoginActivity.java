@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,10 +34,13 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        prefs = getSharedPreferences("reisender", MODE_PRIVATE);
         Intent intent = getIntent();
         if(intent.getStringExtra("registered") != null)
             Toast.makeText(this, "Account erfolgreich registriert!", Toast.LENGTH_LONG).show();
@@ -106,15 +110,16 @@ public class LoginActivity extends AppCompatActivity {
                 UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful())
                 {
-                    MainActivity.currentUserData.setCurrentUser(userResponse.getReisender());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("reisender", response.body().string());
+                    editor.apply();
                     if(userResponse.getReisender().isFirsttimelogin())
                     {
-                        MainActivity.currentUserData.getCurrentUser().setFirsttimelogin(false);
-                        sendUserUpdate();
+                        userResponse.getReisender().setFirsttimelogin(false);
+                        sendUserUpdate(userResponse);
                         startFirstTimeActivity();
                     }
                     else success();
-                    Log.d("currentuser", MainActivity.currentUserData.getCurrentUser().toString());
                     findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
                     return;
                 }
@@ -143,9 +148,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void sendUserUpdate() throws IOException {
+    public void sendUserUpdate(UserResponse userResponse) throws IOException {
         HttpUrl.Builder httpBuilder = HttpUrl.parse(MainActivity.BASEURL + "/api/userdaten/update").newBuilder();
-        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(MainActivity.currentUserData.getCurrentUser()));
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(userResponse.getReisender()));
 
         OkHttpClient nextclient = new OkHttpClient();
         Request request = new Request.Builder()

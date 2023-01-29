@@ -1,77 +1,45 @@
 package com.example.roadsplit.model;
 
+import java.math.BigDecimal;
 import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 
 public class Reise {
-
     private Long id;
     private String name;
     private String uniquename;
     private String reiseErsteller;
     private boolean ongoing;
-    private List<Stop> stops;
-    private List<PacklistenItem> packliste;
     private long createDate;
 
-    public Reise(Long id, String name, String uniquename, String reiseErsteller, boolean ongoing, List<Stop> stops, List<PacklistenItem> packliste, long createDate) {
+    private List<Stop> stops;
+    private List<PacklistenItem> packliste;
+    private List<AusgabenSumme> gesamtBudgetProReisender;
+    private List<AusgabenSumme> gesamtAusgabeProReisender;
+    private List<Schulden> schuldens;
+    private List<ReiseTeilnehmer> reiseTeilnehmer;
+    private BigDecimal gesamtAusgabe;
+    private BigDecimal gesamtBudget;
+
+
+    public Reise() {
+    }
+
+    public Reise(Long id, String name, String uniquename, String reiseErsteller, boolean ongoing, long createDate, List<Stop> stops, List<PacklistenItem> packliste, List<AusgabenSumme> gesamtBudgetProReisender, List<AusgabenSumme> gesamtAusgabeProReisender, List<Schulden> schuldens, List<ReiseTeilnehmer> reiseTeilnehmer, BigDecimal gesamtAusgabe, BigDecimal gesamtBudget) {
         this.id = id;
         this.name = name;
         this.uniquename = uniquename;
         this.reiseErsteller = reiseErsteller;
         this.ongoing = ongoing;
-        this.stops = stops;
-        this.packliste = packliste;
         this.createDate = createDate;
-    }
-
-    public Reise(Long id, String name, String uniquename, boolean ongoing, List<Stop> stops, List<PacklistenItem> packliste, long createDate) {
-        this.id = id;
-        this.name = name;
-        this.uniquename = uniquename;
-        this.ongoing = ongoing;
         this.stops = stops;
         this.packliste = packliste;
-        this.createDate = createDate;
-    }
-
-    public Reise(Long id, String name, String uniquename, boolean ongoing, List<Stop> stops, List<PacklistenItem> packliste) {
-        this.id = id;
-        this.name = name;
-        this.uniquename = uniquename;
-        this.ongoing = ongoing;
-        this.stops = stops;
-        this.packliste = packliste;
-    }
-
-    public Reise(Long id, String name, boolean ongoing, List<Stop> stops) {
-        this.id = id;
-        this.name = name;
-        this.ongoing = ongoing;
-        this.stops = stops;
-    }
-
-    public Reise(Long id, String name, String uniquename, boolean ongoing, List<Stop> stops) {
-        this.id = id;
-        this.name = name;
-        this.uniquename = uniquename;
-        this.ongoing = ongoing;
-        this.stops = stops;
-    }
-
-    public Reise(String name, String uniquename, boolean ongoing, List<Stop> stops) {
-        this.name = name;
-        this.uniquename = uniquename;
-        this.ongoing = ongoing;
-        this.stops = stops;
-    }
-
-    public Reise() {
+        this.gesamtBudgetProReisender = gesamtBudgetProReisender;
+        this.gesamtAusgabeProReisender = gesamtAusgabeProReisender;
+        this.schuldens = schuldens;
+        this.reiseTeilnehmer = reiseTeilnehmer;
+        this.gesamtAusgabe = gesamtAusgabe;
+        this.gesamtBudget = gesamtBudget;
     }
 
     public Long getId() {
@@ -90,22 +58,6 @@ public class Reise {
         this.name = name;
     }
 
-    public boolean isOngoing() {
-        return ongoing;
-    }
-
-    public void setOngoing(boolean ongoing) {
-        this.ongoing = ongoing;
-    }
-
-    public List<Stop> getStops() {
-        return stops;
-    }
-
-    public void setStops(List<Stop> stops) {
-        this.stops = stops;
-    }
-
     public String getUniquename() {
         return uniquename;
     }
@@ -114,12 +66,20 @@ public class Reise {
         this.uniquename = uniquename;
     }
 
-    public List<PacklistenItem> getPackliste() {
-        return packliste;
+    public String getReiseErsteller() {
+        return reiseErsteller;
     }
 
-    public void setPackliste(List<PacklistenItem> packliste) {
-        this.packliste = packliste;
+    public void setReiseErsteller(String reiseErsteller) {
+        this.reiseErsteller = reiseErsteller;
+    }
+
+    public boolean isOngoing() {
+        return ongoing;
+    }
+
+    public void setOngoing(boolean ongoing) {
+        this.ongoing = ongoing;
     }
 
     public long getCreateDate() {
@@ -130,11 +90,75 @@ public class Reise {
         this.createDate = createDate;
     }
 
-    public String getReiseErsteller() {
-        return reiseErsteller;
+    public List<Stop> getStops() {
+        return stops;
     }
 
-    public void setReiseErsteller(String reiseErsteller) {
-        this.reiseErsteller = reiseErsteller;
+    public void setStops(List<Stop> stops) {
+        this.stops = stops;
+    }
+
+    public List<PacklistenItem> getPackliste() {
+        return packliste;
+    }
+
+    public void setPackliste(List<PacklistenItem> packliste) {
+        this.packliste = packliste;
+    }
+
+    public List<AusgabenSumme> getGesamtBudgetProReisender() {
+        return gesamtBudgetProReisender;
+    }
+
+    public void setGesamtBudgetProReisender(List<AusgabenSumme> gesamtBudgetProReisender) {
+        this.gesamtBudgetProReisender = gesamtBudgetProReisender;
+    }
+
+    public List<Schulden> getDebts() {
+        return schuldens;
+    }
+
+    public void setDebts(List<Schulden> schuldens) {
+        this.schuldens = schuldens;
+    }
+
+    public BigDecimal getGesamtAusgabe() {
+        return gesamtAusgabe;
+    }
+
+    public void setGesamtAusgabe(BigDecimal gesamtAusgabe) {
+        this.gesamtAusgabe = gesamtAusgabe;
+    }
+
+    public BigDecimal getGesamtBudget() {
+        return gesamtBudget;
+    }
+
+    public void setGesamtBudget(BigDecimal gesamtBudget) {
+        this.gesamtBudget = gesamtBudget;
+    }
+
+    public List<AusgabenSumme> getGesamtAusgabeProReisender() {
+        return gesamtAusgabeProReisender;
+    }
+
+    public void setGesamtAusgabeProReisender(List<AusgabenSumme> gesamtAusgabeProReisender) {
+        this.gesamtAusgabeProReisender = gesamtAusgabeProReisender;
+    }
+
+    public List<Schulden> getSchuldens() {
+        return schuldens;
+    }
+
+    public void setSchuldens(List<Schulden> schuldens) {
+        this.schuldens = schuldens;
+    }
+
+    public List<ReiseTeilnehmer> getReiseTeilnehmer() {
+        return reiseTeilnehmer;
+    }
+
+    public void setReiseTeilnehmer(List<ReiseTeilnehmer> reiseTeilnehmer) {
+        this.reiseTeilnehmer = reiseTeilnehmer;
     }
 }

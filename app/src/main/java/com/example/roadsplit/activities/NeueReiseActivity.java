@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,7 +23,9 @@ import android.widget.Toast;
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.EndpointConnector;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.UserResponse;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -36,17 +39,23 @@ import okhttp3.Response;
 public class NeueReiseActivity extends AppCompatActivity {
 
     private Dialog dialog;
-
+    private SharedPreferences prefs;
+    private Reisender reisender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neue_reise);
-        if(MainActivity.currentUserData.getCurrentUser() != null)
+
+        this.prefs = getSharedPreferences("reisender", MODE_PRIVATE);
+        this.reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        if(reisender != null)
         {
-            String welcome = "WAS GEHT, " + MainActivity.currentUserData.getCurrentUser().getNickname().toUpperCase();
+            String welcome = "WAS GEHT, " + reisender.getNickname().toUpperCase();
             ((TextView)findViewById(R.id.textView10)).setText(welcome);
         }
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
 
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseBeitretenButton));
@@ -96,7 +105,7 @@ public class NeueReiseActivity extends AppCompatActivity {
     public void join(View view) {
         EditText editText = dialog.findViewById(R.id.pinTextView);
         String uniquename = editText.getText().toString();
-        JoinRequest joinRequest = new JoinRequest(MainActivity.currentUserData.getCurrentUser().getId(), uniquename);
+        JoinRequest joinRequest = new JoinRequest(reisender.getId(), uniquename);
         EndpointConnector.reiseBeitreten(joinRequest, reiseBeitretenCallback());
 
     }
@@ -112,11 +121,13 @@ public class NeueReiseActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
+                Gson gson = new Gson();
+                ReiseResponse reiseResponse = gson.fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
-                    MainActivity.currentUserData.setCurrentReiseResponse(reiseResponse);
-                    MainActivity.currentUserData.setCurrentReise(reiseResponse.getReise());
+                    UserResponse userResponse = new UserResponse("ok", reiseResponse.getReisender(), System.currentTimeMillis());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("reisender", gson.toJson(userResponse));
+                    editor.apply();
                     Looper.prepare();
                     dialog.dismiss();
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();

@@ -35,6 +35,8 @@ public class AusgabeDetailAdapterHelper implements Observer {
 
     public void setUpAusgabeDetailPage()
     {
+        mContext.getSharedPreferences();
+
         Spinner filterSpinner = layoutScreen.findViewById(R.id.ausgabeFilterSpinner);
         ListView detailAusgaben = layoutScreen.findViewById(R.id.ausgabeDetailListView);
 

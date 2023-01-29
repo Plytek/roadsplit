@@ -1,6 +1,9 @@
 package com.example.roadsplit.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +14,22 @@ import androidx.annotation.NonNull;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
+import com.google.gson.Gson;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class StopAdapter extends ArrayAdapter<Stop> implements Observer {
+public class StopAdapter extends ArrayAdapter<Stop> {
 
     private List<Stop> dataSet;
     Context mContext;
+    private Reisender reisender;
+    private SharedPreferences prefs;
 
-    @Override
-    public void update(Observable observable, Object o) {
-        this.dataSet = MainActivity.currentUserData.getCurrentReise().getStops();
-    }
 
     // View lookup cache
     private static class ViewHolder {
@@ -36,8 +39,9 @@ public class StopAdapter extends ArrayAdapter<Stop> implements Observer {
     }
 
     public StopAdapter(List<Stop> data, Context context) {
+        prefs = context.getSharedPreferences("reisender", MODE_PRIVATE);
+        reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
         super(context, R.layout.row_layout, MainActivity.currentUserData.getCurrentReise().getStops());
-        MainActivity.currentUserData.addObserver(this);
         this.dataSet = MainActivity.currentUserData.getCurrentReise().getStops();
         this.mContext = context;
     }

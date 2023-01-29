@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,7 +13,9 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.UserResponse;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
@@ -27,6 +30,9 @@ public class AusgabenActivity extends AppCompatActivity {
     private ReiseUebersichtAdapter reiseUebersichtAdapter;
     private TabLayout tabLayout;
     private Reise reise;
+    private Reisender reisender;
+
+    private SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +44,22 @@ public class AusgabenActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d("errorRoadsplit", e.getMessage());
         }
+        prefs = getSharedPreferences("reisender", MODE_PRIVATE);
+        this.reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+
+        for (Reise r : reisender.getReisen()) {
+            if (r.getName().equals(reise.getName())) {
+                reise = r;
+                break;
+            }
+        }
         // setup viewpager
         screenPager = findViewById(R.id.screen_viewpager);
-        EndpointConnector.fetchPaymentInfo(reise, fetchPaymentCallback());
+        Reisender reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        EndpointConnector.updateReisenderInfo(reisender.getId(), updateUserCallback());
     }
 
-    private Callback fetchPaymentCallback(){
+    private Callback updateUserCallback(){
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -51,14 +67,13 @@ public class AusgabenActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("reisender", response.body().string());
+                    editor.commit();
+
                     runOnUiThread(() -> {
-                        reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseResponse);
-                        MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
-                        MainActivity.currentUserData.setCurrentReiseResponse(reiseResponse);
-                        MainActivity.currentUserData.setCurrentReise(reiseResponse.getReise());
-                        MainActivity.currentUserData.notifyObservers();
+                        reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reise);
                         screenPager.setAdapter(reiseUebersichtAdapter);
                         tabLayout = findViewById(R.id.tab_indicator2);
                         tabLayout.setupWithViewPager(screenPager);
@@ -73,9 +88,4 @@ public class AusgabenActivity extends AppCompatActivity {
         };
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        reiseUebersichtAdapter.removeListeners();
-    }
 }

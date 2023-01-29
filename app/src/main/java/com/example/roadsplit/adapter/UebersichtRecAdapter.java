@@ -1,7 +1,10 @@
 package com.example.roadsplit.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -15,9 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
-import com.example.roadsplit.activities.MainActivity;
-import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.gson.Gson;
@@ -27,21 +29,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
-public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdapter.RecentsViewHolder> implements Observer {
+public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdapter.RecentsViewHolder>{
 
     private Context context;
-    private List<ReiseResponse> recentsDataList;
+    private Reisender reisender;
+    private SharedPreferences prefs;
     private Map<String, Bitmap> imageMap;
     private RecentsViewHolder viewHolder;
 
-    public UebersichtRecAdapter(Context context, List<ReiseResponse> recentsDataList, Map<String, Bitmap> imageMap) {
-        MainActivity.currentUserData.addObserver(this);
+    public UebersichtRecAdapter(Context context, Map<String, Bitmap> imageMap) {
         this.context = context;
-        this.recentsDataList = recentsDataList;
         this.imageMap = imageMap;
+        prefs = context.getSharedPreferences("reisender", MODE_PRIVATE);
+        reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
     }
 
     @NonNull
@@ -56,14 +57,14 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
     @Override
     public void onBindViewHolder(@NonNull RecentsViewHolder holder, int position) {
 
-        ReiseResponse reiseResponse = recentsDataList.get(position);
-        setupUi(holder, reiseResponse);
+        Reise reise = reisender.getReisen().get(position);
+        setupUi(holder, reise);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AusgabenActivity.class);
-                String reiseString = new Gson().toJson(reiseResponse.getReise());
+                String reiseString = new Gson().toJson(reise);
                 intent.putExtra("reise", reiseString);
                 context.startActivity(intent);
             }
@@ -71,30 +72,24 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
 
     }
 
-    private void setupUi(RecentsViewHolder holder, ReiseResponse reiseResponse)
+    private void setupUi(RecentsViewHolder holder, Reise reise)
     {
-        Reise reise = reiseResponse.getReise();
 
         holder.name.setText(reise.getName());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateString = dateFormat.format(new Date(reise.getCreateDate()));
         holder.date.setText(dateString);
-        if (reiseResponse.getGesamtAusgabe() != null)
-            holder.ausgaben.setText("Ausgaben: " + reiseResponse.getGesamtAusgabe().toString() + "€");
-        holder.anzahlReisende.setText("Reisende: " + Integer.toString(reiseResponse.getReisendeList().size()));
-        BigDecimal gesamtBudget = new BigDecimal(0);
-        for(Stop stop : reise.getStops())
-        {
-            if(stop.getBudget() != null)
-                gesamtBudget = gesamtBudget.add(stop.getBudget());
-        }
+        BigDecimal gesamtBudget = reise.getGesamtBudget();
+        if (reise.getGesamtAusgabe() != null)
+            holder.ausgaben.setText("Ausgaben: " + reise.getGesamtAusgabe().toString() + "€");
+        //holder.anzahlReisende.setText("Reisende: " + Integer.toString(reiseResponse.getReisendeList().size()));
         holder.budget.setText("Budget: " + gesamtBudget.toString() + "€");
         holder.image.setImageBitmap(imageMap.get(reise.getName()));
         holder.ersteller.setText("Erstellt von: " + reise.getReiseErsteller());
 
         if(gesamtBudget != null &&
                 !gesamtBudget.equals(new BigDecimal(0))
-                && gesamtBudget.compareTo(reiseResponse.getGesamtAusgabe()) < 0){
+                && gesamtBudget.compareTo(reise.getGesamtAusgabe()) < 0){
             holder.ausgaben.setTextColor(Color.RED);
         }
 
@@ -103,12 +98,9 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
 
     @Override
     public int getItemCount() {
-        return recentsDataList.size();
+        return reisender.getReisen().size();
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-    }
 
     public static final class RecentsViewHolder extends RecyclerView.ViewHolder{
 

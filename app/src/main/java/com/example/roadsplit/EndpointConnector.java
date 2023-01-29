@@ -1,20 +1,51 @@
 package com.example.roadsplit;
 
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.net.Uri;
+
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.requests.AusgabenRequest;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class EndpointConnector {
+
+    public static void updateReisenderInfo(long id, Callback callback)
+    {
+        OkHttpClient client = new OkHttpClient();
+        String url = MainActivity.BASEURL + "/api/userdaten/user";
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
+
+
+        FormBody.Builder formBuilder = new FormBody.Builder();
+        formBuilder.add("id", String.valueOf(id));
+        RequestBody formBody = formBuilder.build();
+
+        Request request = new Request.Builder()
+                .url(httpBuilder.build())
+                .post(formBody)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
 
     public static void fetchImageFromWiki(Reise reise, Callback callback)
     {
@@ -29,6 +60,23 @@ public class EndpointConnector {
                 .url(httpBuilder.build())
                 .get()
                 .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+    private static final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
+    public static void uploadFile(Context context, Callback callback, Uri uri)
+    {
+        OkHttpClient client = new OkHttpClient();
+        String url = MainActivity.BASEURL + "/api/reisedaten/uploadFile/";
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
+        File file = new File(uri.getPath());
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(), RequestBody.create(MEDIA_TYPE_JPG, file))
+                .build();
+
+        Request request = new Request.Builder().url(httpBuilder.build())
+                .post(requestBody).build();
 
         client.newCall(request).enqueue(callback);
     }

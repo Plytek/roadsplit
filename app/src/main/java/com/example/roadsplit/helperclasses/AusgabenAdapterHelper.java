@@ -2,6 +2,7 @@ package com.example.roadsplit.helperclasses;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Looper;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,11 +27,11 @@ import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.adapter.DashboardAusgabenAdapter;
 import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
-import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Ausgabe;
+import com.example.roadsplit.model.AusgabenSumme;
 import com.example.roadsplit.model.AusgabenTyp;
-import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.ReiseTeilnehmer;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseResponse;
@@ -47,32 +49,25 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class AusgabenAdapterHelper implements Observer {
+public class AusgabenAdapterHelper{
 
         private Context mContext;
         private View layoutScreen;
         private AusgabenActivity ausgabenActivity;
-        private ReiseResponse reiseResponse;
-        private BigDecimal reiseGesamtAusgabe;
         private List<String> reisendeNames;
         private ReiseUebersichtAdapter reiseUebersichtAdapter;
+        private Reisender reisender;
+        private Reise reise;
 
-    public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseResponse reiseResponse, AusgabenActivity ausgabenActivity, ReiseUebersichtAdapter reiseUebersichtAdapter) {
-        MainActivity.currentUserData.addObserver(this);
+    public AusgabenAdapterHelper(Context context, View layoutScreen, Reisender reisender, Reise reise, AusgabenActivity ausgabenActivity, ReiseUebersichtAdapter reiseUebersichtAdapter) {
+
         this.layoutScreen = layoutScreen;
-        this.reiseResponse = MainActivity.currentUserData.getCurrentReiseResponse();
         this.mContext = context;
         this.ausgabenActivity = ausgabenActivity;
         this.reiseUebersichtAdapter = reiseUebersichtAdapter;
+        this.reisender = reisender;
+        this.reise = reise;
 
-        reiseGesamtAusgabe = new BigDecimal(0);
-        for(Stop stop : reiseResponse.getReise().getStops()) {
-            try {
-                reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
-            } catch (Exception e) {
-                stop.setGesamtausgaben(new BigDecimal(0));
-            }
-        }
     }
 
     public void setUpDashboard(){
@@ -80,9 +75,9 @@ public class AusgabenAdapterHelper implements Observer {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
         details.setLayoutManager(layoutManager);
         List<Ausgabe> ausgaben = new ArrayList<>();
-        for(Stop stop : reiseResponse.getReise().getStops())
+        for(Stop stop : reise.getStops())
             ausgaben.addAll(stop.getAusgaben());
-        DashboardAusgabenAdapter dashboardAusgabenAdapter = new DashboardAusgabenAdapter(mContext, ausgaben, reiseResponse.getReisendeList());
+        DashboardAusgabenAdapter dashboardAusgabenAdapter = new DashboardAusgabenAdapter(mContext, ausgaben);
         details.setAdapter(dashboardAusgabenAdapter);
     }
 
@@ -92,16 +87,27 @@ public class AusgabenAdapterHelper implements Observer {
         ButtonEffect.buttonPressDownEffect(ausgabeSpeichernButton);
 
         TextView nutzergView = layoutScreen.findViewById(R.id.textViewPayAmount);
-        nutzergView.setText(reiseResponse.getGesamtAusgabe().toString() + "€");
+
+        List<AusgabenSumme> budgetReisende = reise.getGesamtBudgetProReisender();
+        AusgabenSumme currentUserAusgabenSumme = null;
+        for(AusgabenSumme ausgabenSumme : budgetReisende)
+        {
+            if(ausgabenSumme.getReisenderId() == reisender.getId())
+            {
+                currentUserAusgabenSumme = ausgabenSumme;
+                break;
+            }
+        }
+        nutzergView.setText(currentUserAusgabenSumme.getBetrag().toString() + "€");
 
         TextView gesamtView = layoutScreen.findViewById(R.id.textViewPayAmountTeam);
-        gesamtView.setText(reiseGesamtAusgabe + "€");
+        gesamtView.setText(reise.getGesamtAusgabe() + "€");
 
         setUpPaymentTextViews(layoutScreen);
 
 
         reisendeNames = new ArrayList<>();
-        for(Reisender reisender : reiseResponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
+        for(ReiseTeilnehmer reiseTeilnehmer : reise.getReiseTeilnehmer()) reisendeNames.add(reiseTeilnehmer.getReisenderName());
 
         ListView schuldnerListView = layoutScreen.findViewById(R.id.schuldnerListView);
         schuldnerListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
@@ -119,7 +125,7 @@ public class AusgabenAdapterHelper implements Observer {
 
         Spinner stopNameSpinner = layoutScreen.findViewById(R.id.planets_spinner3);
         List<String> stopNames = new ArrayList<>();
-        for(Stop stop : reiseResponse.getReise().getStops()) stopNames.add(stop.getName());
+        for(Stop stop : reise.getStops()) stopNames.add(stop.getName());
         ArrayAdapter<String> stopAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, stopNames);
         stopAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         stopNameSpinner.setAdapter(stopAdapter);
@@ -130,19 +136,25 @@ public class AusgabenAdapterHelper implements Observer {
             String sbetrag = betragView.getText().toString();
             if(sbetrag.isEmpty()) return;
             BigDecimal betrag = new BigDecimal(sbetrag);
-            addBetrag(reiseResponse.getReise(), stopNameSpinner, betrag, schuldnerListView, layoutScreen);
+            addBetrag(reise, stopNameSpinner, betrag, schuldnerListView, layoutScreen);
             betragView.setText("");
             layoutScreen.findViewById(R.id.ausgabenProgressBar).setVisibility(View.INVISIBLE);
             reiseUebersichtAdapter.getZwischenstopAdapterHelper().setUpZwischenStops();
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setUpPaymentTextViews(View layoutScreen){
         TextView balanceView = layoutScreen.findViewById(R.id.textViewPayAmountAusgleich);
         TextView balanceTextView = layoutScreen.findViewById(R.id.textView11);
 
+        AusgabenSumme reisenderGesamt = reise.getGesamtAusgabeProReisender().stream()
+                .filter(d -> d.getReisenderId() == reisender.getId())
+                .findFirst().orElse(null);
+        if (reisenderGesamt.getBetrag() == null) reisenderGesamt.setBetrag(BigDecimal.ZERO);
+
         TextView gesamtView = layoutScreen.findViewById(R.id.textViewPayAmount);
-        gesamtView.setText(reiseResponse.getGesamtAusgabe().toString() + "€");
+        gesamtView.setText(reise.getGesamtAusgabe().toString() + "€");
 
         TextView gesamtGruppeView = layoutScreen.findViewById(R.id.textViewPayAmountTeam);
 
@@ -154,7 +166,7 @@ public class AusgabenAdapterHelper implements Observer {
                 stop.setGesamtausgaben(new BigDecimal(0));
             }
         }
-        gesamtGruppeView.setText(reiseGesamtAusgabe.toString() + "€");
+        gesamtGruppeView.setText(reise.get.toString() + "€");
 
         BigDecimal gesamtBalance = new BigDecimal(0);
         int counter = 0;

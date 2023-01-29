@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.model.Ausgabe;
+import com.example.roadsplit.model.AusgabenSumme;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
@@ -35,11 +36,9 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
 
     private Context context;
     private List<Ausgabe> ausgaben;
-    private List<Reisender> reisende;
-    public DashboardAusgabenAdapter(Context context, List<Ausgabe> ausgaben, List<Reisender> reisende) {
+    public DashboardAusgabenAdapter(Context context, List<Ausgabe> ausgaben) {
         this.context = context;
         this.ausgaben = ausgaben;
-        this.reisende = reisende;
     }
 
     @NonNull
@@ -53,34 +52,57 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
     @Override
     public void onBindViewHolder(@NonNull RecentsViewHolder holder, int position) {
 
-        Ausgabe ausgabe = ausgaben.get(position);
-        String zahler = null;
-        for (Iterator<Reisender> iterator = reisende.iterator(); iterator.hasNext(); ) {
-            Reisender reisender = iterator.next();
-            if (reisender.getId() == ausgabe.getZahler()) {
-                zahler = reisender.getNickname();
-                break;
-            }
-        }
-        String schulder = null;
-        for (Iterator<Reisender> iterator = reisende.iterator(); iterator.hasNext(); ) {
-            Reisender reisender = iterator.next();
-            if (reisender.getId() == ausgabe.getSchuldner()) {
-                schulder = reisender.getNickname();
-                break;
-            }
-        }
-        if(schulder == null || zahler == null) return;
 
-        holder.ausgabename.setText(ausgabe.getAusgabenTyp().toString());
-        holder.beschreibung.setText("Von: " + zahler + " An: " + schulder);
-        holder.ausgabe.setText(ausgabe.getBetrag() + "€");
+
+        Result result = getAusgabeAndSumme(position);
+        String zahler = result.getAusgabe().getZahlername();
+        String schuldner = result.getAusgabenSumme().getReisenderName();
+
+        holder.ausgabename.setText(result.getAusgabe().getAusgabenTyp().toString());
+        holder.beschreibung.setText("Von: " + zahler + " An: " + schuldner);
+        holder.ausgabe.setText(result.getAusgabenSumme().getBetrag() + "€");
 
     }
 
     @Override
     public int getItemCount() {
-        return ausgaben.size();
+        int counter = 0;
+        for(Ausgabe ausgabe : ausgaben)
+        {
+            counter = counter + ausgabe.getAusgabenSumme().size();
+        }
+        return counter;
+    }
+
+    public class Result {
+        private Ausgabe ausgabe;
+        private AusgabenSumme ausgabenSumme;
+
+        public Result(Ausgabe ausgabe, AusgabenSumme ausgabenSumme) {
+            this.ausgabe = ausgabe;
+            this.ausgabenSumme = ausgabenSumme;
+        }
+
+        public Ausgabe getAusgabe() {
+            return ausgabe;
+        }
+
+        public AusgabenSumme getAusgabenSumme() {
+            return ausgabenSumme;
+        }
+    }
+
+    public Result getAusgabeAndSumme(int counter) {
+        int currentCounter = 0;
+        for(Ausgabe ausgabe : ausgaben) {
+            for(AusgabenSumme ausgabenSumme : ausgabe.getAusgabenSumme()) {
+                currentCounter++;
+                if(currentCounter == counter) {
+                    return new Result(ausgabe, ausgabenSumme);
+                }
+            }
+        }
+        return null; // or throw an exception if the counter is out of bounds
     }
 
     public static final class RecentsViewHolder extends RecyclerView.ViewHolder{
