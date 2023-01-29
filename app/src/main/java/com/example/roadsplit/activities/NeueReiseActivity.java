@@ -43,7 +43,7 @@ public class NeueReiseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_neue_reise);
         if(MainActivity.currentUserData.getCurrentUser() != null)
         {
-            String welcome = "WAS GEHT, " + MainActivity.currentUserData.getCurrentUser().getNickname().toUpperCase();
+            String welcome = "Was geht, " + MainActivity.currentUserData.getCurrentUser().getNickname();
             ((TextView)findViewById(R.id.textView10)).setText(welcome);
         }
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
