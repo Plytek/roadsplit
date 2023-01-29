@@ -129,12 +129,5 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
         };
     }
 
-    public void removeListeners(){
-        MainActivity.currentUserData.deleteObserver(zwischenstopAdapterHelper);
-        MainActivity.currentUserData.deleteObserver(ausgabenAdapterHelper);
-        MainActivity.currentUserData.deleteObserver(ausgabeDetailAdapterHelper);
-    }
-
-
 
 }

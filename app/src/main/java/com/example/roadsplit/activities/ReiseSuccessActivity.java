@@ -13,16 +13,23 @@ import android.widget.Toast;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ButtonEffect;
+import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.reponses.ReiseResponse;
+import com.google.gson.Gson;
 
 public class ReiseSuccessActivity extends AppCompatActivity {
 
     String reiseid;
+    Reise reise;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success_create_reise);
 
         Intent intent = getIntent();
+        String reiseString = intent.getStringExtra("reiseResponse");
+        ReiseResponse reiseResponse = new Gson().fromJson(reiseString, ReiseResponse.class);
+        reise = reiseResponse.getReise();
         reiseid = intent.getStringExtra("id");
         ((TextView)findViewById(R.id.pinTextViewSuccess)).setText(reiseid);
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.sharedUebersichtButton));
@@ -45,8 +52,15 @@ public class ReiseSuccessActivity extends AppCompatActivity {
     }
 
     public void zurReise(View view){
-        //TODO: zur aktuellen Reise nicht main
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, AusgabenActivity.class);
+        String reiseString = new Gson().toJson(reise);
+        intent.putExtra("reise", reiseString);
+        startActivity(intent);
+        finish();
+    }
+
+    public void reiseübersichtAnzeigen(View view){
+        Intent intent = new Intent(this,ReiseUebersichtActivity.class);
         startActivity(intent);
         finish();
     }

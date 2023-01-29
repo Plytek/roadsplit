@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintzwischenstopp"
@@ -7,22 +9,34 @@
     android:layout_height="match_parent"
     android:background="@color/rcreme">
 
+
+    <Button
+        android:id="@+id/plusButton4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/plusbutton"
+        app:layout_constraintBottom_toBottomOf="@id/guideline17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/pinTextView3"
+        app:layout_constraintTop_toTopOf="@id/guideline17" />
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="41dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
-        android:text="Mehr oder Weniger Zwischentops?"
+        android:text="Mehr oder weniger Zwischenstopps?"
         android:textColor="#2A4B42"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.376"
+        app:layout_constraintHorizontal_bias="0.194"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineOben"
-        app:layout_constraintVertical_bias="0.487" />
-
+        app:layout_constraintVertical_bias="0.39" />
 
     <TextView
         android:id="@+id/BudgetTextHeadline"
@@ -39,20 +53,21 @@
         app:layout_constraintEnd_toEndOf="@id/pinTextView3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/pinTextView3"
-        app:layout_constraintTop_toBottomOf="@+id/stopNamenListView" />
+        app:layout_constraintTop_toBottomOf="@+id/stopNamenListView"
+        app:layout_constraintVertical_bias="0.735" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="323dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:lineSpacingExtra="2sp"
         android:text="Füge Zwischenstopps hinzu, entferne sie oder sieh dir eine Übersicht zu den jeweiligen Stopps an."
         android:textSize="13dp"
         app:layout_constraintEnd_toEndOf="@id/textView8"
-        app:layout_constraintHorizontal_bias="0.64"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/textView8"
         app:layout_constraintTop_toBottomOf="@id/textView8" />
 
@@ -80,10 +95,10 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline16"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintVertical_bias="0.671" />
 
     <Button
         android:id="@+id/plusButton2"
@@ -121,19 +136,41 @@
         app:layout_constraintStart_toEndOf="@id/plusButton2"
         app:layout_constraintTop_toTopOf="@id/guideline16" />
 
+    <Button
+        android:id="@+id/mapAnzeigenButton"
+        android:layout_width="225dp"
+        android:layout_height="74dp"
+        android:background="@drawable/lightgreenbutton"
+        android:elevation="3dp"
+        android:fontFamily="@font/cextrabold"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:text="ZWISCHENSTOPPS ANZEIGEN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pinTextView3"
+        app:layout_constraintVertical_bias="0.409" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineOben"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.165" />
+        app:layout_constraintGuide_percent="0.11" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.32" />
+        app:layout_constraintGuide_percent="0.26" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineText2"
@@ -141,7 +178,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45"
+        app:layout_constraintGuide_percent="0.39"
         app:layout_constraintTop_toBottomOf="@id/guideline16" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -149,14 +186,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.64" />
+        app:layout_constraintGuide_percent="0.53" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.78" />
 
     <TextView
         android:id="@+id/StopsTextHeadline"
@@ -164,15 +201,15 @@
         android:layout_height="41dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
-        android:text="Zwischenstops"
+        android:text="Zwischenstopps"
         android:textColor="#2A4B42"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
         app:layout_constraintEnd_toEndOf="@id/stopNamenListView"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.007"
         app:layout_constraintStart_toStartOf="@id/stopNamenListView"
         app:layout_constraintTop_toTopOf="@id/guidelineText2"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintVertical_bias="0.487" />
 
     <TextView
         android:id="@+id/stopEntfernenErrorView"
@@ -201,16 +238,16 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
         app:layout_constraintEnd_toStartOf="@+id/BudgetTextHeadline3"
-        app:layout_constraintHorizontal_bias="0.197"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/StopsTextHeadline"
         app:layout_constraintTop_toTopOf="@id/guidelineText2"
-        app:layout_constraintVertical_bias="0.487" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/BudgetTextHeadline3"
         android:layout_width="wrap_content"
         android:layout_height="41dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="88dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Budget"
@@ -219,12 +256,12 @@
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineText2"
-        app:layout_constraintVertical_bias="0.219" />
+        app:layout_constraintVertical_bias="0.487" />
 
     <ListView
         android:id="@+id/stopNamenListView"
-        android:layout_width="366dp"
-        android:layout_height="189dp"
+        android:layout_width="396dp"
+        android:layout_height="190dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/customshapefour"
         android:choiceMode="singleChoice"
@@ -232,10 +269,10 @@
         android:listSelector="#00FF00"
         app:layout_constraintBottom_toBottomOf="@id/guideline18"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.355"
+        app:layout_constraintHorizontal_bias="0.222"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline18"
-        app:layout_constraintVertical_bias="0.573" />
+        app:layout_constraintVertical_bias="0.775" />
 
     <EditText
         android:id="@+id/pinTextView3"
@@ -263,7 +300,9 @@
         app:layout_constraintHorizontal_bias="0.202"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline17"
-        app:layout_constraintVertical_bias="0.028" />
+        app:layout_constraintVertical_bias="0.225" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

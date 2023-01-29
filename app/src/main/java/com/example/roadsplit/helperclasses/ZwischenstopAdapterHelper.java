@@ -1,8 +1,14 @@
 package com.example.roadsplit.helperclasses;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.SparseBooleanArray;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,25 +26,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
-import lombok.Getter;
-
-public class ZwischenstopAdapterHelper implements Observer {
+public class ZwischenstopAdapterHelper {
 
     private Context mContext;
     private View layoutScreen;
-    private ListView stopListView;
     private List<Stop> stops;
     private Reise reise;
     private TextView stopEntfernenErrorView;
+    private ListView stopListView;
     private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
 
     //Kommentar
 
 
     public ZwischenstopAdapterHelper(View layoutScreen, Context context, ReiseResponse reiseResponse) {
-        MainActivity.currentUserData.addObserver(this);
         this.stops = MainActivity.currentUserData.getCurrentReiseResponse().getReise().getStops();
         this.reise = MainActivity.currentUserData.getCurrentReiseResponse().getReise();
         this.mContext = context;
@@ -47,6 +49,7 @@ public class ZwischenstopAdapterHelper implements Observer {
 
     public void setUpZwischenStops(){
         Button addStopButton = layoutScreen.findViewById(R.id.plusButton2);
+        Button mapButton = layoutScreen.findViewById(R.id.mapAnzeigenButton);
         Button removeStopButton = layoutScreen.findViewById(R.id.minusButton2);
         Button addBudgetButton = layoutScreen.findViewById(R.id.plusButton3);
         stopEntfernenErrorView = layoutScreen.findViewById(R.id.stopEntfernenErrorView);
@@ -66,6 +69,12 @@ public class ZwischenstopAdapterHelper implements Observer {
             fullstops.add(fullstop);
         }
 
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mapAnzeigen();
+            }
+        });
         StopAdapter stopAdapter = new StopAdapter(stops, mContext);
         stopListView.setAdapter(stopAdapter);
 
@@ -128,10 +137,16 @@ public class ZwischenstopAdapterHelper implements Observer {
     }
 
 
-    @Override
-    public void update(Observable observable, Object o) {
-        this.stops = MainActivity.currentUserData.getCurrentReiseResponse().getReise().getStops();
-        this.reise = MainActivity.currentUserData.getCurrentReiseResponse().getReise();
-        //setUpZwischenStops();
+    private void mapAnzeigen(){
+
+        Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.maplayout);
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.PopUpAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
 }

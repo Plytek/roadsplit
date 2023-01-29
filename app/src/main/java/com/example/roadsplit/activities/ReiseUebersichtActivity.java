@@ -119,7 +119,6 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
         });
     }
 
-
     private void goToReise(Reise reise){
         Intent intent = new Intent(this, AusgabenActivity.class);
         String reiseString = new Gson().toJson(reise);

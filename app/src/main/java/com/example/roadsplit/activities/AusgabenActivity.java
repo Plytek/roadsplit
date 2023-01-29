@@ -73,9 +73,4 @@ public class AusgabenActivity extends AppCompatActivity {
         };
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        reiseUebersichtAdapter.removeListeners();
-    }
 }

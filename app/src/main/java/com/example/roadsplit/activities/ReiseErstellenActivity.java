@@ -195,7 +195,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
                 if(response.isSuccessful()) {
                     MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
                     MainActivity.currentUserData.setCurrentReiseResponse(reiseResponse);
-                    reiseSuccess(reiseResponse.getReise().getUniquename());
+                    reiseSuccess(reiseResponse.getReise().getUniquename(), reiseResponse);
                     Looper.prepare();
                 }
             }
@@ -281,10 +281,11 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         };
     }
 
-    private void reiseSuccess(String id)
+    private void reiseSuccess(String id, ReiseResponse reiseResponse)
     {
         Intent intent = new Intent(this, ReiseSuccessActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("reiseResponse", new Gson().toJson(reiseResponse));
         startActivity(intent);
         finish();
     }
