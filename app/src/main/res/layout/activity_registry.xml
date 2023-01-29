@@ -156,7 +156,7 @@
         android:layout_marginEnd="10dp"
         android:background="@drawable/custom_shape2"
         android:fontFamily="@font/cmedium"
-        android:onClick="login"
+        android:onClick="createUser"
         android:text="Registrieren"
         android:textAllCaps="false"
         android:textColor="#ffff"

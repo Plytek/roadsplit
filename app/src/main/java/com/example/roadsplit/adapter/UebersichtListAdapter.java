@@ -17,6 +17,7 @@ import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -47,7 +48,8 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap>{
         this.reisenWithImages = data;
         this.context = context;
         prefs = context.getSharedPreferences("reisender", MODE_PRIVATE);
-        reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        UserResponse userResponse = new Gson().fromJson(prefs.getString("reisender", "fehler"), UserResponse.class);
+        this.reisender = userResponse.getReisender();
     }
 
     @Override

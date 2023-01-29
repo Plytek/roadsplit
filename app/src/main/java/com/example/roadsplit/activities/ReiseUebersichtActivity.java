@@ -24,6 +24,7 @@ import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.UserResponse;
 import com.example.roadsplit.reponses.WikiResponse;
 import com.google.gson.Gson;
 
@@ -63,7 +64,8 @@ public class ReiseUebersichtActivity extends AppCompatActivity{
         setContentView(R.layout.activity_reise_uebersicht);
 
         prefs = getSharedPreferences("reisender", MODE_PRIVATE);
-        reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        UserResponse userResponse = new Gson().fromJson(prefs.getString("reisender", "fehler"), UserResponse.class);
+        this.reisender = userResponse.getReisender();
 
         images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item

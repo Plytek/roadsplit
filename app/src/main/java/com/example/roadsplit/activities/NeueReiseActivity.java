@@ -47,7 +47,8 @@ public class NeueReiseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_neue_reise);
 
         this.prefs = getSharedPreferences("reisender", MODE_PRIVATE);
-        this.reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        UserResponse userResponse = new Gson().fromJson(prefs.getString("reisender", "fehler"), UserResponse.class);
+        this.reisender = userResponse.getReisender();
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         if(reisender != null)

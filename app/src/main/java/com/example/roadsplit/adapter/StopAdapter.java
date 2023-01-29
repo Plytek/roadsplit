@@ -24,8 +24,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class StopAdapter extends ArrayAdapter<Stop> {
+    public StopAdapter(@NonNull Context context, int resource) {
+        super(context, resource);
+    }
 
-    private List<Stop> dataSet;
+    /*private List<Stop> dataSet;
     Context mContext;
     private Reisender reisender;
     private SharedPreferences prefs;
@@ -75,5 +78,5 @@ public class StopAdapter extends ArrayAdapter<Stop> {
 
         // Return the completed view to render on screen
         return convertView;
-    }
+    }*/
 }

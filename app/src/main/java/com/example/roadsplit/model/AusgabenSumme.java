@@ -19,7 +19,17 @@ public class AusgabenSumme {
         public AusgabenSumme() {
         }
 
-        public long getId() {
+    public AusgabenSumme(BigDecimal betrag) {
+        this.betrag = betrag;
+    }
+
+    public AusgabenSumme(long reisenderId, String reisenderName, BigDecimal betrag) {
+        this.reisenderId = reisenderId;
+        this.reisenderName = reisenderName;
+        this.betrag = betrag;
+    }
+
+    public long getId() {
             return id;
         }
 

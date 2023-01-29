@@ -9,6 +9,7 @@ import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.requests.AusgabenRequest;
 import com.example.roadsplit.requests.JoinRequest;
+import com.example.roadsplit.requests.UpdateRequest;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -30,13 +31,27 @@ public class EndpointConnector {
     public static void updateReisenderInfo(long id, Callback callback)
     {
         OkHttpClient client = new OkHttpClient();
-        String url = MainActivity.BASEURL + "/api/userdaten/user";
+        String url = MainActivity.BASEURL + "/api/userdaten/userUpdate";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
 
-        FormBody.Builder formBuilder = new FormBody.Builder();
-        formBuilder.add("id", String.valueOf(id));
-        RequestBody formBody = formBuilder.build();
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(new UpdateRequest(id)));
+
+        Request request = new Request.Builder()
+                .url(httpBuilder.build())
+                .post(formBody)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void saveAusgabe(AusgabenRequest ausgabenRequest, Callback callback)
+    {
+        OkHttpClient client = new OkHttpClient();
+        String url = MainActivity.BASEURL + "/api/reisedaten/ausgaben";
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
+
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
 
         Request request = new Request.Builder()
                 .url(httpBuilder.build())
@@ -81,50 +96,6 @@ public class EndpointConnector {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void fetchPaymentInfo(Reise reise, Callback callback)
-    {
-        OkHttpClient client = new OkHttpClient();
-        String url = MainActivity.BASEURL + "/api/reisedaten/ausgaben";
-        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-
-        AusgabenRequest ausgabenRequest = new AusgabenRequest();
-        if(reise == null) return;
-
-        ausgabenRequest.setReise(reise);
-        ausgabenRequest.setReisender(MainActivity.currentUserData.getCurrentUser());
-
-        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
-
-        Request request = new Request.Builder()
-                .url(httpBuilder.build())
-                .post(formBody)
-                .build();
-
-        client.newCall(request).enqueue(callback);
-    }
-
-    public static void fetchPaymentInfoSummary(Reise reise, Callback callback)
-    {
-        OkHttpClient client = new OkHttpClient();
-        String url = MainActivity.BASEURL + "/api/reisedaten/ausgabenSummary";
-        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-
-        AusgabenRequest ausgabenRequest = new AusgabenRequest();
-        if(reise == null) return;
-
-        ausgabenRequest.setReise(reise);
-        ausgabenRequest.setReisender(MainActivity.currentUserData.getCurrentUser());
-
-        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
-
-        Request request = new Request.Builder()
-                .url(httpBuilder.build())
-                .post(formBody)
-                .build();
-
-        client.newCall(request).enqueue(callback);
-    }
-
     public static void reiseBeitreten(JoinRequest joinRequest, Callback callback)
     {
 
@@ -158,22 +129,6 @@ public class EndpointConnector {
         client.newCall(request).enqueue(callback);
     }
 
-
-    public static void updateReise(Reise reise, Callback callback) {
-        OkHttpClient client = new OkHttpClient();
-        String url = MainActivity.BASEURL + "/api/reisedaten/updatereise";
-        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-
-        if (reise == null) return;
-        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(reise));
-
-        Request request = new Request.Builder()
-                .url(httpBuilder.build())
-                .post(formBody)
-                .build();
-
-        client.newCall(request).enqueue(callback);
-    }
 
     public static void fetchLocationInfo(String location, Callback callback){
 

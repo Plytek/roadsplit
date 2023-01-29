@@ -14,10 +14,7 @@ import android.widget.Toast;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
-import com.example.roadsplit.activities.testing.DummyPlanungActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
-import com.example.roadsplit.activities.testing.PaymentDummyActivity;
-import com.example.roadsplit.activities.testing.UserCreateActivity;
 import com.example.roadsplit.model.UserAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -40,9 +37,9 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     private static int PICK_FILE_REQUEST = 1;
     private SharedPreferences prefs;
-    public static final String BASEURL = "http://167.172.167.221:8080";
+    //public static final String BASEURL = "http://167.172.167.221:8080";
     private BottomNavigationView navigation;
-    //public static final String BASEURL = "https://2d43-88-70-249-101.ngrok.io";
+    public static final String BASEURL = "https://98c5-88-70-249-101.ngrok.io";
 
 
     @Override
@@ -93,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createUser(View view){
-        Intent intent = new Intent(this, UserCreateActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, UserCreateActivity.class);
+        //startActivity(intent);
     }
 
     public void registrieren(View view) {
@@ -103,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reiseText(View view){
-        Intent intent = new Intent(this, DummyPlanungActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, DummyPlanungActivity.class);
+        //startActivity(intent);
     }
 
     public void turorialAnim(View view){
@@ -118,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reiseErstelen(View view){
-        Intent intent = new Intent(this, PaymentDummyActivity.class);
-        startActivity(intent);
     }
 
     public void testBent(View view){

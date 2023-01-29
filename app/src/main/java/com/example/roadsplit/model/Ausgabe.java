@@ -5,9 +5,12 @@ import java.util.List;
 
 public class Ausgabe {
     private long id;
+
     private long zahler;
     private String zahlername;
+
     private AusgabenTyp ausgabenTyp;
+
     private List<AusgabenSumme> ausgabenSumme;
 
 

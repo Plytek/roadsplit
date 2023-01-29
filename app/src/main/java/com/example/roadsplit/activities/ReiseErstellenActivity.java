@@ -64,7 +64,8 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         setContentView(R.layout.activity_reise_erstellen);
 
         this.prefs = getSharedPreferences("reisender", MODE_PRIVATE);
-        this.reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        UserResponse userResponse = new Gson().fromJson(prefs.getString("reisender", "fehler"), UserResponse.class);
+        this.reisender = userResponse.getReisender();
         zwischenstops = new ArrayList<>();
         suggestions = new ArrayList<>();
 

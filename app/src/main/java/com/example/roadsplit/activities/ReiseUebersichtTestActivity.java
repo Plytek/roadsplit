@@ -27,6 +27,7 @@ import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.UserResponse;
 import com.example.roadsplit.reponses.WikiResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -57,7 +58,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
     private Map<String, Bitmap> imageMap = new HashMap<>();
     private int imageloadCounter;
     private Handler handler;
-    UebersichtRecAdapter uebersichtRecAdapter;
+    private UebersichtRecAdapter uebersichtRecAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,8 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#325a4f")));
 
         prefs = getSharedPreferences("reisender", MODE_PRIVATE);
-        reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        UserResponse userResponse = new Gson().fromJson(prefs.getString("reisender", "fehler"), UserResponse.class);
+        this.reisender = userResponse.getReisender();
 
         images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
@@ -167,7 +169,9 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
                         url = "https:" + url;
                         url = url.replaceAll("/\\d+px-", "/200px-");
                         downloadImages(url, reise.getName());
-                        uebersichtRecAdapter.notifyItemChanged(imageloadCounter);
+                        runOnUiThread(() -> {
+                            uebersichtRecAdapter.notifyItemChanged(imageloadCounter);
+                        });
                         imageloadCounter++;
                     } catch (Exception e) {
                         downloadImages("https://cdn.discordapp.com/attachments/284675100253487104/1065300629448298578/globeicon.png", reise.getName());

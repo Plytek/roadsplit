@@ -45,7 +45,8 @@ public class AusgabenActivity extends AppCompatActivity {
             Log.d("errorRoadsplit", e.getMessage());
         }
         prefs = getSharedPreferences("reisender", MODE_PRIVATE);
-        this.reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        UserResponse userResponse = new Gson().fromJson(prefs.getString("reisender", "fehler"), UserResponse.class);
+        this.reisender = userResponse.getReisender();
 
         for (Reise r : reisender.getReisen()) {
             if (r.getName().equals(reise.getName())) {
@@ -55,7 +56,6 @@ public class AusgabenActivity extends AppCompatActivity {
         }
         // setup viewpager
         screenPager = findViewById(R.id.screen_viewpager);
-        Reisender reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
         EndpointConnector.updateReisenderInfo(reisender.getId(), updateUserCallback());
     }
 
@@ -70,7 +70,7 @@ public class AusgabenActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("reisender", response.body().string());
-                    editor.commit();
+                    editor.apply();
 
                     runOnUiThread(() -> {
                         reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reise);

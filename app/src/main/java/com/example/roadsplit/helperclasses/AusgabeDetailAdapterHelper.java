@@ -16,9 +16,10 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class AusgabeDetailAdapterHelper implements Observer {
+public class AusgabeDetailAdapterHelper  {
 
-    private List<String> reisendeNames;
+
+   /* private List<String> reisendeNames;
     private Context mContext;
     private View layoutScreen;
     private ReiseResponse reiseResponse;
@@ -70,9 +71,5 @@ public class AusgabeDetailAdapterHelper implements Observer {
         });
 
     }
-
-    @Override
-    public void update(Observable observable, Object o) {
-
-    }
+    */
 }

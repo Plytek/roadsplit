@@ -24,9 +24,9 @@ import java.util.Observer;
 
 import lombok.Getter;
 
-public class ZwischenstopAdapterHelper implements Observer {
+public class ZwischenstopAdapterHelper {
 
-    private Context mContext;
+    /*private Context mContext;
     private View layoutScreen;
     private ListView stopListView;
     private List<Stop> stops;
@@ -36,7 +36,6 @@ public class ZwischenstopAdapterHelper implements Observer {
 
 
     public ZwischenstopAdapterHelper(View layoutScreen, Context context, ReiseResponse reiseResponse) {
-        MainActivity.currentUserData.addObserver(this);
         this.stops = MainActivity.currentUserData.getCurrentReiseResponse().getReise().getStops();
         this.reise = MainActivity.currentUserData.getCurrentReiseResponse().getReise();
         this.mContext = context;
@@ -57,10 +56,10 @@ public class ZwischenstopAdapterHelper implements Observer {
             HashMap<String, String> fullstop = new HashMap<>();
             //TODO: budget immer setzen
             fullstop.put("stop", stop.getName());
-            if(stop.getBudget() == null) fullstop.put("budget","0");
-            else fullstop.put("budget", stop.getBudget().toString());
-            if(stop.getGesamtausgaben() == null)fullstop.put("gesamt", "0");
-            else fullstop.put("gesamt", stop.getGesamtausgaben().toString());
+            if(stop.getGesamtBudget() == null) fullstop.put("budget","0");
+            else fullstop.put("budget", stop.getGesamtBudget().toString());
+            if(stop.getAusgaben() == null)fullstop.put("gesamt", "0");
+            else fullstop.put("gesamt", stop.getAusgaben().toString());
             fullstops.add(fullstop);
         }
 
@@ -75,7 +74,8 @@ public class ZwischenstopAdapterHelper implements Observer {
 
             Stop stop = new Stop();
             stop.setName(stopName);
-            if(budget.isEmpty()) stop.setBudget(new BigDecimal(0));
+            //TODO: Für reisender setzen
+            if(budget.isEmpty()) stop.setGesamtBudget(new BigDecimal(0));
             else stop.setBudget(new BigDecimal(budget));
             stop.setGesamtausgaben(new BigDecimal(0));
 
@@ -124,12 +124,6 @@ public class ZwischenstopAdapterHelper implements Observer {
             stopAdapter.notifyDataSetChanged();
         });
     }
+*/
 
-
-    @Override
-    public void update(Observable observable, Object o) {
-        this.stops = MainActivity.currentUserData.getCurrentReiseResponse().getReise().getStops();
-        this.reise = MainActivity.currentUserData.getCurrentReiseResponse().getReise();
-        //setUpZwischenStops();
-    }
 }

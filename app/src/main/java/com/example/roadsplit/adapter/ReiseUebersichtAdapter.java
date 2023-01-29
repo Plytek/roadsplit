@@ -52,7 +52,8 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
         this.views = views;
         this.ausgabenActivity = ausgabenActivity;
         this.prefs = mContext.getSharedPreferences("reisender", MODE_PRIVATE);
-        this.reisender = new Gson().fromJson(prefs.getString("reisender", "fehler"), Reisender.class);
+        UserResponse userResponse = new Gson().fromJson(prefs.getString("reisender", "fehler"), UserResponse.class);
+        this.reisender = userResponse.getReisender();
         this.reise = reise;
     }
 
@@ -74,8 +75,8 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
                 break;
             case 1:
                 layoutScreen = inflater.inflate(R.layout.zwischenstopp,null);
-                zwischenstopAdapterHelper = new ZwischenstopAdapterHelper(layoutScreen, mContext, MainActivity.currentUserData.getCurrentReiseResponse());
-                zwischenstopAdapterHelper.setUpZwischenStops();
+                //zwischenstopAdapterHelper = new ZwischenstopAdapterHelper(layoutScreen, mContext, MainActivity.currentUserData.getCurrentReiseResponse());
+                //zwischenstopAdapterHelper.setUpZwischenStops();
                 break;
             case 2:
                 layoutScreen = inflater.inflate(R.layout.packlistepage,null);
@@ -88,7 +89,7 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
                 layoutScreen = inflater.inflate(R.layout.ausgabendashboard,null);
                 ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, reisender, reise, ausgabenActivity, this);
                 ausgabenAdapterHelper.setUpDashboard();
-                zwischenstopAdapterHelper.setUpZwischenStops();
+                //zwischenstopAdapterHelper.setUpZwischenStops();
                 break;
             default:
                 layoutScreen = inflater.inflate(R.layout.dokumentepage,null);
@@ -126,7 +127,6 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse reponse = new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful()) {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("reisender", response.body().string());

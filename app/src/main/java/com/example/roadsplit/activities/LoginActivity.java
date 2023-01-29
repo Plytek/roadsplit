@@ -107,11 +107,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
+                String responseBodyString = response.body().string();
+                UserResponse userResponse =  new Gson().fromJson(responseBodyString, UserResponse.class);
                 if(response.isSuccessful())
                 {
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("reisender", response.body().string());
+                    editor.putString("reisender", responseBodyString);
                     editor.apply();
                     if(userResponse.getReisender().isFirsttimelogin())
                     {
