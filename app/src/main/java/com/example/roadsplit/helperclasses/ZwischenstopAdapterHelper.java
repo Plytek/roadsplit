@@ -34,6 +34,8 @@ public class ZwischenstopAdapterHelper implements Observer {
     private TextView stopEntfernenErrorView;
     private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
 
+    //Kommentar
+
 
     public ZwischenstopAdapterHelper(View layoutScreen, Context context, ReiseResponse reiseResponse) {
         MainActivity.currentUserData.addObserver(this);

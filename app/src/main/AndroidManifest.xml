@@ -77,7 +77,8 @@
         <activity
             android:name=".activities.ReiseErstellenActivity"
             android:exported="false"
-            android:theme="@style/Theme.RoadSplit.NoActionBarAndStatusBar">
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.RoadSplitLoGIn">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
