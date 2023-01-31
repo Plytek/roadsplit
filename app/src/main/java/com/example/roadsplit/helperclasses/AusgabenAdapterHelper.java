@@ -231,6 +231,7 @@ public class AusgabenAdapterHelper{
                 ausgabe.setBetrag(betragN);
                 ausgabe.setAnzahlReisende(checked.size());
                 ausgabe.setZahler(reisender.getId());
+                ausgabe.setZahlerName(reisender.getNickname());
                 ausgabe.setSchuldner(reiseResponse.getReisendeList().get(i).getId());
                 ausgabe.setAusgabenTyp(AusgabenTyp.typForPosition(kategorieSpinner.getSelectedItemPosition()));
                 if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());

@@ -1,6 +1,7 @@
 package com.example.roadsplit.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Ausgabe {
     private long id;
@@ -9,9 +10,36 @@ public class Ausgabe {
     private BigDecimal betrag;
     private boolean paidForHimself;
     private long zahler;
+    private String zahlerName;
     private long schuldner;
+    private String schuldnerName;
     private int anzahlReisende;
+    private Date erstellDatum;
 
+    public Ausgabe(long id, AusgabenTyp ausgabenTyp, BigDecimal betrag, boolean paidForHimself, long zahler, String zahlerName, long schuldner, String schuldnerName, int anzahlReisende, Date erstellDatum) {
+        this.id = id;
+        this.ausgabenTyp = ausgabenTyp;
+        this.betrag = betrag;
+        this.paidForHimself = paidForHimself;
+        this.zahler = zahler;
+        this.zahlerName = zahlerName;
+        this.schuldner = schuldner;
+        this.schuldnerName = schuldnerName;
+        this.anzahlReisende = anzahlReisende;
+        this.erstellDatum = erstellDatum;
+    }
+
+    public Ausgabe(long id, AusgabenTyp ausgabenTyp, BigDecimal betrag, boolean paidForHimself, long zahler, String zahlerName, long schuldner, String schuldnerName, int anzahlReisende) {
+        this.id = id;
+        this.ausgabenTyp = ausgabenTyp;
+        this.betrag = betrag;
+        this.paidForHimself = paidForHimself;
+        this.zahler = zahler;
+        this.zahlerName = zahlerName;
+        this.schuldner = schuldner;
+        this.schuldnerName = schuldnerName;
+        this.anzahlReisende = anzahlReisende;
+    }
 
     public Ausgabe(long id, AusgabenTyp ausgabenTyp, BigDecimal betrag, boolean paidForHimself, long zahler, long schuldner, int anzahlReisende) {
         this.id = id;
@@ -80,6 +108,22 @@ public class Ausgabe {
 
     public void setAnzahlReisende(int anzahlReisende) {
         this.anzahlReisende = anzahlReisende;
+    }
+
+    public String getZahlerName() {
+        return zahlerName;
+    }
+
+    public void setZahlerName(String zahlerName) {
+        this.zahlerName = zahlerName;
+    }
+
+    public String getSchuldnerName() {
+        return schuldnerName;
+    }
+
+    public void setSchuldnerName(String schuldnerName) {
+        this.schuldnerName = schuldnerName;
     }
 
     @Override

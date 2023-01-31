@@ -53,14 +53,14 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
         this.mContext = mContext;
         this.views = views;
         this.ausgabenActivity = ausgabenActivity;
-        //this.reiseResponse = reiseResponseX;
+        this.reiseResponse = reiseResponseX;
 
         this.reisenderPref = mContext.getSharedPreferences("reisender", MODE_PRIVATE);
         this.reiseResponsePref = mContext.getSharedPreferences("reiseResponse", MODE_PRIVATE);
         this.reisePref = mContext.getSharedPreferences("reise", MODE_PRIVATE);
 
         this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
-        this.reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
+        //this.reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
