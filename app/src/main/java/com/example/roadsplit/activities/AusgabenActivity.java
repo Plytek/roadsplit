@@ -108,10 +108,10 @@ public class AusgabenActivity extends AppCompatActivity {
                         screenPager.setAdapter(reiseUebersichtAdapter);
                         tabLayout = findViewById(R.id.tab_indicator2);
                         tabLayout.setupWithViewPager(screenPager);
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ausgabeiconselector);
-                        tabLayout.getTabAt(1).setIcon(R.drawable.minusbutton);
-                        tabLayout.getTabAt(2).setIcon(R.drawable.smallbuttondots);
-                        tabLayout.getTabAt(3).setIcon(R.drawable.minusbutton);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.dokumenteiconp);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.stoppsiconp);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.packlisteiconp);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.kosteniconp);
                     });
                 }
             }

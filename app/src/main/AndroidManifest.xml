@@ -39,7 +39,9 @@
         </activity>
         <activity
             android:name=".activities.AusgabenActivity"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.RoadSplitLoGIn">>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -51,13 +53,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".activities.testing.PaymentDummyActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".activities.TutorialActivity"
             android:exported="false"
@@ -90,14 +86,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".activities.testing.UserCreateActivity"
-            android:exported="false"
-            android:theme="@style/Theme.RoadSplit.NoActionBarAndStatusBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".activities.testing.DummyPlanungActivity"
             android:exported="false">

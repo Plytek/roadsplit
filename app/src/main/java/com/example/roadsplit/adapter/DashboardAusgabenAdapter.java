@@ -1,35 +1,20 @@
 package com.example.roadsplit.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.model.Ausgabe;
-import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
-import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.reponses.ReiseResponse;
-import com.google.gson.Gson;
 
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusgabenAdapter.RecentsViewHolder> {
 

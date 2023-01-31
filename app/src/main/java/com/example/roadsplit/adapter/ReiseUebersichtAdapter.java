@@ -76,7 +76,6 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
         });
     }
 
-
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {

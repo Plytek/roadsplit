@@ -4,13 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@color/rcreme"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="325dp"
+        android:layout_width="350dp"
         android:layout_height="75dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,9 +24,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/uebersichtgreyshape"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
+                app:srcCompat="@drawable/uebersichtgreyshape" />
 
             <TextView
                 android:id="@+id/textViewDashName"
@@ -38,7 +34,7 @@
                 android:clickable="true"
                 android:fontFamily="@font/cmedium"
                 android:gravity="center"
-                android:text="Unterkunft"
+                android:text="AusgabeName"
                 android:textColor="#2A4B42"
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -53,13 +49,25 @@
                 android:id="@+id/textViewDashDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dave, Peter, Hans"
+                android:text="Bent"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.427"
+                app:layout_constraintHorizontal_bias="0.27"
                 app:layout_constraintStart_toStartOf="@id/clayoutdetail"
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
                 app:layout_constraintVertical_bias="0.649" />
+
+            <TextView
+                android:id="@+id/textViewDash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Furkan"
+                app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
+                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
+                app:layout_constraintHorizontal_bias="0.282"
+                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
+                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/textViewDashPrice"
