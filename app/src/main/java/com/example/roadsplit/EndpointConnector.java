@@ -3,6 +3,7 @@ package com.example.roadsplit;
 
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.requests.AusgabenRequest;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.gson.Gson;
@@ -33,7 +34,7 @@ public class EndpointConnector {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void fetchPaymentInfo(Reise reise, Callback callback)
+    public static void fetchPaymentInfo(Reise reise, Reisender reisender, Callback callback)
     {
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/ausgaben";
@@ -43,7 +44,7 @@ public class EndpointConnector {
         if(reise == null) return;
 
         ausgabenRequest.setReise(reise);
-        ausgabenRequest.setReisender(MainActivity.currentUserData.getCurrentUser());
+        ausgabenRequest.setReisender(reisender);
 
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
 
@@ -55,7 +56,7 @@ public class EndpointConnector {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void fetchPaymentInfoSummary(Reise reise, Callback callback)
+    public static void fetchPaymentInfoSummary(Reise reise, Reisender reisender, Callback callback)
     {
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/ausgabenSummary";
@@ -65,7 +66,7 @@ public class EndpointConnector {
         if(reise == null) return;
 
         ausgabenRequest.setReise(reise);
-        ausgabenRequest.setReisender(MainActivity.currentUserData.getCurrentUser());
+        ausgabenRequest.setReisender(reisender);
 
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(ausgabenRequest));
 

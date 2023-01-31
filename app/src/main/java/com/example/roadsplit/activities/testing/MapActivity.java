@@ -71,7 +71,7 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        this.reisender = MainActivity.currentUserData.getCurrentUser();
+        //this.reisender = MainActivity.currentUserData.getCurrentUser();
         try {
             this.stops = reisender.getReisen().get(0).getStops();
         } catch (NullPointerException e) {

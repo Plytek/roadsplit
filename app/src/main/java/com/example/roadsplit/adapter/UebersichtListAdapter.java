@@ -48,9 +48,8 @@ public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Obser
 
     public UebersichtListAdapter(List<ReiseResponse> reiseRepons, Context context, List<Bitmap> data) {
         super(context, R.layout.reiseuebersichtlist, data);
-        MainActivity.currentUserData.addObserver(this);
         this.reisenWithImages = data;
-        this.reiseRepons = MainActivity.currentUserData.getCurrentReiseReponsesAsList();
+        this.reiseRepons = reiseRepons;
         this.context = context;
     }
 

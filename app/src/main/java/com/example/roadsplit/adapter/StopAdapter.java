@@ -18,15 +18,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class StopAdapter extends ArrayAdapter<Stop> implements Observer {
+public class StopAdapter extends ArrayAdapter<Stop> {
 
     private List<Stop> dataSet;
     Context mContext;
 
-    @Override
-    public void update(Observable observable, Object o) {
-        this.dataSet = MainActivity.currentUserData.getCurrentReise().getStops();
-    }
 
     // View lookup cache
     private static class ViewHolder {
@@ -36,9 +32,8 @@ public class StopAdapter extends ArrayAdapter<Stop> implements Observer {
     }
 
     public StopAdapter(List<Stop> data, Context context) {
-        super(context, R.layout.row_layout, MainActivity.currentUserData.getCurrentReise().getStops());
-        MainActivity.currentUserData.addObserver(this);
-        this.dataSet = MainActivity.currentUserData.getCurrentReise().getStops();
+        super(context, R.layout.row_layout, data);
+        this.dataSet = data;
         this.mContext = context;
     }
 

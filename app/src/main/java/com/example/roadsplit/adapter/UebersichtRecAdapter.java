@@ -38,7 +38,6 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
     private RecentsViewHolder viewHolder;
 
     public UebersichtRecAdapter(Context context, List<ReiseResponse> recentsDataList, Map<String, Bitmap> imageMap) {
-        MainActivity.currentUserData.addObserver(this);
         this.context = context;
         this.recentsDataList = recentsDataList;
         this.imageMap = imageMap;

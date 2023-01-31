@@ -4,18 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
-import com.example.roadsplit.activities.testing.DummyPlanungActivity;
 import com.example.roadsplit.activities.testing.MapActivity;
-import com.example.roadsplit.activities.testing.PaymentDummyActivity;
-import com.example.roadsplit.activities.testing.UserCreateActivity;
-import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.reponses.UserResponse;
@@ -43,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
     private UserAccount userAccount = null;
     //public static Reisender currentUser;
     public static final String BASEURL = "http://167.172.167.221:8080";
-    public static CurrentUserData currentUserData;
+    //public static CurrentUserData currentUserData;
     private BottomNavigationView navigation;
     //public static final String BASEURL = "https://b5dc-88-70-249-101.ngrok.io";
 
+    private SharedPreferences reisenderPref;
+    private SharedPreferences reiseResponsesPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        currentUserData = new CurrentUserData();
+        this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
+        this.reiseResponsesPref = getSharedPreferences("reiseResponses", MODE_PRIVATE);
         try {
             login();
         } catch (Exception e) {
@@ -86,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     public void openMap(View view) {
         Intent intent = new Intent(this, MapActivity.class);
         //Gibt zusätzliche Daten mit durch .putExtra(Key, Value). In diesem Fall den aktuellen Useraccount als String
-        intent.putExtra("user", (new Gson()).toJson(currentUserData.getCurrentUser()));
         //Startet die Activity
         startActivity(intent);
     }
@@ -97,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createUser(View view){
-        Intent intent = new Intent(this, UserCreateActivity.class);
-        startActivity(intent);
     }
 
     public void registrieren(View view) {
@@ -107,9 +103,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reiseText(View view){
-        Intent intent = new Intent(this, DummyPlanungActivity.class);
-        intent.putExtra("user", (new Gson()).toJson(currentUserData.getCurrentUser()));
-        startActivity(intent);
     }
 
     public void turorialAnim(View view){
@@ -123,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reiseErstelen(View view){
-        Intent intent = new Intent(this, PaymentDummyActivity.class);
-        startActivity(intent);
     }
 
     public void testBent(View view){
@@ -174,8 +165,10 @@ public class MainActivity extends AppCompatActivity {
                 UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
                 if(response.isSuccessful())
                 {
-                    currentUserData.setCurrentUser(userResponse.getReisender());
-                    EndpointConnector.fetchPaymentInfoSummary(currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentInfoSummaryCallback());
+                    SharedPreferences.Editor editor = reisenderPref.edit();
+                    editor.putString("reisender", new Gson().toJson(userResponse.getReisender()));
+                    editor.apply();
+                    EndpointConnector.fetchPaymentInfoSummary(userResponse.getReisender().getReisen().get(0), userResponse.getReisender(), fetchPaymentInfoSummaryCallback());
                 }
             }
         });
@@ -196,8 +189,9 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(response.isSuccessful()) {
-                    currentUserData.setCurrentReiseReponses(reiseResponses);
-                    currentUserData.notifyObservers();
+                    SharedPreferences.Editor editor = reiseResponsesPref.edit();
+                    editor.putString("reiseResponses", new Gson().toJson(reiseResponses));
+                    editor.apply();
                     }
                 }
             };
@@ -206,8 +200,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        MainActivity.currentUserData.deleteObservers();
-        //MainActivity.currentUserData = null;
     }
 
     @Override

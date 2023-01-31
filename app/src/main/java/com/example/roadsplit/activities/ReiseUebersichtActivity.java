@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -21,6 +23,7 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.UebersichtListAdapter;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.reponses.WikiResponse;
 import com.google.gson.Gson;
@@ -42,7 +45,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ReiseUebersichtActivity extends AppCompatActivity implements Observer {
+public class ReiseUebersichtActivity extends AppCompatActivity {
+
     private List<Reise> reisen;
     private ReiseResponse[] reiseResponses;
     private Reise selectedReise;
@@ -52,22 +56,46 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
     private int imageloadCounter;
     private Handler handler;
     UebersichtListAdapter uebersichtListAdapter;
+
+    private Reisender reisender;
+
+    private SharedPreferences reisenderPref;
+    private SharedPreferences reiseResponsePref;
+    private SharedPreferences reisePref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reise_uebersicht);
-        MainActivity.currentUserData.addObserver(this);
+
+        this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
+        this.reiseResponsePref = getSharedPreferences("reiseResponses", MODE_PRIVATE);
+        this.reisePref = getSharedPreferences("reise", MODE_PRIVATE);
+
+        this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+        this.reiseResponses = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse[].class);
 
 
-        reisen = new ArrayList<>();
         images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
-        reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
+        reisen = reisender.getReisen();
         reisenView = findViewById(R.id.reisenUebersichtListView);
-        reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
 
         handler = new Handler(Looper.getMainLooper());
         setUpListView();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if(key.equals("reisender")) {
+                    reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+                } else if(key.equals("reiseResponses")) {
+                    reiseResponses = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse[].class);
+                }
+                // code to handle change in value for the key
+            }
+        });
 
         reisenView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,7 +110,9 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
             public boolean onDoubleTap(MotionEvent e) {
                 if(clickedPosition[0] != -1)
                 {
-                    MainActivity.currentUserData.setCurrentReise(selectedReise);
+                    SharedPreferences.Editor editor = reisePref.edit();
+                    editor.putString("reise", new Gson().toJson(selectedReise));
+                    editor.apply();
                     goToReise(selectedReise);
                 }
                 return true;
@@ -109,7 +139,7 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
         executor.execute(() -> {
             imageloadCounter = 0;
             //if(reiseResponses == null || reiseResponses[0] == null)
-            EndpointConnector.fetchPaymentInfoSummary(reisen.get(0), fetchPaymentSummaryCallback());
+            EndpointConnector.fetchPaymentInfoSummary(reisen.get(0), reisender, fetchPaymentSummaryCallback());
             handler.post(() -> {
                 for(Reise reise : reisen)
                 {
@@ -165,18 +195,23 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Gson gson = new Gson();
                 try {
-                    ReiseResponse[] responses = new Gson().fromJson(response.body().string(), ReiseResponse[].class);
-                    reiseResponses = responses;
-                    MainActivity.currentUserData.setCurrentReiseReponses(responses);
+                    reiseResponses = gson.fromJson(response.body().string(), ReiseResponse[].class);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if(response.isSuccessful()) {
-                    MainActivity.currentUserData.setCurrentUser(reiseResponses[0].getReisender());
-                    MainActivity.currentUserData.notifyObservers();
+                    SharedPreferences.Editor editor = reisenderPref.edit();
+                    editor.putString("reisender", gson.toJson(reisender));
+                    editor.apply();
+
+                    editor = reiseResponsePref.edit();
+                    editor.putString("reiseResponses", gson.toJson(reiseResponses));
+                    editor.apply();
+
                      runOnUiThread(() -> {
-                             uebersichtListAdapter = new UebersichtListAdapter(MainActivity.currentUserData.getCurrentReiseReponsesAsList(), ReiseUebersichtActivity.this, images);
+                             uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
                              reisenView.setAdapter(uebersichtListAdapter);
                              uebersichtListAdapter.notifyDataSetChanged();
                      });
@@ -206,23 +241,14 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Observ
         });
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-            reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MainActivity.currentUserData.deleteObserver(this);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         //reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
         //reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
-        EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentReiseReponses()[0].getReise(), fetchPaymentSummaryCallback());
+        EndpointConnector.fetchPaymentInfoSummary(reiseResponses[0].getReise(), reisender, fetchPaymentSummaryCallback());
 
     }
 }

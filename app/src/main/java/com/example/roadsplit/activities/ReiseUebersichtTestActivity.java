@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.reponses.WikiResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,6 +34,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +56,13 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
     private Map<String, Bitmap> imageMap = new HashMap<>();
     private int imageloadCounter;
     private Handler handler;
-    UebersichtRecAdapter uebersichtRecAdapter;
+    private UebersichtRecAdapter uebersichtRecAdapter;
+
+    private SharedPreferences reisenderPref;
+    private SharedPreferences reiseResponsePref;
+    private SharedPreferences reisePref;
+
+    private Reisender reisender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +70,33 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reise_uebersicht_test);
 
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#325a4f")));
-
         // setSupportActionBar(null);
+
+        this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
+        this.reiseResponsePref = getSharedPreferences("reiseResponses", MODE_PRIVATE);
+        this.reisePref = getSharedPreferences("reise", MODE_PRIVATE);
+
+        this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+        this.reiseResponses = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse[].class);
+
         reisen = new ArrayList<>();
         images = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
-        reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
+        reisen = reisender.getReisen();
         reisenView = findViewById(R.id.recyclerViewTest);
-        reiseResponses = new ReiseResponse[1];
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if(key.equals("reisender")) {
+                    reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+                } else if(key.equals("reiseResponses")) {
+                    reiseResponses = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse[].class);
+                }
+                // code to handle change in value for the key
+            }
+        });
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         navigation.setSelectedItemId(R.id.navigation_notifications);
@@ -98,7 +127,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             imageloadCounter = 0;
-            EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentSummaryCallback(false));
+            EndpointConnector.fetchPaymentInfoSummary(reisender.getReisen().get(0), reisender, fetchPaymentSummaryCallback(false));
             handler.post(() -> {
                 for(Reise reise : reisen)
                 {
@@ -127,7 +156,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
         });
 
         handler.post(() -> {
-            uebersichtRecAdapter = new UebersichtRecAdapter(this, MainActivity.currentUserData.getCurrentReiseReponsesAsList(), imageMap);
+            uebersichtRecAdapter = new UebersichtRecAdapter(this, Arrays.asList(reiseResponses), imageMap);
             reisenView.setAdapter(uebersichtRecAdapter);
         });
     }
@@ -162,7 +191,7 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
                         url = "https:" + url;
                         url = url.replaceAll("/\\d+px-", "/200px-");
                         downloadImages(url, reise.getName());
-                        uebersichtRecAdapter.notifyItemChanged(imageloadCounter);
+                        runOnUiThread(() -> uebersichtRecAdapter.notifyItemChanged(imageloadCounter));
                         imageloadCounter++;
                     } catch (Exception e) {
                         downloadImages("https://cdn.discordapp.com/attachments/284675100253487104/1065300629448298578/globeicon.png", reise.getName());
@@ -182,18 +211,27 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Gson gson = new Gson();
                 try {
-                    reiseResponses = new Gson().fromJson(response.body().string(), ReiseResponse[].class);
+                    reiseResponses = gson.fromJson(response.body().string(), ReiseResponse[].class);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if(response.isSuccessful()) {
-                    MainActivity.currentUserData.setCurrentReiseReponses(reiseResponses);
-                    MainActivity.currentUserData.setCurrentUser(reiseResponses[0].getReisender());
+                    reisender = reiseResponses[0].getReisender();
+
+                    SharedPreferences.Editor editor = reisenderPref.edit();
+                    editor.putString("reisender", gson.toJson(reisender));
+                    editor.apply();
+
+                    editor = reiseResponsePref.edit();
+                    editor.putString("reiseResponses", gson.toJson(reiseResponses));
+                    editor.apply();
+
                     if(resume)
                     {
                         runOnUiThread(() -> {
-                            uebersichtRecAdapter = new UebersichtRecAdapter(ReiseUebersichtTestActivity.this, MainActivity.currentUserData.getCurrentReiseReponsesAsList(), imageMap);
+                            uebersichtRecAdapter = new UebersichtRecAdapter(ReiseUebersichtTestActivity.this, Arrays.asList(reiseResponses), imageMap);
                             reisenView.setAdapter(uebersichtRecAdapter);
                             reisenView.smoothScrollToPosition(0);
                         });
@@ -224,6 +262,6 @@ public class ReiseUebersichtTestActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        EndpointConnector.fetchPaymentInfoSummary(MainActivity.currentUserData.getCurrentUser().getReisen().get(0), fetchPaymentSummaryCallback(true));
+        EndpointConnector.fetchPaymentInfoSummary(reisender.getReisen().get(0), reisender, fetchPaymentSummaryCallback(true));
     }
 }

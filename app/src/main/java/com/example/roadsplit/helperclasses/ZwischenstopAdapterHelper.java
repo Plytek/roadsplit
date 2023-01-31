@@ -1,9 +1,13 @@
 package com.example.roadsplit.helperclasses;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.preference.PreferenceManager;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.View;
@@ -18,8 +22,10 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.adapter.StopAdapter;
 import com.example.roadsplit.model.Reise;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseResponse;
+import com.google.gson.Gson;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,12 +43,32 @@ public class ZwischenstopAdapterHelper {
     private ListView stopListView;
     private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
 
-    //Kommentar
-
+    private SharedPreferences reiseResponsePref;
+    private ReiseResponse reiseResponse;
 
     public ZwischenstopAdapterHelper(View layoutScreen, Context context, ReiseResponse reiseResponse) {
-        this.stops = MainActivity.currentUserData.getCurrentReiseResponse().getReise().getStops();
-        this.reise = MainActivity.currentUserData.getCurrentReiseResponse().getReise();
+
+
+        this.reiseResponsePref = context.getSharedPreferences("reiseResponse", MODE_PRIVATE);
+        this.reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
+
+        this.reise = reiseResponse.getReise();
+        this.stops = reise.getStops();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if(key.equals("reiseResponse")) {
+                    ReiseResponse response = new Gson().fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
+                    ZwischenstopAdapterHelper.this.reiseResponse = response;
+                    ZwischenstopAdapterHelper.this.reise = response.getReise();
+                    ZwischenstopAdapterHelper.this.stops = reise.getStops();
+                }
+                // code to handle change in value for the key
+            }
+        });
+
         this.mContext = context;
         this.layoutScreen = layoutScreen;
     }

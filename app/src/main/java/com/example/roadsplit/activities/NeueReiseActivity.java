@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.EndpointConnector;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.requests.JoinRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,13 +39,23 @@ public class NeueReiseActivity extends AppCompatActivity {
 
     private Dialog dialog;
 
+    private Reisender reisender;
+    private SharedPreferences reisenderPref;
+    private SharedPreferences reiseResponsePref;
+    private SharedPreferences reisePref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neue_reise);
-        if(MainActivity.currentUserData.getCurrentUser() != null)
+
+        this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
+        this.reiseResponsePref = getSharedPreferences("reiseResponse", MODE_PRIVATE);
+        this.reisePref = getSharedPreferences("reise", MODE_PRIVATE);
+        reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+        if(reisender != null)
         {
-            String welcome = "Was geht, " + MainActivity.currentUserData.getCurrentUser().getNickname();
+            String welcome = "Was geht, " + reisender.getNickname();
             ((TextView)findViewById(R.id.textView10)).setText(welcome);
         }
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -96,7 +108,7 @@ public class NeueReiseActivity extends AppCompatActivity {
     public void join(View view) {
         EditText editText = dialog.findViewById(R.id.pinTextView);
         String uniquename = editText.getText().toString();
-        JoinRequest joinRequest = new JoinRequest(MainActivity.currentUserData.getCurrentUser().getId(), uniquename);
+        JoinRequest joinRequest = new JoinRequest(reisender.getId(), uniquename);
         EndpointConnector.reiseBeitreten(joinRequest, reiseBeitretenCallback());
 
     }
@@ -112,11 +124,22 @@ public class NeueReiseActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
+                Gson gson = new Gson();
+                ReiseResponse reiseResponse = gson.fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUserData.setCurrentUser(reiseResponse.getReisender());
-                    MainActivity.currentUserData.setCurrentReiseResponse(reiseResponse);
-                    MainActivity.currentUserData.setCurrentReise(reiseResponse.getReise());
+
+                    SharedPreferences.Editor editor = reisenderPref.edit();
+                    editor.putString("reisender", gson.toJson(reiseResponse.getReisender()));
+                    editor.apply();
+
+                    editor = reiseResponsePref.edit();
+                    editor.putString("reiseResponse", gson.toJson(reiseResponse));
+                    editor.apply();
+
+                    editor = reisePref.edit();
+                    editor.putString("reise", gson.toJson(reiseResponse.getReise()));
+                    editor.apply();
+
                     Looper.prepare();
                     dialog.dismiss();
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();

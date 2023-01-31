@@ -1,8 +1,12 @@
 package com.example.roadsplit.helperclasses;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -47,7 +51,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class AusgabenAdapterHelper implements Observer {
+public class AusgabenAdapterHelper{
 
         private Context mContext;
         private View layoutScreen;
@@ -57,13 +61,39 @@ public class AusgabenAdapterHelper implements Observer {
         private List<String> reisendeNames;
         private ReiseUebersichtAdapter reiseUebersichtAdapter;
 
+        private SharedPreferences reisenderPref;
+        private SharedPreferences reiseResponsePref;
+        private SharedPreferences reisePref;
+
+        private Reisender reisender;
+
+
     public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseResponse reiseResponse, AusgabenActivity ausgabenActivity, ReiseUebersichtAdapter reiseUebersichtAdapter) {
-        MainActivity.currentUserData.addObserver(this);
+
+        this.reisenderPref = context.getSharedPreferences("reisender", MODE_PRIVATE);
+        this.reiseResponsePref = context.getSharedPreferences("reiseResponses", MODE_PRIVATE);
+        this.reisePref = context.getSharedPreferences("reise", MODE_PRIVATE);
+
+        this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+        this.reiseResponse = reiseResponse;
+
         this.layoutScreen = layoutScreen;
-        this.reiseResponse = MainActivity.currentUserData.getCurrentReiseResponse();
         this.mContext = context;
         this.ausgabenActivity = ausgabenActivity;
         this.reiseUebersichtAdapter = reiseUebersichtAdapter;
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if(key.equals("reisender")) {
+                    AusgabenAdapterHelper.this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+                } else if(key.equals("reiseResponse")) {
+                    AusgabenAdapterHelper.this.reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse.class);
+                }
+                // code to handle change in value for the key
+            }
+        });
 
         reiseGesamtAusgabe = new BigDecimal(0);
         for(Stop stop : reiseResponse.getReise().getStops()) {
@@ -92,10 +122,18 @@ public class AusgabenAdapterHelper implements Observer {
         ButtonEffect.buttonPressDownEffect(ausgabeSpeichernButton);
 
         TextView nutzergView = layoutScreen.findViewById(R.id.textViewPayAmount);
-        nutzergView.setText(reiseResponse.getGesamtAusgabe().toString() + "€");
+        try {
+            nutzergView.setText(reiseResponse.getGesamtAusgabe().toString() + "€");
+        } catch (Exception e) {
+            nutzergView.setText("0€");
+        }
 
         TextView gesamtView = layoutScreen.findViewById(R.id.textViewPayAmountTeam);
-        gesamtView.setText(reiseGesamtAusgabe + "€");
+        try {
+            gesamtView.setText(reiseGesamtAusgabe + "€");
+        } catch (Exception e) {
+            gesamtView.setText("0€");
+        }
 
         setUpPaymentTextViews(layoutScreen);
 
@@ -142,7 +180,11 @@ public class AusgabenAdapterHelper implements Observer {
         TextView balanceTextView = layoutScreen.findViewById(R.id.textView11);
 
         TextView gesamtView = layoutScreen.findViewById(R.id.textViewPayAmount);
-        gesamtView.setText(reiseResponse.getGesamtAusgabe().toString() + "€");
+        try {
+            gesamtView.setText(reiseResponse.getGesamtAusgabe().toString() + "€");
+        } catch (Exception e) {
+            gesamtView.setText("0€");
+        }
 
         TextView gesamtGruppeView = layoutScreen.findViewById(R.id.textViewPayAmountTeam);
 
@@ -151,7 +193,8 @@ public class AusgabenAdapterHelper implements Observer {
             try {
                 reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
             } catch (Exception e) {
-                stop.setGesamtausgaben(new BigDecimal(0));
+                if (stop.getGesamtausgaben() == null)
+                    stop.setGesamtausgaben(new BigDecimal(0));
             }
         }
         gesamtGruppeView.setText(reiseGesamtAusgabe.toString() + "€");
@@ -159,7 +202,7 @@ public class AusgabenAdapterHelper implements Observer {
         BigDecimal gesamtBalance = new BigDecimal(0);
         int counter = 0;
         for(Reisender reisender : reiseResponse.getSchuldner()){
-            if(!reisender.getId().equals(MainActivity.currentUserData.getCurrentUser().getId())){
+            if(!reisender.getId().equals(reisender.getId())){
                 BigDecimal betrag = reiseResponse.getBetraege().get(counter);
                 gesamtBalance = gesamtBalance.add(betrag);
             }
@@ -187,7 +230,7 @@ public class AusgabenAdapterHelper implements Observer {
                 Ausgabe ausgabe = new Ausgabe();
                 ausgabe.setBetrag(betragN);
                 ausgabe.setAnzahlReisende(checked.size());
-                ausgabe.setZahler(MainActivity.currentUserData.getCurrentUser().getId());
+                ausgabe.setZahler(reisender.getId());
                 ausgabe.setSchuldner(reiseResponse.getReisendeList().get(i).getId());
                 ausgabe.setAusgabenTyp(AusgabenTyp.typForPosition(kategorieSpinner.getSelectedItemPosition()));
                 if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
@@ -211,7 +254,7 @@ public class AusgabenAdapterHelper implements Observer {
                 ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
                     Log.d("ausgaben", reiseResponse.getReise().toString());
-                    EndpointConnector.fetchPaymentInfo(reiseResponse.getReise(), fetchPaymentCallback());
+                    EndpointConnector.fetchPaymentInfo(reiseResponse.getReise(), reisender, fetchPaymentCallback());
                 }
             }
         };
@@ -225,12 +268,21 @@ public class AusgabenAdapterHelper implements Observer {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseResponse payResponse = new Gson().fromJson(Objects.requireNonNull(response.body()).string(), ReiseResponse.class);
+                Gson gson = new Gson();
+                ReiseResponse payResponse = gson.fromJson(Objects.requireNonNull(response.body()).string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
-                    MainActivity.currentUserData.setCurrentUser(payResponse.getReisender());
-                    MainActivity.currentUserData.setCurrentReiseResponse(payResponse);
-                    MainActivity.currentUserData.setCurrentReise(payResponse.getReise());
-                    MainActivity.currentUserData.notifyObservers();
+                    SharedPreferences.Editor editor = reisenderPref.edit();
+                    editor.putString("reisender", gson.toJson(reisender));
+                    editor.apply();
+
+                    editor = reiseResponsePref.edit();
+                    editor.putString("reiseResponse", gson.toJson(reiseResponse));
+                    editor.apply();
+
+                    editor = reisePref.edit();
+                    editor.putString("reise", gson.toJson(reiseResponse.getReise()));
+                    editor.apply();
+
                     reiseResponse = payResponse;
                     reisendeNames = new ArrayList<>();
                     for(Reisender reisender : reiseResponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
@@ -250,10 +302,4 @@ public class AusgabenAdapterHelper implements Observer {
         };
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-        if(o instanceof CurrentUserData){
-            //reiseReponses = ((CurrentUserData) o).getCurrentReiseReponsesAsList();
-        }
-    }
 }
