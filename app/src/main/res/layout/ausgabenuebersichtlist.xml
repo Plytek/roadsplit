@@ -17,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clayoutdetail"
-            android:layout_width="match_parent"
+            android:layout_width="364dp"
             android:layout_height="match_parent">
 
             <ImageView
@@ -40,34 +40,34 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.38"
+                app:layout_constraintHorizontal_bias="0.379"
                 app:layout_constraintStart_toStartOf="@id/clayoutdetail"
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
-                app:layout_constraintVertical_bias="0.296" />
-
-            <TextView
-                android:id="@+id/textViewDashDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bent"
-                app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
-                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.27"
-                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
-                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
-                app:layout_constraintVertical_bias="0.649" />
+                app:layout_constraintVertical_bias="0.24" />
 
             <TextView
                 android:id="@+id/textViewDash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Furkan"
+                android:text="29.01.2023"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.282"
+                app:layout_constraintHorizontal_bias="0.308"
                 app:layout_constraintStart_toStartOf="@id/clayoutdetail"
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.947" />
+
+            <TextView
+                android:id="@+id/textViewDashDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Von: Bent An: Lennart"
+                app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
+                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
+                app:layout_constraintHorizontal_bias="0.419"
+                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
+                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
+                app:layout_constraintVertical_bias="0.596" />
 
             <TextView
                 android:id="@+id/textViewDashPrice"

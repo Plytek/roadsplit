@@ -190,14 +190,14 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:contentDescription="Test"
-        app:backgroundTint="@color/rlightgreen"
+        app:backgroundTint="@color/rdarkgreen"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintHorizontal_bias="0.859"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.935"
-        app:srcCompat="@drawable/plusiconsecond" />
+        app:layout_constraintVertical_bias="0.959"
+        app:srcCompat="@drawable/bookmarkicon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
