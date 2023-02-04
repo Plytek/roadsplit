@@ -34,16 +34,16 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.075" />
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-120dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/wave" />
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/wave" />
 
     <TextView
         android:id="@+id/textView7"
@@ -72,15 +72,15 @@
         app:layout_constraintTop_toTopOf="@id/guideline32" />
 
     <EditText
-        android:id="@+id/BetragEditTExt"
+        android:id="@+id/betragEditText"
         android:layout_width="275dp"
         android:layout_height="50dp"
         android:layout_marginStart="75dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/custom_shape"
         android:fontFamily="@font/cmedium"
-        android:hint="Pizza bei Papa John´s"
-        android:inputType="text"
+        android:hint="50 Smackeroos"
+        android:inputType="numberDecimal"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
         android:paddingEnd="8dp"
@@ -93,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@id/guideline26" />
 
     <EditText
-        android:id="@+id/BetragEditTExt9"
+        android:id="@+id/ausgabenNotizEditText"
         android:layout_width="275dp"
         android:layout_height="50dp"
         android:layout_marginStart="15dp"
@@ -135,7 +135,7 @@
         app:layout_constraintGuide_percent="0.44" />
 
     <Spinner
-        android:id="@+id/planets_spinner4"
+        android:id="@+id/kategorieSpinner"
         android:layout_width="275dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
@@ -224,7 +224,6 @@
         android:layout_marginEnd="80dp"
         android:background="@drawable/custom_shape2"
         android:fontFamily="@font/cmedium"
-        android:onClick="saveReise"
         android:text="Ausgabe Speichern"
         android:textAllCaps="false"
         android:textColor="#ffff"
@@ -249,6 +248,29 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.13129103" />
+
+    <CheckBox
+        android:id="@+id/privatCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Privatausgabe"
+        app:layout_constraintBottom_toTopOf="@+id/guideline32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toEndOf="@+id/textAusgabeErstellen"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.602" />
+
+    <ProgressBar
+        android:id="@+id/ausgabeProgressBar"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

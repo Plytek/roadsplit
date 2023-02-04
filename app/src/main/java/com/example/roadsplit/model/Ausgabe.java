@@ -6,6 +6,7 @@ import java.util.Date;
 public class Ausgabe {
     private long id;
 
+    private String notiz;
     private AusgabenTyp ausgabenTyp;
     private BigDecimal betrag;
     private boolean paidForHimself;
@@ -14,9 +15,23 @@ public class Ausgabe {
     private long schuldner;
     private String schuldnerName;
     private int anzahlReisende;
-    private Date erstellDatum;
+    private long erstellDatum;
 
-    public Ausgabe(long id, AusgabenTyp ausgabenTyp, BigDecimal betrag, boolean paidForHimself, long zahler, String zahlerName, long schuldner, String schuldnerName, int anzahlReisende, Date erstellDatum) {
+    public Ausgabe(long id, String notiz, AusgabenTyp ausgabenTyp, BigDecimal betrag, boolean paidForHimself, long zahler, String zahlerName, long schuldner, String schuldnerName, int anzahlReisende, long erstellDatum) {
+        this.id = id;
+        this.notiz = notiz;
+        this.ausgabenTyp = ausgabenTyp;
+        this.betrag = betrag;
+        this.paidForHimself = paidForHimself;
+        this.zahler = zahler;
+        this.zahlerName = zahlerName;
+        this.schuldner = schuldner;
+        this.schuldnerName = schuldnerName;
+        this.anzahlReisende = anzahlReisende;
+        this.erstellDatum = erstellDatum;
+    }
+
+    public Ausgabe(long id, AusgabenTyp ausgabenTyp, BigDecimal betrag, boolean paidForHimself, long zahler, String zahlerName, long schuldner, String schuldnerName, int anzahlReisende, long erstellDatum) {
         this.id = id;
         this.ausgabenTyp = ausgabenTyp;
         this.betrag = betrag;
@@ -124,6 +139,22 @@ public class Ausgabe {
 
     public void setSchuldnerName(String schuldnerName) {
         this.schuldnerName = schuldnerName;
+    }
+
+    public String getNotiz() {
+        return notiz;
+    }
+
+    public void setNotiz(String notiz) {
+        this.notiz = notiz;
+    }
+
+    public long getErstellDatum() {
+        return erstellDatum;
+    }
+
+    public void setErstellDatum(long erstellDatum) {
+        this.erstellDatum = erstellDatum;
     }
 
     @Override

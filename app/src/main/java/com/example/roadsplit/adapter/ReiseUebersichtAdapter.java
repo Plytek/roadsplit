@@ -21,6 +21,7 @@ import com.example.roadsplit.helperclasses.AusgabenAdapterHelper;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.helperclasses.ZwischenstopAdapterHelper;
 import com.example.roadsplit.model.Reisender;
+import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.gson.Gson;
 
@@ -48,16 +49,21 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
     private SharedPreferences reisenderPref;
     private SharedPreferences reiseResponsePref;
     private SharedPreferences reisePref;
+    private SharedPreferences reportPref;
 
-    public ReiseUebersichtAdapter(Context mContext, AusgabenActivity ausgabenActivity, List<View> views, ReiseResponse reiseResponseX) {
+    private AusgabenReport ausgabenReport;
+
+    public ReiseUebersichtAdapter(Context mContext, AusgabenActivity ausgabenActivity, List<View> views, ReiseResponse reiseResponseX, AusgabenReport ausgabenReport) {
         this.mContext = mContext;
         this.views = views;
         this.ausgabenActivity = ausgabenActivity;
         this.reiseResponse = reiseResponseX;
+        this.ausgabenReport = ausgabenReport;
 
         this.reisenderPref = mContext.getSharedPreferences("reisender", MODE_PRIVATE);
         this.reiseResponsePref = mContext.getSharedPreferences("reiseResponse", MODE_PRIVATE);
         this.reisePref = mContext.getSharedPreferences("reise", MODE_PRIVATE);
+        this.reportPref = mContext.getSharedPreferences("report", MODE_PRIVATE);
 
         this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
         //this.reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
@@ -68,8 +74,14 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if(key.equals("reisender")) {
                     reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+                    notifyDataSetChanged();
                 } else if(key.equals("reiseResponse")) {
                     reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
+                    notifyDataSetChanged();
+                }
+                else if(key.equals("report")) {
+                    ReiseUebersichtAdapter.this.ausgabenReport = new Gson().fromJson(reportPref.getString("report", "fehler"), AusgabenReport.class);
+                    notifyDataSetChanged();
                 }
                 // code to handle change in value for the key
             }
@@ -88,12 +100,13 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
             case 0:
                 layoutScreen = inflater.inflate(R.layout.ausgabenpage,null);
                 EndpointConnector.fetchPaymentInfo(reiseResponse.getReise(), reisender, updateReiseCallback());
+                EndpointConnector.fetchAusgabenReport(reiseResponse.getReise(), reisender, ausgabenReportCallback());
                 ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, reiseResponse, ausgabenActivity, this);
                 ausgabenAdapterHelper.setUpAusgaben();
                 break;
             case 1:
                 layoutScreen = inflater.inflate(R.layout.zwischenstopp,null);
-                zwischenstopAdapterHelper = new ZwischenstopAdapterHelper(layoutScreen, mContext, reiseResponse);
+                zwischenstopAdapterHelper = new ZwischenstopAdapterHelper(layoutScreen, mContext);
                 zwischenstopAdapterHelper.setUpZwischenStops();
                 break;
             case 2:
@@ -105,7 +118,7 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
                 ausgabeDetailAdapterHelper.setUpAusgabeDetailPage();*/
                 EndpointConnector.fetchPaymentInfo(reiseResponse.getReise(), reisender, updateReiseCallback());
                 layoutScreen = inflater.inflate(R.layout.ausgabendashboard,null);
-                ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, reiseResponse, ausgabenActivity, this);
+                ausgabenAdapterHelper = new AusgabenAdapterHelper(mContext, layoutScreen, reiseResponse, ausgabenActivity, this, ausgabenReport);
                 ausgabenAdapterHelper.setUpDashboard();
                 zwischenstopAdapterHelper.setUpZwischenStops();
                 break;
@@ -134,6 +147,30 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
 
         container.removeView((View)object);
 
+    }
+
+    public Callback ausgabenReportCallback(){
+        return new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Gson gson = new Gson();
+                ausgabenReport = gson.fromJson(response.body().string(), AusgabenReport.class);
+                if(response.isSuccessful()) {
+                    SharedPreferences.Editor editor = reportPref.edit();
+                    editor.putString("report", gson.toJson(ausgabenReport));
+                    editor.apply();
+
+
+                    Looper.prepare();
+                    Toast.makeText(mContext, "report fetch", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        };
     }
 
 

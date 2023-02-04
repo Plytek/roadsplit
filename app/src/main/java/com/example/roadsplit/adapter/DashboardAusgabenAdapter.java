@@ -1,6 +1,9 @@
 package com.example.roadsplit.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +15,38 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.Reisender;
+import com.example.roadsplit.model.finanzen.AusgabenReport;
+import com.example.roadsplit.model.finanzen.Schulden;
 
-import java.util.Iterator;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusgabenAdapter.RecentsViewHolder> {
 
     private Context context;
-    private List<Ausgabe> ausgaben;
-    private List<Reisender> reisende;
-    public DashboardAusgabenAdapter(Context context, List<Ausgabe> ausgaben, List<Reisender> reisende) {
+    private String type;
+    private AusgabenReport ausgabenReport;
+    private TextView summe;
+
+    private SharedPreferences reportPref;
+
+    public DashboardAusgabenAdapter(Context context, AusgabenReport ausgabenReport, View layoutScreen, String type) {
         this.context = context;
-        this.ausgaben = ausgaben;
-        this.reisende = reisende;
+        this.ausgabenReport = ausgabenReport;
+        this.type = type;
+        summe = layoutScreen.findViewById(R.id.textViewDashBetrag);
+        this.reportPref = context.getSharedPreferences("report", MODE_PRIVATE);
+
+        this.reportPref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                    if(key.equals("report"))
+                    {
+
+                    }
+            }
+        });
     }
 
     @NonNull
@@ -37,35 +59,80 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
 
     @Override
     public void onBindViewHolder(@NonNull RecentsViewHolder holder, int position) {
-
-        Ausgabe ausgabe = ausgaben.get(position);
-        String zahler = null;
-        for (Iterator<Reisender> iterator = reisende.iterator(); iterator.hasNext(); ) {
-            Reisender reisender = iterator.next();
-            if (reisender.getId() == ausgabe.getZahler()) {
-                zahler = reisender.getNickname();
+        switch (type) {
+            case "privatAusgabe": {
+                Ausgabe ausgabe = ausgabenReport.getAusgabenFuerSelbst().get(position);
+                if(ausgabe.getNotiz() == null) holder.ausgabename.setText("Keine Notiz!");
+                else holder.ausgabename.setText(ausgabe.getNotiz());
+                holder.beschreibung.setText("");
+                try {
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
+                    String dateString = formatter.format(ausgabe.getErstellDatum());
+                    holder.date.setText(dateString);
+                } catch (Exception e) {
+                    holder.date.setText("");
+                }
+                summe.setText("Privat: " + ausgabenReport.getPrivateAusgaben() + "€");
+                holder.ausgabe.setText(ausgabe.getBetrag() + "€");
                 break;
             }
-        }
-        String schulder = null;
-        for (Iterator<Reisender> iterator = reisende.iterator(); iterator.hasNext(); ) {
-            Reisender reisender = iterator.next();
-            if (reisender.getId() == ausgabe.getSchuldner()) {
-                schulder = reisender.getNickname();
+            case "gruppenAusgabe": {
+                Ausgabe ausgabe = ausgabenReport.getAusgabenFuerGruppe().get(position);
+                if(ausgabe.getNotiz() == null) holder.ausgabename.setText("Keine Notiz!");
+                else holder.ausgabename.setText(ausgabe.getNotiz());
+                try {
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
+                    String dateString = formatter.format(ausgabe.getErstellDatum());
+                    holder.date.setText(dateString);
+                } catch (Exception e) {
+                    holder.date.setText("");
+                }
+                if(ausgabe.getZahler() == ausgabe.getSchuldner()) holder.beschreibung.setText("Für dich selbst!");
+                else holder.beschreibung.setText("Von: " + ausgabe.getZahlerName() + " An: " + ausgabe.getSchuldnerName());
+                holder.ausgabe.setText(ausgabe.getBetrag() + "€");
+                summe.setText("Gruppen: " + ausgabenReport.getPersoenlicheGruppenausgaben() + "€");
                 break;
             }
+            case "schulden":
+                Schulden schulden = ausgabenReport.getSchuldenReport().get(position);
+                BigDecimal betrag = schulden.getSchulden();
+                if (betrag.compareTo(BigDecimal.ZERO) < 0){
+                    holder.ausgabename.setText("Du schuldest");
+                    holder.beschreibung.setText(schulden.getMitreisenderName());
+                    holder.ausgabe.setText(betrag.abs() + "€");
+                }
+                else
+                {
+                    holder.ausgabename.setText("Du bekommst von");
+                    holder.beschreibung.setText(schulden.getMitreisenderName());
+                    holder.ausgabe.setText(betrag + "€");
+                }
+                holder.date.setText("");
+                summe.setText("Gesamt: " + ausgabenReport.getGruppenGesamtausgabe() + "€");
+                break;
         }
-        if(schulder == null || zahler == null) return;
-
-        holder.ausgabename.setText(ausgabe.getAusgabenTyp().toString());
-        holder.beschreibung.setText("Von: " + zahler + " An: " + schulder);
-        holder.ausgabe.setText(ausgabe.getBetrag() + "€");
 
     }
 
     @Override
     public int getItemCount() {
-        return ausgaben.size();
+        switch (type)
+        {
+        case "privatAusgabe": {
+            try {
+                return ausgabenReport.getAusgabenFuerSelbst().size();
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+        case "gruppenAusgabe": {
+            return ausgabenReport.getAusgabenFuerGruppe().size();
+        }
+        case "schulden": {
+            return ausgabenReport.getSchuldenReport().size();
+        }
+        default: return ausgabenReport.getAusgabenFuerSelbst().size();
+        }
     }
 
     public static final class RecentsViewHolder extends RecyclerView.ViewHolder{
@@ -73,6 +140,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
         TextView ausgabename;
         TextView beschreibung;
         TextView ausgabe;
+        TextView date;
 
         public RecentsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +148,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
             ausgabename = itemView.findViewById(R.id.textViewDashName);
             beschreibung = itemView.findViewById(R.id.textViewDashDesc);
             ausgabe = itemView.findViewById(R.id.textViewDashPrice);
+            date = itemView.findViewById(R.id.textViewDashSchuldner);
 
         }
     }

@@ -73,6 +73,19 @@
         app:layout_constraintVertical_bias="0.636" />
 
     <Button
+        android:id="@+id/uploadFileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="uploadFile"
+        android:text="Upload File"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.74" />
+
+    <Button
         android:id="@+id/erstellenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -151,6 +164,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/navigation" />
+
+    <ImageView
+        android:id="@+id/retrievedImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.886"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.878"
+        tools:srcCompat="@tools:sample/avatars" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

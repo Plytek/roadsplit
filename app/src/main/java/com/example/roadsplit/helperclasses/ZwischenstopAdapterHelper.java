@@ -24,6 +24,7 @@ import com.example.roadsplit.adapter.StopAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
+import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.gson.Gson;
 
@@ -43,27 +44,26 @@ public class ZwischenstopAdapterHelper {
     private ListView stopListView;
     private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
 
-    private SharedPreferences reiseResponsePref;
-    private ReiseResponse reiseResponse;
+    private SharedPreferences reportPref;
+    private AusgabenReport ausgabenReport;
 
-    public ZwischenstopAdapterHelper(View layoutScreen, Context context, ReiseResponse reiseResponse) {
+    public ZwischenstopAdapterHelper(View layoutScreen, Context context) {
 
 
-        this.reiseResponsePref = context.getSharedPreferences("reiseResponse", MODE_PRIVATE);
-        this.reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
-
-        this.reise = reiseResponse.getReise();
+        this.reportPref = context.getSharedPreferences("report", MODE_PRIVATE);
+        this.ausgabenReport = new Gson().fromJson(reportPref.getString("report", "fehler"), AusgabenReport.class);
+        this.reise = ausgabenReport.getReise();
         this.stops = reise.getStops();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if(key.equals("reiseResponse")) {
-                    ReiseResponse response = new Gson().fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
-                    ZwischenstopAdapterHelper.this.reiseResponse = response;
-                    ZwischenstopAdapterHelper.this.reise = response.getReise();
-                    ZwischenstopAdapterHelper.this.stops = reise.getStops();
+                if(key.equals("report")) {
+                    ausgabenReport = new Gson().fromJson(reportPref.getString("report", "fehler"), AusgabenReport.class);
+                    reise = ausgabenReport.getReise();
+                    stops = reise.getStops();
+                    setUpZwischenStops();
                 }
                 // code to handle change in value for the key
             }

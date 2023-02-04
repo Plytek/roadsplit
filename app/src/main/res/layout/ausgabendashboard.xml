@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
     android:id="@+id/constraintausgabenpage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:fillViewport="true">
 
 
     <TextView
@@ -45,13 +44,13 @@
 
 
     <TextView
-        android:id="@+id/textDashboard2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/textViewDashBetrag"
+        android:layout_width="319dp"
+        android:layout_height="39dp"
         android:clickable="true"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
-        android:text="550€"
+        android:text="0€"
         android:textColor="#2A4B42"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -67,9 +66,9 @@
         android:layout_height="135dp"
         android:layout_marginTop="100dp"
         android:background="@color/rlightgreen"
-        app:cardElevation="20dp"
-        app:cardCornerRadius="40dp"
         android:visibility="gone"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -122,28 +121,29 @@
         android:id="@+id/buttonGruppeAusgaben"
         android:layout_width="100dp"
         android:layout_height="39dp"
-        android:layout_marginEnd="156dp"
         android:background="@drawable/smallbuttondots"
         android:text="Versammlung"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineOben"
-        app:layout_constraintVertical_bias="0.487" />
+        app:layout_constraintBottom_toTopOf="@+id/guidelineOben"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAbrechnungsAusgabe"
+        app:layout_constraintStart_toEndOf="@+id/buttonPrivatAusgaben"
+        app:layout_constraintTop_toTopOf="@+id/guidelineOben" />
 
     <Button
         android:id="@+id/buttonPrivatAusgaben"
         android:layout_width="100dp"
         android:layout_height="39dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/smallbuttondots"
         android:text="Privat"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineOben"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintTop_toTopOf="@+id/guidelineOben"
         app:layout_constraintVertical_bias="0.512" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -164,7 +164,7 @@
         android:id="@+id/buttonAbrechnungsAusgabe"
         android:layout_width="100dp"
         android:layout_height="39dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/smallbuttondots"
         android:text="Abrechnung"
         android:textAllCaps="false"

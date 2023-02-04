@@ -11,10 +11,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.adapter.DashboardOverviewAdapter;
 import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
+import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -28,14 +30,17 @@ import okhttp3.Response;
 public class AusgabenActivity extends AppCompatActivity {
     private ViewPager screenPager;
     private ReiseUebersichtAdapter reiseUebersichtAdapter;
+    private DashboardOverviewAdapter dashboardOverviewAdapter;
     private TabLayout tabLayout;
     private Reise reise;
 
     private Reisender reisender;
     private ReiseResponse reiseResponse;
+    private AusgabenReport ausgabenReport;
     private SharedPreferences reisenderPref;
     private SharedPreferences reiseResponsePref;
     private SharedPreferences reisePref;
+    private SharedPreferences reportPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +56,7 @@ public class AusgabenActivity extends AppCompatActivity {
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
         this.reiseResponsePref = getSharedPreferences("reiseResponse", MODE_PRIVATE);
         this.reisePref = getSharedPreferences("reise", MODE_PRIVATE);
+        this.reportPref = getSharedPreferences("report", MODE_PRIVATE);
 
         this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
         //this.reiseResponse = new Gson().fromJson(reisenderPref.getString("reiseResponse", "fehler"), ReiseResponse.class);
@@ -70,12 +76,53 @@ public class AusgabenActivity extends AppCompatActivity {
                     case "reise":
                         reise = gson.fromJson(reiseResponsePref.getString("reise", "fehler"), Reise.class);
                         break;
+                    case "report":
+                         ausgabenReport = gson.fromJson(reiseResponsePref.getString("report", "fehler"), AusgabenReport.class);
+                         dashboardOverviewAdapter.notifyDataSetChanged();
+                        break;
                 }
             }
         });
         // setup viewpager
         screenPager = findViewById(R.id.screen_viewpager);
-        EndpointConnector.fetchPaymentInfo(reise, reisender,fetchPaymentCallback());
+        //EndpointConnector.fetchPaymentInfo(reise, reisender,fetchPaymentCallback());
+        EndpointConnector.fetchAusgabenReport(reise, reisender, ausgabenReportCallback());
+    }
+
+    private Callback ausgabenReportCallback(){
+        return new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Gson gson = new Gson();
+                ausgabenReport = gson.fromJson(response.body().string(), AusgabenReport.class);
+                if(response.isSuccessful()) {
+                    runOnUiThread(() -> {
+                        //reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseResponse, ausgabenReport);
+
+                        SharedPreferences.Editor editor = reisenderPref.edit();
+
+                        editor = reportPref.edit();
+                        editor.putString("report", gson.toJson(ausgabenReport));
+                        editor.apply();
+
+                        dashboardOverviewAdapter = new DashboardOverviewAdapter(AusgabenActivity.this, ausgabenReport);
+
+                        screenPager.setAdapter(dashboardOverviewAdapter);
+                        tabLayout = findViewById(R.id.tab_indicator2);
+                        tabLayout.setupWithViewPager(screenPager);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.dokumenteiconp);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.stoppsiconp);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.packlisteiconp);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.kosteniconp);
+                    });
+                }
+            }
+
+        };
     }
 
     private Callback fetchPaymentCallback(){
@@ -90,7 +137,6 @@ public class AusgabenActivity extends AppCompatActivity {
                 reiseResponse = gson.fromJson(response.body().string(), ReiseResponse.class);
                 if(response.isSuccessful()) {
                     runOnUiThread(() -> {
-                        reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseResponse);
 
                         SharedPreferences.Editor editor = reisenderPref.edit();
                         editor.putString("reisender", gson.toJson(reiseResponse.getReisender()));
@@ -105,13 +151,7 @@ public class AusgabenActivity extends AppCompatActivity {
                         editor.apply();
 
 
-                        screenPager.setAdapter(reiseUebersichtAdapter);
-                        tabLayout = findViewById(R.id.tab_indicator2);
-                        tabLayout.setupWithViewPager(screenPager);
-                        tabLayout.getTabAt(0).setIcon(R.drawable.dokumenteiconp);
-                        tabLayout.getTabAt(1).setIcon(R.drawable.stoppsiconp);
-                        tabLayout.getTabAt(2).setIcon(R.drawable.packlisteiconp);
-                        tabLayout.getTabAt(3).setIcon(R.drawable.kosteniconp);
+                        EndpointConnector.fetchAusgabenReport(reise, reisender, ausgabenReportCallback());
                     });
                 }
             }

@@ -137,4 +137,5 @@ public class Reise {
     public void setReiseErsteller(String reiseErsteller) {
         this.reiseErsteller = reiseErsteller;
     }
+
 }

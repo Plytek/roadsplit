@@ -38,10 +38,19 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".activities.PaymentActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.RoadSplitLoGIn">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.AusgabenActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.RoadSplitLoGIn">>
+            android:theme="@style/Theme.RoadSplitLoGIn">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
