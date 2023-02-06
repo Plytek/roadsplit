@@ -11,6 +11,8 @@
         android:layout_width="300dp"
         android:layout_height="65dp"
         app:cardCornerRadius="20dp"
+        android:elevation="0dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -91,11 +93,11 @@
 
             <ImageView
                 android:id="@+id/ausgabenTypImageView"
-                android:layout_width="42dp"
-                android:layout_height="39dp"
+                android:layout_width="32dp"
+                android:layout_height="29dp"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.049"
+                app:layout_constraintHorizontal_bias="0.048"
                 app:layout_constraintStart_toStartOf="@id/clayoutdetail"
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
                 app:srcCompat="@drawable/clipboardicon" />
