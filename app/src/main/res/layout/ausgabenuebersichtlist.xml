@@ -83,7 +83,7 @@
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail" />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/ausgabenTypImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"

@@ -16,6 +16,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.DashboardSetup;
+import com.example.roadsplit.helperclasses.DokumentSetup;
 import com.example.roadsplit.helperclasses.ZwischenstopAdapterHelper;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.google.gson.Gson;
@@ -34,6 +35,7 @@ public class DashboardOverviewAdapter extends PagerAdapter {
     private SharedPreferences reportPref;
     private SharedPreferences reisePref;
     private AusgabenReport ausgabenReport;
+
 
 
     public DashboardOverviewAdapter(Context mContext, AusgabenReport ausgabenReport) {
@@ -78,6 +80,8 @@ public class DashboardOverviewAdapter extends PagerAdapter {
                 break;
             case 3:
                 layoutScreen = inflater.inflate(R.layout.dokumentepage,null);
+                DokumentSetup dokumentSetup = new DokumentSetup(layoutScreen, context);
+                dokumentSetup.setupDokuments();
                 break;
             default:
                 layoutScreen = inflater.inflate(R.layout.dokumentepage,null);

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String BASEURL = "http://167.172.167.221:8080";
     //public static CurrentUserData currentUserData;
     private BottomNavigationView navigation;
-    //public static final String BASEURL = "https://100a-84-63-180-89.ngrok.io";
+    //public static final String BASEURL = "https://46ba-84-63-180-89.ngrok.io";
 
     private SharedPreferences reisenderPref;
     private SharedPreferences reiseResponsesPref;
@@ -231,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
     public void uploadFile(View view){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent,1);
 
     }
 
@@ -261,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                     fileType = fileType.substring(fileType.lastIndexOf("/") + 1);
                 }
 
-                EndpointConnector.uploadFile(bytes, fileName, fileType , reisender.getReisen().get(0) , uploadFileCallback());
+                EndpointConnector.uploadFile(bytes, fileName, fileType , reisender.getReisen().get(0), reisender, uploadFileCallback());
             } catch (IOException e) {
                 e.printStackTrace();
             }

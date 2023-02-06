@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/constraintpackliste"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintpackliste"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/textAusgabeErstellen"
@@ -32,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.075" />
+        app:layout_constraintGuide_percent="0.06" />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -52,11 +51,12 @@
         android:text="Wieviel wurde ausgegeben?"
         android:textColor="@color/rdarkgreen"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline26"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.313"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline26" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline26"
+        app:layout_constraintEnd_toEndOf="@+id/betragEditText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/betragEditText"
+        app:layout_constraintTop_toTopOf="@+id/guideline26"
+        app:layout_constraintVertical_bias="0.157" />
 
     <TextView
         android:id="@+id/textViewBetragEingabe"
@@ -65,11 +65,12 @@
         android:text="Gib deiner Ausgabe einen Namen."
         android:textColor="@color/rdarkgreen"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline32"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.385"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline32" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline32"
+        app:layout_constraintEnd_toEndOf="@+id/ausgabenNotizEditText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ausgabenNotizEditText"
+        app:layout_constraintTop_toTopOf="@+id/guideline32"
+        app:layout_constraintVertical_bias="0.526" />
 
     <EditText
         android:id="@+id/betragEditText"
@@ -89,15 +90,14 @@
         android:textColorHint="#7c818f"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="@id/textView7"
-        app:layout_constraintStart_toStartOf="@id/textView7"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
         app:layout_constraintTop_toBottomOf="@id/guideline26" />
 
     <EditText
         android:id="@+id/ausgabenNotizEditText"
         android:layout_width="275dp"
         android:layout_height="50dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/custom_shape"
         android:fontFamily="@font/cmedium"
         android:hint="Pizza bei Papa John´s"
@@ -109,10 +109,11 @@
         android:textColor="#c4c4c4"
         android:textColorHint="#7c818f"
         android:textSize="14dp"
-        app:layout_constraintEnd_toEndOf="@id/textViewBetragEingabe"
-        app:layout_constraintHorizontal_bias="0.309"
-        app:layout_constraintStart_toStartOf="@id/textViewBetragEingabe"
-        app:layout_constraintTop_toBottomOf="@id/guideline32" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline26"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toTopOf="@+id/guideline32" />
 
     <TextView
         android:id="@+id/textView22"
@@ -120,44 +121,48 @@
         android:layout_height="wrap_content"
         android:text="Für wen wurde bezahlt?"
         android:textColor="@color/rdarkgreen"
-        app:layout_constraintBottom_toBottomOf="@id/guideline28"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.261"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline28"
-        app:layout_constraintVertical_bias="0.388" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline28"
+        app:layout_constraintEnd_toEndOf="@+id/schuldnerListView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/schuldnerListView"
+        app:layout_constraintTop_toTopOf="@+id/guideline28"
+        app:layout_constraintVertical_bias="0.055" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.44" />
+        app:layout_constraintGuide_percent="0.43" />
 
     <Spinner
         android:id="@+id/kategorieSpinner"
         android:layout_width="275dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/custom_shape"
+        app:layout_constraintBottom_toTopOf="@+id/textView22"
         app:layout_constraintEnd_toEndOf="@id/textView23"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/textView23"
-        app:layout_constraintTop_toBottomOf="@id/guideline27" />
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toBottomOf="@id/guideline27"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ListView
         android:id="@+id/schuldnerListView"
         android:layout_width="275dp"
         android:layout_height="150dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/custom_shape"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:choiceMode="multipleChoice"
-        app:layout_constraintEnd_toEndOf="@id/textView22"
-        app:layout_constraintHorizontal_bias="0.231"
-        app:layout_constraintStart_toStartOf="@id/textView22"
-        app:layout_constraintTop_toBottomOf="@id/guideline28" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline29"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toTopOf="@+id/guideline28"
+        app:layout_constraintVertical_bias="0.67" />
 
     <TextView
         android:id="@+id/textView24"
@@ -165,11 +170,12 @@
         android:layout_height="wrap_content"
         android:text="Zwischenstopp"
         android:textColor="@color/rdarkgreen"
-        app:layout_constraintBottom_toBottomOf="@id/guideline29"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.213"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline29" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline29"
+        app:layout_constraintEnd_toEndOf="@+id/planets_spinnerZW"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/planets_spinnerZW"
+        app:layout_constraintTop_toTopOf="@+id/guideline29"
+        app:layout_constraintVertical_bias="0.111" />
 
     <Spinner
         android:id="@+id/planets_spinnerZW"
@@ -178,8 +184,9 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/custom_shape"
         app:layout_constraintEnd_toEndOf="@id/textView24"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/textView24"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
         app:layout_constraintTop_toBottomOf="@id/guideline29" />
 
     <TextView
@@ -189,77 +196,76 @@
         android:text="Kategorie"
         android:textColor="@color/rdarkgreen"
         app:layout_constraintBottom_toBottomOf="@id/guideline27"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.191"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline27" />
+        app:layout_constraintEnd_toEndOf="@+id/kategorieSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/kategorieSpinner"
+        app:layout_constraintTop_toTopOf="@id/guideline27"
+        app:layout_constraintVertical_bias="0.111" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.23" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline27"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.34" />
+        app:layout_constraintGuide_percent="0.33" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.71" />
 
     <Button
         android:id="@+id/ausgabeSpeichernButton"
-        android:layout_width="0dp"
+        android:layout_width="251dp"
         android:layout_height="50dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="215dp"
         android:background="@drawable/custom_shape2"
         android:fontFamily="@font/cmedium"
         android:text="Ausgabe Speichern"
         android:textAllCaps="false"
         android:textColor="#ffff"
         android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline31"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline31"
-        app:layout_constraintVertical_bias="0.826" />
+        app:layout_constraintBottom_toBottomOf="@+id/guideline31"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toTopOf="@+id/guideline31" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.80" />
+        app:layout_constraintGuide_percent="0.84" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.13129103" />
+        app:layout_constraintGuide_percent="0.12" />
 
     <CheckBox
         android:id="@+id/privatCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Privatausgabe"
-        app:layout_constraintBottom_toTopOf="@+id/guideline32"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintStart_toEndOf="@+id/textAusgabeErstellen"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.602" />
+        app:layout_constraintBottom_toTopOf="@+id/schuldnerListView"
+        app:layout_constraintEnd_toEndOf="@+id/schuldnerListView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/schuldnerListView"
+        app:layout_constraintTop_toTopOf="@+id/guideline28"
+        app:layout_constraintVertical_bias="0.629" />
 
     <ProgressBar
         android:id="@+id/ausgabeProgressBar"
@@ -271,6 +277,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVert50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

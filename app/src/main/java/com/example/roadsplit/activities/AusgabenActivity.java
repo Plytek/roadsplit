@@ -1,14 +1,21 @@
 package com.example.roadsplit.activities;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.DashboardOverviewAdapter;
@@ -20,6 +27,7 @@ import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 
@@ -41,6 +49,7 @@ public class AusgabenActivity extends AppCompatActivity {
     private SharedPreferences reiseResponsePref;
     private SharedPreferences reisePref;
     private SharedPreferences reportPref;
+    private boolean returning;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +62,10 @@ public class AusgabenActivity extends AppCompatActivity {
             Log.d("errorRoadsplit", e.getMessage());
         }
 
+        Intent intent = getIntent();
+        returning = intent.getBooleanExtra("returning", false);
+
+
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
         this.reiseResponsePref = getSharedPreferences("reiseResponse", MODE_PRIVATE);
         this.reisePref = getSharedPreferences("reise", MODE_PRIVATE);
@@ -61,6 +74,7 @@ public class AusgabenActivity extends AppCompatActivity {
         this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
         //this.reiseResponse = new Gson().fromJson(reisenderPref.getString("reiseResponse", "fehler"), ReiseResponse.class);
 
+        isStoragePermissionGranted();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
@@ -118,11 +132,32 @@ public class AusgabenActivity extends AppCompatActivity {
                         tabLayout.getTabAt(1).setIcon(R.drawable.stoppsiconp);
                         tabLayout.getTabAt(2).setIcon(R.drawable.packlisteiconp);
                         tabLayout.getTabAt(3).setIcon(R.drawable.kosteniconp);
+                        if (returning) screenPager.setCurrentItem(3);
                     });
                 }
             }
 
         };
+    }
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
+        }
+
+
     }
 
     private Callback fetchPaymentCallback(){

@@ -1,24 +1,33 @@
 package com.example.roadsplit.model;
 
 public enum AusgabenTyp {
-    Egal,
-    Unterkunft,
-    Verpflegung,
+    Allgemein,
+    Restaurants,
     Transport,
-    Events;
+    Tanken,
+    Unterkunft,
+    Shopping,
+    Aktivitaeten,
+    Gebuehren;
 
     public static AusgabenTyp typForPosition(int pos)
     {
         switch (pos){
             case 1:
-                return Unterkunft;
+                return Restaurants;
             case 2:
-                return Verpflegung;
-            case 3:
                 return Transport;
+            case 3:
+                return Tanken;
             case 4:
-                return Events;
-            default: return Egal;
+                return Unterkunft;
+            case 5:
+                return Shopping;
+            case 6:
+                return Aktivitaeten;
+            case 7:
+                return Gebuehren;
+            default: return Allgemein;
         }
     }
 }

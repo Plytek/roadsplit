@@ -1,8 +1,11 @@
 package com.example.roadsplit;
 
 
+import android.app.DownloadManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Base64;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,7 @@ import com.example.roadsplit.model.Dokument;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.requests.AusgabenRequest;
+import com.example.roadsplit.requests.DownloadRequest;
 import com.example.roadsplit.requests.JoinRequest;
 import com.example.roadsplit.requests.UploadRequest;
 import com.google.gson.Gson;
@@ -194,10 +198,10 @@ public class EndpointConnector {
 
         client.newCall(request).enqueue(callback);
     }
-    public static void uploadFile(byte[] byteImage, String filename, String filetype, Reise reise, Callback callback){
+    public static void uploadFile(byte[] byteImage, String filename, String filetype, Reise reise, Reisender reisender, Callback callback){
         String byteString = Base64.encodeToString(byteImage, Base64.NO_WRAP);
         Dokument dokument = new Dokument(byteString, filetype, filename);
-        UploadRequest uploadRequest = new UploadRequest(dokument, reise);
+        UploadRequest uploadRequest = new UploadRequest(dokument, reise, reisender);
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/uploadFile";
 
@@ -212,5 +216,20 @@ public class EndpointConnector {
 
     }
 
+    public static void downloadFile(DownloadRequest downloadRequest, Callback callback){
+
+        OkHttpClient client = new OkHttpClient();
+        String url = MainActivity.BASEURL + "/api/reisedaten/downloadFile";
+
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
+        RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(downloadRequest));
+        Request request = new Request.Builder()
+                .url(httpBuilder.build())
+                .post(formBody)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+
+    }
 
 }

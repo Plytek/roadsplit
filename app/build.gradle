@@ -57,4 +57,8 @@ dependencies {
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    //SVG
+    // https://mvnrepository.com/artifact/com.caverock/androidsvg
+    implementation group: 'com.caverock', name: 'androidsvg', version: '1.4'
+
 }

@@ -36,6 +36,27 @@
         app:layout_constraintGuide_percent="0.06" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertMiddle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVert25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.21" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVert75"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.79" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,25 +147,22 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guidelineOben"
-        app:layout_constraintEnd_toStartOf="@+id/buttonAbrechnungsAusgabe"
-        app:layout_constraintStart_toEndOf="@+id/buttonPrivatAusgaben"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertMiddle"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertMiddle"
         app:layout_constraintTop_toTopOf="@+id/guidelineOben" />
 
     <Button
         android:id="@+id/buttonPrivatAusgaben"
         android:layout_width="100dp"
         android:layout_height="39dp"
-        android:layout_marginStart="16dp"
         android:background="@drawable/smallbuttondots"
         android:text="Privat"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guidelineOben"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineOben"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert25"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert25"
+        app:layout_constraintTop_toTopOf="@+id/guidelineOben" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineOben"
@@ -164,24 +182,26 @@
         android:id="@+id/buttonAbrechnungsAusgabe"
         android:layout_width="100dp"
         android:layout_height="39dp"
-        android:layout_marginEnd="16dp"
         android:background="@drawable/smallbuttondots"
         android:text="Abrechnung"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineOben"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintBottom_toTopOf="@+id/guidelineOben"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert75"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert75"
+        app:layout_constraintTop_toTopOf="@+id/guidelineOben" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ausgabenDetailsRecycler"
-        android:layout_width="411dp"
-        android:layout_height="409dp"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineRecView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineRecView" />
+        android:layout_width="371dp"
+        android:layout_height="605dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/floating_action_button"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertMiddle"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertMiddle"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGruppeAusgaben"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button"

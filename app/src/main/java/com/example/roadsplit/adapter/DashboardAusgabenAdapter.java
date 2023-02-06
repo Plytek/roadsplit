@@ -7,13 +7,16 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.caverock.androidsvg.SVG;
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Ausgabe;
+import com.example.roadsplit.model.AusgabenTyp;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.model.finanzen.Schulden;
@@ -72,6 +75,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
                 } catch (Exception e) {
                     holder.date.setText("");
                 }
+                setupAusgabenImage(holder, ausgabe.getAusgabenTyp());
                 summe.setText("Privat: " + ausgabenReport.getPrivateAusgaben() + "€");
                 holder.ausgabe.setText(ausgabe.getBetrag() + "€");
                 break;
@@ -87,6 +91,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
                 } catch (Exception e) {
                     holder.date.setText("");
                 }
+                setupAusgabenImage(holder, ausgabe.getAusgabenTyp());
                 if(ausgabe.getZahler() == ausgabe.getSchuldner()) holder.beschreibung.setText("Für dich selbst!");
                 else holder.beschreibung.setText("Von: " + ausgabe.getZahlerName() + " An: " + ausgabe.getSchuldnerName());
                 holder.ausgabe.setText(ausgabe.getBetrag() + "€");
@@ -112,6 +117,36 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
                 break;
         }
 
+    }
+
+    private void setupAusgabenImage(RecentsViewHolder holder, AusgabenTyp ausgabenTyp)
+    {
+        switch (ausgabenTyp){
+            case Restaurants:
+                holder.kategorie.setImageResource(R.drawable.spaghettismall);
+                break;
+            case Transport:
+                holder.kategorie.setImageResource(R.drawable.trainsmall);
+                break;
+            case Tanken:
+                holder.kategorie.setImageResource(R.drawable.fuelpumpsmall);
+                break;
+            case Unterkunft:
+                holder.kategorie.setImageResource(R.drawable.bedsmall);
+                break;
+            case Shopping:
+                holder.kategorie.setImageResource(R.drawable.shoppingsmall);
+                break;
+            case Aktivitaeten:
+                holder.kategorie.setImageResource(R.drawable.clappersmall);
+                break;
+            case Gebuehren:
+                holder.kategorie.setImageResource(R.drawable.creditcardsmall);
+                break;
+            default:
+                holder.kategorie.setImageResource(R.drawable.moneywingssmall);
+                break;
+        }
     }
 
     @Override
@@ -141,6 +176,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
         TextView beschreibung;
         TextView ausgabe;
         TextView date;
+        ImageView kategorie;
 
         public RecentsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -149,6 +185,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
             beschreibung = itemView.findViewById(R.id.textViewDashDesc);
             ausgabe = itemView.findViewById(R.id.textViewDashPrice);
             date = itemView.findViewById(R.id.textViewDashSchuldner);
+            kategorie = itemView.findViewById(R.id.ausgabenTypImageView);
 
         }
     }

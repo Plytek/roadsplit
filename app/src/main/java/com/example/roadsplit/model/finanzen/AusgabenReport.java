@@ -24,6 +24,22 @@ public class AusgabenReport {
     private List<Ausgabe> ausgabenFuerGruppe;
     private List<Ausgabe> ausgabenFuerSelbst;
     private List<Schulden> schuldenReport;
+    private List<String> fileNames;
+
+    public AusgabenReport(Reise reise, List<Reisender> reisende, BigDecimal gruppenGesamtausgabe, BigDecimal persoenlicheGruppenausgaben, BigDecimal privateAusgaben, BigDecimal budget, long nutzerId, String nutzerName, List<Ausgabe> ausgabenFuerGruppe, List<Ausgabe> ausgabenFuerSelbst, List<Schulden> schuldenReport, List<String> fileNames) {
+        this.reise = reise;
+        this.reisende = reisende;
+        this.gruppenGesamtausgabe = gruppenGesamtausgabe;
+        this.persoenlicheGruppenausgaben = persoenlicheGruppenausgaben;
+        this.privateAusgaben = privateAusgaben;
+        this.budget = budget;
+        this.nutzerId = nutzerId;
+        this.nutzerName = nutzerName;
+        this.ausgabenFuerGruppe = ausgabenFuerGruppe;
+        this.ausgabenFuerSelbst = ausgabenFuerSelbst;
+        this.schuldenReport = schuldenReport;
+        this.fileNames = fileNames;
+    }
 
     public AusgabenReport(Reise reise, List<Reisender> reisende, BigDecimal gruppenGesamtausgabe, BigDecimal persoenlicheGruppenausgaben, BigDecimal privateAusgaben, BigDecimal budget, long nutzerId, String nutzerName, List<Ausgabe> ausgabenFuerGruppe, List<Ausgabe> ausgabenFuerSelbst, List<Schulden> schuldenReport) {
         this.reise = reise;
@@ -140,5 +156,13 @@ public class AusgabenReport {
 
     public void setReisende(List<Reisender> reisende) {
         this.reisende = reisende;
+    }
+
+    public List<String> getFileNames() {
+        return fileNames;
+    }
+
+    public void setFileNames(List<String> fileNames) {
+        this.fileNames = fileNames;
     }
 }
