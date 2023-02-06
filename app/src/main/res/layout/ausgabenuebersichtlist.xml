@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="330dp"
+        android:layout_width="300dp"
         android:layout_height="65dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +29,20 @@
                 tools:layout_editor_absoluteY="0dp" />
 
             <TextView
+                android:id="@+id/textViewDashDesc"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Von: Bent An: Lenn"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toTopOf="@id/textViewDashSchuldner"
+                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
+                app:layout_constraintHorizontal_bias="0.345"
+                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
+                app:layout_constraintTop_toBottomOf="@id/textViewDashName"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
                 android:id="@+id/textViewDashName"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -42,35 +56,22 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.457"
+                app:layout_constraintHorizontal_bias="0.349"
                 app:layout_constraintStart_toStartOf="@id/clayoutdetail"
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
                 app:layout_constraintVertical_bias="0.127" />
 
             <TextView
                 android:id="@+id/textViewDashSchuldner"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="29.01.2023"
                 android:gravity="left"
+                android:text="29.01.2023"
+                android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.332"
-                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
-                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <TextView
-                android:id="@+id/textViewDashDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Von: Bent An: Lennart"
-                android:textSize="15dp"
-                android:gravity="left"
-                app:layout_constraintBottom_toTopOf="@id/textViewDashSchuldner"
-                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.461"
+                app:layout_constraintHorizontal_bias="0.345"
                 app:layout_constraintStart_toStartOf="@id/clayoutdetail"
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
                 app:layout_constraintVertical_bias="1.0" />
@@ -79,15 +80,14 @@
                 android:id="@+id/textViewDashPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="44dp"
+                android:layout_marginEnd="72dp"
                 android:fontFamily="@font/cextrabold"
                 android:text="12,95€"
                 android:textColor="@color/rdarkgreen"
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
-                app:layout_constraintVertical_bias="0.521" />
+                app:layout_constraintTop_toTopOf="@id/clayoutdetail" />
 
             <ImageView
                 android:id="@+id/ausgabenTypImageView"
@@ -95,10 +95,9 @@
                 android:layout_height="39dp"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.09"
+                app:layout_constraintHorizontal_bias="0.049"
                 app:layout_constraintStart_toStartOf="@id/clayoutdetail"
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
-                app:layout_constraintVertical_bias="0.523"
                 app:srcCompat="@drawable/clipboardicon" />
 
 
