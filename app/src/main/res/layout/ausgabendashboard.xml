@@ -47,14 +47,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.21" />
+        app:layout_constraintGuide_percent="0.19" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVert75"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.79" />
+        app:layout_constraintGuide_percent="0.81" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline24"
@@ -73,7 +73,7 @@
         android:gravity="center"
         android:text="0€"
         android:textColor="#2A4B42"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,7 +143,7 @@
         android:layout_width="100dp"
         android:layout_height="39dp"
         android:background="@drawable/smallbuttondots"
-        android:text="Versammlung"
+        android:text="Gruppe"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guidelineOben"
@@ -218,6 +218,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959"
-        app:srcCompat="@drawable/bookmarkicon" />
+        app:srcCompat="@drawable/plusiconsecond" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.caverock.androidsvg.SVG;
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.AusgabenTyp;
@@ -76,7 +75,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
                     holder.date.setText("");
                 }
                 setupAusgabenImage(holder, ausgabe.getAusgabenTyp());
-                summe.setText("Privat: " + ausgabenReport.getPrivateAusgaben() + "€");
+                summe.setText(ausgabenReport.getPrivateAusgaben() + "€");
                 holder.ausgabe.setText(ausgabe.getBetrag() + "€");
                 break;
             }
@@ -95,7 +94,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
                 if(ausgabe.getZahler() == ausgabe.getSchuldner()) holder.beschreibung.setText("Für dich selbst!");
                 else holder.beschreibung.setText("Von: " + ausgabe.getZahlerName() + " An: " + ausgabe.getSchuldnerName());
                 holder.ausgabe.setText(ausgabe.getBetrag() + "€");
-                summe.setText("Gruppen: " + ausgabenReport.getPersoenlicheGruppenausgaben() + "€");
+                summe.setText(ausgabenReport.getPersoenlicheGruppenausgaben() + "€");
                 break;
             }
             case "schulden":
@@ -113,7 +112,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
                     holder.ausgabe.setText(betrag + "€");
                 }
                 holder.date.setText("");
-                summe.setText("Gesamt: " + ausgabenReport.getGruppenGesamtausgabe() + "€");
+                summe.setText(ausgabenReport.getGruppenGesamtausgabe() + "€");
                 break;
         }
 
