@@ -267,6 +267,7 @@
         app:layout_constraintTop_toBottomOf="@id/schuldnerListView"
         app:layout_constraintEnd_toEndOf="@+id/schuldnerListView"
         app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintBottom_toTopOf="@id/textView24"
         app:layout_constraintStart_toStartOf="@+id/schuldnerListView"
         tools:layout_editor_absoluteY="557dp" />
 
