@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
     <TextView
         android:id="@+id/textAusgabeErstellen"
         android:layout_width="wrap_content"
@@ -20,18 +21,17 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline25"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline25"
-        app:layout_constraintVertical_bias="0.483" />
-
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.06" />
+        app:layout_constraintGuide_percent="0.13" />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -48,35 +48,37 @@
         android:id="@+id/textViewBetragEingabe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Zwischenstopp hinzufügen"
         android:textColor="@color/rdarkgreen"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline32"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline32"
-        app:layout_constraintVertical_bias="0.157"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_bias="0.368" />
 
     <TextView
         android:id="@+id/textViewBetragEingabe2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Übersicht"
         android:textColor="@color/rdarkgreen"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline29"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline29"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_bias="0.473" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/zwischenstoppDetailsRecycler"
         android:layout_width="match_parent"
         android:layout_height="222dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/textViewBetragEingabe2"
         app:layout_constraintTop_toTopOf="@id/guideline29" />
 
@@ -84,7 +86,7 @@
         android:id="@+id/ausgabenNotizEditText"
         android:layout_width="275dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/custom_shape"
         android:fontFamily="@font/cmedium"
         android:hint="Pizza bei Papa John´s"
@@ -102,27 +104,18 @@
         app:layout_constraintTop_toTopOf="@id/guideline32" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.22" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.26" />
-
-    <Button
-        android:id="@+id/ausgabeSpeichernButton"
-        android:layout_width="251dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="215dp"
-        android:background="@drawable/custom_shape2"
-        android:fontFamily="@font/cmedium"
-        android:text="Änderungen Speichern"
-        android:textAllCaps="false"
-        android:textColor="#ffff"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline31"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintTop_toTopOf="@+id/guideline31" />
+        app:layout_constraintGuide_percent="0.34" />
 
 
     <Button
@@ -138,29 +131,42 @@
         android:textSize="17dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline33"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintTop_toTopOf="@+id/guideline33" />
+        app:layout_constraintTop_toTopOf="@+id/guideline33"
+        app:layout_constraintVertical_bias="0.113" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+    <Button
+        android:id="@+id/ausgabeSpeichernButton"
+        android:layout_width="251dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="215dp"
+        android:background="@drawable/custom_shape2"
+        android:fontFamily="@font/cmedium"
+        android:text="Änderungen Speichern"
+        android:textAllCaps="false"
+        android:textColor="#ffff"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline31"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toTopOf="@+id/guideline31"
+        app:layout_constraintVertical_bias="0.109" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.67" />
+        app:layout_constraintGuide_percent="0.73" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline32"
+        android:id="@+id/guideline31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.14" />
+        app:layout_constraintGuide_percent="0.66" />
 
     <ProgressBar
         android:id="@+id/ausgabeProgressBar"
@@ -195,14 +201,17 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@id/guideline29"
-        app:layout_constraintStart_toEndOf="@id/ausgabenNotizEditText"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:width="10dp"
+        android:height="10dp"
+        android:background="@drawable/plusoneplus"
+app:layout_constraintTop_toTopOf="@id/ausgabenNotizEditText"
+        app:layout_constraintBottom_toBottomOf="@id/ausgabenNotizEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteX="307dp"
-        tools:layout_editor_absoluteY="135dp" />
+        app:layout_constraintHorizontal_bias="0.188"
+        app:layout_constraintStart_toEndOf="@id/ausgabenNotizEditText"
+        tools:layout_editor_absoluteY="141dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
