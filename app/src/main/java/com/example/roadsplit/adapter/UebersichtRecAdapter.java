@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
-import com.example.roadsplit.activities.MainActivity;
-import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.reponses.ReiseResponse;
@@ -32,15 +30,16 @@ import java.util.Observer;
 
 public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdapter.RecentsViewHolder> implements Observer {
 
-    private Context context;
-    private List<ReiseResponse> recentsDataList;
-    private Map<String, Bitmap> imageMap;
+    private final Context context;
+    private final List<ReiseResponse> recentsDataList;
+    private final Map<String, Bitmap> imageMap;
     private RecentsViewHolder viewHolder;
 
     public UebersichtRecAdapter(Context context, List<ReiseResponse> recentsDataList, Map<String, Bitmap> imageMap) {
         this.context = context;
         this.recentsDataList = recentsDataList;
         this.imageMap = imageMap;
+
     }
 
     @NonNull
@@ -70,8 +69,7 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
 
     }
 
-    private void setupUi(RecentsViewHolder holder, ReiseResponse reiseResponse)
-    {
+    private void setupUi(RecentsViewHolder holder, ReiseResponse reiseResponse) {
         Reise reise = reiseResponse.getReise();
 
         holder.name.setText(reise.getName());
@@ -80,20 +78,19 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
         holder.date.setText(dateString);
         if (reiseResponse.getGesamtAusgabe() != null)
             holder.ausgaben.setText("Ausgaben: " + reiseResponse.getGesamtAusgabe().toString() + "€");
-        holder.anzahlReisende.setText("Reisende: " + Integer.toString(reiseResponse.getReisendeList().size()));
+        holder.anzahlReisende.setText("Reisende: " + reiseResponse.getReisendeList().size());
         BigDecimal gesamtBudget = new BigDecimal(0);
-        for(Stop stop : reise.getStops())
-        {
-            if(stop.getBudget() != null)
+        for (Stop stop : reise.getStops()) {
+            if (stop.getBudget() != null)
                 gesamtBudget = gesamtBudget.add(stop.getBudget());
         }
         holder.budget.setText("Budget: " + gesamtBudget.toString() + "€");
         holder.image.setImageBitmap(imageMap.get(reise.getName()));
         holder.ersteller.setText("Erstellt von: " + reise.getReiseErsteller());
 
-        if(gesamtBudget != null &&
+        if (gesamtBudget != null &&
                 !gesamtBudget.equals(new BigDecimal(0))
-                && gesamtBudget.compareTo(reiseResponse.getGesamtAusgabe()) < 0){
+                && gesamtBudget.compareTo(reiseResponse.getGesamtAusgabe()) < 0) {
             holder.ausgaben.setTextColor(Color.RED);
         }
 
@@ -109,7 +106,7 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
     public void update(Observable observable, Object o) {
     }
 
-    public static final class RecentsViewHolder extends RecyclerView.ViewHolder{
+    public static final class RecentsViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
         TextView date;

@@ -1,19 +1,18 @@
 package com.example.roadsplit.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ButtonEffect;
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
 
         Intent intent = getIntent();
-        if(intent.getStringExtra("registered") != null)
+        if (intent.getStringExtra("registered") != null)
             Toast.makeText(this, "Account erfolgreich registriert!", Toast.LENGTH_LONG).show();
         findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
         //findViewById(R.id.plsloginButton).setOnTouchListener(new HapticTouchListener());
@@ -55,15 +54,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //TODO: Textfeld auf PW Feld von Email ändern
-    public void register(View view)
-    {
+    public void register(View view) {
         Intent intent = new Intent(this, RegistryActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void login(View view)
-    {
+    public void login(View view) {
         findViewById(R.id.loginProgressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.erroremail).setVisibility(View.INVISIBLE);
         findViewById(R.id.errorPassword).setVisibility(View.INVISIBLE);
@@ -73,22 +70,21 @@ public class LoginActivity extends AppCompatActivity {
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
         UserAccount userAccount = new UserAccount();
-        String username = ((EditText)findViewById(R.id.emailLogView)).getText().toString();
-        String password = ((EditText)findViewById(R.id.passLogView)).getText().toString();
+        String username = ((EditText) findViewById(R.id.emailLogView)).getText().toString();
+        String password = ((EditText) findViewById(R.id.passLogView)).getText().toString();
 
         boolean ok = true;
-        if(username.isEmpty()){
+        if (username.isEmpty()) {
             findViewById(R.id.erroremail).setVisibility(View.VISIBLE);
             findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
             ok = false;
         }
-        if(password.isEmpty())
-        {
+        if (password.isEmpty()) {
             findViewById(R.id.errorPassword).setVisibility(View.VISIBLE);
             findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
             ok = false;
         }
-        if(!ok){
+        if (!ok) {
             reject(view);
             return;
         }
@@ -111,36 +107,30 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
-                if(response.isSuccessful())
-                {
+                UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+                if (response.isSuccessful()) {
                     reisender = userResponse.getReisender();
                     SharedPreferences.Editor editor = reisenderPref.edit();
                     editor.putString("reisender", new Gson().toJson(reisender));
                     editor.apply();
-                    if(userResponse.getReisender().isFirsttimelogin())
-                    {
+                    if (userResponse.getReisender().isFirsttimelogin()) {
                         reisender.setFirsttimelogin(false);
                         sendUserUpdate();
                         startFirstTimeActivity();
-                    }
-                    else success();
+                    } else success();
                     findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
                     return;
                 }
 
                 String message = userResponse.getMessage();
-                if(message.contains("Passwort"))
-                {
+                if (message.contains("Passwort")) {
                     runOnUiThread(() -> {
                         TextView textView;
                         textView = findViewById(R.id.errorPassword);
                         textView.setVisibility(View.VISIBLE);
                         textView.setText(message);
                     });
-                }
-                else
-                {
+                } else {
                     runOnUiThread(() -> {
                         TextView textView;
                         textView = findViewById(R.id.erroremail);
@@ -166,27 +156,25 @@ public class LoginActivity extends AppCompatActivity {
         nextcall.execute();
     }
 
-    public void success()
-    {
-        Intent intent = new Intent(this, NeueReiseActivity.class);
+    public void success() {
+        Intent intent = new Intent(this, ReiseUebersichtTestActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void startFirstTimeActivity()
-    {
+    public void startFirstTimeActivity() {
         Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void reject(View view){
+    public void reject(View view) {
         view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
 
-    public void confirm(View view){
+    public void confirm(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        view.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            view.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
         }
     }
 }

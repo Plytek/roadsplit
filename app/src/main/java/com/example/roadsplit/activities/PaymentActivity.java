@@ -78,7 +78,7 @@ public class PaymentActivity extends AppCompatActivity {
         this.ausgabeSpeichernButton = findViewById(R.id.ausgabeSpeichernButton);
         this.privateCheckBox = findViewById(R.id.privatCheckBox);
         this.progressBar = findViewById(R.id.ausgabeProgressBar);
-        progressBar.setVisibility(View.GONE);
+        this.progressBar.setVisibility(View.GONE);
 
         this.reportPref = getSharedPreferences("report", MODE_PRIVATE);
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
@@ -136,11 +136,8 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void setupSpinners(){
-        List<String> names = new ArrayList<>();
-        for (AusgabenTyp c : AusgabenTyp.values()) {
-            names.add(c.name());
-        }
-        ArrayAdapter<String> typAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, names);
+
+        ArrayAdapter<String> typAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, AusgabenTyp.ausgabenTypenWithEmoji());
         typAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         kategorieSpinner.setAdapter(typAdapter);
 

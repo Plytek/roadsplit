@@ -169,6 +169,7 @@ public class EndpointConnector {
         client.newCall(request).enqueue(callback);
     }
 
+
     public static void updateAusgaben(AusgabenRequest ausgabenRequest, Callback callback) {
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/reisedaten/ausgabe";

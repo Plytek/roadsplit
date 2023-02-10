@@ -1,47 +1,34 @@
 package com.example.roadsplit.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Base64;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.testing.MapActivity;
-import com.example.roadsplit.model.Dokument;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.reponses.UserResponse;
 import com.example.roadsplit.requests.UploadRequest;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -60,20 +47,20 @@ import okhttp3.Response;
 @Setter
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_PICK_FILE = 1;
-    private UserAccount userAccount = null;
     //public static Reisender currentUser;
     public static final String BASEURL = "http://167.172.167.221:8080";
+    private static final int REQUEST_CODE_PICK_FILE = 1;
+    private final UserAccount userAccount = null;
     //public static CurrentUserData currentUserData;
-    private BottomNavigationView navigation;
-    //public static final String BASEURL = "https://46ba-84-63-180-89.ngrok.io";
 
+    //public static final String BASEURL = "https://46ba-84-63-180-89.ngrok.io";
     private SharedPreferences reisenderPref;
     private SharedPreferences reiseResponsesPref;
 
     private ImageView retrievedImage;
     private ReiseResponse reiseResponse;
     private Reisender reisender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Das hier auszukommentieren damit die App beim starten auf den Debugger wartet
@@ -85,31 +72,13 @@ public class MainActivity extends AppCompatActivity {
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
         this.reiseResponsesPref = getSharedPreferences("reiseResponses", MODE_PRIVATE);
 
-        this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+        //this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
         try {
             login();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        navigation.setSelectedItemId(R.id.navigation_home);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        break;
-                    case R.id.navigation_dashboard:
-                        neueReise(null);
-                        break;
-                    case R.id.navigation_notifications:
-                        reiseDetail(null);
-                        break;
-                }
-                return true;
-            }
-        });
     }
 
     //Startet einen neuen Intent (Activity) - die MapActivity
@@ -125,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void createUser(View view){
+    public void createUser(View view) {
     }
 
     public void registrieren(View view) {
@@ -133,40 +102,39 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void reiseText(View view){
+    public void reiseText(View view) {
     }
 
-    public void turorialAnim(View view){
+    public void turorialAnim(View view) {
         Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
     }
 
-    public void einloggen(View view){
+    public void einloggen(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    public void reiseErstelen(View view){
+    public void reiseErstelen(View view) {
     }
 
-    public void testBent(View view){
+    public void testBent(View view) {
         Intent intent = new Intent(this, ReiseErstellenActivity.class);
         startActivity(intent);
     }
 
-    public void testKnecht(View view){
+    public void testKnecht(View view) {
         setContentView(R.layout.testknecht);
     }
 
 
-    public void reiseDetail(View view){
+    public void reiseDetail(View view) {
         Intent intent = new Intent(this, ReiseUebersichtTestActivity.class);
         startActivity(intent);
     }
 
 
-    private void login()
-    {
+    private void login() {
         OkHttpClient client = new OkHttpClient();
         String url = MainActivity.BASEURL + "/api/userdaten/login";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
@@ -193,9 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
-                if(response.isSuccessful())
-                {
+                UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+                if (response.isSuccessful()) {
                     reisender = userResponse.getReisender();
                     SharedPreferences.Editor editor = reisenderPref.edit();
                     editor.putString("reisender", new Gson().toJson(userResponse.getReisender()));
@@ -206,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private Callback fetchPaymentInfoSummaryCallback(){
+    private Callback fetchPaymentInfoSummaryCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -220,20 +187,20 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     reiseResponse = reiseResponses[0];
                     SharedPreferences.Editor editor = reiseResponsesPref.edit();
                     editor.putString("reiseResponses", new Gson().toJson(reiseResponses));
                     editor.apply();
-                    }
                 }
-            };
+            }
+        };
     }
 
-    public void uploadFile(View view){
+    public void uploadFile(View view) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
 
     }
 
@@ -263,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                     fileType = fileType.substring(fileType.lastIndexOf("/") + 1);
                 }
 
-                EndpointConnector.uploadFile(bytes, fileName, fileType , reisender.getReisen().get(0), reisender, uploadFileCallback());
+                EndpointConnector.uploadFile(bytes, fileName, fileType, reisender.getReisen().get(0), reisender, uploadFileCallback());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -271,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     private byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
@@ -286,13 +254,12 @@ public class MainActivity extends AppCompatActivity {
     public String getPath(Uri uri) {
 
         String path = null;
-        String[] projection = { MediaStore.Files.FileColumns.DATA };
+        String[] projection = {MediaStore.Files.FileColumns.DATA};
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
 
-        if(cursor == null){
+        if (cursor == null) {
             path = uri.getPath();
-        }
-        else{
+        } else {
             cursor.moveToFirst();
             int column_index = cursor.getColumnIndexOrThrow(projection[0]);
             path = cursor.getString(column_index);
@@ -310,12 +277,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        navigation.setSelectedItemId(R.id.navigation_home);
     }
 
 
-    private Callback uploadFileCallback()
-    {
+    private Callback uploadFileCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -328,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 UploadRequest uploadRequest = gson.fromJson(response.body().string(), UploadRequest.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
                         byte[] byteArray = Base64.decode(uploadRequest.getDokument().getEncodedImage(), Base64.NO_WRAP);

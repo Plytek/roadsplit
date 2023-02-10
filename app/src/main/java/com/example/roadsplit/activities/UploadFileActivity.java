@@ -1,17 +1,24 @@
 package com.example.roadsplit.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +66,8 @@ public class UploadFileActivity extends AppCompatActivity {
         uploadFile();
     }
 
+
+
     public void uploadFile(){
         uploadProgressBar.setVisibility(View.VISIBLE);
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -92,14 +101,61 @@ public class UploadFileActivity extends AppCompatActivity {
                     fileType = fileType.substring(fileType.lastIndexOf("/") + 1);
                 }
 
-                EndpointConnector.uploadFile(bytes, fileName, fileType , reise, reisender, uploadFileCallback());
+                openConfirmDialog(bytes, fileName, fileType);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+        }
+        if(resultCode == RESULT_CANCELED){
+            finish();
         }
 
     }
+    private void openConfirmDialog(byte[] bytes, String fileName, String fileType)
+    {
+        Dialog dialog = new Dialog(this){
+            @Override
+            public void onBackPressed() {
+                finish();
+            }
+        };
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.fileuploaddialog);
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.PopUpAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+        TextView filename = dialog.findViewById(R.id.filenameChangeEditText);
+        TextView uploadButton = dialog.findViewById(R.id.confirmUploadButton);
+        TextView cancelButton = dialog.findViewById(R.id.cancelUploadButton);
+
+
+        cancelButton.setOnClickListener(view -> {
+            dialog.dismiss();
+            finish();
+        });
+
+        uploadButton.setOnClickListener(view -> {
+            String newFilename = filename.getText().toString();
+            if (!newFilename.isEmpty()){
+                int dotIndex = fileName.lastIndexOf(".");
+                String fileExtension = fileName.substring(dotIndex);
+                EndpointConnector.uploadFile(bytes, newFilename + fileExtension, fileType, reise, reisender, uploadFileCallback());
+                dialog.dismiss();
+            }
+            else{
+                EndpointConnector.uploadFile(bytes, fileName, fileType, reise, reisender, uploadFileCallback());
+                dialog.dismiss();
+            }
+        });
+
+
+
+    }
+
     private byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;

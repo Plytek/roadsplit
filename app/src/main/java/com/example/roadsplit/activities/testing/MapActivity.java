@@ -60,7 +60,7 @@ import okhttp3.Response;
 public class MapActivity extends AppCompatActivity {
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
-    private Reisender reisender = null;
+    private final Reisender reisender = null;
     private MapView map = null;
     private RoadManager roadManager;
     private List<Address> adressen;
@@ -107,7 +107,7 @@ public class MapActivity extends AppCompatActivity {
     }
 
     public void fetchGeodata(View view)
-    {;
+    {
         ArrayList<GeoPoint> waypoints = fetchWayPointsFromAdress(stops);
         map.invalidate();
     }

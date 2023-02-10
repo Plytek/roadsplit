@@ -61,17 +61,17 @@ import okhttp3.Response;
 
 public class AusgabenAdapterHelper{
 
-        private Context mContext;
-        private View layoutScreen;
-        private AusgabenActivity ausgabenActivity;
+        private final Context mContext;
+        private final View layoutScreen;
+        private final AusgabenActivity ausgabenActivity;
         private ReiseResponse reiseResponse;
         private BigDecimal reiseGesamtAusgabe;
         private List<String> reisendeNames;
-        private ReiseUebersichtAdapter reiseUebersichtAdapter;
+        private final ReiseUebersichtAdapter reiseUebersichtAdapter;
 
-        private SharedPreferences reisenderPref;
-        private SharedPreferences reiseResponsePref;
-        private SharedPreferences reisePref;
+        private final SharedPreferences reisenderPref;
+        private final SharedPreferences reiseResponsePref;
+        private final SharedPreferences reisePref;
     private SharedPreferences reportPref;
 
         private Reisender reisender;
@@ -331,7 +331,7 @@ public class AusgabenAdapterHelper{
             balanceView.setTextColor(Color.GREEN);
             balanceTextView.setText("Du bekommst");
         }
-        balanceView.setText(gesamtBalance.toString() + "€");
+        balanceView.setText(gesamtBalance + "€");
     }
 
     public void addBetrag(Reise reise, Spinner stopSpinner, BigDecimal betrag, ListView schuldner, View layoutScreen)

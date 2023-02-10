@@ -52,7 +52,7 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
     private Reise selectedReise;
     private ListView reisenView;
     private List<Bitmap> images;
-    private Map<String, Bitmap> imageMap = new HashMap<>();
+    private final Map<String, Bitmap> imageMap = new HashMap<>();
     private int imageloadCounter;
     private Handler handler;
     UebersichtListAdapter uebersichtListAdapter;

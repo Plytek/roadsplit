@@ -20,7 +20,7 @@ import java.util.Observer;
 
 public class StopAdapter extends ArrayAdapter<Stop> {
 
-    private List<Stop> dataSet;
+    private final List<Stop> dataSet;
     Context mContext;
 
 

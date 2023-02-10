@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.helperclasses.DashboardSetup;
-import com.example.roadsplit.helperclasses.DokumentSetup;
 import com.example.roadsplit.helperclasses.ZwischenstopAdapterHelper;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.google.gson.Gson;
@@ -30,17 +30,18 @@ import okhttp3.Response;
 public class DashboardOverviewAdapter extends PagerAdapter {
 
 
-
-    private Context context;
-    private SharedPreferences reportPref;
-    private SharedPreferences reisePref;
+    private final Context context;
+    private final SharedPreferences reportPref;
+    private final SharedPreferences reisePref;
+    DashboardSetup dashboardSetup;
     private AusgabenReport ausgabenReport;
+    private AusgabenActivity ausgabenActivity;
 
 
-
-    public DashboardOverviewAdapter(Context mContext, AusgabenReport ausgabenReport) {
+    public DashboardOverviewAdapter(Context mContext, AusgabenActivity ausgabenActivity, AusgabenReport ausgabenReport) {
         this.context = mContext;
         this.ausgabenReport = ausgabenReport;
+        this.ausgabenActivity = ausgabenActivity;
         this.reportPref = context.getSharedPreferences("report", MODE_PRIVATE);
         this.reisePref = context.getSharedPreferences("reise", MODE_PRIVATE);
 
@@ -48,7 +49,7 @@ public class DashboardOverviewAdapter extends PagerAdapter {
         preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if(key.equals("report")) {
+                if (key.equals("report")) {
                     DashboardOverviewAdapter.this.ausgabenReport = new Gson().fromJson(reportPref.getString("report", "fehler"), AusgabenReport.class);
                 }
             }
@@ -63,35 +64,39 @@ public class DashboardOverviewAdapter extends PagerAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View layoutScreen;
-        switch(position)
-        {
+        switch (position) {
             case 0:
-                layoutScreen = inflater.inflate(R.layout.ausgabendashboard,null);
-                DashboardSetup dashboardSetup = new DashboardSetup(layoutScreen, context);
+                layoutScreen = inflater.inflate(R.layout.ausgabendashboard, null);
+                dashboardSetup = new DashboardSetup(layoutScreen, context, ausgabenActivity);
                 dashboardSetup.setUpDashboard();
                 break;
             case 1:
-                layoutScreen = inflater.inflate(R.layout.zwischenstopp,null);
+                layoutScreen = inflater.inflate(R.layout.testknecht, null);
                 ZwischenstopAdapterHelper zwischenstopAdapterHelper = new ZwischenstopAdapterHelper(layoutScreen, context);
-                zwischenstopAdapterHelper.setUpZwischenStops();
+                //zwischenstopAdapterHelper.setUpZwischenStops();
                 break;
             case 2:
-                layoutScreen = inflater.inflate(R.layout.packlistepage,null);
+                layoutScreen = inflater.inflate(R.layout.packlistepage, null);
                 break;
             case 3:
-                layoutScreen = inflater.inflate(R.layout.dokumentepage,null);
-                DokumentSetup dokumentSetup = new DokumentSetup(layoutScreen, context);
-                dokumentSetup.setupDokuments();
+                layoutScreen = inflater.inflate(R.layout.piechart, null);
+                dashboardSetup = new DashboardSetup(layoutScreen, context, ausgabenActivity);
+                dashboardSetup.setUpPiechart();
+
+                //DokumentSetup dokumentSetup = new DokumentSetup(layoutScreen, context, ausgabenActivity);
+                //dokumentSetup.setupDokuments();
                 break;
             default:
-                layoutScreen = inflater.inflate(R.layout.dokumentepage,null);
+                layoutScreen = inflater.inflate(R.layout.dokumentepage, null);
                 break;
         }
+
 
         container.addView(layoutScreen);
 
         return layoutScreen;
     }
+
 
     @Override
     public int getCount() {
@@ -106,11 +111,11 @@ public class DashboardOverviewAdapter extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 
-        container.removeView((View)object);
+        container.removeView((View) object);
 
     }
 
-    public Callback ausgabenReportCallback(){
+    public Callback ausgabenReportCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -120,7 +125,7 @@ public class DashboardOverviewAdapter extends PagerAdapter {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 ausgabenReport = gson.fromJson(response.body().string(), AusgabenReport.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     SharedPreferences.Editor editor = reportPref.edit();
                     editor.putString("report", gson.toJson(ausgabenReport));
                     editor.apply();

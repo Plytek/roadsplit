@@ -39,6 +39,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
+import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.activities.UploadFileActivity;
 import com.example.roadsplit.model.Dokument;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
@@ -59,18 +60,19 @@ import okhttp3.ResponseBody;
 
 public class DokumentSetup {
 
-    private View layoutScreen;
-    private Context context;
-    private SharedPreferences reportPref;
-    private AusgabenReport ausgabenReport;
+    private final View layoutScreen;
+    private final Context context;
+    private final SharedPreferences reportPref;
+    private final AusgabenReport ausgabenReport;
 
-    private Button uploadButton;
-    private Button downloadButton;
-    private ListView dokumentListView;
-    private ProgressBar dokumentProgressBar;
+    private final Button uploadButton;
+    private final Button downloadButton;
+    private final ListView dokumentListView;
+    private final ProgressBar dokumentProgressBar;
     private ArrayAdapter<String> dokumentAdapter;
+    private AusgabenActivity ausgabenActivity;
 
-    public DokumentSetup(View layoutScreen, Context context) {
+    public DokumentSetup(View layoutScreen, Context context, AusgabenActivity ausgabenActivity) {
         this.layoutScreen = layoutScreen;
         this.context = context;
 
@@ -85,6 +87,11 @@ public class DokumentSetup {
         dokumentProgressBar.setVisibility(View.INVISIBLE);
         ButtonEffect.buttonPressDownEffect(downloadButton);
         ButtonEffect.buttonPressDownEffect(uploadButton);
+
+        if(!ausgabenReport.getReise().isOngoing())
+            uploadButton.setVisibility(View.GONE);
+        else
+            uploadButton.setVisibility(View.VISIBLE);
 
         uploadButton.setOnClickListener(view -> {
             Intent intent = new Intent(context, UploadFileActivity.class);
@@ -145,6 +152,24 @@ public class DokumentSetup {
         };
     }
 
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (context.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(ausgabenActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
+        }
 
 
+    }
 }

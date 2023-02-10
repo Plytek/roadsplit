@@ -9,7 +9,17 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTest"
+        android:id="@+id/recyclerViewFinished"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewOnGoing"
+        app:layout_constraintVertical_bias="0.426" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewOnGoing"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -23,15 +33,15 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:clickable="true"
+        android:elevation="100dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Home"
         android:textColor="@color/white"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:elevation="100dp"
-        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +58,7 @@
         android:textColor="#2A4B42"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewTest"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewOnGoing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent" />
@@ -66,17 +76,17 @@
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@color/rldarkgreen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/rldarkgreen" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="32dp"
             android:layout_height="31dp"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="350dp"
+            android:layout_marginTop="15dp"
             android:elevation="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,19 +95,21 @@
 
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#F5F5F5"
-        app:itemIconTint="@color/rdarkgreen"
-        app:itemTextColor="@color/rdarkgreen"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingNeueReiseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="Neue Reise"
+        app:backgroundTint="@color/rdarkgreen"
+        app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.859"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/navigation" />
+        app:layout_constraintVertical_bias="0.959"
+        app:srcCompat="@drawable/plusiconsecond" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

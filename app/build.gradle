@@ -61,4 +61,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.caverock/androidsvg
     implementation group: 'com.caverock', name: 'androidsvg', version: '1.4'
 
+    //Piechart und Graph
+    implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
+
 }

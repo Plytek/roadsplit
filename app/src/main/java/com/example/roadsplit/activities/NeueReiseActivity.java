@@ -62,28 +62,6 @@ public class NeueReiseActivity extends AppCompatActivity {
 
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseErstellenButton));
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseBeitretenButton));
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        navigation.setSelectedItemId(R.id.navigation_dashboard);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Intent intent;
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        finish();
-                        break;
-                    case R.id.navigation_dashboard:
-                        break;
-                    case R.id.navigation_notifications:
-                        intent = new Intent(NeueReiseActivity.this, ReiseUebersichtTestActivity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                }
-                return true;
-            }
-        });
     }
 
     public void reiseErstellen(View view)

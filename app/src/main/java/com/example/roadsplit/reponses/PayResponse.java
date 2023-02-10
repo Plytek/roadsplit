@@ -18,5 +18,5 @@ import lombok.ToString;
 @ToString
 public class PayResponse {
     private String message;
-    private HashMap<Reisender, BigDecimal> zusammenfassung = new HashMap<>();
+    private final HashMap<Reisender, BigDecimal> zusammenfassung = new HashMap<>();
 }

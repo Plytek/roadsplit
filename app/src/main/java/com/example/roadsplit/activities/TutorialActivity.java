@@ -1,8 +1,5 @@
 package com.example.roadsplit.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,8 +10,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.roadsplit.adapter.IntroViewPagerAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.roadsplit.R;
+import com.example.roadsplit.adapter.IntroViewPagerAdapter;
 import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.model.ScreenItem;
 import com.google.android.material.tabs.TabLayout;
@@ -25,12 +25,12 @@ import java.util.List;
 public class TutorialActivity extends AppCompatActivity {
 
     private ViewPager screenPager;
-    private IntroViewPagerAdapter introViewPagerAdapter ;
+    private IntroViewPagerAdapter introViewPagerAdapter;
     private TabLayout tabIndicator;
     private Button btnNext;
-    private int position = 0 ;
+    private int position = 0;
     private Button btnGetStarted;
-    private Animation btnAnim ;
+    private Animation btnAnim;
     private TextView tvSkip;
     private Boolean visible = false;
     private List<ScreenItem> mList;
@@ -48,7 +48,7 @@ public class TutorialActivity extends AppCompatActivity {
         btnNext = findViewById(R.id.btn_next);
         btnGetStarted = findViewById(R.id.btn_get_started);
         tabIndicator = findViewById(R.id.tab_indicator);
-        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation);
+        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation);
         tvSkip = findViewById(R.id.tv_skip);
 
         ButtonEffect.buttonPressDownEffect(btnNext);
@@ -56,12 +56,12 @@ public class TutorialActivity extends AppCompatActivity {
 
         // fill list screen
         this.mList = new ArrayList<>();
-        mList.add(new ScreenItem("Plane deine Reise","Du musst kein Planungsgenie sein, wir helfen dir bei dem Planen deiner Reise und du kümmerst dich um das Genießen deiner Reise.",R.drawable.img1));
-        mList.add(new ScreenItem("Rechnungen teilen","Genieße die Reise mit deinen Freunden oder deiner Familie und verbringe nicht die Zeit damit Rechnungen kompliziert aufzuteilen.",R.drawable.img2));
-        mList.add(new ScreenItem("Gespeicherte Reisen","Wir bewahren deine Reisen auf und damit auch deine Erinnerungen. Sieh dir an was du wo und wann ausgegeben hast auf deinen Reisen.",R.drawable.img3));
+        mList.add(new ScreenItem("Plane deine Reise", "Du musst kein Planungsgenie sein, wir helfen dir bei dem Planen deiner Reise und du kümmerst dich um das Genießen deiner Reise.", R.drawable.img1));
+        mList.add(new ScreenItem("Rechnungen teilen", "Genieße die Reise mit deinen Freunden oder deiner Familie und verbringe nicht die Zeit damit Rechnungen kompliziert aufzuteilen.", R.drawable.img2));
+        mList.add(new ScreenItem("Gespeicherte Reisen", "Wir bewahren deine Reisen auf und damit auch deine Erinnerungen. Sieh dir an was du wo und wann ausgegeben hast auf deinen Reisen.", R.drawable.img3));
 
         // setup viewpager
-        screenPager =findViewById(R.id.screen_viewpager);
+        screenPager = findViewById(R.id.screen_viewpager);
         introViewPagerAdapter = new IntroViewPagerAdapter(this, mList);
         screenPager.setAdapter(introViewPagerAdapter);
 
@@ -73,11 +73,9 @@ public class TutorialActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                if (tab.getPosition() == mList.size()-1) {
+                if (tab.getPosition() == mList.size() - 1) {
                     loadLastScreen();
-                }
-                else if(visible == true)
-                {
+                } else if (visible == true) {
                     btnNext.setVisibility(View.VISIBLE);
                     btnGetStarted.setVisibility(View.INVISIBLE);
                     tvSkip.setVisibility(View.VISIBLE);
@@ -85,9 +83,11 @@ public class TutorialActivity extends AppCompatActivity {
                     visible = false;
                 }
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
@@ -102,20 +102,21 @@ public class TutorialActivity extends AppCompatActivity {
             position++;
             screenPager.setCurrentItem(position);
         }
-        if (position == mList.size()-1) {
+        if (position == mList.size() - 1) {
             loadLastScreen();
         }
     }
 
     public void getStarted(View view) {
-        Intent mainActivity = new Intent(getApplicationContext(), NeueReiseActivity.class);
+        Intent mainActivity = new Intent(getApplicationContext(), ReiseUebersichtTestActivity.class);
         startActivity(mainActivity);
         finish();
     }
 
-    public void skip(View view){
+    public void skip(View view) {
         screenPager.setCurrentItem(mList.size());
     }
+
     private void loadLastScreen() {
         btnNext.setVisibility(View.INVISIBLE);
         btnGetStarted.setVisibility(View.VISIBLE);

@@ -26,12 +26,12 @@ import java.util.List;
 
 public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusgabenAdapter.RecentsViewHolder> {
 
-    private Context context;
-    private String type;
-    private AusgabenReport ausgabenReport;
-    private TextView summe;
+    private final Context context;
+    private final String type;
+    private final AusgabenReport ausgabenReport;
+    private final TextView summe;
 
-    private SharedPreferences reportPref;
+    private final SharedPreferences reportPref;
 
     public DashboardAusgabenAdapter(Context context, AusgabenReport ausgabenReport, View layoutScreen, String type) {
         this.context = context;
@@ -64,7 +64,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
         switch (type) {
             case "privatAusgabe": {
                 Ausgabe ausgabe = ausgabenReport.getAusgabenFuerSelbst().get(position);
-                if(ausgabe.getNotiz() == null) holder.ausgabename.setText("Keine Notiz!");
+                if(ausgabe.getNotiz() == null || ausgabe.getNotiz().isEmpty()) holder.ausgabename.setText("Keine Notiz!");
                 else holder.ausgabename.setText(ausgabe.getNotiz());
                 holder.beschreibung.setText("");
                 try {

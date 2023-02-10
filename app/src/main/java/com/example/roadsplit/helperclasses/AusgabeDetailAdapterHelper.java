@@ -19,10 +19,10 @@ import java.util.Observer;
 public class AusgabeDetailAdapterHelper implements Observer {
 
     private List<String> reisendeNames;
-    private Context mContext;
-    private View layoutScreen;
-    private ReiseResponse reiseResponse;
-    private List<String> ausgabeDetails;
+    private final Context mContext;
+    private final View layoutScreen;
+    private final ReiseResponse reiseResponse;
+    private final List<String> ausgabeDetails;
 
     public AusgabeDetailAdapterHelper(View layoutScreen, Context context, ReiseResponse reiseResponse) {
         this.reiseResponse = reiseResponse;

@@ -25,9 +25,9 @@ import java.util.Observer;
 
 public class UebersichtListAdapter extends ArrayAdapter<Bitmap> implements Observer {
 
-    private List<Bitmap> reisenWithImages;
-    private List<ReiseResponse> reiseRepons;
-    private Context context;
+    private final List<Bitmap> reisenWithImages;
+    private final List<ReiseResponse> reiseRepons;
+    private final Context context;
 
     @Override
     public void update(Observable observable, Object o) {

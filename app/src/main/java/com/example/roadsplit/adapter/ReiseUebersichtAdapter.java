@@ -39,17 +39,17 @@ public class ReiseUebersichtAdapter extends PagerAdapter {
     private ReiseResponse reiseResponse;
     private Reisender reisender;
 
-    private Context mContext;
-    private AusgabenActivity ausgabenActivity;
-    private List<View> views;
+    private final Context mContext;
+    private final AusgabenActivity ausgabenActivity;
+    private final List<View> views;
     private AusgabeDetailAdapterHelper ausgabeDetailAdapterHelper;
     private ZwischenstopAdapterHelper zwischenstopAdapterHelper;
     private AusgabenAdapterHelper ausgabenAdapterHelper;
 
-    private SharedPreferences reisenderPref;
-    private SharedPreferences reiseResponsePref;
-    private SharedPreferences reisePref;
-    private SharedPreferences reportPref;
+    private final SharedPreferences reisenderPref;
+    private final SharedPreferences reiseResponsePref;
+    private final SharedPreferences reisePref;
+    private final SharedPreferences reportPref;
 
     private AusgabenReport ausgabenReport;
 

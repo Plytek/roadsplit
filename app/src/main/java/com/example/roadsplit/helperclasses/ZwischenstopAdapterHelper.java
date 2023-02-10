@@ -36,15 +36,15 @@ import java.util.Observable;
 
 public class ZwischenstopAdapterHelper {
 
-    private Context mContext;
-    private View layoutScreen;
+    private final Context mContext;
+    private final View layoutScreen;
     private List<Stop> stops;
     private Reise reise;
     private TextView stopEntfernenErrorView;
     private ListView stopListView;
-    private ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
+    private final ArrayList<HashMap<String,String>> fullstops = new ArrayList<HashMap<String,String>>();
 
-    private SharedPreferences reportPref;
+    private final SharedPreferences reportPref;
     private AusgabenReport ausgabenReport;
 
     public ZwischenstopAdapterHelper(View layoutScreen, Context context) {

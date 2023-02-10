@@ -1,33 +1,25 @@
 package com.example.roadsplit.activities;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.viewpager.widget.ViewPager;
-
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.DashboardOverviewAdapter;
 import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
-import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 
@@ -50,6 +42,7 @@ public class AusgabenActivity extends AppCompatActivity {
     private SharedPreferences reisePref;
     private SharedPreferences reportPref;
     private boolean returning;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +67,6 @@ public class AusgabenActivity extends AppCompatActivity {
         this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
         //this.reiseResponse = new Gson().fromJson(reisenderPref.getString("reiseResponse", "fehler"), ReiseResponse.class);
 
-        isStoragePermissionGranted();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
@@ -91,8 +83,8 @@ public class AusgabenActivity extends AppCompatActivity {
                         reise = gson.fromJson(reiseResponsePref.getString("reise", "fehler"), Reise.class);
                         break;
                     case "report":
-                         ausgabenReport = gson.fromJson(reiseResponsePref.getString("report", "fehler"), AusgabenReport.class);
-                         dashboardOverviewAdapter.notifyDataSetChanged();
+                        ausgabenReport = gson.fromJson(reiseResponsePref.getString("report", "fehler"), AusgabenReport.class);
+                        dashboardOverviewAdapter.notifyDataSetChanged();
                         break;
                 }
             }
@@ -103,7 +95,7 @@ public class AusgabenActivity extends AppCompatActivity {
         EndpointConnector.fetchAusgabenReport(reise, reisender, ausgabenReportCallback());
     }
 
-    private Callback ausgabenReportCallback(){
+    private Callback ausgabenReportCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -113,7 +105,7 @@ public class AusgabenActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 ausgabenReport = gson.fromJson(response.body().string(), AusgabenReport.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     runOnUiThread(() -> {
                         //reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseResponse, ausgabenReport);
 
@@ -123,7 +115,7 @@ public class AusgabenActivity extends AppCompatActivity {
                         editor.putString("report", gson.toJson(ausgabenReport));
                         editor.apply();
 
-                        dashboardOverviewAdapter = new DashboardOverviewAdapter(AusgabenActivity.this, ausgabenReport);
+                        dashboardOverviewAdapter = new DashboardOverviewAdapter(AusgabenActivity.this, AusgabenActivity.this, ausgabenReport);
 
                         screenPager.setAdapter(dashboardOverviewAdapter);
                         tabLayout = findViewById(R.id.tab_indicator2);
@@ -139,28 +131,9 @@ public class AusgabenActivity extends AppCompatActivity {
 
         };
     }
-    public  boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
-                return true;
-            } else {
-
-                Log.v(TAG,"Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-                return false;
-            }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
-            return true;
-        }
 
 
-    }
-
-    private Callback fetchPaymentCallback(){
+    private Callback fetchPaymentCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -170,7 +143,7 @@ public class AusgabenActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 reiseResponse = gson.fromJson(response.body().string(), ReiseResponse.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     runOnUiThread(() -> {
 
                         SharedPreferences.Editor editor = reisenderPref.edit();
