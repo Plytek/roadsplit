@@ -32,7 +32,7 @@ public class DashboardSetup {
     private SharedPreferences reportPref;
 
     private int standardColor;
-    private final int pressedColor = 0xe0f47521;
+    private final int pressedColor = 0xe233e37;
 
     public DashboardSetup(View layoutScreen, Context mContext) {
         this.layoutScreen = layoutScreen;

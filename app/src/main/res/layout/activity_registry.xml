@@ -242,15 +242,14 @@
 
     <ImageView
         android:id="@+id/imageView20"
-        android:layout_width="122dp"
-        android:layout_height="108dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="102dp"
+        android:layout_height="73dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666"
+        app:layout_constraintVertical_bias="0.504"
         app:srcCompat="@drawable/rdarklogo" />
 
     <ProgressBar

@@ -221,7 +221,7 @@
         android:textSize="11dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineText2"
         app:layout_constraintEnd_toEndOf="@id/stopNamenListView"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="@id/stopNamenListView"
         app:layout_constraintTop_toBottomOf="@+id/pinTextView2"
         app:layout_constraintVertical_bias="0.0" />

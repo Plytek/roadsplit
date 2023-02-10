@@ -68,7 +68,7 @@ public class PaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.testknecht);
+        setContentView(R.layout.ausgabeerstellen);
 
         this.notizView = findViewById(R.id.ausgabenNotizEditText);
         this.betragView = findViewById(R.id.betragEditText);

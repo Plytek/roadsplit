@@ -14,7 +14,7 @@
         android:clickable="true"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
-        android:text="Ausgabe erstellen"
+        android:text="Zwischenstopp"
         android:textColor="#2A4B42"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -45,60 +45,46 @@
         app:srcCompat="@drawable/wave" />
 
     <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wieviel wurde ausgegeben?"
-        android:textColor="@color/rdarkgreen"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
-        app:layout_constraintEnd_toEndOf="@+id/betragEditText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/betragEditText"
-        app:layout_constraintTop_toTopOf="@+id/guideline26"
-        app:layout_constraintVertical_bias="0.157" />
-
-    <TextView
         android:id="@+id/textViewBetragEingabe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gib deiner Ausgabe einen Namen."
+        android:text="Zwischenstopp hinzufügen"
         android:textColor="@color/rdarkgreen"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline32"
-        app:layout_constraintEnd_toEndOf="@+id/ausgabenNotizEditText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ausgabenNotizEditText"
-        app:layout_constraintTop_toTopOf="@+id/guideline32"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintBottom_toBottomOf="@id/guideline32"
+        app:layout_constraintTop_toTopOf="@id/guideline32"
+        app:layout_constraintVertical_bias="0.157"
+        tools:layout_editor_absoluteX="16dp" />
 
-    <EditText
-        android:id="@+id/betragEditText"
-        android:layout_width="275dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="75dp"
+    <TextView
+        android:id="@+id/textViewBetragEingabe2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Übersicht"
+        android:textColor="@color/rdarkgreen"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline29"
+        app:layout_constraintTop_toTopOf="@id/guideline29"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/zwischenstoppDetailsRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="222dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/custom_shape"
-        android:fontFamily="@font/cmedium"
-        android:hint="50 Smackeroos"
-        android:inputType="numberDecimal"
-        android:paddingStart="8dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="9dp"
-        android:textColor="#c4c4c4"
-        android:textColorHint="#7c818f"
-        android:textSize="14dp"
-        app:layout_constraintEnd_toEndOf="@id/textView7"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintTop_toBottomOf="@id/guideline26" />
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/textViewBetragEingabe2"
+        app:layout_constraintTop_toTopOf="@id/guideline29" />
 
     <EditText
         android:id="@+id/ausgabenNotizEditText"
         android:layout_width="275dp"
         android:layout_height="40dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/custom_shape"
         android:fontFamily="@font/cmedium"
         android:hint="Pizza bei Papa John´s"
@@ -110,122 +96,17 @@
         android:textColor="#c4c4c4"
         android:textColorHint="#7c818f"
         android:textSize="14dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintTop_toTopOf="@+id/guideline32"
-        app:layout_constraintVertical_bias="0.172" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Für wen wurde bezahlt?"
-        android:textColor="@color/rdarkgreen"
-        app:layout_constraintBottom_toTopOf="@+id/guideline28"
-        app:layout_constraintEnd_toEndOf="@+id/schuldnerListView"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/schuldnerListView"
-        app:layout_constraintTop_toTopOf="@+id/guideline28"
-        app:layout_constraintVertical_bias="0.055" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.43" />
-
-    <Spinner
-        android:id="@+id/kategorieSpinner"
-        android:layout_width="275dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/custom_shape"
-        app:layout_constraintBottom_toTopOf="@+id/textView22"
-        app:layout_constraintEnd_toEndOf="@id/textView23"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintTop_toBottomOf="@id/guideline27"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ListView
-        android:id="@+id/schuldnerListView"
-        android:layout_width="275dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/custom_shape"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:choiceMode="multipleChoice"
-        app:layout_constraintBottom_toTopOf="@+id/guideline29"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintTop_toTopOf="@+id/guideline28"
-        app:layout_constraintVertical_bias="0.195" />
-
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Zwischenstopp"
-        android:textColor="@color/rdarkgreen"
-        app:layout_constraintBottom_toTopOf="@+id/guideline29"
-        app:layout_constraintEnd_toEndOf="@+id/planets_spinnerZW"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/planets_spinnerZW"
-        app:layout_constraintTop_toTopOf="@+id/guideline29"
-        app:layout_constraintVertical_bias="0.111" />
-
-    <Spinner
-        android:id="@+id/planets_spinnerZW"
-        android:layout_width="275dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/custom_shape"
-        app:layout_constraintEnd_toEndOf="@id/textView24"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintTop_toBottomOf="@id/guideline29" />
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kategorie"
-        android:textColor="@color/rdarkgreen"
-        app:layout_constraintBottom_toBottomOf="@id/guideline27"
-        app:layout_constraintEnd_toEndOf="@+id/kategorieSpinner"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/kategorieSpinner"
-        app:layout_constraintTop_toTopOf="@id/guideline27"
-        app:layout_constraintVertical_bias="0.111" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.23" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintStart_toStartOf="@id/textViewBetragEingabe"
+        app:layout_constraintTop_toTopOf="@id/guideline32" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.69" />
+        app:layout_constraintGuide_percent="0.26" />
 
     <Button
         android:id="@+id/ausgabeSpeichernButton"
@@ -234,7 +115,7 @@
         android:layout_marginBottom="215dp"
         android:background="@drawable/custom_shape2"
         android:fontFamily="@font/cmedium"
-        android:text="Ausgabe Speichern"
+        android:text="Änderungen Speichern"
         android:textAllCaps="false"
         android:textColor="#ffff"
         android:textSize="17dp"
@@ -243,34 +124,43 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
         app:layout_constraintTop_toTopOf="@+id/guideline31" />
 
+
+    <Button
+        android:id="@+id/ausgabeSpeichernButton3"
+        android:layout_width="251dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="215dp"
+        android:background="@drawable/custom_shape2"
+        android:fontFamily="@font/cmedium"
+        android:text="Karte anzeigen"
+        android:textAllCaps="false"
+        android:textColor="#ffff"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline33"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toTopOf="@+id/guideline33" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.83" />
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.67" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
-
-    <CheckBox
-        android:id="@+id/privatCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:text="Privat"
-        android:textColor="#c4c4c4"
-        android:textSize="14dp"
-        app:layout_constraintBottom_toTopOf="@id/textView24"
-        app:layout_constraintEnd_toEndOf="@+id/schuldnerListView"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/schuldnerListView"
-        app:layout_constraintTop_toBottomOf="@id/schuldnerListView" />
+        app:layout_constraintGuide_percent="0.14" />
 
     <ProgressBar
         android:id="@+id/ausgabeProgressBar"
@@ -291,6 +181,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Hinzufügen, entfernen und bearbeiten"
+        app:layout_constraintEnd_toEndOf="@+id/textAusgabeErstellen"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textAusgabeErstellen"
+        app:layout_constraintTop_toBottomOf="@+id/textAusgabeErstellen" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@id/guideline29"
+        app:layout_constraintStart_toEndOf="@id/ausgabenNotizEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="307dp"
+        tools:layout_editor_absoluteY="135dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
