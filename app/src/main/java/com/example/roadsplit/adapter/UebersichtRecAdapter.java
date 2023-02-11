@@ -17,7 +17,7 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Stop;
-import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.ReiseUebersicht;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -31,11 +31,11 @@ import java.util.Observer;
 public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdapter.RecentsViewHolder> implements Observer {
 
     private final Context context;
-    private final List<ReiseResponse> recentsDataList;
+    private final List<ReiseUebersicht> recentsDataList;
     private final Map<String, Bitmap> imageMap;
     private RecentsViewHolder viewHolder;
 
-    public UebersichtRecAdapter(Context context, List<ReiseResponse> recentsDataList, Map<String, Bitmap> imageMap) {
+    public UebersichtRecAdapter(Context context, List<ReiseUebersicht> recentsDataList, Map<String, Bitmap> imageMap) {
         this.context = context;
         this.recentsDataList = recentsDataList;
         this.imageMap = imageMap;
@@ -54,14 +54,14 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
     @Override
     public void onBindViewHolder(@NonNull RecentsViewHolder holder, int position) {
 
-        ReiseResponse reiseResponse = recentsDataList.get(position);
-        setupUi(holder, reiseResponse);
+        ReiseUebersicht reiseUebersicht = recentsDataList.get(position);
+        setupUi(holder, reiseUebersicht);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AusgabenActivity.class);
-                String reiseString = new Gson().toJson(reiseResponse.getReise());
+                String reiseString = new Gson().toJson(reiseUebersicht.getReise());
                 intent.putExtra("reise", reiseString);
                 context.startActivity(intent);
             }
@@ -69,16 +69,16 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
 
     }
 
-    private void setupUi(RecentsViewHolder holder, ReiseResponse reiseResponse) {
-        Reise reise = reiseResponse.getReise();
+    private void setupUi(RecentsViewHolder holder, ReiseUebersicht reiseUebersicht) {
+        Reise reise = reiseUebersicht.getReise();
 
         holder.name.setText(reise.getName());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateString = dateFormat.format(new Date(reise.getCreateDate()));
         holder.date.setText(dateString);
-        if (reiseResponse.getGesamtAusgabe() != null)
-            holder.ausgaben.setText("Ausgaben: " + reiseResponse.getGesamtAusgabe().toString() + "€");
-        holder.anzahlReisende.setText("Reisende: " + reiseResponse.getReisendeList().size());
+        if (reiseUebersicht.getGesamtAusgaben() != null)
+            holder.ausgaben.setText("Ausgaben: " + reiseUebersicht.getGesamtAusgaben().toString() + "€");
+        holder.anzahlReisende.setText("Reisende: " + reiseUebersicht.getAnzahlReisende());
         BigDecimal gesamtBudget = new BigDecimal(0);
         for (Stop stop : reise.getStops()) {
             if (stop.getBudget() != null)
@@ -90,7 +90,7 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
 
         if (gesamtBudget != null &&
                 !gesamtBudget.equals(new BigDecimal(0))
-                && gesamtBudget.compareTo(reiseResponse.getGesamtAusgabe()) < 0) {
+                && gesamtBudget.compareTo(reiseUebersicht.getGesamtAusgaben()) < 0) {
             holder.ausgaben.setTextColor(Color.RED);
         }
 

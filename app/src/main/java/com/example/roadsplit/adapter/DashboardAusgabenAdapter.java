@@ -16,13 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.AusgabenTyp;
-import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.model.finanzen.Schulden;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusgabenAdapter.RecentsViewHolder> {
 
@@ -43,10 +41,9 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
         this.reportPref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                    if(key.equals("report"))
-                    {
+                if (key.equals("report")) {
 
-                    }
+                }
             }
         });
     }
@@ -64,7 +61,8 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
         switch (type) {
             case "privatAusgabe": {
                 Ausgabe ausgabe = ausgabenReport.getAusgabenFuerSelbst().get(position);
-                if(ausgabe.getNotiz() == null || ausgabe.getNotiz().isEmpty()) holder.ausgabename.setText("Keine Notiz!");
+                if (ausgabe.getNotiz() == null || ausgabe.getNotiz().isEmpty())
+                    holder.ausgabename.setText("Keine Notiz!");
                 else holder.ausgabename.setText(ausgabe.getNotiz());
                 holder.beschreibung.setText("");
                 try {
@@ -81,7 +79,7 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
             }
             case "gruppenAusgabe": {
                 Ausgabe ausgabe = ausgabenReport.getAusgabenFuerGruppe().get(position);
-                if(ausgabe.getNotiz() == null) holder.ausgabename.setText("Keine Notiz!");
+                if (ausgabe.getNotiz() == null) holder.ausgabename.setText("Keine Notiz!");
                 else holder.ausgabename.setText(ausgabe.getNotiz());
                 try {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
@@ -91,8 +89,10 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
                     holder.date.setText("");
                 }
                 setupAusgabenImage(holder, ausgabe.getAusgabenTyp());
-                if(ausgabe.getZahler() == ausgabe.getSchuldner()) holder.beschreibung.setText("Für dich selbst!");
-                else holder.beschreibung.setText("Von: " + ausgabe.getZahlerName() + " An: " + ausgabe.getSchuldnerName());
+                if (ausgabe.getZahler() == ausgabe.getSchuldner())
+                    holder.beschreibung.setText("Für dich selbst!");
+                else
+                    holder.beschreibung.setText("Von: " + ausgabe.getZahlerName() + " An: " + ausgabe.getSchuldnerName());
                 holder.ausgabe.setText(ausgabe.getBetrag() + "€");
                 summe.setText(ausgabenReport.getPersoenlicheGruppenausgaben() + "€");
                 break;
@@ -100,13 +100,11 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
             case "schulden":
                 Schulden schulden = ausgabenReport.getSchuldenReport().get(position);
                 BigDecimal betrag = schulden.getSchulden();
-                if (betrag.compareTo(BigDecimal.ZERO) < 0){
+                if (betrag.compareTo(BigDecimal.ZERO) < 0) {
                     holder.ausgabename.setText("Du schuldest");
-                    holder.beschreibung.setText(schulden.getMitreisenderName());
+                    holder.beschreibung.setText(schulden.getReisenderName());
                     holder.ausgabe.setText(betrag.abs() + "€");
-                }
-                else
-                {
+                } else {
                     holder.ausgabename.setText("Du bekommst von");
                     holder.beschreibung.setText(schulden.getMitreisenderName());
                     holder.ausgabe.setText(betrag + "€");
@@ -118,9 +116,8 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
 
     }
 
-    private void setupAusgabenImage(RecentsViewHolder holder, AusgabenTyp ausgabenTyp)
-    {
-        switch (ausgabenTyp){
+    private void setupAusgabenImage(RecentsViewHolder holder, AusgabenTyp ausgabenTyp) {
+        switch (ausgabenTyp) {
             case Restaurants:
                 holder.kategorie.setImageResource(R.drawable.spaghettismall);
                 break;
@@ -150,26 +147,26 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
 
     @Override
     public int getItemCount() {
-        switch (type)
-        {
-        case "privatAusgabe": {
-            try {
-                return ausgabenReport.getAusgabenFuerSelbst().size();
-            } catch (Exception e) {
-                return 0;
+        switch (type) {
+            case "privatAusgabe": {
+                try {
+                    return ausgabenReport.getAusgabenFuerSelbst().size();
+                } catch (Exception e) {
+                    return 0;
+                }
             }
-        }
-        case "gruppenAusgabe": {
-            return ausgabenReport.getAusgabenFuerGruppe().size();
-        }
-        case "schulden": {
-            return ausgabenReport.getSchuldenReport().size();
-        }
-        default: return ausgabenReport.getAusgabenFuerSelbst().size();
+            case "gruppenAusgabe": {
+                return ausgabenReport.getAusgabenFuerGruppe().size();
+            }
+            case "schulden": {
+                return ausgabenReport.getSchuldenReport().size();
+            }
+            default:
+                return ausgabenReport.getAusgabenFuerSelbst().size();
         }
     }
 
-    public static final class RecentsViewHolder extends RecyclerView.ViewHolder{
+    public static final class RecentsViewHolder extends RecyclerView.ViewHolder {
 
         TextView ausgabename;
         TextView beschreibung;

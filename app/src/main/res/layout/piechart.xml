@@ -49,7 +49,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="5dp">
 
                     <!--View to display the yellow color icon-->
                     <View
@@ -64,12 +65,21 @@
                         android:paddingLeft="10dp"
                         android:text="Allgemein" />
 
+                    <TextView
+                        android:id="@+id/allgemeinPercent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%" />
+
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="5dp">
 
                     <!--View to display the yellow color icon-->
                     <View
@@ -84,12 +94,20 @@
                         android:paddingLeft="10dp"
                         android:text="Restaurants" />
 
+                    <TextView
+                        android:id="@+id/restaurantsPercent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="5dp">
 
                     <!--View to display the yellow color icon-->
                     <View
@@ -104,12 +122,20 @@
                         android:paddingLeft="10dp"
                         android:text="Transport" />
 
+                    <TextView
+                        android:id="@+id/transportPercent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="5dp">
 
                     <!--View to display the yellow color icon-->
                     <View
@@ -124,12 +150,20 @@
                         android:paddingLeft="10dp"
                         android:text="Tanken" />
 
+                    <TextView
+                        android:id="@+id/tankenPercent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="5dp">
 
                     <!--View to display the yellow color icon-->
                     <View
@@ -141,8 +175,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
                         android:text="Unterkunft" />
+
+                    <TextView
+                        android:id="@+id/unterkunftPercent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%" />
 
                 </LinearLayout>
 
@@ -151,7 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginBottom="5dp">
 
                     <!--View to display the green color icon-->
                     <View
@@ -166,6 +207,13 @@
                         android:paddingLeft="10dp"
                         android:text="Shopping" />
 
+                    <TextView
+                        android:id="@+id/shoppingPercent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%" />
+
                 </LinearLayout>
 
                 <!--Linear layout to display C++-->
@@ -173,7 +221,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginBottom="5dp">
 
                     <!--View to display the red color icon-->
                     <View
@@ -188,6 +236,13 @@
                         android:paddingLeft="10dp"
                         android:text="Aktivitäten" />
 
+                    <TextView
+                        android:id="@+id/aktivitaetenPercent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%" />
+
                 </LinearLayout>
 
                 <!--Linear layout to display Java-->
@@ -195,7 +250,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginBottom="5dp">
 
                     <!--View to display the blue color icon-->
                     <View
@@ -209,6 +264,13 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:text="Gebühren" />
+
+                    <TextView
+                        android:id="@+id/gebuerenPercent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%" />
 
                 </LinearLayout>
 

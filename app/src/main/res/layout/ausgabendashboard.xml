@@ -1,13 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintausgabenpage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fillViewport="true">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="665dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintEnd_toEndOf="@+id/expand_button"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGruppeAusgaben">
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/expandable_layout"
+            android:layout_width="406dp"
+            android:layout_height="226dp"
+            app:el_duration="1000"
+            app:el_expanded="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guidelineVert50"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/guidelineVert50"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewGraph"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:id="@+id/dropdownlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+
+                    <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/piechart"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_weight="1"
+                        android:padding="6dp"
+
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="5dp">
+
+                            <!--View to display the yellow color icon-->
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/red" />
+
+                            <!--Text view to display R -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="Allgemein" />
+
+                            <TextView
+                                android:id="@+id/allgemeinPercent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="0%" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="5dp">
+
+                            <!--View to display the yellow color icon-->
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/rlightgreen" />
+
+                            <!--Text view to display R -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="Restaurants" />
+
+                            <TextView
+                                android:id="@+id/restaurantsPercent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="0%" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="5dp">
+
+                            <!--View to display the yellow color icon-->
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/rgrey" />
+
+                            <!--Text view to display R -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="Transport" />
+
+                            <TextView
+                                android:id="@+id/transportPercent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="0%" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="5dp">
+
+                            <!--View to display the yellow color icon-->
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/purple_200" />
+
+                            <!--Text view to display R -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="Tanken" />
+
+                            <TextView
+                                android:id="@+id/tankenPercent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="0%" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="5dp">
+
+                            <!--View to display the yellow color icon-->
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/marineblue" />
+
+                            <!--Text view to display R -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="10dp"
+                                android:text="Unterkunft" />
+
+                            <TextView
+                                android:id="@+id/unterkunftPercent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="0%" />
+
+                        </LinearLayout>
+
+                        <!--Linear layout to display Python-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="5dp">
+
+                            <!--View to display the green color icon-->
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/yellow" />
+
+                            <!--Text view to display python text -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="Shopping" />
+
+                            <TextView
+                                android:id="@+id/shoppingPercent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="0%" />
+
+                        </LinearLayout>
+
+                        <!--Linear layout to display C++-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="5dp">
+
+                            <!--View to display the red color icon-->
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/rdarkgreen" />
+
+                            <!--Text view to display C++ text -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="Aktivitäten" />
+
+                            <TextView
+                                android:id="@+id/aktivitaetenPercent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="0%" />
+
+                        </LinearLayout>
+
+                        <!--Linear layout to display Java-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="5dp">
+
+                            <!--View to display the blue color icon-->
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/black" />
+
+                            <!--Text view to display Java text -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="Gebühren" />
+
+                            <TextView
+                                android:id="@+id/gebuerenPercent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="0%" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ausgabenDetailsRecycler"
+            android:layout_width="338dp"
+            android:layout_height="500dp"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal90"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expandable_layout"
+            app:layout_constraintVertical_bias="0.074" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineHorizontal90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.98" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineVert50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textDashboard"
@@ -34,6 +359,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.06" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVertMiddle"
@@ -206,18 +532,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline23"
         app:layout_constraintVertical_bias="0.589" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ausgabenDetailsRecycler"
-        android:layout_width="353dp"
-        android:layout_height="452dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/floating_action_button"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVertMiddle"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVertMiddle"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGruppeAusgaben"
-        app:layout_constraintVertical_bias="0.0" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button"
         android:layout_width="wrap_content"
@@ -234,5 +548,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959"
         app:srcCompat="@drawable/plusiconsecond" />
+
+    <Button
+        android:id="@+id/expand_button"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:background="@drawable/smallbuttondots"
+        android:foreground="?selectableItemBackground"
+        android:text="Statistik"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertMiddle"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertMiddle"
+        app:layout_constraintTop_toTopOf="@+id/guidelineOben"
+        app:layout_constraintVertical_bias="0.933" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,7 +58,7 @@ public class AusgabenActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         returning = intent.getBooleanExtra("returning", false);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
         this.reiseResponsePref = getSharedPreferences("reiseResponse", MODE_PRIVATE);

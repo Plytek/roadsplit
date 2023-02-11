@@ -17,6 +17,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.helperclasses.DashboardSetup;
+import com.example.roadsplit.helperclasses.DokumentSetup;
 import com.example.roadsplit.helperclasses.ZwischenstopAdapterHelper;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.google.gson.Gson;
@@ -69,6 +70,7 @@ public class DashboardOverviewAdapter extends PagerAdapter {
                 layoutScreen = inflater.inflate(R.layout.ausgabendashboard, null);
                 dashboardSetup = new DashboardSetup(layoutScreen, context, ausgabenActivity);
                 dashboardSetup.setUpDashboard();
+                dashboardSetup.setUpPiechart("privat");
                 break;
             case 1:
                 layoutScreen = inflater.inflate(R.layout.testknecht, null);
@@ -79,12 +81,12 @@ public class DashboardOverviewAdapter extends PagerAdapter {
                 layoutScreen = inflater.inflate(R.layout.packlistepage, null);
                 break;
             case 3:
-                layoutScreen = inflater.inflate(R.layout.piechart, null);
-                dashboardSetup = new DashboardSetup(layoutScreen, context, ausgabenActivity);
-                dashboardSetup.setUpPiechart();
+                layoutScreen = inflater.inflate(R.layout.dokumentepage, null);
+                //dashboardSetup = new DashboardSetup(layoutScreen, context, ausgabenActivity);
+                //dashboardSetup.setUpPiechart();
 
-                //DokumentSetup dokumentSetup = new DokumentSetup(layoutScreen, context, ausgabenActivity);
-                //dokumentSetup.setupDokuments();
+                DokumentSetup dokumentSetup = new DokumentSetup(layoutScreen, context, ausgabenActivity);
+                dokumentSetup.setupDokuments();
                 break;
             default:
                 layoutScreen = inflater.inflate(R.layout.dokumentepage, null);

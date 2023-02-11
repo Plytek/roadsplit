@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +37,8 @@ import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
@@ -61,6 +64,8 @@ public class DashboardSetup {
     private Reisender reisender;
 
     private PieChart pieChart;
+    private ExpandableLayout expandableLayout;
+    private TextView expandButton;
 
     public DashboardSetup(View layoutScreen, Context mContext, AusgabenActivity ausgabenActivity) {
         this.layoutScreen = layoutScreen;
@@ -73,6 +78,8 @@ public class DashboardSetup {
         this.reiseResponsePref = mContext.getSharedPreferences("reiseResponses", MODE_PRIVATE);
 
         this.pieChart = layoutScreen.findViewById(R.id.piechart);
+        this.expandableLayout = layoutScreen.findViewById(R.id.expandable_layout);
+        this.expandButton = layoutScreen.findViewById(R.id.expand_button);
 
         this.ausgabenReport = new Gson().fromJson(reportPref.getString("report", "fehler"), AusgabenReport.class);
         this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
@@ -87,12 +94,46 @@ public class DashboardSetup {
                 }
             }
         });
-
+        expandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (expandableLayout.isExpanded())
+                    expandableLayout.collapse();
+                else
+                    expandableLayout.expand();
+            }
+        });
     }
 
-    public void setUpPiechart() {
-        List<Ausgabe> ausgaben = ausgabenReport.getAusgabenFuerGruppe();
-        ausgaben.addAll(ausgabenReport.getAusgabenFuerSelbst());
+    public void setUpPiechart(String type) {
+        TextView allgemeinView = layoutScreen.findViewById(R.id.allgemeinPercent);
+        TextView restaurantsView = layoutScreen.findViewById(R.id.restaurantsPercent);
+        TextView transportView = layoutScreen.findViewById(R.id.transportPercent);
+        TextView tankenView = layoutScreen.findViewById(R.id.tankenPercent);
+        TextView unterkunftView = layoutScreen.findViewById(R.id.unterkunftPercent);
+        TextView shoppingView = layoutScreen.findViewById(R.id.shoppingPercent);
+        TextView aktivitaetenView = layoutScreen.findViewById(R.id.aktivitaetenPercent);
+        TextView gebuerenView = layoutScreen.findViewById(R.id.gebuerenPercent);
+
+
+        List<Ausgabe> ausgaben;
+
+        switch (type) {
+            case "privat":
+                ausgaben = ausgabenReport.getAusgabenFuerSelbst();
+                break;
+            case "gruppe":
+                ausgaben = ausgabenReport.getAusgabenFuerGruppe();
+                break;
+            case "schulden":
+                ausgaben = ausgabenReport.getAusgabenFuerGruppe();
+                break;
+            default:
+                ausgaben = ausgabenReport.getAusgabenFuerSelbst();
+                break;
+        }
+
+
         double allgemein = 0;
         double restaurants = 0;
         double transport = 0;
@@ -130,16 +171,27 @@ public class DashboardSetup {
                     break;
             }
         }
-        allgemein = allgemein / gesamt * 100;
-        restaurants = restaurants / gesamt * 100;
-        transport = transport / gesamt * 100;
-        tanken = tanken / gesamt * 100;
-        unterkunft = unterkunft / gesamt * 100;
-        shopping = shopping / gesamt * 100;
-        aktivitaeten = aktivitaeten / gesamt * 100;
-        gebuehren = gebuehren / gesamt * 100;
+        allgemein = (double) Math.round(allgemein / gesamt * 100 * 100) / 100;
+        restaurants = (double) Math.round(restaurants / gesamt * 100 * 100) / 100;
+        transport = (double) Math.round(transport / gesamt * 100 * 100) / 100;
+        tanken = (double) Math.round(tanken / gesamt * 100 * 100) / 100;
+        unterkunft = (double) Math.round(unterkunft / gesamt * 100 * 100) / 100;
+        shopping = (double) Math.round(shopping / gesamt * 100 * 100) / 100;
+        aktivitaeten = (double) Math.round(aktivitaeten / gesamt * 100 * 100) / 100;
+        gebuehren = (double) Math.round(gebuehren / gesamt * 100 * 100) / 100;
+
+        allgemeinView.setText(allgemein + "%");
+        restaurantsView.setText(restaurants + "%");
+        transportView.setText(transport + "%");
+        tankenView.setText(tanken + "%");
+        unterkunftView.setText(unterkunft + "%");
+        shoppingView.setText(shopping + "%");
+        aktivitaetenView.setText(aktivitaeten + "%");
+        gebuerenView.setText(gebuehren + "%");
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pieChart.clearChart();
             pieChart.addPieSlice(
                     new PieModel(
                             "Allgemein",
@@ -182,7 +234,10 @@ public class DashboardSetup {
                             (int) gebuehren,
                             mContext.getColor(R.color.black)));
         }
-
+        for (PieModel pieModel : pieChart.getData()) {
+            //pieModel.get
+        }
+        pieChart.animate();
     }
 
     public void animatePieChart() {
@@ -221,6 +276,7 @@ public class DashboardSetup {
                 details.setLayoutManager(layoutManager);
                 DashboardAusgabenAdapter dashboardAusgabenAdapter = new DashboardAusgabenAdapter(mContext, ausgabenReport, layoutScreen, "privatAusgabe");
                 details.setAdapter(dashboardAusgabenAdapter);
+                setUpPiechart("privat");
             }
         });
 
@@ -231,6 +287,7 @@ public class DashboardSetup {
                 details.setLayoutManager(layoutManager);
                 DashboardAusgabenAdapter dashboardAusgabenAdapter = new DashboardAusgabenAdapter(mContext, ausgabenReport, layoutScreen, "gruppenAusgabe");
                 details.setAdapter(dashboardAusgabenAdapter);
+                setUpPiechart("gruppe");
             }
         });
 
@@ -241,6 +298,7 @@ public class DashboardSetup {
                 details.setLayoutManager(layoutManager);
                 DashboardAusgabenAdapter dashboardAusgabenAdapter = new DashboardAusgabenAdapter(mContext, ausgabenReport, layoutScreen, "schulden");
                 details.setAdapter(dashboardAusgabenAdapter);
+                setUpPiechart("schulden");
             }
         });
 

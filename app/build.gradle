@@ -28,6 +28,7 @@ android {
     }
 }
 
+
 dependencies {
     //Lombok
     //
@@ -64,5 +65,5 @@ dependencies {
     //Piechart und Graph
     implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
-
+    implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
 }

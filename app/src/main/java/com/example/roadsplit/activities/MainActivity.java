@@ -47,13 +47,12 @@ import okhttp3.Response;
 @Setter
 public class MainActivity extends AppCompatActivity {
 
+    //public static final String BASEURL = "https://eb82-84-63-180-89.ngrok.io";
     //public static Reisender currentUser;
     public static final String BASEURL = "http://167.172.167.221:8080";
     private static final int REQUEST_CODE_PICK_FILE = 1;
-    private final UserAccount userAccount = null;
     //public static CurrentUserData currentUserData;
-
-    //public static final String BASEURL = "https://46ba-84-63-180-89.ngrok.io";
+    private final UserAccount userAccount = null;
     private SharedPreferences reisenderPref;
     private SharedPreferences reiseResponsesPref;
 
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         //this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
         try {
-            login();
+            //login();
         } catch (Exception e) {
             e.printStackTrace();
         }
