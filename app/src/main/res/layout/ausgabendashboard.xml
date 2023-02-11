@@ -20,8 +20,8 @@
 
         <net.cachapa.expandablelayout.ExpandableLayout
             android:id="@+id/expandable_layout"
-            android:layout_width="406dp"
-            android:layout_height="226dp"
+            android:layout_width="381dp"
+            android:layout_height="209dp"
             app:el_duration="1000"
             app:el_expanded="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -72,14 +72,15 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
                             <!--View to display the yellow color icon-->
                             <View
                                 android:layout_width="15dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="bottom"
                                 android:background="@color/red" />
 
                             <!--Text view to display R -->
@@ -101,14 +102,15 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
                             <!--View to display the yellow color icon-->
                             <View
                                 android:layout_width="15dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="bottom"
                                 android:background="@color/rlightgreen" />
 
                             <!--Text view to display R -->
@@ -129,14 +131,15 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
                             <!--View to display the yellow color icon-->
                             <View
                                 android:layout_width="15dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="bottom"
                                 android:background="@color/rgrey" />
 
                             <!--Text view to display R -->
@@ -157,14 +160,15 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
                             <!--View to display the yellow color icon-->
                             <View
                                 android:layout_width="15dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="bottom"
                                 android:background="@color/purple_200" />
 
                             <!--Text view to display R -->
@@ -192,7 +196,8 @@
                             <!--View to display the yellow color icon-->
                             <View
                                 android:layout_width="15dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="bottom"
                                 android:background="@color/marineblue" />
 
                             <!--Text view to display R -->
@@ -214,14 +219,15 @@
                         <!--Linear layout to display Python-->
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
                             <!--View to display the green color icon-->
                             <View
                                 android:layout_width="15dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="bottom"
                                 android:background="@color/yellow" />
 
                             <!--Text view to display python text -->
@@ -243,14 +249,15 @@
                         <!--Linear layout to display C++-->
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
                             <!--View to display the red color icon-->
                             <View
                                 android:layout_width="15dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="bottom"
                                 android:background="@color/rdarkgreen" />
 
                             <!--Text view to display C++ text -->
@@ -272,14 +279,15 @@
                         <!--Linear layout to display Java-->
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
                             <!--View to display the blue color icon-->
                             <View
                                 android:layout_width="15dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="bottom"
                                 android:background="@color/black" />
 
                             <!--Text view to display Java text -->
