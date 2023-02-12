@@ -189,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void success() {
-        Intent intent = new Intent(this, ReiseUebersichtTestActivity.class);
+        Intent intent = new Intent(this, ReiseUebersichtActivity.class);
         startActivityForResult(intent, 1);
 
     }

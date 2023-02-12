@@ -108,7 +108,7 @@ public class TutorialActivity extends AppCompatActivity {
     }
 
     public void getStarted(View view) {
-        Intent mainActivity = new Intent(getApplicationContext(), ReiseUebersichtTestActivity.class);
+        Intent mainActivity = new Intent(getApplicationContext(), ReiseUebersichtActivity.class);
         startActivity(mainActivity);
         finish();
     }

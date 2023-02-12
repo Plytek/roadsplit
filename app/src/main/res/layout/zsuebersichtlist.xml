@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white">
 
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
         android:layout_height="65dp"
-        app:cardCornerRadius="20dp"
         android:elevation="0dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,14 +34,16 @@
                 android:id="@+id/textViewZwDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="4dp"
                 android:gravity="left"
                 android:text="Ausgegeben: 250€"
                 android:textSize="12dp"
-                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintHorizontal_bias="0.291"
-                app:layout_constraintStart_toStartOf="@id/clayoutdetail"
-                app:layout_constraintTop_toBottomOf="@id/textViewZwName" />
+                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="@+id/textViewZwName"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textViewZwName"
+                app:layout_constraintTop_toBottomOf="@id/textViewZwName"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textViewZwName"
@@ -49,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
                 android:clickable="true"
+                android:elevation="1dp"
                 android:fontFamily="@font/cmedium"
                 android:gravity="left"
                 android:text="Amsterdamm"
@@ -62,19 +65,42 @@
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
                 app:layout_constraintVertical_bias="0.282" />
 
-            <TextView
-                android:id="@+id/textViewDashBudget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="88dp"
+
+            <EditText
+                android:id="@+id/textViewZwBudget"
+                android:layout_width="111dp"
+                android:layout_height="32dp"
+                android:background="@android:color/transparent"
+                android:elevation="10dp"
                 android:fontFamily="@font/cextrabold"
-                android:text="450€"
+                android:gravity="center|end"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:text="0"
+                android:textColor="@color/rdarkgreen"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewZwDesc"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintHorizontal_bias="0.664"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/textViewZwName"
+                app:layout_constraintVertical_bias="0.454" />
+
+            <TextView
+                android:id="@+id/textViewDashBudgetEuro"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginEnd="64dp"
+                android:fontFamily="@font/cextrabold"
+                android:gravity="center"
+                android:text="€"
                 android:textColor="@color/rdarkgreen"
                 android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
-                app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
-                app:layout_constraintTop_toTopOf="@id/clayoutdetail"
-                app:layout_constraintVertical_bias="0.4" />
+                app:layout_constraintBottom_toBottomOf="@+id/textViewZwBudget"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textViewZwBudget"
+                app:layout_constraintTop_toTopOf="@+id/textViewZwBudget" />
 
             <ImageView
                 android:id="@+id/ausgabenTypImageView"
@@ -91,14 +117,14 @@
                 android:id="@+id/textView25"
                 android:layout_width="57dp"
                 android:layout_height="9dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="4dp"
                 android:text="Budget ändern"
                 android:textColor="@color/rdarkgreen"
                 android:textSize="7dp"
-                app:layout_constraintEnd_toEndOf="@id/textViewDashBudget"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/textViewDashBudget"
-                app:layout_constraintTop_toTopOf="@id/textViewDashBudget" />
+                app:layout_constraintEnd_toEndOf="@+id/textViewZwBudget"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/textViewZwBudget"
+                app:layout_constraintTop_toBottomOf="@+id/textViewZwBudget" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

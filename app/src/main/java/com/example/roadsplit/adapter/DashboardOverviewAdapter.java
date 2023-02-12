@@ -18,7 +18,7 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.helperclasses.DashboardSetup;
 import com.example.roadsplit.helperclasses.DokumentSetup;
-import com.example.roadsplit.helperclasses.ZwischenstopAdapterHelper;
+import com.example.roadsplit.helperclasses.ZwischenstopSetup;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.google.gson.Gson;
 
@@ -73,8 +73,8 @@ public class DashboardOverviewAdapter extends PagerAdapter {
                 dashboardSetup.setUpPiechart("privat");
                 break;
             case 1:
-                layoutScreen = inflater.inflate(R.layout.testknecht, null);
-                ZwischenstopAdapterHelper zwischenstopAdapterHelper = new ZwischenstopAdapterHelper(layoutScreen, context);
+                layoutScreen = inflater.inflate(R.layout.zstop, null);
+                ZwischenstopSetup zwischenstopSetup = new ZwischenstopSetup(context, ausgabenActivity, layoutScreen);
                 //zwischenstopAdapterHelper.setUpZwischenStops();
                 break;
             case 2:

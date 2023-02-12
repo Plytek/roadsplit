@@ -25,10 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
-public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdapter.RecentsViewHolder> implements Observer {
+public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdapter.RecentsViewHolder> {
 
     private final Context context;
     private final List<ReiseUebersicht> recentsDataList;
@@ -102,9 +100,6 @@ public class UebersichtRecAdapter extends RecyclerView.Adapter<UebersichtRecAdap
         return recentsDataList.size();
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-    }
 
     public static final class RecentsViewHolder extends RecyclerView.ViewHolder {
 

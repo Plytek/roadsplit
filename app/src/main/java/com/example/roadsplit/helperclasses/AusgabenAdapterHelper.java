@@ -23,21 +23,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
-import com.example.roadsplit.activities.MainActivity;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.activities.PaymentActivity;
 import com.example.roadsplit.adapter.DashboardAusgabenAdapter;
 import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
-import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.AusgabenTyp;
-import com.example.roadsplit.model.CurrentUserData;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
@@ -45,40 +41,35 @@ import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Observable;
-import java.util.Observer;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class AusgabenAdapterHelper{
+public class AusgabenAdapterHelper {
 
-        private final Context mContext;
-        private final View layoutScreen;
-        private final AusgabenActivity ausgabenActivity;
-        private ReiseResponse reiseResponse;
-        private BigDecimal reiseGesamtAusgabe;
-        private List<String> reisendeNames;
-        private final ReiseUebersichtAdapter reiseUebersichtAdapter;
-
-        private final SharedPreferences reisenderPref;
-        private final SharedPreferences reiseResponsePref;
-        private final SharedPreferences reisePref;
+    private final Context mContext;
+    private final View layoutScreen;
+    private final AusgabenActivity ausgabenActivity;
+    private final ReiseUebersichtAdapter reiseUebersichtAdapter;
+    private final SharedPreferences reisenderPref;
+    private final SharedPreferences reiseResponsePref;
+    private final SharedPreferences reisePref;
+    private final int pressedColor = 0xe0f47521;
+    private ReiseResponse reiseResponse;
+    private BigDecimal reiseGesamtAusgabe;
+    private List<String> reisendeNames;
     private SharedPreferences reportPref;
-
-        private Reisender reisender;
-        private AusgabenReport ausgabenReport;
-
-        private int standardColor;
-        private final int pressedColor = 0xe0f47521;
+    private Reisender reisender;
+    private AusgabenReport ausgabenReport;
+    private int standardColor;
 
     public AusgabenAdapterHelper(Context context, View layoutScreen, ReiseResponse reiseResponse, AusgabenActivity ausgabenActivity, ReiseUebersichtAdapter reiseUebersichtAdapter, AusgabenReport ausgabenReport) {
 
@@ -103,13 +94,12 @@ public class AusgabenAdapterHelper{
         preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if(key.equals("reisender")) {
+                if (key.equals("reisender")) {
                     AusgabenAdapterHelper.this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
-                } else if(key.equals("reiseResponse")) {
+                } else if (key.equals("reiseResponse")) {
                     AusgabenAdapterHelper.this.reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse.class);
                 }
-                if(key.equals("report"))
-                {
+                if (key.equals("report")) {
                     AusgabenAdapterHelper.this.ausgabenReport = new Gson().fromJson(reportPref.getString("report", "fehler"), AusgabenReport.class);
                     setUpDashboard();
                 }
@@ -118,7 +108,7 @@ public class AusgabenAdapterHelper{
         });
 
         reiseGesamtAusgabe = new BigDecimal(0);
-        for(Stop stop : reiseResponse.getReise().getStops()) {
+        for (Stop stop : reiseResponse.getReise().getStops()) {
             try {
                 reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
             } catch (Exception e) {
@@ -146,9 +136,9 @@ public class AusgabenAdapterHelper{
         preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if(key.equals("reisender")) {
+                if (key.equals("reisender")) {
                     AusgabenAdapterHelper.this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
-                } else if(key.equals("reiseResponse")) {
+                } else if (key.equals("reiseResponse")) {
                     AusgabenAdapterHelper.this.reiseResponse = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse.class);
                 }
                 // code to handle change in value for the key
@@ -156,7 +146,7 @@ public class AusgabenAdapterHelper{
         });
 
         reiseGesamtAusgabe = new BigDecimal(0);
-        for(Stop stop : reiseResponse.getReise().getStops()) {
+        for (Stop stop : reiseResponse.getReise().getStops()) {
             try {
                 reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
             } catch (Exception e) {
@@ -165,7 +155,7 @@ public class AusgabenAdapterHelper{
         }
     }
 
-    public void setUpDashboard(){
+    public void setUpDashboard() {
         RecyclerView details = layoutScreen.findViewById(R.id.ausgabenDetailsRecycler);
         Button privatausgaben = layoutScreen.findViewById(R.id.buttonPrivatAusgaben);
         Button gruppenausgaben = layoutScreen.findViewById(R.id.buttonGruppeAusgaben);
@@ -221,7 +211,7 @@ public class AusgabenAdapterHelper{
         });
     }
 
-    private void setUpColors(int gruppeColor, int privatColor, int schuldenColor){
+    private void setUpColors(int gruppeColor, int privatColor, int schuldenColor) {
         Button privatausgaben = layoutScreen.findViewById(R.id.buttonPrivatAusgaben);
         Button gruppenausgaben = layoutScreen.findViewById(R.id.buttonGruppeAusgaben);
         Button schuldendetails = layoutScreen.findViewById(R.id.buttonAbrechnungsAusgabe);
@@ -231,7 +221,7 @@ public class AusgabenAdapterHelper{
         schuldendetails.getBackground().setColorFilter(schuldenColor, PorterDuff.Mode.SRC_ATOP);
     }
 
-    public void setUpAusgaben(){
+    public void setUpAusgaben() {
         Button ausgabeSpeichernButton = layoutScreen.findViewById(R.id.ausgabeSpeichernButton);
         layoutScreen.findViewById(R.id.ausgabenProgressBar).setVisibility(View.INVISIBLE);
         ButtonEffect.buttonPressDownEffect(ausgabeSpeichernButton);
@@ -254,7 +244,8 @@ public class AusgabenAdapterHelper{
 
 
         reisendeNames = new ArrayList<>();
-        for(Reisender reisender : reiseResponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
+        for (Reisender reisender : reiseResponse.getReisendeList())
+            reisendeNames.add(reisender.getNickname());
 
         ListView schuldnerListView = layoutScreen.findViewById(R.id.schuldnerListView);
         schuldnerListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
@@ -272,7 +263,7 @@ public class AusgabenAdapterHelper{
 
         Spinner stopNameSpinner = layoutScreen.findViewById(R.id.planets_spinner3);
         List<String> stopNames = new ArrayList<>();
-        for(Stop stop : reiseResponse.getReise().getStops()) stopNames.add(stop.getName());
+        for (Stop stop : reiseResponse.getReise().getStops()) stopNames.add(stop.getName());
         ArrayAdapter<String> stopAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, stopNames);
         stopAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         stopNameSpinner.setAdapter(stopAdapter);
@@ -281,7 +272,7 @@ public class AusgabenAdapterHelper{
             layoutScreen.findViewById(R.id.ausgabenProgressBar).setVisibility(View.VISIBLE);
             EditText betragView = layoutScreen.findViewById(R.id.ausgabenTextView);
             String sbetrag = betragView.getText().toString();
-            if(sbetrag.isEmpty()) return;
+            if (sbetrag.isEmpty()) return;
             BigDecimal betrag = new BigDecimal(sbetrag);
             addBetrag(reiseResponse.getReise(), stopNameSpinner, betrag, schuldnerListView, layoutScreen);
             betragView.setText("");
@@ -290,7 +281,7 @@ public class AusgabenAdapterHelper{
         });
     }
 
-    private void setUpPaymentTextViews(View layoutScreen){
+    private void setUpPaymentTextViews(View layoutScreen) {
         TextView balanceView = layoutScreen.findViewById(R.id.textViewPayAmountAusgleich);
         TextView balanceTextView = layoutScreen.findViewById(R.id.textView11);
 
@@ -304,7 +295,7 @@ public class AusgabenAdapterHelper{
         TextView gesamtGruppeView = layoutScreen.findViewById(R.id.textViewPayAmountTeam);
 
         reiseGesamtAusgabe = new BigDecimal(0);
-        for(Stop stop : reiseResponse.getReise().getStops()) {
+        for (Stop stop : reiseResponse.getReise().getStops()) {
             try {
                 reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
             } catch (Exception e) {
@@ -316,26 +307,24 @@ public class AusgabenAdapterHelper{
 
         BigDecimal gesamtBalance = new BigDecimal(0);
         int counter = 0;
-        for(Reisender reisender : reiseResponse.getSchuldner()){
-            if(!reisender.getId().equals(reisender.getId())){
+        for (Reisender reisender : reiseResponse.getSchuldner()) {
+            if (!reisender.getId().equals(reisender.getId())) {
                 BigDecimal betrag = reiseResponse.getBetraege().get(counter);
                 gesamtBalance = gesamtBalance.add(betrag);
             }
             counter++;
         }
-        if(gesamtBalance.compareTo(new BigDecimal(0)) < 0){
+        if (gesamtBalance.compareTo(new BigDecimal(0)) < 0) {
             balanceView.setTextColor(Color.RED);
             balanceTextView.setText("Du schuldest");
-        }
-        else {
+        } else {
             balanceView.setTextColor(Color.GREEN);
             balanceTextView.setText("Du bekommst");
         }
         balanceView.setText(gesamtBalance + "€");
     }
 
-    public void addBetrag(Reise reise, Spinner stopSpinner, BigDecimal betrag, ListView schuldner, View layoutScreen)
-    {
+    public void addBetrag(Reise reise, Spinner stopSpinner, BigDecimal betrag, ListView schuldner, View layoutScreen) {
         Stop stop = reise.getStops().get(stopSpinner.getSelectedItemPosition());
         Spinner kategorieSpinner = layoutScreen.findViewById(R.id.planets_spinner4);
         SparseBooleanArray checked = schuldner.getCheckedItemPositions();
@@ -351,17 +340,17 @@ public class AusgabenAdapterHelper{
                 ausgabe.setSchuldnerName(reiseResponse.getReisendeList().get(i).getNickname());
                 ausgabe.setAusgabenTyp(AusgabenTyp.typForPosition(kategorieSpinner.getSelectedItemPosition()));
                 ausgabe.setErstellDatum(System.currentTimeMillis());
-                if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
+                if (stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
                 stop.getAusgaben().add(ausgabe);
-                if(stop.getGesamtausgaben() == null) stop.setGesamtausgaben(new BigDecimal(0));
+                if (stop.getGesamtausgaben() == null) stop.setGesamtausgaben(new BigDecimal(0));
                 stop.setGesamtausgaben(stop.getGesamtausgaben().add(betragN));
             }
         reise.getStops().set(stopSpinner.getSelectedItemPosition(), stop);
-        EndpointConnector.updateReise(reise, updateReiseCallback());
+        //EndpointConnector.updateReise(reise, updateReiseCallback());
         Log.d("ausgaben", stop.getAusgaben().toString());
     }
 
-    private Callback updateReiseCallback(){
+    private Callback updateReiseCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -370,7 +359,7 @@ public class AusgabenAdapterHelper{
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     Log.d("ausgaben", reiseResponse.getReise().toString());
                     EndpointConnector.fetchPaymentInfo(reiseResponse.getReise(), reisender, fetchPaymentCallback());
                 }
@@ -378,7 +367,7 @@ public class AusgabenAdapterHelper{
         };
     }
 
-    private Callback fetchPaymentCallback(){
+    private Callback fetchPaymentCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -388,7 +377,7 @@ public class AusgabenAdapterHelper{
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 ReiseResponse payResponse = gson.fromJson(Objects.requireNonNull(response.body()).string(), ReiseResponse.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     SharedPreferences.Editor editor = reisenderPref.edit();
                     editor.putString("reisender", gson.toJson(reisender));
                     editor.apply();
@@ -403,9 +392,10 @@ public class AusgabenAdapterHelper{
 
                     reiseResponse = payResponse;
                     reisendeNames = new ArrayList<>();
-                    for(Reisender reisender : reiseResponse.getReisendeList()) reisendeNames.add(reisender.getNickname());
+                    for (Reisender reisender : reiseResponse.getReisendeList())
+                        reisendeNames.add(reisender.getNickname());
                     reiseGesamtAusgabe = new BigDecimal(0);
-                    for(Stop stop : reiseResponse.getReise().getStops()) {
+                    for (Stop stop : reiseResponse.getReise().getStops()) {
                         try {
                             reiseGesamtAusgabe = reiseGesamtAusgabe.add(stop.getGesamtausgaben());
                         } catch (Exception e) {

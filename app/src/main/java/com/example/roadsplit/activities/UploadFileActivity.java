@@ -1,24 +1,18 @@
 package com.example.roadsplit.activities;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-import android.util.Base64;
-import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +26,6 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
-import com.example.roadsplit.requests.UploadRequest;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
@@ -67,8 +60,7 @@ public class UploadFileActivity extends AppCompatActivity {
     }
 
 
-
-    public void uploadFile(){
+    public void uploadFile() {
         uploadProgressBar.setVisibility(View.VISIBLE);
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -106,23 +98,68 @@ public class UploadFileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        if(resultCode == RESULT_CANCELED){
+        if (resultCode == RESULT_CANCELED) {
             finish();
         }
 
     }
-    private void openConfirmDialog(byte[] bytes, String fileName, String fileType)
-    {
-        Dialog dialog = new Dialog(this){
+
+    private void openConfirmDialog(byte[] bytes, String fileName, String fileType) {
+        Dialog dialog = new Dialog(this) {
             @Override
             public void onBackPressed() {
                 finish();
             }
         };
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        builder.setView(input);
+        builder.setTitle("Dateinamen ändern?");
+        builder.setPositiveButton("Datei speichern", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newFilename = input.getText().toString();
+                // Set the TextView's text to the value entered by the user
+                if (!newFilename.isEmpty()) {
+                    int dotIndex = fileName.lastIndexOf(".");
+                    String fileExtension = fileName.substring(dotIndex);
+                    EndpointConnector.uploadFile(bytes, newFilename + fileExtension, fileType, reise, reisender, uploadFileCallback());
+                    dialog.dismiss();
+                } else {
+                    EndpointConnector.uploadFile(bytes, fileName, fileType, reise, reisender, uploadFileCallback());
+                    dialog.dismiss();
+                }
+
+            }
+        });
+        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                finish();
+            }
+        });
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    alertDialog.dismiss();
+                    finish();
+                }
+                return true;
+            }
+        });
+
+       /* dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.fileuploaddialog);
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.PopUpAnimation;
@@ -140,18 +177,16 @@ public class UploadFileActivity extends AppCompatActivity {
 
         uploadButton.setOnClickListener(view -> {
             String newFilename = filename.getText().toString();
-            if (!newFilename.isEmpty()){
+            if (!newFilename.isEmpty()) {
                 int dotIndex = fileName.lastIndexOf(".");
                 String fileExtension = fileName.substring(dotIndex);
                 EndpointConnector.uploadFile(bytes, newFilename + fileExtension, fileType, reise, reisender, uploadFileCallback());
                 dialog.dismiss();
-            }
-            else{
+            } else {
                 EndpointConnector.uploadFile(bytes, fileName, fileType, reise, reisender, uploadFileCallback());
                 dialog.dismiss();
             }
-        });
-
+        });*/
 
 
     }
@@ -168,8 +203,7 @@ public class UploadFileActivity extends AppCompatActivity {
         return byteBuffer.toByteArray();
     }
 
-    private Callback uploadFileCallback()
-    {
+    private Callback uploadFileCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -182,7 +216,7 @@ public class UploadFileActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 AusgabenReport ausgabenReport = gson.fromJson(response.body().string(), AusgabenReport.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     SharedPreferences.Editor editor = reportPref.edit();
                     editor.putString("report", gson.toJson(ausgabenReport));
                     editor.apply();
@@ -190,10 +224,10 @@ public class UploadFileActivity extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         uploadProgressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText( UploadFileActivity.this,"Upload Erfolgreich", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UploadFileActivity.this, "Upload Erfolgreich", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(UploadFileActivity.this, AusgabenActivity.class);
                         intent.putExtra("reise", new Gson().toJson(reise, Reise.class));
-                        intent.putExtra("returning", true);
+                        intent.putExtra("returning", "3");
                         startActivity(intent);
                         finish();
                     });

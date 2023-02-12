@@ -42,7 +42,7 @@ public class AusgabenActivity extends AppCompatActivity {
     private SharedPreferences reiseResponsePref;
     private SharedPreferences reisePref;
     private SharedPreferences reportPref;
-    private boolean returning;
+    private int returning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,12 @@ public class AusgabenActivity extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        returning = intent.getBooleanExtra("returning", false);
+        try {
+            returning = Integer.parseInt(intent.getStringExtra("returning"));
+            //TODO: Richtige Exception fangen
+        } catch (Exception e) {
+            returning = 0;
+        }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
@@ -125,7 +130,7 @@ public class AusgabenActivity extends AppCompatActivity {
                         tabLayout.getTabAt(1).setIcon(R.drawable.stoppsiconp);
                         tabLayout.getTabAt(2).setIcon(R.drawable.packlisteiconp);
                         tabLayout.getTabAt(3).setIcon(R.drawable.kosteniconp);
-                        if (returning) screenPager.setCurrentItem(3);
+                        screenPager.setCurrentItem(returning);
                     });
                 }
             }

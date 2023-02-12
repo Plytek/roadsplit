@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true" >
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintpackliste"
@@ -53,7 +51,7 @@
             app:layout_constraintGuide_percent="0.06" />
 
         <EditText
-            android:id="@+id/pinTextView2"
+            android:id="@+id/packlistenEditText"
             android:layout_width="275dp"
             android:layout_height="50dp"
             android:background="@drawable/custom_shape"
@@ -63,10 +61,10 @@
             android:paddingStart="8dp"
             android:paddingTop="8dp"
             android:paddingEnd="8dp"
+            android:paddingBottom="9dp"
             android:textColor="#c4c4c4"
             android:textColorHint="#7c818f"
             android:textSize="14dp"
-            android:paddingBottom="9dp"
             app:layout_constraintBottom_toBottomOf="@id/guideline16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.235"
@@ -75,7 +73,7 @@
             app:layout_constraintVertical_bias="0.48" />
 
         <Button
-            android:id="@+id/plusButton2"
+            android:id="@+id/addPacklistenItemButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
@@ -84,7 +82,7 @@
             app:layout_constraintBottom_toBottomOf="@id/guideline16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
-            app:layout_constraintStart_toEndOf="@id/pinTextView2"
+            app:layout_constraintStart_toEndOf="@id/packlistenEditText"
             app:layout_constraintTop_toTopOf="@id/guideline16" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -102,7 +100,7 @@
             app:layout_constraintGuide_percent="0.45" />
 
         <Button
-            android:id="@+id/minusButton3"
+            android:id="@+id/removePacklistenItemButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
@@ -111,20 +109,18 @@
             app:layout_constraintBottom_toBottomOf="@id/guideline16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.794"
-            app:layout_constraintStart_toEndOf="@id/plusButton2"
+            app:layout_constraintStart_toEndOf="@id/addPacklistenItemButton"
             app:layout_constraintTop_toTopOf="@id/guideline16" />
 
-        <ListView
-            android:id="@+id/packlisteListView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/packlisteRecyclerView"
             android:layout_width="349dp"
             android:layout_height="378dp"
-            android:layout_marginStart="32dp"
             app:layout_constraintBottom_toBottomOf="@id/guideline18"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline18"
-            app:layout_constraintVertical_bias="0.593" />
+            app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+            app:layout_constraintHorizontal_bias="0.415"
+            app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+            app:layout_constraintTop_toTopOf="@id/guideline18" />
 
         <ImageView
             android:id="@+id/imageView9"
@@ -138,6 +134,27 @@
             app:layout_constraintVertical_bias="0.875"
             app:srcCompat="@drawable/wave" />
 
+        <Button
+            android:id="@+id/savePacklisteChangesButton"
+            android:layout_width="251dp"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_shape2"
+            android:fontFamily="@font/cmedium"
+            android:text="Änderungen Speichern"
+            android:textAllCaps="false"
+            android:textColor="#ffff"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView9"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+            app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+            app:layout_constraintTop_toBottomOf="@+id/packlisteRecyclerView" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineVert50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

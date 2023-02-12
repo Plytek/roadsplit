@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintpackliste"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/textAusgabeErstellen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Zwischenstopp"
+        android:textColor="#2A4B42"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline25"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.13" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/wave" />
+
+    <TextView
+        android:id="@+id/textViewBetragEingabe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Zwischenstopp hinzufügen"
+        android:textColor="@color/rdarkgreen"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline32"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline32"
+        app:layout_constraintVertical_bias="0.368" />
+
+    <TextView
+        android:id="@+id/textViewBetragEingabe2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Übersicht"
+        android:textColor="@color/rdarkgreen"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline29"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline29"
+        app:layout_constraintVertical_bias="0.473" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/zwischenstoppDetailsRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="222dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/textViewBetragEingabe2"
+        app:layout_constraintTop_toTopOf="@id/guideline29"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/zwischenstopTextField"
+        android:layout_width="275dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_shape"
+        android:fontFamily="@font/cmedium"
+        android:hint="Hamburg, Hawaii, Homeoffice"
+        android:inputType="text"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="9dp"
+        android:textColor="#c4c4c4"
+        android:textColorHint="#7c818f"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/textViewBetragEingabe"
+        app:layout_constraintTop_toTopOf="@id/guideline32" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.22" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.34" />
+
+
+    <Button
+        android:id="@+id/showMapButton"
+        android:layout_width="251dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/custom_shape2"
+        android:fontFamily="@font/cmedium"
+        android:text="Karte anzeigen"
+        android:textAllCaps="false"
+        android:textColor="#ffff"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toBottomOf="@+id/saveStopChangesButton" />
+
+    <Button
+        android:id="@+id/saveStopChangesButton"
+        android:layout_width="251dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/custom_shape2"
+        android:fontFamily="@font/cmedium"
+        android:text="Änderungen Speichern"
+        android:textAllCaps="false"
+        android:textColor="#ffff"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline33"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toBottomOf="@+id/zwischenstoppDetailsRecycler"
+        app:layout_constraintVertical_bias="0.424" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.73" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <ProgressBar
+        android:id="@+id/ausgabeProgressBar"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.682" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVert50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Hinzufügen, entfernen und bearbeiten"
+        app:layout_constraintEnd_toEndOf="@+id/textAusgabeErstellen"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textAusgabeErstellen"
+        app:layout_constraintTop_toBottomOf="@+id/textAusgabeErstellen" />
+
+    <Button
+        android:id="@+id/addZwischenStopButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:width="10dp"
+        android:height="10dp"
+        android:background="@drawable/plusoneplus"
+        app:layout_constraintBottom_toBottomOf="@id/zwischenstopTextField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.188"
+        app:layout_constraintStart_toEndOf="@id/zwischenstopTextField"
+        app:layout_constraintTop_toTopOf="@id/zwischenstopTextField"
+        tools:layout_editor_absoluteY="141dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

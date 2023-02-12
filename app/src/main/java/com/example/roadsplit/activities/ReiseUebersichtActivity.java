@@ -1,32 +1,40 @@
 package com.example.roadsplit.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
-import com.example.roadsplit.R;
-import com.example.roadsplit.adapter.UebersichtListAdapter;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.roadsplit.EndpointConnector;
+import com.example.roadsplit.R;
+import com.example.roadsplit.adapter.UebersichtRecAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
-import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.ReiseUebersicht;
+import com.example.roadsplit.reponses.UserResponse;
 import com.example.roadsplit.reponses.WikiResponse;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,9 +43,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,79 +50,130 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ReiseUebersichtActivity extends AppCompatActivity {
+public class ReiseUebersichtActivity extends AppCompatActivity implements SensorEventListener {
 
+    private Map<String, Bitmap> imageMap = new HashMap<>();
     private List<Reise> reisen;
-    private ReiseResponse[] reiseResponses;
+    private List<ReiseUebersicht> uebersicht;
+    private List<ReiseUebersicht> ongoingResponses;
+    private List<ReiseUebersicht> finishedResponses;
     private Reise selectedReise;
-    private ListView reisenView;
-    private List<Bitmap> images;
-    private final Map<String, Bitmap> imageMap = new HashMap<>();
+    private RecyclerView reisenView;
+    private RecyclerView reisenViewFinished;
+    //private List<Bitmap> images;
     private int imageloadCounter;
     private Handler handler;
-    UebersichtListAdapter uebersichtListAdapter;
+    private UebersichtRecAdapter uebersichtRecAdapter;
+    private UebersichtRecAdapter uebersichtRecAdapterFinish;
+
+    private SharedPreferences reisenderPref;
+    private SharedPreferences uebersichtPref;
+    private SharedPreferences reisePref;
 
     private Reisender reisender;
 
-    private SharedPreferences reisenderPref;
-    private SharedPreferences reiseResponsePref;
-    private SharedPreferences reisePref;
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private long lastUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reise_uebersicht);
+        setContentView(R.layout.activity_reise_uebersicht_test);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        lastUpdate = System.currentTimeMillis();
+
+        imageMap = LoginActivity.imageMap;
+        setResult(RESULT_OK);
+
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#325a4f")));
+        // setSupportActionBar(null);
+
+        EndpointConnector.baseurl = getResources().getString(R.string.baseendpoint);
 
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
-        this.reiseResponsePref = getSharedPreferences("reiseResponses", MODE_PRIVATE);
+        this.uebersichtPref = getSharedPreferences("uebersicht", MODE_PRIVATE);
         this.reisePref = getSharedPreferences("reise", MODE_PRIVATE);
 
-        this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
-        this.reiseResponses = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse[].class);
+        try {
+            this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+            this.uebersicht = Arrays.asList(new Gson().fromJson(uebersichtPref.getString("uebersicht", "fehler"), ReiseUebersicht[].class));
+        } catch (JsonSyntaxException e) {
+            toLogin();
+            return;
+        }
 
+        this.ongoingResponses = new ArrayList<>();
+        this.finishedResponses = new ArrayList<>();
 
-        images = new ArrayList<>();
+        for (ReiseUebersicht reiseUebersicht : uebersicht) {
+            if (reiseUebersicht.getReise().isOngoing())
+                ongoingResponses.add(reiseUebersicht);
+            else
+                finishedResponses.add(reiseUebersicht);
+        }
+
+        reisen = new ArrayList<>();
         final int[] clickedPosition = {-1}; // to store the position of the clicked item
         reisen = reisender.getReisen();
-        reisenView = findViewById(R.id.reisenUebersichtListView);
-
-        handler = new Handler(Looper.getMainLooper());
-        setUpListView();
+        reisenView = findViewById(R.id.recyclerViewOnGoing);
+        reisenViewFinished = findViewById(R.id.recyclerViewFinished);
+        ImageView logout = findViewById(R.id.settingsView);
+        FloatingActionButton neueReiseButton = findViewById(R.id.floatingNeueReiseButton);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+        /*preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if(key.equals("reisender")) {
+                if (key.equals("reisender")) {
                     reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
-                } else if(key.equals("reiseResponses")) {
+                } else if (key.equals("uebersicht")) {
                     reiseResponses = new Gson().fromJson(reiseResponsePref.getString("reiseResponses", "fehler"), ReiseResponse[].class);
+                    ongoingResponses = new ArrayList<>();
+                    finishedResponses = new ArrayList<>();
+                    for (ReiseResponse reiseResponse : reiseResponses) {
+                        if (reiseResponse.getReise().isOngoing())
+                            ongoingResponses.add(reiseResponse);
+                        else
+                            finishedResponses.add(reiseResponse);
+                    }
+                    uebersichtRecAdapter.notifyDataSetChanged();
+                    uebersichtRecAdapterFinish.notifyDataSetChanged();
                 }
                 // code to handle change in value for the key
             }
-        });
+        });*/
 
-        reisenView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    clickedPosition[0] = i;
-                    selectedReise = reisen.get(i);
-            }
-        });
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        reisenView.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager layoutManagerFinished = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        reisenViewFinished.setLayoutManager(layoutManagerFinished);
+
+  /*      handler = new Handler(Looper.getMainLooper());
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            imageloadCounter = 0;
+            EndpointConnector.fetchPaymentInfoSummary(reisender.getReisen().get(0), reisender, fetchPaymentSummaryCallback(false));
+            handler.post(() -> {
+                for (Reise reise : reisen) {
+                    EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
+                }
+            });
+        });*/
+
 
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                if(clickedPosition[0] != -1)
-                {
-                    SharedPreferences.Editor editor = reisePref.edit();
-                    editor.putString("reise", new Gson().toJson(selectedReise));
-                    editor.apply();
+                if (clickedPosition[0] != -1) {
                     goToReise(selectedReise);
                 }
                 return true;
             }
         });
+
 
         reisenView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -126,38 +182,100 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
             }
         });
 
-        handler.post(() -> {
-            uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
-            reisenView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-            reisenView.setAdapter(uebersichtListAdapter);
+        reisenViewFinished.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return gestureDetector.onTouchEvent(motionEvent);
+            }
         });
+
+        neueReiseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ReiseUebersichtActivity.this, NeueReiseActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toLogin();
+                SharedPreferences.Editor editor = reisenderPref.edit();
+                editor.clear();
+                editor.apply();
+                editor = uebersichtPref.edit();
+                editor.clear();
+                editor.apply();
+
+            }
+        });
+        uebersichtRecAdapter = new UebersichtRecAdapter(this, ongoingResponses, imageMap);
+        reisenView.setAdapter(uebersichtRecAdapter);
+        uebersichtRecAdapterFinish = new UebersichtRecAdapter(this, finishedResponses, imageMap);
+        reisenViewFinished.setAdapter(uebersichtRecAdapterFinish);
+
+/*        handler.post(() -> {
+            uebersichtRecAdapter = new UebersichtRecAdapter(this, ongoingResponses, imageMap);
+            reisenView.setAdapter(uebersichtRecAdapter);
+            uebersichtRecAdapterFinish = new UebersichtRecAdapter(this, finishedResponses, imageMap);
+            reisenViewFinished.setAdapter(uebersichtRecAdapterFinish);
+        });*/
     }
 
-    private void setUpListView()
-    {
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            imageloadCounter = 0;
-            //if(reiseResponses == null || reiseResponses[0] == null)
-            EndpointConnector.fetchPaymentInfoSummary(reisen.get(0), reisender, fetchPaymentSummaryCallback());
-            handler.post(() -> {
-                for(Reise reise : reisen)
-                {
-                    EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
-                }
-            });
-        });
+    private void toLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
-    private void goToReise(Reise reise){
+    private void goToReise(Reise reise) {
         Intent intent = new Intent(this, AusgabenActivity.class);
         String reiseString = new Gson().toJson(reise);
         intent.putExtra("reise", reiseString);
         startActivity(intent);
     }
 
-    private Callback wikiCallback(Reise reise)
-    {
+    private Callback updateOverviewCallback() {
+        return new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+                if (response.isSuccessful()) {
+                    reisender = userResponse.getReisender();
+                    uebersicht = userResponse.getReisen();
+                    SharedPreferences.Editor editor = reisenderPref.edit();
+                    editor.putString("reisender", new Gson().toJson(reisender));
+                    editor.apply();
+
+                    editor = uebersichtPref.edit();
+                    editor.putString("uebersicht", new Gson().toJson(userResponse.getReisen()));
+                    editor.apply();
+
+                    ongoingResponses = new ArrayList<>();
+                    finishedResponses = new ArrayList<>();
+
+                    for (ReiseUebersicht reiseUebersicht : uebersicht) {
+                        if (reiseUebersicht.getReise().isOngoing())
+                            ongoingResponses.add(reiseUebersicht);
+                        else
+                            finishedResponses.add(reiseUebersicht);
+                    }
+
+                    imageloadCounter = 0;
+                    for (Reise reise : reisender.getReisen()) {
+                        EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
+                    }
+                }
+            }
+        };
+    }
+
+    private Callback wikiCallback(Reise reise) {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -171,7 +289,8 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
+
                     try {
                         String url = wikiResponse.getPages().get(0).getThumbnail().getUrl();
                         url = "https:" + url;
@@ -187,68 +306,79 @@ public class ReiseUebersichtActivity extends AppCompatActivity {
         };
     }
 
-    private Callback fetchPaymentSummaryCallback(){
-        return new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-            }
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Gson gson = new Gson();
-                try {
-                    reiseResponses = gson.fromJson(response.body().string(), ReiseResponse[].class);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(response.isSuccessful()) {
-                    SharedPreferences.Editor editor = reisenderPref.edit();
-                    editor.putString("reisender", gson.toJson(reisender));
-                    editor.apply();
-
-                    editor = reiseResponsePref.edit();
-                    editor.putString("reiseResponses", gson.toJson(reiseResponses));
-                    editor.apply();
-
-                     runOnUiThread(() -> {
-                             uebersichtListAdapter = new UebersichtListAdapter(Arrays.asList(reiseResponses), ReiseUebersichtActivity.this, images);
-                             reisenView.setAdapter(uebersichtListAdapter);
-                             uebersichtListAdapter.notifyDataSetChanged();
-                     });
-                    }
-                }
-        };
-    }
-
-
-    public void downloadImages(String url, String reisename){
+    public void downloadImages(String url, String reisename) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
-                Bitmap mIcon = null;
-                try {
-                    InputStream in = new java.net.URL(url).openStream();
-                    mIcon = BitmapFactory.decodeStream(in);
-                } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
-                    e.printStackTrace();
-                }
-                images.add(mIcon);
-                imageMap.put(reisename, mIcon);
-                handler.post(() -> {
-                        uebersichtListAdapter.notifyDataSetChanged();
+            Bitmap mIcon = null;
+            try {
+                InputStream in = new java.net.URL(url).openStream();
+                mIcon = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            //images.add(mIcon);
+            imageMap.put(reisename, mIcon);
+            imageloadCounter++;
+            if (imageloadCounter == reisender.getReisen().size()) {
+                runOnUiThread(() -> {
+                    uebersichtRecAdapter.notifyDataSetChanged();
+                    uebersichtRecAdapterFinish.notifyDataSetChanged();
                 });
+            }
         });
     }
-
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        //reisen = MainActivity.currentUserData.getCurrentUser().getReisen();
-        //reiseResponses = MainActivity.currentUserData.getCurrentReiseReponses();
-        EndpointConnector.fetchPaymentInfoSummary(reiseResponses[0].getReise(), reisender, fetchPaymentSummaryCallback());
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        refresh();
+    }
 
+    private void refresh() {
+        EndpointConnector.updateOverview(reisender, updateOverviewCallback());
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            getAccelerometer(event);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    private void getAccelerometer(SensorEvent event) {
+        float[] values = event.values;
+        // Movement
+        float x = values[0];
+        float y = values[1];
+        float z = values[2];
+
+        float accelationSquareRoot = (x * x + y * y + z * z)
+                / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
+        long actualTime = System.currentTimeMillis();
+        if (accelationSquareRoot >= 2) //
+        {
+            if (actualTime - lastUpdate < 200) {
+                return;
+            }
+            lastUpdate = actualTime;
+            // Code to start a new Activity when the phone is shaken
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
     }
 }

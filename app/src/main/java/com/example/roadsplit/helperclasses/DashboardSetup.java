@@ -3,20 +3,15 @@ package com.example.roadsplit.helperclasses;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,13 +23,14 @@ import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.activities.PaymentActivity;
-import com.example.roadsplit.activities.ReiseUebersichtTestActivity;
+import com.example.roadsplit.activities.ReiseUebersichtActivity;
 import com.example.roadsplit.adapter.DashboardAusgabenAdapter;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.requests.UpdateRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -142,32 +138,40 @@ public class DashboardSetup {
         double shopping = 0;
         double aktivitaeten = 0;
         double gebuehren = 0;
-        double gesamt = ausgaben.size();
+        double gesamt = 0;
         for (Ausgabe ausgabe : ausgaben) {
             switch (ausgabe.getAusgabenTyp()) {
                 case Allgemein:
-                    allgemein++;
+                    allgemein = allgemein + ausgabe.getBetrag().doubleValue();
+                    gesamt = gesamt + ausgabe.getBetrag().doubleValue();
                     break;
                 case Restaurants:
-                    restaurants++;
+                    restaurants = restaurants + ausgabe.getBetrag().doubleValue();
+                    gesamt = gesamt + ausgabe.getBetrag().doubleValue();
                     break;
                 case Transport:
-                    transport++;
+                    transport = transport + ausgabe.getBetrag().doubleValue();
+                    gesamt = gesamt + ausgabe.getBetrag().doubleValue();
                     break;
                 case Tanken:
-                    tanken++;
+                    tanken = tanken + ausgabe.getBetrag().doubleValue();
+                    gesamt = gesamt + ausgabe.getBetrag().doubleValue();
                     break;
                 case Unterkunft:
-                    unterkunft++;
+                    unterkunft = unterkunft + ausgabe.getBetrag().doubleValue();
+                    gesamt = gesamt + ausgabe.getBetrag().doubleValue();
                     break;
                 case Shopping:
-                    shopping++;
+                    shopping = shopping + ausgabe.getBetrag().doubleValue();
+                    gesamt = gesamt + ausgabe.getBetrag().doubleValue();
                     break;
                 case Aktivitaeten:
-                    aktivitaeten++;
+                    aktivitaeten = aktivitaeten + ausgabe.getBetrag().doubleValue();
+                    gesamt = gesamt + ausgabe.getBetrag().doubleValue();
                     break;
                 case Gebuehren:
-                    gebuehren++;
+                    gebuehren = gebuehren + ausgabe.getBetrag().doubleValue();
+                    gesamt = gesamt + ausgabe.getBetrag().doubleValue();
                     break;
             }
         }
@@ -233,9 +237,6 @@ public class DashboardSetup {
                             "Gebühren",
                             (int) gebuehren,
                             mContext.getColor(R.color.black)));
-        }
-        for (PieModel pieModel : pieChart.getData()) {
-            //pieModel.get
         }
         pieChart.animate();
     }
@@ -315,29 +316,29 @@ public class DashboardSetup {
         reiseBeenden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(mContext);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.reiseabschliessenpopup);
-                dialog.show();
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-                dialog.getWindow().getAttributes().windowAnimations = R.style.PopUpAnimation;
-                dialog.getWindow().setGravity(Gravity.BOTTOM);
-
-                Button bestaetigen = dialog.findViewById(R.id.confirmReiseBeendenButton);
-                Button abbrechen = dialog.findViewById(R.id.cancelReiseBeendenButton);
-
-                bestaetigen.setOnClickListener(btn -> {
-                    Reise reise = ausgabenReport.getReise();
-                    reise.setOngoing(false);
-                    EndpointConnector.updateReise(reise, updateReiseCallback());
-                    dialog.dismiss();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                //final EditText input = new EditText(mContext);
+                //builder.setView(input);
+                builder.setTitle("Reise wirklich beenden?");
+                builder.setPositiveButton("Reise beenden", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Set the TextView's text to the value entered by the user
+                        //textView.setText(input.getText().toString());
+                        Reise reise = ausgabenReport.getReise();
+                        reise.setOngoing(false);
+                        UpdateRequest updateRequest = new UpdateRequest(reisender, reise);
+                        EndpointConnector.updateReise(updateRequest, updateReiseCallback());
+                        dialog.dismiss();
+                    }
                 });
-
-                abbrechen.setOnClickListener(btn -> {
-                    dialog.dismiss();
+                builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
                 });
+                builder.show();
 
             }
         });
@@ -414,7 +415,7 @@ public class DashboardSetup {
                     editor.putString("reiseResponses", gson.toJson(reiseResponses));
                     editor.apply();
 
-                    Intent intent = new Intent(mContext, ReiseUebersichtTestActivity.class);
+                    Intent intent = new Intent(mContext, ReiseUebersichtActivity.class);
                     mContext.startActivity(intent);
                     ausgabenActivity.finish();
                 }
