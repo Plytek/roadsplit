@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -39,6 +40,9 @@ import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.requests.UpdateRequest;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 
 import org.osmdroid.api.IMapController;
@@ -66,6 +70,7 @@ import okhttp3.Response;
 
 public class ZwischenstopSetup {
 
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     private final SharedPreferences reportPref;
     private final SharedPreferences reisenderPref;
     private final SharedPreferences reisePref;
@@ -83,6 +88,10 @@ public class ZwischenstopSetup {
     private Reise reise;
     private List<Stop> stops;
 
+    private FusedLocationProviderClient fusedLocationClient;
+    private MapView map;
+    private GeoPoint lastLocation;
+
     public ZwischenstopSetup(Context context, AusgabenActivity ausgabenActivity, View layoutScreen) {
         this.context = context;
         this.ausgabenActivity = ausgabenActivity;
@@ -93,6 +102,8 @@ public class ZwischenstopSetup {
         this.saveChanges = layoutScreen.findViewById(R.id.saveStopChangesButton);
         this.showMap = layoutScreen.findViewById(R.id.showMapButton);
         this.addZwischenStop = layoutScreen.findViewById(R.id.addZwischenStopButton);
+
+        this.fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
         this.reportPref = context.getSharedPreferences("report", MODE_PRIVATE);
         this.reisenderPref = context.getSharedPreferences("reisender", MODE_PRIVATE);
@@ -112,7 +123,7 @@ public class ZwischenstopSetup {
         saveChanges.setOnClickListener(view -> {
             reise.setStops(stops);
             UpdateRequest updateRequest = new UpdateRequest(reisender, reise);
-            EndpointConnector.updateReise(updateRequest, updateReiseCallback());
+            EndpointConnector.updateReise(updateRequest, updateReiseCallback(), context);
         });
 
         showMap.setOnClickListener(view -> {
@@ -165,6 +176,8 @@ public class ZwischenstopSetup {
                         ausgabenActivity.startActivity(intent);
                         ausgabenActivity.finish();
                     });
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(ausgabenActivity);
                 }
             }
         };
@@ -220,7 +233,7 @@ public class ZwischenstopSetup {
         OSRMRoadManager roadManager = new OSRMRoadManager(context, Configuration.getInstance().getNormalizedUserAgent());
         roadManager.setMean(OSRMRoadManager.MEAN_BY_CAR);
 
-        MapView map = dialog.findViewById(R.id.mapView3);
+        map = dialog.findViewById(R.id.mapView3);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
@@ -249,10 +262,19 @@ public class ZwischenstopSetup {
                     map.getOverlays().add(marker);
                     counter++;
                 }
+                getCurrentLocation();
+
+
                 map.getOverlays().add(roadOverlay);
-                IMapController mapController = map.getController();
+/*                IMapController mapController = map.getController();
                 mapController.setZoom(8.5);
-                mapController.setCenter(waypoints.get(0));
+                try {
+                    mapController.setCenter(waypoints.get(0));
+                } catch (Exception e) {
+                    Log.d("map", "Error beim map fetchen");
+                    e.printStackTrace();
+                    mapController.setCenter(new GeoPoint(53.551086, 9.993682));
+                }*/
                 map.invalidate();
             });
         });
@@ -279,5 +301,50 @@ public class ZwischenstopSetup {
                 drawWaypoints(waypoints, dialog);
             });
         });
+    }
+
+
+    private void getCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(ausgabenActivity,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        } else {
+
+
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(ausgabenActivity, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Convert the location to a GeoPoint
+                                lastLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
+                                if (lastLocation != null) {
+                                    Marker marker = new Marker(map);
+                                    marker.setPosition(lastLocation);
+                                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                    marker.setIcon(context.getResources().getDrawable(R.drawable.pinpoint));
+                                    marker.setTitle("It's you!"); //
+                                    map.getOverlays().add(marker);
+
+                                    IMapController mapController = map.getController();
+                                    mapController.setZoom(8.5);
+                                    try {
+                                        mapController.setCenter(lastLocation);
+                                    } catch (Exception e) {
+                                        Log.d("map", "Error beim map fetchen");
+                                        e.printStackTrace();
+                                        mapController.setCenter(new GeoPoint(53.551086, 9.993682));
+                                    }
+                                    map.invalidate();
+                                }
+                                // Do something with the GeoPoint
+                            }
+                        }
+                    });
+        }
     }
 }

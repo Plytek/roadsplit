@@ -328,7 +328,8 @@ public class DashboardSetup {
                         Reise reise = ausgabenReport.getReise();
                         reise.setOngoing(false);
                         UpdateRequest updateRequest = new UpdateRequest(reisender, reise);
-                        EndpointConnector.updateReise(updateRequest, updateReiseCallback());
+                        //TODO: FIX THIS
+                        EndpointConnector.updateReise(updateRequest, updateReiseCallback(), mContext);
                         dialog.dismiss();
                     }
                 });
@@ -366,8 +367,11 @@ public class DashboardSetup {
                 if (response.isSuccessful()) {
                     //EndpointConnector.fetchAusgabenReport(reiseResponse.getReise(), reiseResponse.getReisender(), updateAusgabenCallback());
                     EndpointConnector.fetchPaymentInfoSummary(ausgabenReport.getReise(), reisender, fetchPaymentSummaryCallback());
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(ausgabenActivity);
                 }
             }
+
         };
     }
 
@@ -388,6 +392,8 @@ public class DashboardSetup {
                     editor.apply();
                     mContext.startActivity(intent);
                     ausgabenActivity.finish();
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(ausgabenActivity);
                 }
             }
         };
@@ -418,6 +424,8 @@ public class DashboardSetup {
                     Intent intent = new Intent(mContext, ReiseUebersichtActivity.class);
                     mContext.startActivity(intent);
                     ausgabenActivity.finish();
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(ausgabenActivity);
                 }
             }
         };

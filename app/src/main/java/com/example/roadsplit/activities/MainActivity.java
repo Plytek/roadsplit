@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     fileType = fileType.substring(fileType.lastIndexOf("/") + 1);
                 }
 
-                EndpointConnector.uploadFile(bytes, fileName, fileType, reisender.getReisen().get(0), reisender, uploadFileCallback());
+                EndpointConnector.uploadFile(bytes, fileName, fileType, reisender.getReisen().get(0), reisender, uploadFileCallback(), this);
             } catch (IOException e) {
                 e.printStackTrace();
             }

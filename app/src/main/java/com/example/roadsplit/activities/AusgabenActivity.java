@@ -98,8 +98,9 @@ public class AusgabenActivity extends AppCompatActivity {
         // setup viewpager
         screenPager = findViewById(R.id.screen_viewpager);
         //EndpointConnector.fetchPaymentInfo(reise, reisender,fetchPaymentCallback());
-        EndpointConnector.fetchAusgabenReport(reise, reisender, ausgabenReportCallback());
+        EndpointConnector.fetchAusgabenReport(reise, reisender, ausgabenReportCallback(), this);
     }
+
 
     private Callback ausgabenReportCallback() {
         return new Callback() {
@@ -115,16 +116,22 @@ public class AusgabenActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         //reiseUebersichtAdapter = new ReiseUebersichtAdapter(AusgabenActivity.this, AusgabenActivity.this, null, reiseResponse, ausgabenReport);
 
-                        SharedPreferences.Editor editor = reisenderPref.edit();
+                        reise = ausgabenReport.getReise();
 
-                        editor = reportPref.edit();
+                        SharedPreferences.Editor editor = reportPref.edit();
                         editor.putString("report", gson.toJson(ausgabenReport));
                         editor.apply();
 
                         dashboardOverviewAdapter = new DashboardOverviewAdapter(AusgabenActivity.this, AusgabenActivity.this, ausgabenReport);
 
+
                         screenPager.setAdapter(dashboardOverviewAdapter);
                         tabLayout = findViewById(R.id.tab_indicator2);
+                        int width = tabLayout.getWidth();
+                        int height = tabLayout.getHeight();
+                        //Drawable drawable = getResources().getDrawable(R.drawable.tabindicatorneu);
+                        //drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.1), (int) (drawable.getIntrinsicHeight() * 0.1));
+                        //tabLayout.setSelectedTabIndicator(drawable);
                         tabLayout.setupWithViewPager(screenPager);
                         tabLayout.getTabAt(0).setIcon(R.drawable.dokumenteiconp);
                         tabLayout.getTabAt(1).setIcon(R.drawable.stoppsiconp);
@@ -132,6 +139,8 @@ public class AusgabenActivity extends AppCompatActivity {
                         tabLayout.getTabAt(3).setIcon(R.drawable.kosteniconp);
                         screenPager.setCurrentItem(returning);
                     });
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(AusgabenActivity.this);
                 }
             }
 
@@ -165,7 +174,7 @@ public class AusgabenActivity extends AppCompatActivity {
                         editor.apply();
 
 
-                        EndpointConnector.fetchAusgabenReport(reise, reisender, ausgabenReportCallback());
+                        EndpointConnector.fetchAusgabenReport(reise, reisender, ausgabenReportCallback(), AusgabenActivity.this);
                     });
                 }
             }

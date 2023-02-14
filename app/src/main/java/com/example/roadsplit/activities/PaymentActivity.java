@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -23,14 +22,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.AusgabenAdapterHelper;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.AusgabenTyp;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.Stop;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
-import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.requests.AusgabenRequest;
 import com.google.gson.Gson;
 
@@ -46,6 +43,7 @@ import okhttp3.Response;
 
 public class PaymentActivity extends AppCompatActivity {
 
+    ArrayAdapter<String> schuldnerAdapter;
     private TextView notizView;
     private TextView betragView;
     private Spinner kategorieSpinner;
@@ -54,8 +52,6 @@ public class PaymentActivity extends AppCompatActivity {
     private Button ausgabeSpeichernButton;
     private CheckBox privateCheckBox;
     private ProgressBar progressBar;
-
-    ArrayAdapter<String> schuldnerAdapter;
     private SharedPreferences reportPref;
     private SharedPreferences reisenderPref;
     private SharedPreferences reisePref;
@@ -67,6 +63,8 @@ public class PaymentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //TODO Start activity for Result
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ausgabeerstellen);
 
@@ -106,14 +104,13 @@ public class PaymentActivity extends AppCompatActivity {
         privateCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked){
+                if (checked) {
                     schulderView.setEnabled(false);
                     schulderView.setBackgroundColor(Color.LTGRAY);
                     schulderView.clearChoices();
                     check = true;
                     schuldnerAdapter.notifyDataSetChanged();
-                }
-                else {
+                } else {
 
                     schulderView.setEnabled(true);
                     check = false;
@@ -125,35 +122,34 @@ public class PaymentActivity extends AppCompatActivity {
 
     }
 
-    private void setupListView()
-    {
+    private void setupListView() {
         List<String> reisendeNames = new ArrayList<>();
-        for(Reisender reisender : ausgabenReport.getReisende()) reisendeNames.add(reisender.getNickname());
+        for (Reisender reisender : ausgabenReport.getReisende())
+            reisendeNames.add(reisender.getNickname());
 
         schulderView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         schuldnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, reisendeNames);
         schulderView.setAdapter(schuldnerAdapter);
     }
 
-    private void setupSpinners(){
+    private void setupSpinners() {
 
         ArrayAdapter<String> typAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, AusgabenTyp.ausgabenTypenWithEmoji());
         typAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         kategorieSpinner.setAdapter(typAdapter);
 
         List<String> stopNames = new ArrayList<>();
-        for(Stop stop : ausgabenReport.getReise().getStops()) stopNames.add(stop.getName());
+        for (Stop stop : ausgabenReport.getReise().getStops()) stopNames.add(stop.getName());
         ArrayAdapter<String> stopAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stopNames);
         stopAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         zwischenstopSpinner.setAdapter(stopAdapter);
     }
 
 
-    public void addBetrag(BigDecimal betrag, ListView schuldner)
-    {
+    public void addBetrag(BigDecimal betrag, ListView schuldner) {
         Stop stop = reise.getStops().get(zwischenstopSpinner.getSelectedItemPosition());
         SparseBooleanArray checked = schuldner.getCheckedItemPositions();
-        if(privateCheckBox.isChecked()){
+        if (privateCheckBox.isChecked()) {
             Ausgabe ausgabe = new Ausgabe();
             ausgabe.setBetrag(betrag);
             ausgabe.setAnzahlReisende(1);
@@ -165,10 +161,9 @@ public class PaymentActivity extends AppCompatActivity {
             ausgabe.setSchuldnerName(reisender.getNickname());
             ausgabe.setAusgabenTyp(AusgabenTyp.typForPosition(kategorieSpinner.getSelectedItemPosition()));
             ausgabe.setErstellDatum(System.currentTimeMillis());
-            if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
+            if (stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
             stop.getAusgaben().add(ausgabe);
-        }
-        else {
+        } else {
             for (int i = 0; i < schuldner.getCount(); i++)
                 if (checked.get(i)) {
                     BigDecimal betragN = betrag.divide(new BigDecimal(checked.size()), 2, RoundingMode.HALF_DOWN);
@@ -179,21 +174,18 @@ public class PaymentActivity extends AppCompatActivity {
                     ausgabe.setZahler(reisender.getId());
                     ausgabe.setNotiz(notizView.getText().toString());
                     ausgabe.setZahlerName(reisender.getNickname());
-                    if(privateCheckBox.isChecked())
-                    {
+                    if (privateCheckBox.isChecked()) {
                         ausgabe.setSchuldner(reisender.getId());
                         ausgabe.setSchuldnerName(reisender.getNickname());
-                    }
-                    else
-                    {
+                    } else {
                         ausgabe.setSchuldner(ausgabenReport.getReisende().get(i).getId());
                         ausgabe.setSchuldnerName(ausgabenReport.getReisende().get(i).getNickname());
                     }
                     ausgabe.setAusgabenTyp(AusgabenTyp.typForPosition(kategorieSpinner.getSelectedItemPosition()));
                     ausgabe.setErstellDatum(System.currentTimeMillis());
-                    if(stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
+                    if (stop.getAusgaben() == null) stop.setAusgaben(new ArrayList<>());
                     stop.getAusgaben().add(ausgabe);
-                    if(stop.getGesamtausgaben() == null) stop.setGesamtausgaben(new BigDecimal(0));
+                    if (stop.getGesamtausgaben() == null) stop.setGesamtausgaben(new BigDecimal(0));
                     stop.setGesamtausgaben(stop.getGesamtausgaben().add(betragN));
                 }
         }
@@ -201,10 +193,10 @@ public class PaymentActivity extends AppCompatActivity {
         reise.getStops().set(zwischenstopSpinner.getSelectedItemPosition(), stop);
 
         AusgabenRequest ausgabenRequest = new AusgabenRequest(reisender, reise);
-        EndpointConnector.updateAusgaben(ausgabenRequest, updateAusgabenCallback());
+        EndpointConnector.updateAusgaben(ausgabenRequest, updateAusgabenCallback(), this);
     }
 
-    private Callback updateAusgabenCallback(){
+    private Callback updateAusgabenCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -214,7 +206,7 @@ public class PaymentActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 ausgabenReport = gson.fromJson(response.body().string(), AusgabenReport.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     SharedPreferences.Editor editor = reportPref.edit();
                     editor.putString("report", gson.toJson(ausgabenReport));
                     editor.apply();
@@ -232,6 +224,8 @@ public class PaymentActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     });
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(PaymentActivity.this);
                 }
             }
         };

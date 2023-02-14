@@ -1,8 +1,5 @@
 package com.example.roadsplit.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,22 +8,22 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ButtonEffect;
-import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.requests.JoinRequest;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -53,10 +50,9 @@ public class NeueReiseActivity extends AppCompatActivity {
         this.reiseResponsePref = getSharedPreferences("reiseResponse", MODE_PRIVATE);
         this.reisePref = getSharedPreferences("reise", MODE_PRIVATE);
         reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
-        if(reisender != null)
-        {
+        if (reisender != null) {
             String welcome = "Was geht, " + reisender.getNickname();
-            ((TextView)findViewById(R.id.textView10)).setText(welcome);
+            ((TextView) findViewById(R.id.textView10)).setText(welcome);
         }
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -64,19 +60,17 @@ public class NeueReiseActivity extends AppCompatActivity {
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.reiseBeitretenButton));
     }
 
-    public void reiseErstellen(View view)
-    {
+    public void reiseErstellen(View view) {
         Intent intent = new Intent(this, ReiseErstellenActivity.class);
         startActivity(intent);
     }
 
-    public void reiseBeitreten(View view)
-    {
+    public void reiseBeitreten(View view) {
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheetlayout);
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -87,11 +81,11 @@ public class NeueReiseActivity extends AppCompatActivity {
         EditText editText = dialog.findViewById(R.id.pinTextView);
         String uniquename = editText.getText().toString();
         JoinRequest joinRequest = new JoinRequest(reisender.getId(), uniquename);
-        EndpointConnector.reiseBeitreten(joinRequest, reiseBeitretenCallback());
+        EndpointConnector.reiseBeitreten(joinRequest, reiseBeitretenCallback(), this);
 
     }
 
-    private Callback reiseBeitretenCallback(){
+    private Callback reiseBeitretenCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -104,7 +98,7 @@ public class NeueReiseActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 ReiseResponse reiseResponse = gson.fromJson(response.body().string(), ReiseResponse.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
 
                     SharedPreferences.Editor editor = reisenderPref.edit();
                     editor.putString("reisender", gson.toJson(reiseResponse.getReisender()));
@@ -121,6 +115,8 @@ public class NeueReiseActivity extends AppCompatActivity {
                     Looper.prepare();
                     dialog.dismiss();
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(NeueReiseActivity.this);
                 }
             }
         };

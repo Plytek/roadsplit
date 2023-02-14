@@ -124,10 +124,10 @@ public class UploadFileActivity extends AppCompatActivity {
                 if (!newFilename.isEmpty()) {
                     int dotIndex = fileName.lastIndexOf(".");
                     String fileExtension = fileName.substring(dotIndex);
-                    EndpointConnector.uploadFile(bytes, newFilename + fileExtension, fileType, reise, reisender, uploadFileCallback());
+                    EndpointConnector.uploadFile(bytes, newFilename + fileExtension, fileType, reise, reisender, uploadFileCallback(), UploadFileActivity.this);
                     dialog.dismiss();
                 } else {
-                    EndpointConnector.uploadFile(bytes, fileName, fileType, reise, reisender, uploadFileCallback());
+                    EndpointConnector.uploadFile(bytes, fileName, fileType, reise, reisender, uploadFileCallback(), UploadFileActivity.this);
                     dialog.dismiss();
                 }
 
@@ -231,6 +231,8 @@ public class UploadFileActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     });
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(UploadFileActivity.this);
                 }
             }
         };

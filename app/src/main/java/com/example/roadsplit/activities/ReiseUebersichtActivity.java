@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -80,7 +79,7 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reise_uebersicht_test);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         lastUpdate = System.currentTimeMillis();
@@ -104,6 +103,8 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
             toLogin();
             return;
         }
+
+        if (EndpointConnector.getJwtToken(this).equals("error")) toLogin();
 
         this.ongoingResponses = new ArrayList<>();
         this.finishedResponses = new ArrayList<>();
@@ -244,8 +245,9 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+
                 if (response.isSuccessful()) {
+                    UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
                     reisender = userResponse.getReisender();
                     uebersicht = userResponse.getReisen();
                     SharedPreferences.Editor editor = reisenderPref.edit();
@@ -270,6 +272,9 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
                     for (Reise reise : reisender.getReisen()) {
                         EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise));
                     }
+                }
+                if (response.code() == 403) {
+                    toLogin();
                 }
             }
         };
@@ -338,7 +343,7 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
     }
 
     private void refresh() {
-        EndpointConnector.updateOverview(reisender, updateOverviewCallback());
+        EndpointConnector.updateOverview(reisender, updateOverviewCallback(), this);
     }
 
     @Override

@@ -1,8 +1,5 @@
 package com.example.roadsplit.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,9 +15,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ButtonEffect;
-import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.model.Location;
 import com.example.roadsplit.model.LocationInfo;
 import com.example.roadsplit.model.Reise;
@@ -38,7 +38,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ReiseErstellenActivity extends AppCompatActivity{
+public class ReiseErstellenActivity extends AppCompatActivity {
 
     private Reisender reisender;
     private Reise currentReise;
@@ -60,7 +60,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setContentView(R.layout.activity_reise_erstellen);
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
@@ -101,12 +101,12 @@ public class ReiseErstellenActivity extends AppCompatActivity{
     }
 
     //HERE
-    public void addToZwischenstops(View view){
+    public void addToZwischenstops(View view) {
         EditText editText = findViewById(R.id.zwischenStopView);
         String stop = editText.getText().toString();
-        if(stop.isEmpty()) return;
+        if (stop.isEmpty()) return;
         try {
-            if(zwischenstops.get(zwischenstops.size()-1).equals(stop)) return;
+            if (zwischenstops.get(zwischenstops.size() - 1).equals(stop)) return;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,41 +115,39 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         adapter.notifyDataSetChanged();
     }
 
-    public void deleteFromZwischenstops(View view){
-        if(zwischenstops.isEmpty()) return;
-        zwischenstops.remove(zwischenstops.size()-1);
+    public void deleteFromZwischenstops(View view) {
+        if (zwischenstops.isEmpty()) return;
+        zwischenstops.remove(zwischenstops.size() - 1);
         adapter.notifyDataSetChanged();
     }
 
-    public void addReise()
-    {
+    public void addReise() {
         Reise reise = new Reise();
-        reise.setName(((EditText)findViewById(R.id.reiseName)).getText().toString());
+        reise.setName(((EditText) findViewById(R.id.reiseName)).getText().toString());
         reise.setUniquename(reisender.getId().toString());
         if (reisender.getReisen() == null) reisender.setReisen(new ArrayList<>());
         reisender.getReisen().add(reise);
         currentReise = reise;
     }
 
-    public boolean addInitialStop()
-    {
+    public boolean addInitialStop() {
         Stop stop = new Stop();
-        stop.setName(((EditText)findViewById(R.id.startingPoint)).getText().toString());
-        if(stop.getName() == null || stop.getName().isEmpty()) return false;
-        if(currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
-        if(!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
+        stop.setName(((EditText) findViewById(R.id.startingPoint)).getText().toString());
+        if (stop.getName() == null || stop.getName().isEmpty()) return false;
+        if (currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
+        if (!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
         return true;
     }
 
-    public void addLastStop(){
+    public void addLastStop() {
         Stop stop = new Stop();
-        stop.setName(((EditText)findViewById(R.id.endStopView)).getText().toString());
-        if(currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
-        if(!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
+        stop.setName(((EditText) findViewById(R.id.endStopView)).getText().toString());
+        if (currentReise.getStops() == null) currentReise.setStops(new ArrayList<>());
+        if (!currentReise.getStops().contains(stop)) currentReise.getStops().add(stop);
     }
 
-    public void addZwischenStops(){
-        for(String zwischenstop : zwischenstops){
+    public void addZwischenStops() {
+        for (String zwischenstop : zwischenstops) {
             Stop stop = new Stop();
             stop.setName(zwischenstop);
             currentReise.getStops().add(stop);
@@ -161,19 +159,19 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         errorStartView.setVisibility(View.INVISIBLE);
         if (currentReise == null) {
             String reiseName = ((EditText) findViewById(R.id.reiseName)).getText().toString();
-            if (reiseName.isEmpty()){
+            if (reiseName.isEmpty()) {
                 errorReisenameView.setVisibility(View.VISIBLE);
                 errorReisenameView.setText("Bitte gib der Reise einen Namen");
                 return;
             }
-            if(reiseName.length() > 16){
+            if (reiseName.length() > 16) {
                 errorReisenameView.setVisibility(View.VISIBLE);
                 errorReisenameView.setText("Der Name darf maximal 16 Zeichen lang sein");
                 return;
             }
             addReise();
         }
-        if(!addInitialStop()){
+        if (!addInitialStop()) {
             errorStartView.setVisibility(View.VISIBLE);
             errorStartView.setText("Bitte gib einen Start an");
             return;
@@ -182,12 +180,11 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         addLastStop();
         zwischenstops.clear();
         currentReise.setCreateDate(System.currentTimeMillis());
-        EndpointConnector.saveReise(currentReise, saveReiseCallback());
+        EndpointConnector.saveReise(currentReise, saveReiseCallback(), this);
 
     }
 
-    private Callback saveReiseCallback()
-    {
+    private Callback saveReiseCallback() {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -200,7 +197,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 ReiseResponse reiseResponse = gson.fromJson(response.body().string(), ReiseResponse.class);
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     SharedPreferences.Editor editor = reisenderPref.edit();
                     editor.putString("reisender", gson.toJson(reiseResponse.getReisender()));
                     editor.apply();
@@ -214,12 +211,14 @@ public class ReiseErstellenActivity extends AppCompatActivity{
                     editor.apply();
                     reiseSuccess(reiseResponse.getReise().getUniquename(), reiseResponse);
                     Looper.prepare();
+                } else if (response.code() == 403) {
+                    EndpointConnector.toLogin(ReiseErstellenActivity.this);
                 }
             }
         };
     }
 
-    private TextWatcher fetchAutoCompleteTextWatcher(){
+    private TextWatcher fetchAutoCompleteTextWatcher() {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -236,7 +235,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
                 // Get the user's input
                 long currentTimeMillis = System.currentTimeMillis();
                 String input = s.toString();
-                if(input.length() < 3) return;
+                if (input.length() < 3) return;
 
                 if (currentTimeMillis - last >= 1000) {
                     // At least 1 second has passed since the last check
@@ -257,9 +256,9 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         last = current;
         EndpointConnector.fetchLocationInfo(loc, locationCallback());
     }
-    private Callback locationCallback()
-    {
-       return new Callback() {
+
+    private Callback locationCallback() {
+        return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
             }
@@ -269,20 +268,19 @@ public class ReiseErstellenActivity extends AppCompatActivity{
                 LocationInfo[] locationInfo = new LocationInfo[1];
                 try {
                     locationInfo = new Gson().fromJson(response.body().string(), LocationInfo[].class);
-                } catch (Exception e){
+                } catch (Exception e) {
                     try {
                         locationInfo[0] = new Gson().fromJson(response.body().string(), LocationInfo.class);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 }
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
 
                     LocationInfo[] finalLocationInfo = locationInfo;
                     runOnUiThread(() -> {
                         suggestions = new ArrayList<>();
-                        for(LocationInfo info : finalLocationInfo)
-                        {
+                        for (LocationInfo info : finalLocationInfo) {
                             Location location = info.getAddress();
                             suggestions.add(location.getName() + " (" + location.getPostcode() + ", " + location.getCountry() + ")");
                         }
@@ -298,8 +296,7 @@ public class ReiseErstellenActivity extends AppCompatActivity{
         };
     }
 
-    private void reiseSuccess(String id, ReiseResponse reiseResponse)
-    {
+    private void reiseSuccess(String id, ReiseResponse reiseResponse) {
         Intent intent = new Intent(this, ReiseSuccessActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("reiseResponse", new Gson().toJson(reiseResponse));

@@ -18,6 +18,7 @@ import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.helperclasses.DashboardSetup;
 import com.example.roadsplit.helperclasses.DokumentSetup;
+import com.example.roadsplit.helperclasses.PacklisteSetup;
 import com.example.roadsplit.helperclasses.ZwischenstopSetup;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.google.gson.Gson;
@@ -79,6 +80,8 @@ public class DashboardOverviewAdapter extends PagerAdapter {
                 break;
             case 2:
                 layoutScreen = inflater.inflate(R.layout.packlistepage, null);
+                PacklisteSetup packlisteSetup = new PacklisteSetup(context, ausgabenActivity, layoutScreen);
+                packlisteSetup.setUpPackliste();
                 break;
             case 3:
                 layoutScreen = inflater.inflate(R.layout.dokumentepage, null);

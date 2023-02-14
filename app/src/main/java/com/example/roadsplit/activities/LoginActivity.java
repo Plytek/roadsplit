@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.errorPassword).setVisibility(View.INVISIBLE);
 
         OkHttpClient client = new OkHttpClient();
-        String url = MainActivity.BASEURL + "/api/userdaten/login";
+        String url = getResources().getString(R.string.baseendpoint) + "/api/userdaten/login";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
         UserAccount userAccount = new UserAccount();
@@ -110,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         userAccount.setPassword(password);
         userAccount.setFirsttimelogin(false);
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(userAccount));
+        System.out.println(new Gson().toJson(userAccount));
 
         Request request = new Request.Builder()
                 .url(httpBuilder.build())
@@ -124,8 +125,16 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+                UserResponse userResponse = null;
+                try {
+                    userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 if (response.isSuccessful()) {
+
+                    EndpointConnector.storeJwtToken(userResponse.getMessage(), LoginActivity.this);
                     reisender = userResponse.getReisender();
                     SharedPreferences.Editor editor = reisenderPref.edit();
                     editor.putString("reisender", new Gson().toJson(reisender));
@@ -135,17 +144,15 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("uebersicht", new Gson().toJson(userResponse.getReisen()));
                     editor.apply();
 
-
+                    imageloadCounter = 0;
                     if (userResponse.getReisender().isFirsttimelogin()) {
                         reisender.setFirsttimelogin(false);
-                        imageloadCounter = 0;
                         for (Reise reise : reisender.getReisen()) {
                             EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise, true));
                         }
                         sendUserUpdate();
                         startFirstTimeActivity();
                     } else {
-                        imageloadCounter = 0;
                         for (Reise reise : reisender.getReisen()) {
                             EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise, false));
                         }
@@ -154,21 +161,26 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                String message = userResponse.getMessage();
-                if (message.contains("Passwort")) {
-                    runOnUiThread(() -> {
-                        TextView textView;
-                        textView = findViewById(R.id.errorPassword);
-                        textView.setVisibility(View.VISIBLE);
-                        textView.setText(message);
-                    });
-                } else {
-                    runOnUiThread(() -> {
-                        TextView textView;
-                        textView = findViewById(R.id.erroremail);
-                        textView.setVisibility(View.VISIBLE);
-                        textView.setText(message);
-                    });
+
+                try {
+                    String message = userResponse.getMessage();
+                    if (message.contains("Passwort")) {
+                        runOnUiThread(() -> {
+                            TextView textView;
+                            textView = findViewById(R.id.errorPassword);
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(message);
+                        });
+                    } else {
+                        runOnUiThread(() -> {
+                            TextView textView;
+                            textView = findViewById(R.id.erroremail);
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(message);
+                        });
+                    }
+                } catch (NullPointerException e) {
+                    Log.d("okhttp", "null message in userresponse " + e);
                 }
                 findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
             }
@@ -264,12 +276,18 @@ public class LoginActivity extends AppCompatActivity {
             }
             imageMap.put(reisename, mIcon);
             imageloadCounter++;
-            if (imageloadCounter == reisender.getReisen().size()) {
+            if (imageloadCounter == reisender.getReisen().size() - 1) {
                 if (firsttime)
                     startFirstTimeActivity();
                 else
                     success();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        imageloadCounter = 0;
     }
 }

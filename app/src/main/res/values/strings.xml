@@ -10,6 +10,7 @@
     <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
     <string name="reise_name_erstellen">Gib deiner Reise einen Namen.</string>
     <string name="lockey">pk.07b1dd6de2c45e289e1470fc2407c7e5</string>
-    <string name="baseendpoint">http://167.172.167.221:8080</string>
-    <!--<string name="baseendpoint">https://47ef-84-63-180-89.ngrok.io</string>!-->
+    <!--<string name="baseendpoint">http://167.172.167.221:8080</string>!-->
+    <!--<string name="baseendpoint">https://5e8d-84-63-180-89.ngrok.io</string>!-->
+    <string name="baseendpoint">https://roadsplit.hopto.org</string>
 </resources>

@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,11 +40,32 @@ public class PacklistenRecyclerAdapter extends RecyclerView.Adapter<PacklistenRe
     @Override
     public void onBindViewHolder(@NonNull PacklistenRecyclerAdapter.RecentsViewHolder holder, int position) {
         PacklistenItem packlistenItem = recentsDataList.get(position);
-        viewHolder.name.setText(packlistenItem.getItemname());
+
+        holder.name.setOnClickListener(view -> {
+            if ((holder.name.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == Paint.STRIKE_THRU_TEXT_FLAG) {
+                holder.name.setPaintFlags(viewHolder.name.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                packlistenItem.setDone(false);
+                recentsDataList.set(position, packlistenItem);
+                //notifyDataSetChanged();
+            } else {
+                holder.name.setPaintFlags(viewHolder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                packlistenItem.setDone(true);
+                recentsDataList.set(position, packlistenItem);
+                //notifyDataSetChanged();
+            }
+        });
+
+        holder.delete.setOnClickListener(view -> {
+            recentsDataList.remove(position);
+            notifyDataSetChanged();
+            //this.notifyItemChanged(position);
+        });
+
+        holder.name.setText(packlistenItem.getItemname());
         if (packlistenItem.isDone()) {
-            viewHolder.name.setPaintFlags(viewHolder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.name.setPaintFlags(viewHolder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
-            viewHolder.name.setPaintFlags(viewHolder.name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            holder.name.setPaintFlags(viewHolder.name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
 
     }
@@ -53,17 +75,22 @@ public class PacklistenRecyclerAdapter extends RecyclerView.Adapter<PacklistenRe
         return recentsDataList.size();
     }
 
+    public List<PacklistenItem> getRecentsDataList() {
+        return recentsDataList;
+    }
+
     public static final class RecentsViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
         ImageView image;
+        Button delete;
 
         public RecentsViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.packlistenItemName);
             image = itemView.findViewById(R.id.packlistenImageView);
-
+            delete = itemView.findViewById(R.id.deletePacklistenItem);
         }
     }
 }
