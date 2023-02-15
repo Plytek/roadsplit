@@ -7,101 +7,91 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="246dp"
-        android:layout_height="221dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline20"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline20"
-        app:srcCompat="@drawable/successcanvas" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
-
     <Button
         android:id="@+id/uploadButton"
-        android:layout_width="275dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/lightgreenbutton"
-        android:elevation="3dp"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="215dp"
+        android:background="@drawable/custom_shape2"
         android:fontFamily="@font/cmedium"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:text="Upload Dokument"
-        android:textAlignment="center"
+        android:text="Dokument hochladen"
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/downloadButton"
+        android:textColor="#ffff"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/guidelineUpload"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
+        app:layout_constraintTop_toTopOf="@+id/guidelineUpload"
+        app:layout_constraintVertical_bias="0.109" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center|left"
+        android:text="Dokumente"
+        android:textColor="#2A4B42"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineObenPack"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dokumentListView"
-        app:layout_constraintVertical_bias="0.629" />
+        app:layout_constraintTop_toTopOf="@id/guidelineObenPack"
+        app:layout_constraintVertical_bias="0.625" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="323dp"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="2sp"
+        android:text="Alle Reisedokumente zentral an einem Platz."
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineObenPack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.06" />
 
     <Button
         android:id="@+id/downloadButton"
-        android:layout_width="275dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/lightgreenbutton"
-        android:elevation="3dp"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="215dp"
+        android:background="@drawable/custom_shape2"
         android:fontFamily="@font/cmedium"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:text="Download Dokument"
-        android:textAlignment="center"
+        android:text="Dokument herunterladen"
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline10"
-        app:layout_constraintVertical_bias="0.683" />
+        android:textColor="#ffff"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/guidelineDownload"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
+        app:layout_constraintTop_toTopOf="@+id/guidelineDownload"
+        app:layout_constraintVertical_bias="0.109" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline18"
+        android:id="@+id/guidelineUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.77" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline20"
+        android:id="@+id/guidelineDownload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1892779" />
-
-    <ListView
-        android:id="@+id/dokumentListView"
-        android:layout_width="307dp"
-        android:layout_height="261dp"
-        android:choiceMode="singleChoice"
-        android:elevation="3dp"
-        android:listSelector="@color/rdarkgreen"
-        app:layout_constraintBottom_toTopOf="@+id/guideline10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <ProgressBar
         android:id="@+id/dokumenteProgressBar"
@@ -112,5 +102,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dokumentListView"
+        android:layout_width="250dp"
+        android:layout_height="350dp"
+        app:layout_constraintStart_toStartOf="@id/guidelineVertical"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVertical"
+        app:layout_constraintTop_toBottomOf="@id/guidelineObenPack"
+        app:layout_constraintBottom_toTopOf="@id/uploadButton"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="192dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
