@@ -38,7 +38,7 @@
                 android:layout_marginEnd="2dp"
                 android:elevation="1dp"
                 android:fontFamily="@font/cmedium"
-                android:gravity="center"
+                android:gravity="left|center"
                 android:text="Packlistenitem"
                 android:textColor="#2A4B42"
                 android:textSize="15dp"
@@ -53,13 +53,14 @@
             <ImageView
                 android:id="@+id/packlistenImageView"
                 android:layout_width="32dp"
-                android:layout_height="29dp"
+                android:layout_height="32dp"
                 app:layout_constraintBottom_toBottomOf="@id/clayoutdetail"
                 app:layout_constraintEnd_toEndOf="@id/clayoutdetail"
                 app:layout_constraintHorizontal_bias="0.048"
                 app:layout_constraintStart_toStartOf="@id/clayoutdetail"
                 app:layout_constraintTop_toTopOf="@id/clayoutdetail"
-                app:srcCompat="@drawable/mapicon33" />
+                app:layout_constraintVertical_bias="0.555"
+                app:srcCompat="@drawable/luggageicon" />
 
             <Button
                 android:id="@+id/deletePacklistenItem"

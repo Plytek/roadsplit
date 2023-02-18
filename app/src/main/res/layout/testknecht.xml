@@ -120,7 +120,7 @@
 
     <Button
         android:id="@+id/ausgabeSpeichernButton3"
-        android:layout_width="251dp"
+        android:layout_width="210dp"
         android:layout_height="50dp"
         android:layout_marginBottom="215dp"
         android:background="@drawable/custom_shape2"
@@ -128,7 +128,7 @@
         android:text="Karte anzeigen"
         android:textAllCaps="false"
         android:textColor="#ffff"
-        android:textSize="17dp"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline33"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
         app:layout_constraintHorizontal_bias="0.501"
@@ -138,7 +138,7 @@
 
     <Button
         android:id="@+id/ausgabeSpeichernButton"
-        android:layout_width="251dp"
+        android:layout_width="210dp"
         android:layout_height="50dp"
         android:layout_marginBottom="215dp"
         android:background="@drawable/custom_shape2"
@@ -146,7 +146,7 @@
         android:text="Änderungen Speichern"
         android:textAllCaps="false"
         android:textColor="#ffff"
-        android:textSize="17dp"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline31"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
         app:layout_constraintHorizontal_bias="0.501"
@@ -206,7 +206,7 @@
         android:width="10dp"
         android:height="10dp"
         android:background="@drawable/plusoneplus"
-app:layout_constraintTop_toTopOf="@id/ausgabenNotizEditText"
+        app:layout_constraintTop_toTopOf="@id/ausgabenNotizEditText"
         app:layout_constraintBottom_toBottomOf="@id/ausgabenNotizEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.188"

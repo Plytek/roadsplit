@@ -134,10 +134,10 @@ public class AusgabenActivity extends AppCompatActivity {
                         //drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.1), (int) (drawable.getIntrinsicHeight() * 0.1));
                         //tabLayout.setSelectedTabIndicator(drawable);
                         tabLayout.setupWithViewPager(screenPager);
-                        tabLayout.getTabAt(0).setIcon(R.drawable.dokumenteiconp);
-                        tabLayout.getTabAt(1).setIcon(R.drawable.stoppsiconp);
-                        tabLayout.getTabAt(2).setIcon(R.drawable.packlisteiconp);
-                        tabLayout.getTabAt(3).setIcon(R.drawable.kosteniconp);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.reisekosteniconneu);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.zwiconneutest);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.luggageicon96);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.documentsiconneutwo);
                         screenPager.setCurrentItem(returning);
                     });
                 } else if (response.code() == 403) {
