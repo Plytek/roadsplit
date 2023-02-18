@@ -3,16 +3,21 @@ package com.example.roadsplit.helperclasses;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,7 +34,8 @@ import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
-import com.example.roadsplit.reponses.ReiseResponse;
+import com.example.roadsplit.reponses.UserResponse;
+import com.example.roadsplit.reponses.WikiResponse;
 import com.example.roadsplit.requests.UpdateRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -40,7 +46,12 @@ import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,6 +59,7 @@ import okhttp3.Response;
 
 public class DashboardSetup {
 
+    public static Map<String, Bitmap> imageMap = new HashMap<>();
     private final View layoutScreen;
     private final Context mContext;
     private final AusgabenActivity ausgabenActivity;
@@ -56,12 +68,15 @@ public class DashboardSetup {
     private final SharedPreferences reiseResponsePref;
     private final int standardColor;
     private final int pressedColor = 0xe0f47521;
+    private SharedPreferences uebersichtPref;
     private AusgabenReport ausgabenReport;
     private Reisender reisender;
-
     private PieChart pieChart;
     private ExpandableLayout expandableLayout;
     private TextView expandButton;
+    private ProgressBar progressBar;
+    private int imageloadCounter;
+    private FloatingActionButton statisticsButton;
 
     public DashboardSetup(View layoutScreen, Context mContext, AusgabenActivity ausgabenActivity) {
         this.layoutScreen = layoutScreen;
@@ -71,11 +86,17 @@ public class DashboardSetup {
         this.standardColor = mContext.getResources().getColor(R.color.rdarkgreen);
         this.reportPref = mContext.getSharedPreferences("report", MODE_PRIVATE);
         this.reisenderPref = mContext.getSharedPreferences("reisender", MODE_PRIVATE);
+        this.uebersichtPref = mContext.getSharedPreferences("uebersicht", MODE_PRIVATE);
         this.reiseResponsePref = mContext.getSharedPreferences("reiseResponses", MODE_PRIVATE);
 
         this.pieChart = layoutScreen.findViewById(R.id.piechart);
         this.expandableLayout = layoutScreen.findViewById(R.id.expandable_layout);
         this.expandButton = layoutScreen.findViewById(R.id.expand_button);
+        this.progressBar = layoutScreen.findViewById(R.id.dashboardProgressBar);
+        this.statisticsButton = layoutScreen.findViewById(R.id.statisticButton);
+
+
+        this.progressBar.setVisibility(View.INVISIBLE);
 
         this.ausgabenReport = new Gson().fromJson(reportPref.getString("report", "fehler"), AusgabenReport.class);
         this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
@@ -90,13 +111,16 @@ public class DashboardSetup {
                 }
             }
         });
-        expandButton.setOnClickListener(new View.OnClickListener() {
+        statisticsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (expandableLayout.isExpanded())
+                if (expandableLayout.isExpanded()) {
+                    statisticsButton.setImageDrawable(ausgabenActivity.getResources().getDrawable(R.drawable.baseline_chevron_right_black_24dp));
                     expandableLayout.collapse();
-                else
+                } else {
                     expandableLayout.expand();
+                    statisticsButton.setImageDrawable(ausgabenActivity.getResources().getDrawable(R.drawable.baseline_expand_more_black_24dp));
+                }
             }
         });
     }
@@ -308,13 +332,52 @@ public class DashboardSetup {
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, PaymentActivity.class);
                 Activity activity = (Activity) mContext;
-                mContext.startActivity(intent);
-                activity.finish();
+                ((Activity) mContext).startActivityForResult(intent, 1);
             }
         });
 
         reiseBeenden.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(ausgabenActivity, reiseBeenden, Gravity.END);
+                popupMenu.getMenuInflater().inflate(R.menu.options_menu, popupMenu.getMenu());
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.reiseBeenden_item:
+                                progressBar.setVisibility(View.VISIBLE);
+                                UpdateRequest updateRequest = new UpdateRequest();
+                                Reise reise = ausgabenReport.getReise();
+                                reise.setOngoing(false);
+                                updateRequest.setReise(reise);
+                                updateRequest.setReisender(reisender);
+                                EndpointConnector.updateReise(updateRequest, updateReiseCallback(), ausgabenActivity);
+                                return true;
+                            case R.id.logout_item:
+                                SharedPreferences.Editor editor = reisenderPref.edit();
+                                editor.clear();
+                                editor.apply();
+                                editor = reiseResponsePref.edit();
+                                editor.clear();
+                                editor.apply();
+                                editor = uebersichtPref.edit();
+                                editor.clear();
+                                editor.apply();
+                                editor = reportPref.edit();
+                                editor.clear();
+                                editor.apply();
+                                EndpointConnector.toLogin(ausgabenActivity);
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+            }
+
+           /* @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 //final EditText input = new EditText(mContext);
@@ -341,7 +404,7 @@ public class DashboardSetup {
                 });
                 builder.show();
 
-            }
+            }*/
         });
     }
 
@@ -363,10 +426,15 @@ public class DashboardSetup {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ReiseResponse reiseResponse = new Gson().fromJson(response.body().string(), ReiseResponse.class);
+                AusgabenReport ausgabenResponse = new Gson().fromJson(response.body().string(), AusgabenReport.class);
                 if (response.isSuccessful()) {
-                    //EndpointConnector.fetchAusgabenReport(reiseResponse.getReise(), reiseResponse.getReisender(), updateAusgabenCallback());
-                    EndpointConnector.fetchPaymentInfoSummary(ausgabenReport.getReise(), reisender, fetchPaymentSummaryCallback());
+                    ausgabenReport = ausgabenResponse;
+                    SharedPreferences.Editor editor = reportPref.edit();
+                    editor.putString("report", new Gson().toJson(ausgabenReport));
+                    editor.apply();
+
+                    EndpointConnector.updateOverview(reisender, updateOverviewCallback(), ausgabenActivity);
+
                 } else if (response.code() == 403) {
                     EndpointConnector.toLogin(ausgabenActivity);
                 }
@@ -399,7 +467,8 @@ public class DashboardSetup {
         };
     }
 
-    private Callback fetchPaymentSummaryCallback() {
+
+    private Callback wikiCallback(Reise reise, boolean firsttime) {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -407,25 +476,87 @@ public class DashboardSetup {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Gson gson = new Gson();
-                ReiseResponse[] reiseResponses = gson.fromJson(response.body().string(), ReiseResponse[].class);
+                WikiResponse wikiResponse = null;
+                try {
+                    wikiResponse = new Gson().fromJson(response.body().string(), WikiResponse.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (response.isSuccessful()) {
+
+                    try {
+                        String url = wikiResponse.getPages().get(0).getThumbnail().getUrl();
+                        url = "https:" + url;
+                        url = url.replaceAll("/\\d+px-", "/200px-");
+                        downloadImages(url, reise.getName(), firsttime);
+
+
+                    } catch (Exception e) {
+                        downloadImages("https://cdn.discordapp.com/attachments/284675100253487104/1065300629448298578/globeicon.png", reise.getName(), firsttime);
+                        //TODO: Set Default Image
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+    }
+
+    public void downloadImages(String url, String reisename, boolean firsttime) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            Bitmap mIcon = null;
+            try {
+                InputStream in = new java.net.URL(url).openStream();
+                mIcon = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            imageMap.put(reisename, mIcon);
+            imageloadCounter++;
+            if (imageloadCounter == reisender.getReisen().size()) {
+                progressBar.setVisibility(View.INVISIBLE);
+                //reiseübersichtAnzeigen();
+                Intent intent = new Intent(ausgabenActivity, ReiseUebersichtActivity.class);
+                intent.putExtra("from", "dashboard");
+                ausgabenActivity.startActivityForResult(intent, 1);
+                ausgabenActivity.finish();
+            }
+        });
+    }
+
+    private Callback updateOverviewCallback() {
+        return new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                UserResponse userResponse = null;
+                try {
+                    userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 if (response.isSuccessful()) {
-                    Reisender reisender = reiseResponses[0].getReisender();
+                    reisender = userResponse.getReisender();
 
                     SharedPreferences.Editor editor = reisenderPref.edit();
-                    editor.putString("reisender", gson.toJson(reisender));
+                    editor.putString("reisender", new Gson().toJson(reisender));
                     editor.apply();
 
-                    editor = reiseResponsePref.edit();
-                    editor.putString("reiseResponses", gson.toJson(reiseResponses));
+                    editor = uebersichtPref.edit();
+                    editor.putString("uebersicht", new Gson().toJson(userResponse.getReisen()));
                     editor.apply();
 
-                    Intent intent = new Intent(mContext, ReiseUebersichtActivity.class);
-                    mContext.startActivity(intent);
-                    ausgabenActivity.finish();
-                } else if (response.code() == 403) {
-                    EndpointConnector.toLogin(ausgabenActivity);
+                    imageloadCounter = 0;
+
+                    for (Reise reise : reisender.getReisen()) {
+                        EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise, false));
+                    }
+
                 }
             }
         };

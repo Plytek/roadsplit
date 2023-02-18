@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -147,6 +148,13 @@ public class AusgabenActivity extends AppCompatActivity {
         };
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            finish();
+        }
+    }
 
     private Callback fetchPaymentCallback() {
         return new Callback() {

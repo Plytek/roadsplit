@@ -22,7 +22,7 @@
         android:id="@+id/recyclerViewOnGoing"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +47,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewActive"
+        android:id="@+id/textViewUebersicht"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="70dp"
         android:clickable="true"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
@@ -59,6 +59,40 @@
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewOnGoing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewActive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Laufende Reisen"
+        android:textColor="#2A4B42"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewOnGoing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewFinished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Abgeschlossene Reisen"
+        android:textColor="#2A4B42"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewFinished"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent" />
@@ -112,5 +146,43 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959"
         app:srcCompat="@drawable/plusiconsecond" />
+
+    <ImageView
+        android:id="@+id/sidescrollRightLaufend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewOnGoing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recyclerViewOnGoing"
+        app:srcCompat="@drawable/baseline_arrow_right_black_24dp" />
+
+    <ImageView
+        android:id="@+id/sidescrollRightFinished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewFinished"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewFinished"
+        app:layout_constraintTop_toTopOf="@+id/recyclerViewFinished"
+        app:srcCompat="@drawable/baseline_arrow_right_black_24dp" />
+
+    <ImageView
+        android:id="@+id/sidescrollLeftLaufend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewOnGoing"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewOnGoing"
+        app:layout_constraintTop_toTopOf="@+id/recyclerViewOnGoing"
+        app:srcCompat="@drawable/baseline_arrow_left_black_24dp" />
+
+    <ImageView
+        android:id="@+id/sidescrollLeftFinished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/sidescrollRightFinished"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sidescrollRightFinished"
+        app:srcCompat="@drawable/baseline_arrow_left_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,5 @@
 package com.example.roadsplit.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.helperclasses.ButtonEffect;
@@ -34,37 +34,34 @@ public class RegistryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
 
         ButtonEffect.buttonPressDownEffect(findViewById(R.id.realRegistrierenButton));
     }
 
-    public void backToLogin(View view)
-    {
+    public void backToLogin(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void createUser(View view)
-    {
+    public void createUser(View view) {
         findViewById(R.id.registerProgressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.errorNickname).setVisibility(View.INVISIBLE);
         findViewById(R.id.errorPassword).setVisibility(View.INVISIBLE);
         findViewById(R.id.erroremail).setVisibility(View.INVISIBLE);
 
         OkHttpClient client = new OkHttpClient();
-        String url = MainActivity.BASEURL + "/api/userdaten/user";
+        String url = getResources().getString(R.string.baseendpoint) + "/api/userdaten/user";
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
 
         UserAccount userAccount = new UserAccount();
-        String username = ((EditText)findViewById(R.id.userRegView)).getText().toString();
-        String email = ((EditText)findViewById(R.id.emailRegView)).getText().toString();
-        String password = ((EditText)findViewById(R.id.passRegView)).getText().toString();
+        String username = ((EditText) findViewById(R.id.userRegView)).getText().toString();
+        String email = ((EditText) findViewById(R.id.emailRegView)).getText().toString();
+        String password = ((EditText) findViewById(R.id.passRegView)).getText().toString();
 
-        if(!areInputsValid(username, password, email))
-        {
+        if (!areInputsValid(username, password, email)) {
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
             return;
@@ -89,16 +86,14 @@ public class RegistryActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                UserResponse userResponse =  new Gson().fromJson(response.body().string(), UserResponse.class);
-                if(response.isSuccessful())
-                {
+                UserResponse userResponse = new Gson().fromJson(response.body().string(), UserResponse.class);
+                if (response.isSuccessful()) {
                     findViewById(R.id.registerProgressBar).setVisibility(View.INVISIBLE);
                     toLogin();
                     return;
                 }
                 String message = userResponse.getMessage();
-                if(message.contains("Passwort"))
-                {
+                if (message.contains("Passwort")) {
                     runOnUiThread(() -> {
                         TextView textView;
                         textView = findViewById(R.id.errorPassword);
@@ -106,8 +101,7 @@ public class RegistryActivity extends AppCompatActivity {
                         textView.setText(message);
                     });
                 }
-                if(message.contains("Name"))
-                {
+                if (message.contains("Name")) {
                     runOnUiThread(() -> {
                         TextView textView;
                         textView = findViewById(R.id.errorNickname);
@@ -115,8 +109,7 @@ public class RegistryActivity extends AppCompatActivity {
                         textView.setText(message);
                     });
                 }
-                if(message.contains("Email"))
-                {
+                if (message.contains("Email")) {
                     runOnUiThread(() -> {
                         TextView textView;
                         textView = findViewById(R.id.erroremail);
@@ -129,8 +122,7 @@ public class RegistryActivity extends AppCompatActivity {
         });
     }
 
-    public void toLogin()
-    {
+    public void toLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("registered", "success");
         startActivity(intent);
@@ -157,7 +149,7 @@ public class RegistryActivity extends AppCompatActivity {
             textView.setText("Keine gültige Email");
             ok = false;
         }
-        if(username.contains("@")) {
+        if (username.contains("@")) {
             TextView textView = findViewById(R.id.errorNickname);
             textView.setVisibility(View.VISIBLE);
             textView.setText("Name darf kein @ enthalten");

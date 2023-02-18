@@ -1,161 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintpackliste"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@color/white">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintpackliste"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:fontFamily="@font/cmedium"
-            android:gravity="center"
-            android:text="Gemeinsame Packliste"
-            android:textColor="#2A4B42"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.162"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guidelineOben"
-            app:layout_constraintVertical_bias="0.487" />
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="Gemeinsame Packliste"
+        android:textColor="#2A4B42"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben"
+        app:layout_constraintVertical_bias="0.487" />
 
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="323dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
-            android:lineSpacingExtra="2sp"
-            android:text="Was ist besser als Sachen zu vergessen? Eine gemeinsame Packliste!"
-            android:textSize="13dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.267"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guidelineOben" />
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="323dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:lineSpacingExtra="2sp"
+        android:text="Was ist besser als Sachen zu vergessen? Eine gemeinsame Packliste!"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.267"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineOben" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineOben"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.06" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineOben"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.06" />
 
-        <EditText
-            android:id="@+id/packlistenEditText"
-            android:layout_width="275dp"
-            android:layout_height="50dp"
-            android:background="@drawable/custom_shape"
-            android:fontFamily="@font/cmedium"
-            android:hint="Personalausweis, Hemd, Tasche "
-            android:inputType="text"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="9dp"
-            android:textColor="#c4c4c4"
-            android:textColorHint="#7c818f"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="@id/guideline16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.235"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline16"
-            app:layout_constraintVertical_bias="0.48" />
+    <EditText
+        android:id="@+id/packlistenEditText"
+        android:layout_width="275dp"
+        android:layout_height="50dp"
+        android:background="@drawable/custom_shape"
+        android:fontFamily="@font/cmedium"
+        android:hint="Personalausweis, Hemd, Tasche "
+        android:inputType="text"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="9dp"
+        android:textColor="#c4c4c4"
+        android:textColorHint="#7c818f"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline16"
+        app:layout_constraintVertical_bias="0.48" />
 
-        <Button
-            android:id="@+id/addPacklistenItemButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/plusbutton"
-            android:onClick="addToZwischenstops"
-            app:layout_constraintBottom_toBottomOf="@id/guideline16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
-            app:layout_constraintStart_toEndOf="@id/packlistenEditText"
-            app:layout_constraintTop_toTopOf="@id/guideline16" />
+    <Button
+        android:id="@+id/addPacklistenItemButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/plusbutton"
+        android:onClick="addToZwischenstops"
+        app:layout_constraintBottom_toBottomOf="@id/guideline16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/packlistenEditText"
+        app:layout_constraintTop_toTopOf="@id/guideline16" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.18" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.45" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
 
-        <Button
-            android:id="@+id/removePacklistenItemButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/minusbuttondark"
-            app:layout_constraintBottom_toBottomOf="@id/guideline16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.794"
-            app:layout_constraintStart_toEndOf="@id/addPacklistenItemButton"
-            app:layout_constraintTop_toTopOf="@id/guideline16" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/packlisteRecyclerView"
+        android:layout_width="349dp"
+        android:layout_height="378dp"
+        android:layout_marginTop="26dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline18"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toBottomOf="@+id/packlistenEditText"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/packlisteRecyclerView"
-            android:layout_width="349dp"
-            android:layout_height="378dp"
-            app:layout_constraintBottom_toBottomOf="@id/guideline18"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-            app:layout_constraintHorizontal_bias="0.415"
-            app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-            app:layout_constraintTop_toTopOf="@id/guideline18" />
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="437dp"
+        android:layout_height="102dp"
+        android:layout_marginBottom="-120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.875"
+        app:srcCompat="@drawable/wave" />
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="437dp"
-            android:layout_height="102dp"
-            android:layout_marginBottom="-120dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.875"
-            app:srcCompat="@drawable/wave" />
+    <Button
+        android:id="@+id/savePacklisteChangesButton"
+        android:layout_width="251dp"
+        android:layout_height="50dp"
+        android:background="@drawable/custom_shape2"
+        android:fontFamily="@font/cmedium"
+        android:text="Änderungen Speichern"
+        android:textAllCaps="false"
+        android:textColor="#ffff"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView9"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintTop_toBottomOf="@+id/packlisteRecyclerView" />
 
-        <Button
-            android:id="@+id/savePacklisteChangesButton"
-            android:layout_width="251dp"
-            android:layout_height="50dp"
-            android:background="@drawable/custom_shape2"
-            android:fontFamily="@font/cmedium"
-            android:text="Änderungen Speichern"
-            android:textAllCaps="false"
-            android:textColor="#ffff"
-            android:textSize="17dp"
-            app:layout_constraintBottom_toTopOf="@+id/imageView9"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-            app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-            app:layout_constraintTop_toBottomOf="@+id/packlisteRecyclerView" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVert50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineVert50"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

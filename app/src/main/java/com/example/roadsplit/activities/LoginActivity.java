@@ -151,7 +151,6 @@ public class LoginActivity extends AppCompatActivity {
                             EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise, true));
                         }
                         sendUserUpdate();
-                        startFirstTimeActivity();
                     } else {
                         for (Reise reise : reisender.getReisen()) {
                             EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise, false));
@@ -188,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void sendUserUpdate() throws IOException {
-        HttpUrl.Builder httpBuilder = HttpUrl.parse(MainActivity.BASEURL + "/api/userdaten/update").newBuilder();
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(getResources().getString(R.string.baseendpoint) + "/api/userdaten/update").newBuilder();
         RequestBody formBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(reisender));
 
         OkHttpClient nextclient = new OkHttpClient();
@@ -276,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             imageMap.put(reisename, mIcon);
             imageloadCounter++;
-            if (imageloadCounter == reisender.getReisen().size() - 1) {
+            if (imageloadCounter == reisender.getReisen().size()) {
                 if (firsttime)
                     startFirstTimeActivity();
                 else

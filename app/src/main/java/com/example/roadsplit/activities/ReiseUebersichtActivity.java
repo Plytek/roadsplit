@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.UebersichtRecAdapter;
+import com.example.roadsplit.helperclasses.DashboardSetup;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseUebersicht;
@@ -33,7 +34,6 @@ import com.example.roadsplit.reponses.UserResponse;
 import com.example.roadsplit.reponses.WikiResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,7 +84,14 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         lastUpdate = System.currentTimeMillis();
 
-        imageMap = LoginActivity.imageMap;
+        String from = getIntent().getStringExtra("from");
+        if (from != null && from.equals("success")) {
+            imageMap = ReiseSuccessActivity.imageMap;
+        } else if (from != null && from.equals("dashboard")) {
+            imageMap = DashboardSetup.imageMap;
+        } else {
+            imageMap = LoginActivity.imageMap;
+        }
         setResult(RESULT_OK);
 
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#325a4f")));
@@ -99,8 +106,9 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
         try {
             this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
             this.uebersicht = Arrays.asList(new Gson().fromJson(uebersichtPref.getString("uebersicht", "fehler"), ReiseUebersicht[].class));
-        } catch (JsonSyntaxException e) {
+        } catch (Exception e) {
             toLogin();
+            finish();
             return;
         }
 
@@ -121,6 +129,11 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
         reisen = reisender.getReisen();
         reisenView = findViewById(R.id.recyclerViewOnGoing);
         reisenViewFinished = findViewById(R.id.recyclerViewFinished);
+
+        ImageView rightLaufend = findViewById(R.id.sidescrollRightLaufend);
+        ImageView leftLaufend = findViewById(R.id.sidescrollLeftLaufend);
+        ImageView rightFinished = findViewById(R.id.sidescrollRightFinished);
+        ImageView leftFinished = findViewById(R.id.sidescrollLeftFinished);
         ImageView logout = findViewById(R.id.settingsView);
         FloatingActionButton neueReiseButton = findViewById(R.id.floatingNeueReiseButton);
 
@@ -215,6 +228,56 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
         reisenView.setAdapter(uebersichtRecAdapter);
         uebersichtRecAdapterFinish = new UebersichtRecAdapter(this, finishedResponses, imageMap);
         reisenViewFinished.setAdapter(uebersichtRecAdapterFinish);
+
+        reisenView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstVisibleItem = 0;
+                try {
+                    firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                } catch (Exception e) {
+                    return;
+                }
+                int lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+
+                if (firstVisibleItem == 0) {
+                    rightLaufend.setVisibility(View.VISIBLE);
+                    leftLaufend.setVisibility(View.GONE);
+                } else if (lastVisibleItem == recyclerView.getAdapter().getItemCount() - 1) {
+                    leftLaufend.setVisibility(View.VISIBLE);
+                    rightLaufend.setVisibility(View.GONE);
+                } else {
+                    rightLaufend.setVisibility(View.GONE);
+                    leftLaufend.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        reisenViewFinished.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstVisibleItem = 0;
+                try {
+                    firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                } catch (Exception e) {
+                    return;
+                }
+                int lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+
+                if (firstVisibleItem == 0) {
+                    rightFinished.setVisibility(View.VISIBLE);
+                    leftFinished.setVisibility(View.GONE);
+                } else if (lastVisibleItem == recyclerView.getAdapter().getItemCount() - 1) {
+                    leftFinished.setVisibility(View.VISIBLE);
+                    rightFinished.setVisibility(View.GONE);
+                } else {
+                    rightFinished.setVisibility(View.GONE);
+                    leftFinished.setVisibility(View.GONE);
+                }
+            }
+        });
 
 /*        handler.post(() -> {
             uebersichtRecAdapter = new UebersichtRecAdapter(this, ongoingResponses, imageMap);
@@ -338,6 +401,9 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
     @Override
     protected void onResume() {
         super.onResume();
+        if (reisender == null) {
+            toLogin();
+        }
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         refresh();
     }

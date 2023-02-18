@@ -215,7 +215,6 @@ public class PaymentActivity extends AppCompatActivity {
                     editor.putString("reise", gson.toJson(ausgabenReport.getReise()));
                     editor.apply();
 
-
                     runOnUiThread(() ->
                     {
                         progressBar.setVisibility(View.GONE);

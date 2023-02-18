@@ -1,6 +1,7 @@
 package com.example.roadsplit.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,12 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.R;
+import com.example.roadsplit.helperclasses.ItemMoveCallback;
 import com.example.roadsplit.model.Stop;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
-public class StopRecyclerAdapter extends RecyclerView.Adapter<StopRecyclerAdapter.RecentsViewHolder> {
+public class StopRecyclerAdapter extends RecyclerView.Adapter<StopRecyclerAdapter.RecentsViewHolder> implements ItemMoveCallback.ItemTouchHelperContract {
 
     private final List<Stop> recentsDataList;
     private Context context;
@@ -78,12 +81,39 @@ public class StopRecyclerAdapter extends RecyclerView.Adapter<StopRecyclerAdapte
     }
 
     @Override
+    public void onRowMoved(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(recentsDataList, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(recentsDataList, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onRowSelected(RecentsViewHolder myViewHolder) {
+        myViewHolder.overview.setBackgroundColor(Color.GRAY);
+
+    }
+
+    @Override
+    public void onRowClear(RecentsViewHolder myViewHolder) {
+        myViewHolder.overview.setBackgroundColor(Color.WHITE);
+
+    }
+
+    @Override
     public int getItemCount() {
         return recentsDataList.size();
     }
 
     public static final class RecentsViewHolder extends RecyclerView.ViewHolder {
 
+        View overview;
         TextView name;
         TextView ausgaben;
         EditText budget;
@@ -91,6 +121,7 @@ public class StopRecyclerAdapter extends RecyclerView.Adapter<StopRecyclerAdapte
         public RecentsViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            overview = itemView;
             name = itemView.findViewById(R.id.textViewZwName);
             ausgaben = itemView.findViewById(R.id.textViewZwDesc);
             budget = itemView.findViewById(R.id.textViewZwBudget);
