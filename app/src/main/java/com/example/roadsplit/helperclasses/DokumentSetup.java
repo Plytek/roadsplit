@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -51,6 +52,7 @@ public class DokumentSetup {
     private final Button downloadButton;
     private final ListView dokumentListView;
     private final ProgressBar dokumentProgressBar;
+    private ImageView noDocumentImage;
     private ArrayAdapter<String> dokumentAdapter;
     private AusgabenActivity ausgabenActivity;
 
@@ -65,10 +67,16 @@ public class DokumentSetup {
         downloadButton = layoutScreen.findViewById(R.id.downloadButton);
         dokumentListView = layoutScreen.findViewById(R.id.dokumentListView);
         dokumentProgressBar = layoutScreen.findViewById(R.id.dokumenteProgressBar);
+        noDocumentImage = layoutScreen.findViewById(R.id.noDokumenteImageView);
 
         dokumentProgressBar.setVisibility(View.INVISIBLE);
         ButtonEffect.buttonPressDownEffect(downloadButton);
         ButtonEffect.buttonPressDownEffect(uploadButton);
+
+        if (ausgabenReport.getFileNames() == null || ausgabenReport.getFileNames().isEmpty())
+            noDocumentImage.setVisibility(View.VISIBLE);
+        else
+            noDocumentImage.setVisibility(View.INVISIBLE);
 
         if (!ausgabenReport.getReise().isOngoing())
             uploadButton.setVisibility(View.GONE);

@@ -38,14 +38,6 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
         summe = layoutScreen.findViewById(R.id.textViewDashBetrag);
         this.reportPref = context.getSharedPreferences("report", MODE_PRIVATE);
 
-        this.reportPref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals("report")) {
-
-                }
-            }
-        });
     }
 
     @NonNull

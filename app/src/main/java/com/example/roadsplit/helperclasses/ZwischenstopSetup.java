@@ -23,11 +23,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,6 +84,7 @@ public class ZwischenstopSetup {
     private Button saveChanges;
     private Button showMap;
     private Button addZwischenStop;
+    private ProgressBar progressBar;
 
     private AusgabenReport ausgabenReport;
     private Reisender reisender;
@@ -102,6 +105,9 @@ public class ZwischenstopSetup {
         this.saveChanges = layoutScreen.findViewById(R.id.saveStopChangesButton);
         this.showMap = layoutScreen.findViewById(R.id.showMapButton);
         this.addZwischenStop = layoutScreen.findViewById(R.id.addZwischenStopButton);
+        this.progressBar = layoutScreen.findViewById(R.id.zstopProgressBar);
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         this.fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
@@ -120,7 +126,13 @@ public class ZwischenstopSetup {
         zwischenstopRecycler.setAdapter(stopRecyclerAdapter);
 
 
+        ItemTouchHelper.Callback callback =
+                new ItemMoveCallback(stopRecyclerAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(zwischenstopRecycler);
+
         saveChanges.setOnClickListener(view -> {
+            progressBar.setVisibility(View.VISIBLE);
             reise.setStops(stops);
             UpdateRequest updateRequest = new UpdateRequest(reisender, reise);
             EndpointConnector.updateReise(updateRequest, updateReiseCallback(), context);
@@ -158,6 +170,7 @@ public class ZwischenstopSetup {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Gson gson = new Gson();
                 ausgabenReport = gson.fromJson(response.body().string(), AusgabenReport.class);
+                progressBar.setVisibility(View.INVISIBLE);
                 if (response.isSuccessful()) {
                     SharedPreferences.Editor editor = reportPref.edit();
                     editor.putString("report", gson.toJson(ausgabenReport));
@@ -179,6 +192,7 @@ public class ZwischenstopSetup {
                 } else if (response.code() == 403) {
                     EndpointConnector.toLogin(ausgabenActivity);
                 }
+
             }
         };
     }
@@ -257,7 +271,7 @@ public class ZwischenstopSetup {
                     Marker marker = new Marker(map);
                     marker.setPosition(waypoint);
                     marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                    marker.setIcon(context.getResources().getDrawable(R.drawable.pinpoint));
+                    marker.setIcon(context.getResources().getDrawable(R.drawable.baseline_place_black_24dp));
                     marker.setTitle(" Budget: " + stops.get(counter).getBudget() + "€"); //
                     map.getOverlays().add(marker);
                     counter++;
@@ -326,7 +340,7 @@ public class ZwischenstopSetup {
                                     Marker marker = new Marker(map);
                                     marker.setPosition(lastLocation);
                                     marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                                    marker.setIcon(context.getResources().getDrawable(R.drawable.pinpoint));
+                                    marker.setIcon(context.getResources().getDrawable(R.drawable.baseline_my_location_black_24dp));
                                     marker.setTitle("It's you!"); //
                                     map.getOverlays().add(marker);
 

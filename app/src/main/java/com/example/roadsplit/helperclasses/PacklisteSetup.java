@@ -45,7 +45,6 @@ public class PacklisteSetup {
     private RecyclerView packlisteRecycler;
     private EditText packlistenItem;
     private Button addButton;
-    private Button removeButton;
     private Button saveChanges;
 
     private AusgabenReport ausgabenReport;
@@ -69,7 +68,6 @@ public class PacklisteSetup {
         this.packlisteRecycler = layoutScreen.findViewById(R.id.packlisteRecyclerView);
         this.packlistenItem = layoutScreen.findViewById(R.id.packlistenEditText);
         this.addButton = layoutScreen.findViewById(R.id.addPacklistenItemButton);
-        this.removeButton = layoutScreen.findViewById(R.id.removePacklistenItemButton);
         this.saveChanges = layoutScreen.findViewById(R.id.savePacklisteChangesButton);
 
     }

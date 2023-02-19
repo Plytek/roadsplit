@@ -40,6 +40,7 @@ import okhttp3.Response;
 
 public class ReiseErstellenActivity extends AppCompatActivity {
 
+
     private Reisender reisender;
     private Reise currentReise;
     private List<String> zwischenstops;
@@ -51,7 +52,6 @@ public class ReiseErstellenActivity extends AppCompatActivity {
     private TextView errorStartView;
     private List<String> suggestions;
     private long last = 0;
-
     private SharedPreferences reisenderPref;
     private SharedPreferences reiseResponsePref;
     private SharedPreferences reisePref;
@@ -211,12 +211,15 @@ public class ReiseErstellenActivity extends AppCompatActivity {
                     editor.apply();
                     reiseSuccess(reiseResponse.getReise().getUniquename(), reiseResponse);
                     Looper.prepare();
+
+                    //EndpointConnector.updateOverview(reiseResponse.getReisender(), updateOverviewCallback(), ReiseErstellenActivity.this);
                 } else if (response.code() == 403) {
                     EndpointConnector.toLogin(ReiseErstellenActivity.this);
                 }
             }
         };
     }
+
 
     private TextWatcher fetchAutoCompleteTextWatcher() {
         return new TextWatcher() {
@@ -303,4 +306,5 @@ public class ReiseErstellenActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }
