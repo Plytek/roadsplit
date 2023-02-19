@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -67,6 +68,7 @@ public class PaymentActivity extends AppCompatActivity {
         //TODO Start activity for Result
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ausgabeerstellen);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         this.notizView = findViewById(R.id.ausgabenNotizEditText);
         this.betragView = findViewById(R.id.betragEditText);

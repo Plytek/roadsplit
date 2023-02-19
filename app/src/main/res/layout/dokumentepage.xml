@@ -51,10 +51,10 @@
         android:layout_height="404dp"
         android:layout_marginTop="48dp"
         android:layout_marginBottom="160dp"
-        app:layout_constraintTop_toTopOf="@id/guideline9"
+        app:layout_constraintBottom_toBottomOf="@id/guideline9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/guideline9"
+        app:layout_constraintTop_toTopOf="@id/guideline9"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/penisrealsuccessopne" />
 
@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.74" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <Button
         android:id="@+id/uploadButton"
@@ -79,21 +79,21 @@
         android:layout_marginTop="196dp"
         android:background="@drawable/custom_shape2"
         android:fontFamily="@font/cmedium"
-        android:text="Änderungen Speichern"
+        android:text="Dokument hochladen"
         android:textAllCaps="false"
         android:textColor="#ffff"
         android:textSize="16dp"
-        app:layout_constraintTop_toTopOf="@id/guideline10"
         app:layout_constraintBottom_toBottomOf="@id/guideline10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline10" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.69" />
+        app:layout_constraintGuide_percent="0.59" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dokumentListView"
@@ -114,10 +114,10 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/guideline18"
         app:layout_constraintBottom_toBottomOf="@id/guideline18"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline18"
         tools:layout_editor_absoluteX="191dp" />
 
     <ImageView

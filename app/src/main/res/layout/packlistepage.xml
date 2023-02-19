@@ -9,7 +9,6 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="41dp"
         android:fontFamily="@font/cmedium"
@@ -17,6 +16,7 @@
         android:text="Gemeinsame Packliste"
         android:textColor="#2A4B42"
         android:textSize="25dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.162"
@@ -117,6 +117,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/wave3" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal73"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
     <Button
         android:id="@+id/savePacklisteChangesButton"
         android:layout_width="251dp"
@@ -126,11 +133,13 @@
         android:text="Änderungen Speichern"
         android:textAllCaps="false"
         android:textColor="#ffff"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewwave3"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal73"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
+        app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintTop_toBottomOf="@+id/packlisteRecyclerView" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal73"
+        app:layout_constraintVertical_bias="0.155" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVert50"

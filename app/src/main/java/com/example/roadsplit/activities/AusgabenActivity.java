@@ -15,11 +15,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.DashboardOverviewAdapter;
-import com.example.roadsplit.adapter.ReiseUebersichtAdapter;
 import com.example.roadsplit.model.Reise;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
-import com.example.roadsplit.reponses.ReiseResponse;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
@@ -31,13 +29,11 @@ import okhttp3.Response;
 
 public class AusgabenActivity extends AppCompatActivity {
     private ViewPager screenPager;
-    private ReiseUebersichtAdapter reiseUebersichtAdapter;
     private DashboardOverviewAdapter dashboardOverviewAdapter;
     private TabLayout tabLayout;
     private Reise reise;
 
     private Reisender reisender;
-    private ReiseResponse reiseResponse;
     private AusgabenReport ausgabenReport;
     private SharedPreferences reisenderPref;
     private SharedPreferences reiseResponsePref;
@@ -82,9 +78,6 @@ public class AusgabenActivity extends AppCompatActivity {
                 switch (key) {
                     case "reisender":
                         reisender = gson.fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
-                        break;
-                    case "reiseResponse":
-                        reiseResponse = gson.fromJson(reiseResponsePref.getString("reiseResponse", "fehler"), ReiseResponse.class);
                         break;
                     case "reise":
                         reise = gson.fromJson(reiseResponsePref.getString("reise", "fehler"), Reise.class);
@@ -154,40 +147,6 @@ public class AusgabenActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             finish();
         }
-    }
-
-    private Callback fetchPaymentCallback() {
-        return new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Gson gson = new Gson();
-                reiseResponse = gson.fromJson(response.body().string(), ReiseResponse.class);
-                if (response.isSuccessful()) {
-                    runOnUiThread(() -> {
-
-                        SharedPreferences.Editor editor = reisenderPref.edit();
-                        editor.putString("reisender", gson.toJson(reiseResponse.getReisender()));
-                        editor.apply();
-
-                        editor = reiseResponsePref.edit();
-                        editor.putString("reiseResponse", gson.toJson(reiseResponse));
-                        editor.apply();
-
-                        editor = reisePref.edit();
-                        editor.putString("reise", gson.toJson(reiseResponse.getReise()));
-                        editor.apply();
-
-
-                        EndpointConnector.fetchAusgabenReport(reise, reisender, ausgabenReportCallback(), AusgabenActivity.this);
-                    });
-                }
-            }
-
-        };
     }
 
 }
