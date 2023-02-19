@@ -117,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.28" />
+        app:layout_constraintGuide_percent="0.3" />
 
 
     <Button
@@ -131,7 +131,7 @@
         android:text="Karte anzeigen"
         android:textAllCaps="false"
         android:textColor="#ffff"
-        android:textSize="17dp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
         app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
@@ -148,7 +148,7 @@
         android:text="Änderungen Speichern"
         android:textAllCaps="false"
         android:textColor="#ffff"
-        android:textSize="17dp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toTopOf="@+id/showMapButton"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
         app:layout_constraintHorizontal_bias="0.501"

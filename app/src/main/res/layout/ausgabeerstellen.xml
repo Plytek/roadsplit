@@ -261,7 +261,7 @@
         android:id="@+id/privatCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:text="Privat"
         android:textColor="#c4c4c4"
