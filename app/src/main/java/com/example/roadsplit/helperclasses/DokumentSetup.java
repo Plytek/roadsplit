@@ -14,23 +14,23 @@ import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
 import com.example.roadsplit.activities.UploadFileActivity;
+import com.example.roadsplit.adapter.DokumenteRecyclerAdapter;
 import com.example.roadsplit.model.Dokument;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
-import com.example.roadsplit.requests.DownloadRequest;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -49,8 +49,7 @@ public class DokumentSetup {
     private final AusgabenReport ausgabenReport;
 
     private final Button uploadButton;
-    private final Button downloadButton;
-    private final ListView dokumentListView;
+    private final RecyclerView dokumentListView;
     private final ProgressBar dokumentProgressBar;
     private ImageView noDocumentImage;
     private ArrayAdapter<String> dokumentAdapter;
@@ -64,13 +63,11 @@ public class DokumentSetup {
         this.ausgabenReport = new Gson().fromJson(reportPref.getString("report", "fehler"), AusgabenReport.class);
 
         uploadButton = layoutScreen.findViewById(R.id.uploadButton);
-        downloadButton = layoutScreen.findViewById(R.id.downloadButton);
         dokumentListView = layoutScreen.findViewById(R.id.dokumentListView);
         dokumentProgressBar = layoutScreen.findViewById(R.id.dokumenteProgressBar);
         noDocumentImage = layoutScreen.findViewById(R.id.noDokumenteImageView);
 
         dokumentProgressBar.setVisibility(View.INVISIBLE);
-        ButtonEffect.buttonPressDownEffect(downloadButton);
         ButtonEffect.buttonPressDownEffect(uploadButton);
 
         if (ausgabenReport.getFileNames() == null || ausgabenReport.getFileNames().isEmpty())
@@ -89,25 +86,13 @@ public class DokumentSetup {
             context.startActivity(intent);
         });
 
-        downloadButton.setOnClickListener(view -> {
-
-            int selectedIndex = dokumentListView.getCheckedItemPosition();
-            if (selectedIndex != ListView.INVALID_POSITION) {
-                dokumentProgressBar.setVisibility(View.VISIBLE);
-                String selectedItem = dokumentAdapter.getItem(selectedIndex);
-                DownloadRequest downloadRequest = new DownloadRequest();
-                downloadRequest.setReiseId(ausgabenReport.getReise().getId());
-                downloadRequest.setFilename(selectedItem);
-                EndpointConnector.downloadFile(downloadRequest, donwloadFileCallback(), context);
-            }
-
-        });
     }
 
     public void setupDokuments() {
-        dokumentListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-        dokumentAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, ausgabenReport.getFileNames());
-        dokumentListView.setAdapter(dokumentAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
+        dokumentListView.setLayoutManager(layoutManager);
+        DokumenteRecyclerAdapter dokumenteRecyclerAdapter = new DokumenteRecyclerAdapter(context, ausgabenReport.getFileNames(), dokumentProgressBar, ausgabenReport, donwloadFileCallback());
+        dokumentListView.setAdapter(dokumenteRecyclerAdapter);
 
     }
 
