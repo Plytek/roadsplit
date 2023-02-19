@@ -32,6 +32,18 @@
         app:layout_constraintTop_toTopOf="@+id/guideline06"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Lade wichtige Reisedokumente hoch."
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="@+id/textDokumente"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textDokumente"
+        app:layout_constraintTop_toBottomOf="@+id/textDokumente" />
+
 
     <ImageView
         android:id="@+id/noDokumenteImageView"
@@ -51,14 +63,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.37" />
+        app:layout_constraintGuide_percent="0.43" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.67" />
+        app:layout_constraintGuide_percent="0.74" />
 
     <Button
         android:id="@+id/uploadButton"
@@ -81,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.63" />
+        app:layout_constraintGuide_percent="0.69" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dokumentListView"
@@ -107,5 +119,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteX="191dp" />
+
+    <ImageView
+        android:id="@+id/imageViewwave4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/wae4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

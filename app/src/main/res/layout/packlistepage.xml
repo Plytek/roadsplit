@@ -9,13 +9,14 @@
 
     <TextView
         android:id="@+id/textView8"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="41dp"
         android:fontFamily="@font/cmedium"
         android:gravity="center"
         android:text="Gemeinsame Packliste"
         android:textColor="#2A4B42"
-        android:textSize="20dp"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineOben"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.162"
@@ -26,18 +27,15 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="323dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:lineSpacingExtra="2sp"
-        android:text="Was ist besser als Sachen zu vergessen? Eine gemeinsame Packliste!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Eine Reisepackliste für alle."
         android:textSize="13dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.267"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineOben" />
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineOben"
@@ -63,10 +61,10 @@
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintHorizontal_bias="0.169"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline16"
-        app:layout_constraintVertical_bias="0.48" />
+        app:layout_constraintVertical_bias="0.36" />
 
     <Button
         android:id="@+id/addPacklistenItemButton"
@@ -103,22 +101,21 @@
         android:layout_marginTop="26dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline18"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
         app:layout_constraintTop_toBottomOf="@+id/packlistenEditText"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="437dp"
-        android:layout_height="102dp"
+        android:id="@+id/imageViewwave3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="-120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.875"
-        app:srcCompat="@drawable/wave" />
+        app:srcCompat="@drawable/wave3" />
 
     <Button
         android:id="@+id/savePacklisteChangesButton"
@@ -130,7 +127,7 @@
         android:textAllCaps="false"
         android:textColor="#ffff"
         android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView9"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewwave3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVert50"
         app:layout_constraintStart_toStartOf="@+id/guidelineVert50"
         app:layout_constraintTop_toBottomOf="@+id/packlisteRecyclerView" />
