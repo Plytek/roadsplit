@@ -2,7 +2,6 @@ package com.example.roadsplit.helperclasses;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -330,9 +329,8 @@ public class DashboardSetup {
         ausgabeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, PaymentActivity.class);
-                Activity activity = (Activity) mContext;
-                ((Activity) mContext).startActivityForResult(intent, 1);
+                Intent intent = new Intent(ausgabenActivity, PaymentActivity.class);
+                ausgabenActivity.startActivityForResult(intent, 1);
             }
         });
 

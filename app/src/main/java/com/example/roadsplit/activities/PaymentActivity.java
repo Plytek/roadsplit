@@ -217,6 +217,7 @@ public class PaymentActivity extends AppCompatActivity {
 
                     runOnUiThread(() ->
                     {
+                        setResult(RESULT_OK);
                         progressBar.setVisibility(View.GONE);
                         Intent intent = new Intent(PaymentActivity.this, AusgabenActivity.class);
                         intent.putExtra("reise", new Gson().toJson(ausgabenReport.getReise()));

@@ -62,8 +62,10 @@ public class UploadFileActivity extends AppCompatActivity {
 
     public void uploadFile() {
         uploadProgressBar.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("*/*"); // Set the MIME type to allow any file type
+        String[] mimeTypes = {"image/*", "application/pdf"}; // Allow images and PDFs
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         startActivityForResult(intent, 1);
     }
 

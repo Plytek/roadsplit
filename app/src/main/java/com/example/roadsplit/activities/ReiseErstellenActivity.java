@@ -285,7 +285,8 @@ public class ReiseErstellenActivity extends AppCompatActivity {
                         suggestions = new ArrayList<>();
                         for (LocationInfo info : finalLocationInfo) {
                             Location location = info.getAddress();
-                            suggestions.add(location.getName() + " (" + location.getPostcode() + ", " + location.getCountry() + ")");
+                            suggestions.add(location.getName());
+                            //+ " (" + location.getPostcode() + ", " + location.getCountry() + ")"
                         }
                         ArrayAdapter<String> suggestionsAdapter = new ArrayAdapter<>(ReiseErstellenActivity.this,
                                 android.R.layout.simple_list_item_1, suggestions);

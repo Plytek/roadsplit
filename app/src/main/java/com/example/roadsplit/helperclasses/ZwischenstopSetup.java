@@ -217,13 +217,6 @@ public class ZwischenstopSetup {
 
     private void mapAnzeigen() {
 
-/*        LayoutInflater inflater = LayoutInflater.from(context);
-        View customLayout = inflater.inflate(R.layout.maplayout, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setView(customLayout);
-        builder.show();*/
-
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.maplayout);
@@ -235,6 +228,19 @@ public class ZwischenstopSetup {
 
         fetchWayPointsFromAdress(stops, dialog);
 
+    /*    Handler mHandler = new Handler();
+        Runnable mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                getCurrentLocation();
+                Log.d("location", "Task executed at: " + new java.util.Date());
+                mHandler.postDelayed(this, 5000);
+            }
+        };
+
+        mHandler.postDelayed(mRunnable, 0);
+
+        dialog.setOnDismissListener(dialogInterface -> mHandler.removeCallbacks(mRunnable));*/
     }
 
     private void drawWaypoints(ArrayList<GeoPoint> waypoints, Dialog dialog) {
@@ -292,6 +298,8 @@ public class ZwischenstopSetup {
                 map.invalidate();
             });
         });
+
+
     }
 
     private void fetchWayPointsFromAdress(List<Stop> stops, Dialog dialog) {
@@ -326,8 +334,6 @@ public class ZwischenstopSetup {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_LOCATION);
         } else {
-
-
             fusedLocationClient.getLastLocation()
                     .addOnSuccessListener(ausgabenActivity, new OnSuccessListener<Location>() {
                         @Override

@@ -99,6 +99,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="15dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,12 +120,11 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1892779" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dokumentListView"
         android:layout_width="325dp"
         android:layout_height="404dp"
         android:layout_marginTop="28dp"
-        android:choiceMode="singleChoice"
         android:elevation="3dp"
         android:listSelector="@color/rdarkgreen"
         app:layout_constraintBottom_toTopOf="@+id/downloadButton"

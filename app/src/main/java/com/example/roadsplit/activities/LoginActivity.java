@@ -147,14 +147,15 @@ public class LoginActivity extends AppCompatActivity {
                     imageloadCounter = 0;
                     if (userResponse.getReisender().isFirsttimelogin()) {
                         reisender.setFirsttimelogin(false);
-                        for (Reise reise : reisender.getReisen()) {
-                            EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise, true));
-                        }
+                        startFirstTimeActivity();
                         sendUserUpdate();
                     } else {
-                        for (Reise reise : reisender.getReisen()) {
-                            EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise, false));
-                        }
+                        if (reisender.getReisen() != null && reisender.getReisen().size() != 0) {
+                            for (Reise reise : reisender.getReisen()) {
+                                EndpointConnector.fetchImageFromWiki(reise, wikiCallback(reise, false));
+                            }
+                        } else
+                            success();
                     }
                     findViewById(R.id.loginProgressBar).setVisibility(View.INVISIBLE);
                     return;
@@ -201,6 +202,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void success() {
         Intent intent = new Intent(this, ReiseUebersichtActivity.class);
+        intent.putExtra("from", "login");
         startActivityForResult(intent, 1);
 
     }

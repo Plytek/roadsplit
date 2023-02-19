@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.roadsplit.R;
 import com.example.roadsplit.model.Ausgabe;
 import com.example.roadsplit.model.AusgabenTyp;
+import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
 import com.example.roadsplit.model.finanzen.Schulden;
+import com.google.gson.Gson;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -30,6 +32,9 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
     private final TextView summe;
 
     private final SharedPreferences reportPref;
+    private final SharedPreferences reisenderPref;
+
+    private Reisender reisender;
 
     public DashboardAusgabenAdapter(Context context, AusgabenReport ausgabenReport, View layoutScreen, String type) {
         this.context = context;
@@ -37,6 +42,17 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
         this.type = type;
         summe = layoutScreen.findViewById(R.id.textViewDashBetrag);
         this.reportPref = context.getSharedPreferences("report", MODE_PRIVATE);
+        this.reisenderPref = context.getSharedPreferences("reisender", MODE_PRIVATE);
+
+        this.reisender = new Gson().fromJson(reisenderPref.getString("reisender", "fehler"), Reisender.class);
+
+
+        for (int k = ausgabenReport.getSchuldenReport().size() - 1; k >= 0; k--) {
+            Schulden schulden = ausgabenReport.getSchuldenReport().get(k);
+            if (schulden.getSchulden() == null || schulden.getSchulden().equals(BigDecimal.ZERO)) {
+                ausgabenReport.getSchuldenReport().remove(k);
+            }
+        }
 
     }
 
@@ -94,13 +110,16 @@ public class DashboardAusgabenAdapter extends RecyclerView.Adapter<DashboardAusg
                 BigDecimal betrag = schulden.getSchulden();
                 if (betrag.compareTo(BigDecimal.ZERO) < 0) {
                     holder.ausgabename.setText("Du schuldest");
-                    holder.beschreibung.setText(schulden.getReisenderName());
                     holder.ausgabe.setText(betrag.abs() + "€");
                 } else {
                     holder.ausgabename.setText("Du bekommst von");
-                    holder.beschreibung.setText(schulden.getMitreisenderName());
                     holder.ausgabe.setText(betrag + "€");
                 }
+                if (schulden.getReisenderName().equals(reisender.getNickname())) {
+                    holder.beschreibung.setText(schulden.getMitreisenderName());
+                } else
+                    holder.beschreibung.setText(schulden.getReisenderName());
+
                 holder.date.setText("");
                 summe.setText(ausgabenReport.getGruppenGesamtausgabe() + "€");
                 break;
