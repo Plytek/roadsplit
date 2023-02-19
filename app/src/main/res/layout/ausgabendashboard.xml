@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statisticButton">
 
-        <net.cachapa.expandablelayout.ExpandableLayout
+        <!--<net.cachapa.expandablelayout.ExpandableLayout
             android:id="@+id/expandable_layout"
             android:layout_width="381dp"
             android:layout_height="209dp"
@@ -72,14 +72,14 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
-                            <!--View to display the yellow color icon-->
+                            &lt;!&ndash;View to display the yellow color icon&ndash;&gt;
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="bottom"
                                 android:background="@color/red" />
 
-                            <!--Text view to display R -->
+                            &lt;!&ndash;Text view to display R &ndash;&gt;
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -102,14 +102,14 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
-                            <!--View to display the yellow color icon-->
+                            &lt;!&ndash;View to display the yellow color icon&ndash;&gt;
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="bottom"
                                 android:background="@color/rlightgreen" />
 
-                            <!--Text view to display R -->
+                            &lt;!&ndash;Text view to display R &ndash;&gt;
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -131,14 +131,14 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
-                            <!--View to display the yellow color icon-->
+                            &lt;!&ndash;View to display the yellow color icon&ndash;&gt;
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="bottom"
                                 android:background="@color/rgrey" />
 
-                            <!--Text view to display R -->
+                            &lt;!&ndash;Text view to display R &ndash;&gt;
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -160,14 +160,14 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
-                            <!--View to display the yellow color icon-->
+                            &lt;!&ndash;View to display the yellow color icon&ndash;&gt;
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="bottom"
                                 android:background="@color/purple_200" />
 
-                            <!--Text view to display R -->
+                            &lt;!&ndash;Text view to display R &ndash;&gt;
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -189,14 +189,14 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
-                            <!--View to display the yellow color icon-->
+                            &lt;!&ndash;View to display the yellow color icon&ndash;&gt;
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="bottom"
                                 android:background="@color/marineblue" />
 
-                            <!--Text view to display R -->
+                            &lt;!&ndash;Text view to display R &ndash;&gt;
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -212,21 +212,21 @@
 
                         </LinearLayout>
 
-                        <!--Linear layout to display Python-->
+                        &lt;!&ndash;Linear layout to display Python&ndash;&gt;
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
-                            <!--View to display the green color icon-->
+                            &lt;!&ndash;View to display the green color icon&ndash;&gt;
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="bottom"
                                 android:background="@color/yellow" />
 
-                            <!--Text view to display python text -->
+                            &lt;!&ndash;Text view to display python text &ndash;&gt;
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -242,21 +242,21 @@
 
                         </LinearLayout>
 
-                        <!--Linear layout to display C++-->
+                        &lt;!&ndash;Linear layout to display C++&ndash;&gt;
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
-                            <!--View to display the red color icon-->
+                            &lt;!&ndash;View to display the red color icon&ndash;&gt;
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="bottom"
                                 android:background="@color/rdarkgreen" />
 
-                            <!--Text view to display C++ text -->
+                            &lt;!&ndash;Text view to display C++ text &ndash;&gt;
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -272,21 +272,21 @@
 
                         </LinearLayout>
 
-                        <!--Linear layout to display Java-->
+                        &lt;!&ndash;Linear layout to display Java&ndash;&gt;
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="5dp">
 
-                            <!--View to display the blue color icon-->
+                            &lt;!&ndash;View to display the blue color icon&ndash;&gt;
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="bottom"
                                 android:background="@color/black" />
 
-                            <!--Text view to display Java text -->
+                            &lt;!&ndash;Text view to display Java text &ndash;&gt;
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -309,7 +309,7 @@
             </androidx.cardview.widget.CardView>
 
 
-        </net.cachapa.expandablelayout.ExpandableLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ausgabenDetailsRecycler"
@@ -526,7 +526,7 @@
         android:layout_width="43dp"
         android:layout_height="44dp"
         android:background="@android:color/transparent"
-        android:foreground="@drawable/baseline_more_vert_black_24dp"
+        android:foreground="@drawable/more_horiz_black_24dp"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline23"
@@ -542,7 +542,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_marginTop="12dp"
-        app:backgroundTint="@color/rcreme"
+        app:backgroundTint="@color/white"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintStart_toStartOf="@+id/buttonPrivatAusgaben"

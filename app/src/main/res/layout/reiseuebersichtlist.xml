@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="353dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="355dp"
+        android:layout_width="320dp"
         android:layout_height="180dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
                 android:layout_height="200dp"
                 android:background="@color/rcreme"
                 android:scaleType="centerCrop"
-                android:src="@color/rcreme"
+                android:src="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/imageView2"
                 app:layout_constraintStart_toStartOf="@id/imageView2"
                 app:layout_constraintTop_toTopOf="@id/imageView2"

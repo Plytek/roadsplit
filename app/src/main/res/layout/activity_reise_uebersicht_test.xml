@@ -45,7 +45,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textViewUebersicht"
         android:layout_width="wrap_content"
@@ -117,16 +116,15 @@
 
         <ImageView
             android:id="@+id/settingsView"
-            android:layout_width="32dp"
-            android:layout_height="31dp"
-            android:layout_marginStart="300dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="350dp"
+            android:layout_marginTop="19dp"
             android:elevation="100dp"
             android:foreground="?selectableItemBackground"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profileupdated" />
+            app:layout_constraintTop_toTopOf="@id/textView3"
+            app:srcCompat="@drawable/logout_black_24dp" />
 
     </androidx.cardview.widget.CardView>
 
@@ -145,7 +143,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959"
-        app:srcCompat="@drawable/plusiconsecond" />
+        app:srcCompat="@drawable/add_black_24dp" />
 
     <ImageView
         android:id="@+id/sidescrollRightLaufend"

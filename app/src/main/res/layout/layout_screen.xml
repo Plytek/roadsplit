@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rdarkgreen">
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/g1"
@@ -24,7 +24,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textColor="@color/white"
+        android:textColor="@color/rdarkgreen"
         android:textSize="32dp"
         android:fontFamily="@font/cextrabold"
         app:layout_constraintBottom_toTopOf="@+id/g1"
@@ -44,7 +44,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textColor="@color/white"
+        android:textColor="@color/rdarkgreen"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

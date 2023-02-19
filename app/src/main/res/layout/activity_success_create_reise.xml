@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rcreme"
+    android:background="@color/white"
     android:onClick="copyToClipboard"
     tools:context=".activities.ReiseSuccessActivity">
 
@@ -14,18 +14,19 @@
         android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
-        android:background="@color/rdarkgreen"
         android:elevation="3dp"
-        android:fontFamily="@font/cextrabold"
+        android:fontFamily="@font/cmedium"
+        android:background="@drawable/custom_shape2"
+        android:textAllCaps="false"
         android:onClick="reiseübersichtAnzeigen"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
         android:paddingBottom="16dp"
-        android:text="REISEÜBERSICHT ANZEIGEN"
+        android:text="Reiseübersicht"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="@id/textView4"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="@id/textView4"
@@ -41,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline9"
-        app:srcCompat="@drawable/successcanvas" />
+        app:srcCompat="@drawable/penis3214" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
@@ -55,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.51" />
 
     <TextView
         android:id="@+id/textView2"
@@ -91,18 +92,19 @@
         android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@color/rdarkgreen"
         android:elevation="3dp"
-        android:fontFamily="@font/cextrabold"
+        android:fontFamily="@font/cmedium"
         android:onClick="zurReise"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
         android:paddingBottom="16dp"
-        android:text="REISE BEARBEITEN"
+        android:text="Reise bearbeiten"
+        android:textAllCaps="false"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:background="@drawable/custom_shape2"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="@id/textView4"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="@id/textView4"
@@ -113,7 +115,7 @@
         android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
-        android:background="@drawable/customshapetwo"
+        android:background="@drawable/uebersichtgreyshape"
         android:clickable="false"
         android:editable="false"
         android:elevation="3dp"
