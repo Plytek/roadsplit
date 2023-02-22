@@ -94,18 +94,20 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
     private TextView finishedText;
     private ProgressBar progressBar;
 
+    private boolean refreshData = true;
+    private String from;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reise_uebersicht_test);
+        setContentView(R.layout.activity_reise_uebersicht);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         lastUpdate = System.currentTimeMillis();
 
-        setResult(RESULT_OK);
-
         EndpointConnector.baseurl = getResources().getString(R.string.baseendpoint);
+        this.from = getIntent().getStringExtra("from");
 
         this.reisenderPref = getSharedPreferences("reisender", MODE_PRIVATE);
         this.uebersichtPref = getSharedPreferences("uebersicht", MODE_PRIVATE);
@@ -121,21 +123,6 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
         }
 
         if (EndpointConnector.getJwtToken(this).equals("error")) toLogin();
-
-        this.ongoingResponses = new ArrayList<>();
-        this.finishedResponses = new ArrayList<>();
-
-
-        if (uebersicht == null || uebersicht.isEmpty()) {
-            Intent intent = new Intent(this, NeueReiseActivity.class);
-            startActivity(intent);
-        }
-        for (ReiseUebersicht reiseUebersicht : uebersicht) {
-            if (reiseUebersicht.getReise().isOngoing())
-                ongoingResponses.add(reiseUebersicht);
-            else
-                finishedResponses.add(reiseUebersicht);
-        }
 
 
         reisen = new ArrayList<>();
@@ -159,23 +146,9 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
         RecyclerView.LayoutManager layoutManagerFinished = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         reisenViewFinished.setLayoutManager(layoutManagerFinished);
 
-
         reisenView.setVisibility(View.INVISIBLE);
         reisenViewFinished.setVisibility(View.INVISIBLE);
 
-     /*   finishedText.setVisibility(View.VISIBLE);
-        if (finishedResponses == null || finishedResponses.isEmpty()) {
-            finishedText.setVisibility(View.GONE);
-            rightFinished.setVisibility(View.GONE);
-            leftFinished.setVisibility(View.GONE);
-        } else if (finishedResponses.size() == 1) {
-            rightFinished.setVisibility(View.GONE);
-            leftFinished.setVisibility(View.GONE);
-        }
-        if (ongoingResponses == null || ongoingResponses.isEmpty() || ongoingResponses.size() == 1) {
-            rightLaufend.setVisibility(View.GONE);
-            leftLaufend.setVisibility(View.GONE);
-        }*/
 
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -205,8 +178,6 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
         neueReiseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(ReiseUebersichtActivity.this, NeueReiseActivity.class);
-                //startActivity(intent);
                 Dialog dialog = new Dialog(ReiseUebersichtActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.beitreten_join_popup);
@@ -409,49 +380,78 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
             imageMap.put(reisename, mIcon);
             imageloadCounter++;
             if (imageloadCounter == reisender.getReisen().size()) {
-                runOnUiThread(() -> {
-                    uebersichtRecAdapter = new UebersichtRecAdapter(this, ongoingResponses, imageMap);
-                    reisenView.setAdapter(uebersichtRecAdapter);
-                    uebersichtRecAdapterFinish = new UebersichtRecAdapter(this, finishedResponses, imageMap);
-                    reisenViewFinished.setAdapter(uebersichtRecAdapterFinish);
-                    reisenView.setVisibility(View.VISIBLE);
-                    reisenViewFinished.setVisibility(View.VISIBLE);
-
-                    finishedText.setVisibility(View.VISIBLE);
-                    if (finishedResponses == null || finishedResponses.isEmpty()) {
-                        finishedText.setVisibility(View.GONE);
-                        rightFinished.setVisibility(View.GONE);
-                        leftFinished.setVisibility(View.GONE);
-                    } else if (finishedResponses.size() == 1) {
-                        rightFinished.setVisibility(View.GONE);
-                        leftFinished.setVisibility(View.GONE);
-                    }
-                    if (ongoingResponses == null || ongoingResponses.isEmpty() || ongoingResponses.size() == 1) {
-                        rightLaufend.setVisibility(View.GONE);
-                        leftLaufend.setVisibility(View.GONE);
-                    }
-                    progressBar.setVisibility(View.INVISIBLE);
-                });
-
-/*                Intent intent = new Intent(this, ReiseUebersichtActivity.class);
-                startActivity(intent);
-                finish();*/
+                runOnUiThread(() -> setUpReisenAndAdapter());
             }
         });
+    }
+
+    private void setUpReisenAndAdapter() {
+        uebersichtRecAdapter = new UebersichtRecAdapter(this, ongoingResponses, imageMap);
+        reisenView.setAdapter(uebersichtRecAdapter);
+        uebersichtRecAdapterFinish = new UebersichtRecAdapter(this, finishedResponses, imageMap);
+        reisenViewFinished.setAdapter(uebersichtRecAdapterFinish);
+        reisenView.setVisibility(View.VISIBLE);
+        reisenViewFinished.setVisibility(View.VISIBLE);
+
+        finishedText.setVisibility(View.VISIBLE);
+        if (finishedResponses == null || finishedResponses.isEmpty()) {
+            finishedText.setVisibility(View.GONE);
+            rightFinished.setVisibility(View.GONE);
+            leftFinished.setVisibility(View.GONE);
+        } else if (finishedResponses.size() == 1) {
+            rightFinished.setVisibility(View.GONE);
+            leftFinished.setVisibility(View.GONE);
+        }
+        if (ongoingResponses == null || ongoingResponses.isEmpty() || ongoingResponses.size() == 1) {
+            rightLaufend.setVisibility(View.GONE);
+            leftLaufend.setVisibility(View.GONE);
+        }
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        this.ongoingResponses = new ArrayList<>();
+        this.finishedResponses = new ArrayList<>();
+        if (from != null && from.equals("login")) {
+            if (uebersicht == null || uebersicht.isEmpty()) {
+                Intent intent = new Intent(this, NeueReiseActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            for (ReiseUebersicht reiseUebersicht : uebersicht) {
+
+                if (reiseUebersicht.getReise().isOngoing())
+                    ongoingResponses.add(reiseUebersicht);
+                else
+                    finishedResponses.add(reiseUebersicht);
+            }
+
+            imageMap = LoginActivity.imageMap;
+            refreshData = false;
+            setUpReisenAndAdapter();
+        } else if (from == null || !from.equals("success")) {
+            if (uebersicht == null || uebersicht.isEmpty()) {
+                Intent intent = new Intent(this, NeueReiseActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+
         if (reisender == null || System.currentTimeMillis() - lastUpdate > 86400000) {
             toLogin();
         }
-        if (uebersicht == null || uebersicht.isEmpty()) {
-            finish();
-        }
+
+        setResult(RESULT_OK);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         lastUpdate = System.currentTimeMillis();
-        refresh();
+
+        //Nur refreshen wenn der User nicht vom Login kommt
+        if (refreshData)
+            refresh();
+        else refreshData = true;
     }
 
     private void refresh() {
@@ -488,8 +488,8 @@ public class ReiseUebersichtActivity extends AppCompatActivity implements Sensor
             }
             lastUpdate = actualTime;
             // Code to start a new Activity when the phone is shaken
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(this, MainActivity.class);
+            //startActivity(intent);
         }
     }
 

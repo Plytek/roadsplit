@@ -1,0 +1,150 @@
+8pamperi (6):
+      Test initalcommit
+      Logo
+      Connectivity über WebService
+      Entschlackung
+      Entschlackung
+      Entschlackung
+
+New Author Name (1):
+      Entschlackung
+
+Plyte (63):
+      Entschlackung
+      Merge remote-tracking branch 'origin/master'
+      Entschlackung
+      Map & Routing
+      Swiping Listener
+      filenames
+      Centering
+      Login/User Create Activity & Logik
+      baseurl
+      baseurl
+      Quickfix
+      Merge remote-tracking branch 'origin/master'
+      Quickfix
+      Logik für Erstellen von Reisen etc
+      Join Requests und Reiseerstellungstest
+      Dev Activity mal ausgemüllt
+      Launch Logo
+      ViewPager
+      Merge remote-tracking branch 'origin/master'
+      Merger
+      Funktion auf Register und Login
+      Fuktion auf ner menge shit
+      Basic Login/Register Flow for real
+      Copy & Paste from Clipboard
+      Copy & Paste from Clipboard
+      S E R V E R  B A C K E N D
+      Added functionality
+      SMOOTH SLIDES und share test - außerdem delete von Database, Glogin
+      Für Bent Smile
+      Für Bent Smile
+      ScrollView reise erstellen
+      Ordnung
+      Older haptik
+      Winterputz
+      Ausgaben Tests
+      Funtionalität Reise erstellen und Code sharing fr fr
+      commit crimes
+      commit crimes
+      Funktion auf Stopeditmenü
+      Funktion auf Stopeditmenü
+      Diverse Listviews und Basefunktionalität auf Spinner
+      Updaten der Gesamtausgaben und Schulden in der Ausgabenübersicht
+      Packlistenitem
+      Detailsanzeige für Ausgaben sowie Filter, Fuktionalität Ausgabenscreen
+      Bilder für die Reiseübersicht, Aufräumen der Klassen, Endpunkt Adapter
+      Funktion auf Reisen Übersichtsseite - Ausgaben, Budget, Reisende
+      yolo refactoring
+      RecyclerView
+      Reiseersteller
+      paar ui tests
+      back to login
+      lost
+      gradle smile
+      k
+      Refactoring Ausgabendashboards und Grundfunktionen Dokumentenupload
+      DesignUpdates, Downloadrequests etc
+      Piechart undso
+      Statistik im Dashboard
+      Prozentanzeige
+      Zwischenstops, Anfang Packliste
+      Tabindikator, https anfragen, token auth flow
+      Ausrastung
+      Merge remote-tracking branch 'origin/master'
+
+bent1337 (65):
+      Vielen Dank für Ihren Einkauf
+      Vielen Dank für Ihren Einkauf
+      Vielen Dank für Ihren Einkauf
+      Vielen Dank für Ihren Einkauf
+      Vielen Dank für Ihren Einkauf
+      Vielen Dank für Ihren Einkauf
+      Tryn to fix that Centering vom Text
+      Neue Seite (Neue Reisen anlegen) - Keine Funktion
+      SplashScreen + Logo Bugs
+      Alles
+      Alles
+      Alles
+      Alles
+      Alles
+      Merge remote-tracking branch 'origin/master'
+      Alles
+      Alles
+      Alles
+      Ohne ein Commit kein Git
+      Ohne ein Commit kein Git
+      LogIn und Registrieren Pages fertig designed
+      Neue Reise anlegen Design Activity
+      error registry
+      error login
+      error Reise erstellen
+      error reset files
+      error reset files
+      error reset files
+      error reset files
+      error reset files
+      error reset files
+      REGSITRY DESIGN DONE; SUCCESSPAGE DESIGN DONE
+      REGSITRY DESIGN DONE; SUCCESSPAGE DESIGN DONE
+      Merge remote-tracking branch 'origin/master'
+      REGSITRY DESIGN DONE; SUCCESSPAGE DESIGN DONE
+      New Homepage, dokumente, packliste usw.
+      Zwischenstops Seite
+      Zwischenstops Seite
+      Chaos fix
+      Chaos fix
+      Chaos fix
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      LisdtView ordentlich
+      Ich brech mich um
+      Ich brech mich um
+      Ich brech mich um
+      Ich brech mich um
+      Ich brech mich um
+      Einnmal bitte testen
+      Einnmal bitte testen
+      Einnmal bitte testen
+      Einnmal bitte testen
+      Einnmal bitte testen
+      Einnmal bitte testen
+
+furkandursun (2):
+      Testen
+      Mapintegration + Path to specific journey
+
+jannis (1):
+      "Was geht, [benutzername]" not in Caps
+

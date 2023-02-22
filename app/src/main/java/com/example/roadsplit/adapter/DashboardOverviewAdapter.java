@@ -16,11 +16,11 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.activities.AusgabenActivity;
-import com.example.roadsplit.helperclasses.DashboardSetup;
-import com.example.roadsplit.helperclasses.DokumentSetup;
-import com.example.roadsplit.helperclasses.PacklisteSetup;
-import com.example.roadsplit.helperclasses.ZwischenstopSetup;
 import com.example.roadsplit.model.finanzen.AusgabenReport;
+import com.example.roadsplit.tabsetups.DashboardSetup;
+import com.example.roadsplit.tabsetups.DokumentSetup;
+import com.example.roadsplit.tabsetups.PacklisteSetup;
+import com.example.roadsplit.tabsetups.ZwischenstopSetup;
 import com.google.gson.Gson;
 
 import java.io.IOException;

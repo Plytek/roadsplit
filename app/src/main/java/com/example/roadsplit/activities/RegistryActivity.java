@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.ButtonEffect;
+import com.example.roadsplit.utility.ButtonEffect;
 import com.example.roadsplit.model.UserAccount;
 import com.example.roadsplit.reponses.UserResponse;
 import com.google.gson.Gson;

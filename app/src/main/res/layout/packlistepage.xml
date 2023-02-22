@@ -130,7 +130,7 @@
         android:layout_height="50dp"
         android:background="@drawable/custom_shape2"
         android:fontFamily="@font/cmedium"
-        android:text="Änderungen Speichern"
+        android:text="Änderungen speichern"
         android:textAllCaps="false"
         android:textColor="#ffff"
         android:textSize="16sp"

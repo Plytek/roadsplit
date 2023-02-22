@@ -38,7 +38,6 @@
         app:layout_constraintGuide_percent="0.28" />
 
 
-
     <TextView
         android:id="@+id/regText"
         android:layout_width="wrap_content"
@@ -74,10 +73,10 @@
         android:textColor="#7c818f"
         android:textColorHint="#7c818f"
         android:textSize="15dp"
-        app:layout_constraintTop_toTopOf="@id/guidelinenutzer"
         app:layout_constraintBottom_toBottomOf="@id/guidelinenutzer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelinenutzer" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutPassword"
@@ -91,33 +90,33 @@
         android:textColor="#2A4B42"
         android:textColorHint="#7c818f"
         android:textSize="20dp"
+        app:boxBackgroundMode="none"
         app:boxStrokeColor="@color/white"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline3"
         app:layout_constraintBottom_toTopOf="@id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline3"
-        app:passwordToggleEnabled="true"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        app:boxBackgroundMode="none">
+        app:passwordToggleEnabled="true">
 
         <EditText
             android:id="@+id/passLogView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:fontFamily="@font/cmedium"
             android:hint="Passwort"
             android:inputType="textPassword"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            android:paddingBottom="3dp"
             android:textColor="#2A4B42"
             android:textColorHint="#7c818f"
-            android:textSize="15dp"
+            android:textSize="15sp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            android:paddingBottom="3dp"
-            android:background="@android:color/transparent"
             tools:layout_editor_absoluteX="32dp"
             tools:layout_editor_absoluteY="671dp" />
 
@@ -232,11 +231,11 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="381dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/plsloginButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/plsloginButton"/>
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="381dp" />
 
     <ImageView
         android:id="@+id/imageView9"

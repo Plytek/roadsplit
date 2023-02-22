@@ -121,16 +121,19 @@ public class AusgabenActivity extends AppCompatActivity {
 
                         screenPager.setAdapter(dashboardOverviewAdapter);
                         tabLayout = findViewById(R.id.tab_indicator2);
-                        int width = tabLayout.getWidth();
-                        int height = tabLayout.getHeight();
+
                         //Drawable drawable = getResources().getDrawable(R.drawable.tabindicatorneu);
                         //drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.1), (int) (drawable.getIntrinsicHeight() * 0.1));
                         //tabLayout.setSelectedTabIndicator(drawable);
                         tabLayout.setupWithViewPager(screenPager);
-                        tabLayout.getTabAt(0).setIcon(R.drawable.reisekosteniconneu);
-                        tabLayout.getTabAt(1).setIcon(R.drawable.zwiconneutest);
-                        tabLayout.getTabAt(2).setIcon(R.drawable.luggageicon96);
-                        tabLayout.getTabAt(3).setIcon(R.drawable.documentsiconneutwo);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.boerse_icon);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.zwischenstopp_icon);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.koffer_icon);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.karten_icon);
+                        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                            TabLayout.Tab tab = tabLayout.getTabAt(i);
+                            if (tab != null) tab.setCustomView(R.layout.tab_indicator_layout);
+                        }
                         screenPager.setCurrentItem(returning);
                     });
                 } else if (response.code() == 403) {

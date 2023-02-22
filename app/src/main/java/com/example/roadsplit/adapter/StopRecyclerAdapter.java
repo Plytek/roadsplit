@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.ItemMoveCallback;
 import com.example.roadsplit.model.Stop;
+import com.example.roadsplit.utility.ItemMoveCallback;
 
 import java.math.BigDecimal;
 import java.util.Collections;

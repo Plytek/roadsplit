@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.ButtonEffect;
+import com.example.roadsplit.utility.ButtonEffect;
 import com.example.roadsplit.model.Location;
 import com.example.roadsplit.model.LocationInfo;
 import com.example.roadsplit.model.Reise;

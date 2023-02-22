@@ -14,10 +14,9 @@
         android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
+        android:background="@drawable/custom_shape2"
         android:elevation="3dp"
         android:fontFamily="@font/cmedium"
-        android:background="@drawable/custom_shape2"
-        android:textAllCaps="false"
         android:onClick="reiseübersichtAnzeigen"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
@@ -25,6 +24,7 @@
         android:paddingBottom="16dp"
         android:text="Reiseübersicht"
         android:textAlignment="center"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="@id/textView4"
@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline9"
-        app:srcCompat="@drawable/penis3214" />
+        app:srcCompat="@drawable/canvasneuereise" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
@@ -92,6 +92,7 @@
         android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@drawable/custom_shape2"
         android:elevation="3dp"
         android:fontFamily="@font/cmedium"
         android:onClick="zurReise"
@@ -100,10 +101,9 @@
         android:paddingEnd="16dp"
         android:paddingBottom="16dp"
         android:text="Reise bearbeiten"
-        android:textAllCaps="false"
         android:textAlignment="center"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:background="@drawable/custom_shape2"
         android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="@id/textView4"
         app:layout_constraintHorizontal_bias="0.533"

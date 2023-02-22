@@ -338,6 +338,24 @@
         app:layout_constraintVertical_bias="0.483" />
 
 
+    <TextView
+        android:id="@+id/textReiseCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:clickable="true"
+        android:fontFamily="@font/cmedium"
+        android:gravity="center"
+        android:text="test@0001"
+        android:textColor="@color/roadsplitgrey"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textDashboard"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textDashboard"
+        app:layout_constraintTop_toBottomOf="@+id/textDashboard"
+        app:layout_constraintVertical_bias="1.0" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline23"
         android:layout_width="wrap_content"
@@ -372,7 +390,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.13" />
 
 
     <TextView

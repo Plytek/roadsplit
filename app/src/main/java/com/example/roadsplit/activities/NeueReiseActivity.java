@@ -21,10 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.roadsplit.EndpointConnector;
 import com.example.roadsplit.R;
-import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.model.Reisender;
 import com.example.roadsplit.reponses.ReiseResponse;
 import com.example.roadsplit.requests.JoinRequest;
+import com.example.roadsplit.utility.ButtonEffect;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -135,7 +135,7 @@ public class NeueReiseActivity extends AppCompatActivity {
                     dialog.dismiss();
                     Toast.makeText(NeueReiseActivity.this, "Reise erfolgreich beigetreten", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(NeueReiseActivity.this, ReiseUebersichtActivity.class);
-                    intent.putExtra("from", "join");
+                    intent.putExtra("from", "success");
                     startActivity(intent);
                     finish();
                 } else if (response.code() == 403) {

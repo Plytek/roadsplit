@@ -15,8 +15,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.roadsplit.R;
 import com.example.roadsplit.adapter.IntroViewPagerAdapter;
-import com.example.roadsplit.helperclasses.ButtonEffect;
 import com.example.roadsplit.model.ScreenItem;
+import com.example.roadsplit.utility.ButtonEffect;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

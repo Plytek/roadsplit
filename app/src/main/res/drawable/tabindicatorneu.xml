@@ -1,3 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+      android:end="18sp"
+      android:start="18sp"
+      android:bottom="2dp">
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="32dp"
     android:height="32dp"
@@ -6,11 +11,13 @@
   <path
       android:strokeWidth="1"
       android:pathData="M49.8,50.9m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"
-      android:fillColor="#FFFFFF"
+      android:fillColor="#F47521"
       android:strokeColor="#000000"/>
   <path
       android:strokeWidth="1"
       android:pathData="M50,50.9m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"
-      android:fillColor="#2A4B42"
+      android:fillColor="#F47521"
       android:strokeColor="#000000"/>
 </vector>
+  </item>
+</layer-list>

@@ -6,7 +6,7 @@
             android:innerRadius="0dp"
             android:thickness="6dp"
             android:useLevel="false">
-            <solid android:color="@color/white" />
+            <solid android:color="@color/rdarkgreen" />
         </shape>
     </item>
 </layer-list>
